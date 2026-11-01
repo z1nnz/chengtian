@@ -70,11 +70,12 @@ def preview_material(key, name='M_Preview'):
     z = N(nt, 'ShaderNodeValue'); z.name = '_Zhuo'; z.outputs[0].default_value = 1
     sc = N(nt, 'ShaderNodeValue'); sc.name = '_Scar'; sc.outputs[0].default_value = 0
     lo = math_(nt, 'SUBTRACT', 1.0, z.outputs[0])
-    vein = smooth(nt, sp.outputs['Red'], lo, math_(nt, 'ADD', lo, .3))
+    vein = smooth(nt, sp.outputs['Red'], lo, math_(nt, 'ADD', lo, .5))
     vein = math_(nt, 'MULTIPLY', vein, smooth(nt, z.outputs[0], 0, .002))
     vein = math_(nt, 'MULTIPLY', vein, smooth(nt, sp.outputs['Red'], .015, .025))
-    deep = mix(nt, math_(nt, 'MULTIPLY', sp.outputs['Red'], 1.4, True), (.17, .055, .27), (.05, .018, .09))
+    deep = mix(nt, math_(nt, 'MULTIPLY', sp.outputs['Red'], 1.4, True), (.2, .055, .36), (.085, .022, .185))
     c = mix(nt, math_(nt, 'MULTIPLY', vein, .92), bc.outputs['Color'], deep)
+    L(nt, deep, b.inputs['Emission Color']); L(nt, math_(nt, 'MULTIPLY', vein, .16), b.inputs['Emission Strength'])
     c = mix(nt, math_(nt, 'MULTIPLY', sp.outputs['Green'], z.outputs[0]), c, (.36, .05, .05))
     c = mix(nt, math_(nt, 'MULTIPLY', smooth(nt, sp.outputs['Blue'], .15, .6), sc.outputs[0]), c, (.5, .33, .16))
     va = N(nt, 'ShaderNodeVertexColor', layer_name='Col')

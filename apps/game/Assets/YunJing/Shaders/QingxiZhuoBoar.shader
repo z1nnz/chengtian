@@ -16,8 +16,8 @@ Shader "YunJing/QingxiZhuoBoar"
         _MaskMap ("Mask (R dark qi, G eye, B scar)", 2D) = "black" {}
         _Zhuo ("Dark qi (0-1)", Range(0, 1)) = 1
         _Scar ("Scar (0-1)", Range(0, 1)) = 0
-        _ZhuoDark ("Dark qi, deep", Color) = (0.05, 0.018, 0.09, 1)
-        _ZhuoLight ("Dark qi, thin", Color) = (0.17, 0.055, 0.27, 1)
+        _ZhuoDark ("Dark qi, deep", Color) = (0.085, 0.022, 0.185, 1)
+        _ZhuoLight ("Dark qi, thin", Color) = (0.2, 0.055, 0.36, 1)
         _EyeColour ("Sick eye", Color) = (0.36, 0.05, 0.05, 1)
         _ScarColour ("Scar", Color) = (0.5, 0.33, 0.16, 1)
         _Wrap ("Wrapped diffuse", Range(0, 1)) = 0.2
@@ -102,8 +102,9 @@ Shader "YunJing/QingxiZhuoBoar"
                 half3 orm = SAMPLE_TEXTURE2D(_OrmMap, sampler_BaseMap, i.uv).rgb;
 
                 // The veins retreat into their deepest strands as _Zhuo falls, then vanish.
-                half vein = smoothstep(1 - _Zhuo, 1 - _Zhuo + 0.3, mask.r) * step(0.001, _Zhuo) * step(0.02, mask.r);
-                albedo = lerp(albedo, lerp(_ZhuoLight.rgb, _ZhuoDark.rgb, saturate(mask.r * 1.4)), vein * 0.92);
+                half vein = smoothstep(1 - _Zhuo, 1 - _Zhuo + 0.5, mask.r) * step(0.001, _Zhuo) * step(0.02, mask.r);
+                half3 qi = lerp(_ZhuoLight.rgb, _ZhuoDark.rgb, saturate(mask.r * 1.4));
+                albedo = lerp(albedo, qi, vein * 0.92);
                 albedo = lerp(albedo, _EyeColour.rgb, mask.g * _Zhuo);
                 albedo = lerp(albedo, _ScarColour.rgb * (0.82 + 0.18 * mask.b), smoothstep(0.15, 0.6, mask.b) * _Scar);
 
@@ -115,6 +116,7 @@ Shader "YunJing/QingxiZhuoBoar"
                 Light sun = GetMainLight(TransformWorldToShadowCoord(i.positionWS));
                 half wrap = saturate((dot(n, sun.direction) + _Wrap) / (1 + _Wrap));
                 half3 lit = albedo * (sun.color * wrap * sun.shadowAttenuation * sun.distanceAttenuation + SampleSH(n) * orm.r);
+                lit += qi * vein * 0.16;   // stays violet in shade, where a dark stain would read as blood
                 float3 view = normalize(GetWorldSpaceViewDir(i.positionWS));
                 float3 h = normalize(sun.direction + view);
                 lit += sun.color * sun.shadowAttenuation * pow(saturate(dot(n, h)), lerp(90.0, 6.0, orm.g)) * (1 - orm.g) * 0.25;
