@@ -16,8 +16,8 @@ Shader "YunJing/QingxiZhuoBoar"
         _MaskMap ("Mask (R dark qi, G eye, B scar)", 2D) = "black" {}
         _Zhuo ("Dark qi (0-1)", Range(0, 1)) = 1
         _Scar ("Scar (0-1)", Range(0, 1)) = 0
-        _ZhuoDark ("Dark qi, deep", Color) = (0.028, 0.014, 0.046, 1)
-        _ZhuoLight ("Dark qi, thin", Color) = (0.095, 0.045, 0.13, 1)
+        _ZhuoDark ("Dark qi, deep", Color) = (0.05, 0.018, 0.09, 1)
+        _ZhuoLight ("Dark qi, thin", Color) = (0.17, 0.055, 0.27, 1)
         _EyeColour ("Sick eye", Color) = (0.36, 0.05, 0.05, 1)
         _ScarColour ("Scar", Color) = (0.5, 0.33, 0.16, 1)
         _Wrap ("Wrapped diffuse", Range(0, 1)) = 0.2

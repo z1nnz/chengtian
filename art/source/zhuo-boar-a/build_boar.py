@@ -219,22 +219,23 @@ def m_fur():
     def edge(scale, width):
         v = N(nt, 'ShaderNodeTexVoronoi', feature='DISTANCE_TO_EDGE'); L(nt, Q, v.inputs['Vector']); v.inputs['Scale'].default_value = scale
         return smooth(nt, v.outputs['Distance'], width, 0)
-    v1 = edge(5.2, .048); v2 = math_(nt, 'MULTIPLY', edge(11.5, .036), .6)
+    v1 = edge(5.2, .075); v2 = math_(nt, 'MULTIPLY', edge(11.5, .055), .82)
     def blobm(cx, cy, cz, r):
         c = N(nt, 'ShaderNodeCombineXYZ'); c.inputs[0].default_value = cx; c.inputs[1].default_value = cy; c.inputs[2].default_value = cz
         absv = N(nt, 'ShaderNodeCombineXYZ'); L(nt, ax, absv.inputs[0]); L(nt, y, absv.inputs[1]); L(nt, z, absv.inputs[2])
         d = N(nt, 'ShaderNodeVectorMath', operation='DISTANCE'); L(nt, absv.outputs[0], d.inputs[0]); L(nt, c.outputs[0], d.inputs[1])
         return smooth(nt, d.outputs['Value'], r, r * .45)
-    region = math_(nt, 'MAXIMUM', blobm(.27, -.2, .58, .36), blobm(.25, .4, .56, .34))
-    region = math_(nt, 'MAXIMUM', region, blobm(.1, -.36, .72, .22))
+    region = math_(nt, 'MAXIMUM', blobm(.27, -.2, .58, .46), blobm(.25, .4, .56, .44))
+    region = math_(nt, 'MAXIMUM', region, blobm(.1, -.38, .68, .3))
+    region = math_(nt, 'MAXIMUM', region, blobm(.1, -.56, .5, .13))    # reaching onto the cheek
     region = math_(nt, 'MAXIMUM', region, spine)
-    region = math_(nt, 'MULTIPLY', region, smooth(nt, z, .28, .38))
+    region = math_(nt, 'MULTIPLY', region, smooth(nt, z, .22, .32))
     halo_v = N(nt, 'ShaderNodeTexVoronoi', feature='DISTANCE_TO_EDGE'); L(nt, Q, halo_v.inputs['Vector']); halo_v.inputs['Scale'].default_value = 5.2
-    halo = math_(nt, 'MULTIPLY', smooth(nt, halo_v.outputs['Distance'], .13, 0), .09)
+    halo = math_(nt, 'MULTIPLY', smooth(nt, halo_v.outputs['Distance'], .17, 0), .2)
     veins = math_(nt, 'MAXIMUM', math_(nt, 'MAXIMUM', v1, v2), halo)
     r_ = math_(nt, 'MULTIPLY', veins, region)
     # Bristles stain first: the spine strip always carries a little.
-    r_ = math_(nt, 'MAXIMUM', r_, math_(nt, 'MULTIPLY', math_(nt, 'MULTIPLY', spine, smooth(nt, mid, .35, .6)), .5))
+    r_ = math_(nt, 'MAXIMUM', r_, math_(nt, 'MULTIPLY', math_(nt, 'MULTIPLY', spine, mixf(nt, smooth(nt, mid, .35, .6), .55, 1.0)), .95))
     cm = N(nt, 'ShaderNodeCombineColor'); L(nt, r_, cm.inputs[0])
     rough = mixf(nt, nose, mixf(nt, mud_mask, .84, .92), .32)
     height = math_(nt, 'ADD', math_(nt, 'MULTIPLY', streak, .7), math_(nt, 'MULTIPLY', mud_mask, .6))
@@ -250,7 +251,7 @@ def m_plain(name, c1, c2, rough, scale=40.0, mask=None):
 
 def m_eye():
     m, nt, b = K.new_mat('BoarEye')
-    rgb = N(nt, 'ShaderNodeRGB'); rgb.outputs[0].default_value = (0, .2, 0, 1)
+    rgb = N(nt, 'ShaderNodeRGB'); rgb.outputs[0].default_value = (0, .5, 0, 1)
     return K.finish(m, nt, b, (.028, .016, .011), .16, mask=rgb.outputs[0])
 
 

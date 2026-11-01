@@ -266,7 +266,7 @@ namespace YunJing
             else fx.HideLine();
 
             bool cleansing = Rule.state == "daze" && Rule.CleanseProgress > 0;
-            float rate = !shown || Rule.state == "cleansed" ? 0 : cleansing ? 46 : 1.6f * (float)Rule.Zhuo;
+            float rate = !shown || Rule.state == "cleansed" ? 0 : cleansing ? 46 : 4.5f * (float)Rule.Zhuo;
             fx.MistAt(pos + Vector3.up * .72f, rot, rate);
         }
 
