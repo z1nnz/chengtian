@@ -5,7 +5,8 @@
 //   B = the pale scraped bark
 // _Zhuo: 1 = sick, 0 = an ordinary warm brown boar. _Scar: 0 = whole bark, 1 = scraped.
 // Lighting matches YunJing/QingxiFoliageWind (main light with shadows, ambient SH, fog, wrapped diffuse), with the wind
-// on when _Strength > 0 (the pine's needles).
+// on when _Strength > 0 (the pine's needles). _FurMap is read through the second UV and alpha-clips the boar's fur tufts;
+// everything else sits in its opaque column, and the pine leaves it white.
 Shader "YunJing/QingxiZhuoBoar"
 {
     Properties
@@ -14,6 +15,7 @@ Shader "YunJing/QingxiZhuoBoar"
         [Normal] _NormalMap ("Normal map", 2D) = "bump" {}
         _OrmMap ("AO, roughness, metal", 2D) = "white" {}
         _MaskMap ("Mask (R dark qi, G eye, B scar)", 2D) = "black" {}
+        _FurMap ("Fur tufts (A cuts, RGB shades; second UV)", 2D) = "white" {}
         _Zhuo ("Dark qi (0-1)", Range(0, 1)) = 1
         _Scar ("Scar (0-1)", Range(0, 1)) = 0
         _ZhuoDark ("Dark qi, deep", Color) = (0.085, 0.022, 0.185, 1)
@@ -28,7 +30,7 @@ Shader "YunJing/QingxiZhuoBoar"
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "Queue" = "Geometry" "RenderPipeline" = "UniversalPipeline" }
+        Tags { "RenderType" = "TransparentCutout" "Queue" = "AlphaTest" "RenderPipeline" = "UniversalPipeline" }
 
         HLSLINCLUDE
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -39,6 +41,9 @@ Shader "YunJing/QingxiZhuoBoar"
             float _Height, _Strength, _Flutter;
             float4 _WindDir;
         CBUFFER_END
+        TEXTURE2D(_FurMap); SAMPLER(sampler_FurMap);
+
+        void ClipFur(float2 uv2) { clip(SAMPLE_TEXTURE2D(_FurMap, sampler_FurMap, uv2).a - 0.5); }
 
         float3 Sway(float3 positionWS)
         {
@@ -69,7 +74,7 @@ Shader "YunJing/QingxiZhuoBoar"
             TEXTURE2D(_BaseMap); SAMPLER(sampler_BaseMap);
             TEXTURE2D(_NormalMap); TEXTURE2D(_OrmMap); TEXTURE2D(_MaskMap);
 
-            struct Attributes { float4 positionOS : POSITION; float3 normalOS : NORMAL; float4 tangentOS : TANGENT; float2 uv : TEXCOORD0; half4 colour : COLOR; };
+            struct Attributes { float4 positionOS : POSITION; float3 normalOS : NORMAL; float4 tangentOS : TANGENT; float2 uv : TEXCOORD0; float2 uv2 : TEXCOORD1; half4 colour : COLOR; };
             struct Varyings
             {
                 float4 positionCS : SV_POSITION;
@@ -79,6 +84,7 @@ Shader "YunJing/QingxiZhuoBoar"
                 float4 tangentWS : TEXCOORD3;
                 float fogCoord : TEXCOORD4;
                 half3 colour : COLOR;
+                float2 uv2 : TEXCOORD5;
             };
 
             Varyings vert(Attributes v)
@@ -92,12 +98,15 @@ Shader "YunJing/QingxiZhuoBoar"
                 o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
                 o.fogCoord = ComputeFogFactor(o.positionCS.z);
                 o.colour = v.colour.rgb;
+                o.uv2 = v.uv2;
                 return o;
             }
 
             half4 frag(Varyings i) : SV_Target
             {
-                half3 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv).rgb * i.colour;   // fur root-to-tip shade
+                half4 tuft = SAMPLE_TEXTURE2D(_FurMap, sampler_FurMap, i.uv2);
+                clip(tuft.a - 0.5);
+                half3 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv).rgb * i.colour * tuft.rgb;   // fur root-to-tip shade, per strand
                 half3 mask = SAMPLE_TEXTURE2D(_MaskMap, sampler_BaseMap, i.uv).rgb;
                 half3 orm = SAMPLE_TEXTURE2D(_OrmMap, sampler_BaseMap, i.uv).rgb;
 
@@ -135,9 +144,11 @@ Shader "YunJing/QingxiZhuoBoar"
             #pragma fragment frag
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
             float3 _LightDirection;
-            struct Attributes { float4 positionOS : POSITION; float3 normalOS : NORMAL; };
-            float4 vert(Attributes v) : SV_POSITION
+            struct Attributes { float4 positionOS : POSITION; float3 normalOS : NORMAL; float2 uv2 : TEXCOORD1; };
+            struct Varyings { float4 positionCS : SV_POSITION; float2 uv2 : TEXCOORD0; };
+            Varyings vert(Attributes v)
             {
+                Varyings o;
                 float3 ws = Sway(TransformObjectToWorld(v.positionOS.xyz));
                 float4 cs = TransformWorldToHClip(ApplyShadowBias(ws, TransformObjectToWorldNormal(v.normalOS), _LightDirection));
                 #if UNITY_REVERSED_Z
@@ -145,9 +156,10 @@ Shader "YunJing/QingxiZhuoBoar"
                 #else
                     cs.z = max(cs.z, UNITY_NEAR_CLIP_VALUE);
                 #endif
-                return cs;
+                o.positionCS = cs; o.uv2 = v.uv2;
+                return o;
             }
-            half4 frag() : SV_Target { return 0; }
+            half4 frag(Varyings i) : SV_Target { ClipFur(i.uv2); return 0; }
             ENDHLSL
         }
 
@@ -159,9 +171,16 @@ Shader "YunJing/QingxiZhuoBoar"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            struct Attributes { float4 positionOS : POSITION; };
-            float4 vert(Attributes v) : SV_POSITION { return TransformWorldToHClip(Sway(TransformObjectToWorld(v.positionOS.xyz))); }
-            half4 frag() : SV_Target { return 0; }
+            struct Attributes { float4 positionOS : POSITION; float2 uv2 : TEXCOORD1; };
+            struct Varyings { float4 positionCS : SV_POSITION; float2 uv2 : TEXCOORD0; };
+            Varyings vert(Attributes v)
+            {
+                Varyings o;
+                o.positionCS = TransformWorldToHClip(Sway(TransformObjectToWorld(v.positionOS.xyz)));
+                o.uv2 = v.uv2;
+                return o;
+            }
+            half4 frag(Varyings i) : SV_Target { ClipFur(i.uv2); return 0; }
             ENDHLSL
         }
     }

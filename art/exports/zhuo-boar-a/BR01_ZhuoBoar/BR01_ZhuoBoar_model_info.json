@@ -6,8 +6,8 @@
  "front": "-Y (Blender); see Unity note in README",
  "origin": "footprint centre, lowest vertex at z = 0, no ground plate",
  "sizeM": {
-  "length": 1.581,
-  "width": 0.564,
+  "length": 1.596,
+  "width": 0.589,
   "height": 0.973
  },
  "limitM": {
@@ -16,14 +16,14 @@
   "height": 1.0
  },
  "tris": {
-  "LOD0": 71092,
-  "LOD1": 34926,
-  "LOD2": 8450
+  "LOD0": 80092,
+  "LOD1": 39326,
+  "LOD2": 9816
  },
  "collision": {
   "name": "BR01_ZhuoBoar_Collision",
   "kind": "convex hull of the torso, above z = 0.3",
-  "tris": 976
+  "tris": 962
  },
  "material": {
   "name": "M_BR01_ZhuoBoar",
@@ -31,9 +31,11 @@
    "textures/T_BR01_ZhuoBoar_BaseColor.png",
    "textures/T_BR01_ZhuoBoar_ORM.png",
    "textures/T_BR01_ZhuoBoar_Normal.png",
-   "textures/T_BR01_ZhuoBoar_Mask.png"
+   "textures/T_BR01_ZhuoBoar_Mask.png",
+   "textures/T_BR01_ZhuoBoar_Fur.png"
   ],
   "atlas": 2048,
+  "uv2": "fur tufts: A of T_Fur cuts them out; needs alpha clip, as the Unity shader does",
   "unityShader": "YunJing/QingxiZhuoBoar",
   "vertexColour": "fur root-to-tip shade, multiplied onto the base colour"
  },

@@ -10,6 +10,8 @@
 idle → alert → telegraph（刨地，轉向，地上有線）→ charge（直線，不轉彎）
   撞到樹或石頭 → daze → 暈眩中在 2 m 內按住 1.5 秒＝驅濁 1 次
   沒撞到 → brake → 回到 alert
+  暈完、撞到場地邊界，或預告結束時前方跑不到 3 m → reposition：小跑到衝得開、最好到玩家之間沒有障礙的位置，再預告一次
+  所以站在同一棵樹後面只有效一次，玩家要跟著走位才能再引牠撞樹
   驅濁 2 次 → cleansed（站 2 秒，跑回山裡）→ 發出 zhuoBoar.cleansed
   被撞 3 次 → escaped → 發出 zhuoBoar.escaped → 30 秒後在原處再遇
 ```
@@ -36,6 +38,9 @@ idle → alert → telegraph（刨地，轉向，地上有線）→ charge（直
 | `playerRadiusM` | 0.15 | 加上豬寬一半剛好是衝撞線的 1.2 m：站在線外就不會被撞 |
 | `cleansedStandSeconds` | 2 | `Cleanse` 動畫長度 |
 | `fleeSpeedMps`／`fleeSeconds` | 6／3.5 | 跑回林子，之後隱藏 |
+| `minChargeRunM` | 3 | 前方跑不到這個距離就先換位，不貼著牆或樹硬撞 |
+| `repositionDistanceM`／`repositionSpeedMps` | 5.5／4.5 | 換位走多遠、多快（比衝撞慢，看得出是在繞路，也給玩家時間重新走位） |
+| `repositionTurnDegPerSecond`／`repositionMaxSeconds` | 300／3.5 | 轉身速度；最久走多久，避免被卡住 |
 
 ## 檔案
 
@@ -87,7 +92,7 @@ YunJingZhuoBoar.exe -screen-fullscreen 0 -screen-width 1280 -screen-height 720 -
 ## 手感問題（看錄影想到的，還要人玩過才算數）
 
 1. **第一次遇到看不清方向**：預告只有 1.2 秒，鏡頭又在玩家背後，山豬在畫面深處時，衝撞線是斜的，很難判斷該往哪邊閃。
-2. **靠牆會連續被煞車**：玩家貼著邊界時，牠衝幾步就煞車，節奏變得很碎。
+2. **換位時的節奏**：牠每次暈完和撞牆後都會小跑換位，這段玩家只能走位，要人玩過才知道會不會太閒。
 3. **鏡頭會被樹擋**：玩家躲在樹後面引牠撞樹時，鏡頭常被樹冠擋住，正好看不到牠。
 4. **暈眩時間偏緊**：2.5 秒裡要按滿 1.5 秒，只剩 1 秒可以跑過去；如果閃得比較遠就來不及，要多撞一次。
 5. **閃避沒有角色動作**：只有位移，看起來像瞬間滑開；要等角色動畫。

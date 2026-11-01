@@ -256,6 +256,7 @@ namespace YunJing
             }
 
             PlayClip(ClipFor());
+            if (clips != null && clips["Flee"] != null) clips["Flee"].speed = Rule.state == "reposition" ? .7f : 1;   // a trot, not a bolt
 
             var line = Rule.line;
             if (line != null && (Rule.state == "telegraph" || Rule.state == "charge"))
@@ -279,6 +280,7 @@ namespace YunJing
                 case "daze": return "Daze";
                 case "cleansed": return Rule.Elapsed < Content.tuning.cleansedStandSeconds ? "Cleanse" : "Flee";
                 case "escaped": return "Flee";
+                case "reposition": return "Flee";
                 default: return "Idle";
             }
         }
@@ -420,7 +422,7 @@ namespace YunJing
             var tip = Content.texts.tip;
             string line = Time.time < tipUntil ? tipOverride
                 : Rule.state == "alert" ? tip.alert : Rule.state == "telegraph" ? tip.telegraph : Rule.state == "charge" ? tip.charge
-                : Rule.state == "brake" ? tip.brake : near ? tip.dazeNear : tip.dazeFar;
+                : Rule.state == "brake" ? tip.brake : Rule.state == "reposition" ? tip.reposition : near ? tip.dazeNear : tip.dazeFar;
             Strip(w, h, line);
 
             // Hold progress also shows at the centre for keyboard players, who have no button.
@@ -522,7 +524,7 @@ namespace YunJing
                 if (d > 1.6f) want = boar;
                 if (d <= 1.9f) cleanseKey = true;
             }
-            else if (state == "alert" || state == "brake" || state == "telegraph")
+            else if (state == "alert" || state == "brake" || state == "telegraph" || state == "reposition")
             {
                 // The first charge in the open, to show a clean dodge; after that behind a tree, so it runs into the trunk.
                 want = autoCharges == 0 ? OpenSpot(boar) : BehindNearestTree(boar, at);

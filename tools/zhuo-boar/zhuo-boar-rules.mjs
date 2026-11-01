@@ -3,6 +3,8 @@
 // smoke replays. Input per update: time, player position, obstacle list, keys. Output: state and events.
 //
 //   idle -> alert -> telegraph -> charge -> daze | brake -> alert -> ...
+//   reposition: after every daze, after running into the bounds, or when a telegraph ends with no room to run, it trots to a spot
+//   with a clear line to the player, so standing behind one tree does not work twice
 //   cleanse count reached -> cleansed (stands, then runs off); hits reached -> escaped (runs off, returns to idle after the cooldown)
 //
 // Positions are metres on the ground plane {x, z}. Yaw is radians from +z towards +x, the same as Unity's.
@@ -48,6 +50,9 @@ export class ZhuoBoarEncounter {
     this.line = null;
     this.visible = true;
     this.fleeDir = null;
+    this.wall = false;
+    this.repositioned = false;
+    this.moveTo = null;
   }
 
   get elapsed() { return this.time - this.stateAt; }
@@ -120,6 +125,9 @@ export class ZhuoBoarEncounter {
         this.turnTowards(player);
         this.line = this.chargeLine(obstacles, input.bounds);
         if (this.elapsed >= this.c.pawTelegraphSeconds) {
+          const room = this.chargeLine(obstacles, input.bounds).length;
+          if (!this.repositioned && room < this.t.minChargeRunM && this.startReposition(player, obstacles, input.bounds, events)) break;
+          this.repositioned = false;
           this.line = { ...this.chargeLine(obstacles, input.bounds), fixed: true };
           this.chargeFrom = { x: this.x, z: this.z };
           this.chargeHit = false;
@@ -131,10 +139,19 @@ export class ZhuoBoarEncounter {
         this.tickCharge(player, obstacles, input.bounds, events);
         break;
       case 'brake':
-        if (this.elapsed >= this.c.brakeRecoverSeconds) { this.enter('alert'); events.push({ type: 'alert' }); }
+        if (this.elapsed >= this.c.brakeRecoverSeconds) {
+          const wall = this.wall;
+          this.wall = false;
+          if (wall && this.startReposition(player, obstacles, input.bounds, events)) break;
+          this.enter('alert');
+          events.push({ type: 'alert' });
+        }
+        break;
+      case 'reposition':
+        this.tickReposition(events);
         break;
       case 'daze':
-        this.tickDaze(player, !!input.cleanseHeld, obstacles, events);
+        this.tickDaze(player, !!input.cleanseHeld, obstacles, input.bounds, events);
         break;
       case 'cleansed':
         if (this.elapsed >= this.t.cleansedStandSeconds) this.tickFlee(player, obstacles, this.elapsed - this.t.cleansedStandSeconds, events);
@@ -201,10 +218,61 @@ export class ZhuoBoarEncounter {
       events.push({ type: 'daze', obstacle: obstacle.id });
       return;
     }
-    if (len(sub(this, this.chargeFrom)) >= this.c.chargeMaxDistanceM || this.outOfBounds(bounds)) {
+    const wall = this.outOfBounds(bounds);
+    if (len(sub(this, this.chargeFrom)) >= this.c.chargeMaxDistanceM || wall) {
       this.line = null;
+      this.wall = wall;
       this.enter('brake');
       events.push({ type: 'brake' });
+    }
+  }
+
+  /**
+   * Trots to a spot with room to charge at the player, on a path clear of obstacles and inside the bounds. False when
+   * nowhere qualifies (a tight corner): it then charges from where it stands, so it can never circle for ever.
+   */
+  startReposition(player, obstacles, bounds, events) {
+    const margin = this.t.boarLengthM, radius = this.t.boarWidthM / 2 + .2;
+    let best = null, bestScore = -Infinity;
+    for (const scale of [1, .6]) {
+      for (let i = 0; i < 16; i++) {
+        const dir = fromYaw(i / 16 * 2 * Math.PI), reach = this.t.repositionDistanceM * scale;
+        const spot = { x: this.x + dir.x * reach, z: this.z + dir.z * reach };
+        if (bounds && (spot.x < bounds.minX + margin || spot.x > bounds.maxX - margin || spot.z < bounds.minZ + margin || spot.z > bounds.maxZ - margin)) continue;
+        if (obstacles.some(o => { const to = sub(o, this), along = Math.max(0, Math.min(reach, dot(to, dir))); return Math.hypot(to.x - dir.x * along, to.z - dir.z * along) < radius + o.r; })) continue;
+        const room = this.runFrom(spot, toYaw(sub(player, spot)), obstacles, bounds);
+        if (room < this.t.minChargeRunM) continue;
+        // A clear line to the player beats everything: it comes round the tree they are hiding behind.
+        const clear = room >= Math.min(len(sub(player, spot)) - .6, this.c.chargeMaxDistanceM - .01);
+        const score = (clear ? 30 : 0) + Math.min(room, this.c.chargeMaxDistanceM) + reach * .1;
+        if (score > bestScore) { bestScore = score; best = spot; }
+      }
+    }
+    if (!best) return false;
+    this.moveTo = best;
+    this.line = null;
+    this.repositioned = true;
+    this.enter('reposition');
+    events.push({ type: 'reposition' });
+    return true;
+  }
+
+  tickReposition(events) {
+    const to = sub(this.moveTo, this), left = len(to);
+    if (left > 1e-3) {
+      const max = this.t.repositionTurnDegPerSecond * Math.PI / 180 * STEP;
+      const d = wrap(toYaw(to) - this.yaw);
+      this.yaw = wrap(this.yaw + Math.max(-max, Math.min(max, d)));
+      if (Math.abs(d) < .6) {
+        const step = Math.min(left, this.t.repositionSpeedMps * STEP);
+        this.x += to.x / left * step;
+        this.z += to.z / left * step;
+      }
+    }
+    if (left < .05 || this.elapsed >= this.t.repositionMaxSeconds) {
+      this.moveTo = null;
+      this.enter('alert');
+      events.push({ type: 'alert' });
     }
   }
 
@@ -216,7 +284,7 @@ export class ZhuoBoarEncounter {
     return len(sub(player, closest)) < this.t.boarWidthM / 2 + this.t.playerRadiusM;
   }
 
-  tickDaze(player, held, obstacles, events) {
+  tickDaze(player, held, obstacles, bounds, events) {
     if (held && this.canCleanse(player)) {
       this.cleanseHeld += STEP;
       if (this.cleanseHeld >= this.c.cleanseHoldSeconds - 1e-9) {
@@ -233,6 +301,7 @@ export class ZhuoBoarEncounter {
     } else this.cleanseHeld = 0;
     if (this.elapsed >= this.c.dazeSeconds) {
       this.cleanseHeld = 0;
+      if (this.startReposition(player, obstacles, bounds, events)) return;
       this.enter('alert');
       events.push({ type: 'alert' });
     }
@@ -273,9 +342,14 @@ export class ZhuoBoarEncounter {
 
   /** Where the charge would go from here: from the boar, up to the first obstacle, the bounds or the maximum distance. */
   chargeLine(obstacles, bounds) {
-    const dir = fromYaw(this.yaw), radius = this.t.boarWidthM / 2;
+    return { x: this.x, z: this.z, yaw: this.yaw, length: this.runFrom(this, this.yaw, obstacles, bounds), width: this.c.chargeLineWidthM, fixed: false };
+  }
+
+  /** How far a charge from `from` along `yaw` would run. */
+  runFrom(from, yaw, obstacles, bounds) {
+    const dir = fromYaw(yaw), radius = this.t.boarWidthM / 2;
     let length = this.c.chargeMaxDistanceM;
-    const head = this.head();
+    const head = this.head(from.x, from.z, dir);
     for (const o of obstacles) {
       const to = sub(o, head), along = dot(to, dir);
       if (along <= 0) continue;
@@ -286,6 +360,6 @@ export class ZhuoBoarEncounter {
       const toEdge = (from, d, min, max) => d > 1e-6 ? (max - from) / d : d < -1e-6 ? (min - from) / d : Infinity;
       length = Math.min(length, Math.max(0, Math.min(toEdge(head.x, dir.x, bounds.minX, bounds.maxX), toEdge(head.z, dir.z, bounds.minZ, bounds.maxZ))));
     }
-    return { x: this.x, z: this.z, yaw: this.yaw, length, width: this.c.chargeLineWidthM, fixed: false };
+    return length;
   }
 }

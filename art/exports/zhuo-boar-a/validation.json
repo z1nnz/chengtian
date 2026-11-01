@@ -4,15 +4,15 @@
   "BR01_ZhuoBoar": {
    "glb": {
     "tris": {
-     "LOD0": 71092,
-     "LOD1": 34926,
-     "LOD2": 8450
+     "LOD0": 80092,
+     "LOD1": 39326,
+     "LOD2": 9816
     },
     "collision": true,
-    "bytes": 18700904,
+    "bytes": 20107728,
     "sizeXYZ": [
-     0.564,
-     1.581,
+     0.589,
+     1.596,
      0.973
     ],
     "lowest": -0.0,
@@ -28,15 +28,15 @@
    },
    "fbx": {
     "tris": {
-     "LOD0": 71092,
-     "LOD1": 34926,
-     "LOD2": 8450
+     "LOD0": 80092,
+     "LOD1": 39326,
+     "LOD2": 9816
     },
     "collision": true,
-    "bytes": 15427532,
+    "bytes": 19737068,
     "sizeXYZ": [
-     0.564,
-     1.581,
+     0.589,
+     1.596,
      0.973
     ],
     "lowest": -0.0,
@@ -52,7 +52,7 @@
    },
    "health": {
     "BR01_ZhuoBoar": {
-     "nonManifoldEdges": 51420,
+     "nonManifoldEdges": 48420,
      "looseVerts": 0,
      "zeroAreaFaces": 0
     },
@@ -62,12 +62,12 @@
      "zeroAreaFaces": 0
     },
     "BR01_ZhuoBoar_LOD1": {
-     "nonManifoldEdges": 24170,
+     "nonManifoldEdges": 22770,
      "looseVerts": 0,
      "zeroAreaFaces": 0
     },
     "BR01_ZhuoBoar_LOD2": {
-     "nonManifoldEdges": 4582,
+     "nonManifoldEdges": 4564,
      "looseVerts": 0,
      "zeroAreaFaces": 0
     }

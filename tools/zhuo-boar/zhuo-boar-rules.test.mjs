@@ -148,7 +148,7 @@ test('3. holding for 1.5 s in daze counts once; letting go starts over; the end 
   // 1 + .05 + 1.4 = 2.45 s into the daze: not enough held since letting go.
   assert.equal(r.boar.cleanses, 0);
   r.play(.1, { ...near, cleanseHeld: true });
-  assert.equal(r.boar.state, 'alert');
+  assert.equal(r.boar.state, 'reposition');
   assert.equal(r.boar.cleanses, 0);
   assert.equal(r.boar.cleanseProgress, 0);
 
@@ -313,6 +313,105 @@ test('a slow phone and a fast desktop get the same fight', () => {
   const fast = play(1 / 144), slow = play(1 / 30);
   assert.ok(Math.hypot(fast.x - slow.x, fast.z - slow.z) < .01, JSON.stringify({ fast, slow }));
   assert.ok(Math.abs(fast.time - slow.time) < .02);
+});
+
+const BOUNDS = { minX: -10, maxX: 10, minZ: -10, maxZ: 10 };
+
+test('after running into the bounds it moves somewhere with room, then comes again', () => {
+  const r = start({ x: 0, z: 2 });
+  r.boar.begin();
+  const player = { x: 0, z: 9.3 };   // pressed against the wall
+  r.playUntil('charge', { player, bounds: BOUNDS });
+  r.playUntil('brake', { player, bounds: BOUNDS });
+  assert.equal(r.boar.state, 'brake');
+  const hit = { x: r.boar.x, z: r.boar.z };
+  r.playUntil('reposition', { player, bounds: BOUNDS });
+  assert.equal(r.boar.state, 'reposition');
+  r.playUntil('alert', { player, bounds: BOUNDS });
+  assert.equal(r.boar.state, 'alert');
+  assert.ok(Math.hypot(r.boar.x - hit.x, r.boar.z - hit.z) > 2, 'it moved away from the wall');
+  r.playUntil('charge', { player, bounds: BOUNDS });
+  const room = r.boar.line.length;
+  assert.ok(room >= content.tuning.minChargeRunM, `room ${room}`);
+});
+
+test('a charge that merely reaches its full distance does not make it move', () => {
+  const r = start({ x: -7, z: 0 });
+  r.boar.begin();
+  r.playUntil('charge', { player: { x: 7, z: 0 } });
+  r.playUntil('brake', { player: { x: 7, z: 5 } });
+  r.playUntil('alert', { player: { x: 7, z: 5 } });
+  assert.equal(r.count('reposition'), 0);
+});
+
+test('with no room to run it moves instead of butting the same wall or trunk', () => {
+  const wall = start({ x: 0, z: 9, yaw: 0 });
+  wall.boar.begin();
+  // The player is beyond the wall side, so it faces the wall.
+  wall.play(3, { player: { x: 0, z: 9.5 }, bounds: BOUNDS });
+  assert.equal(wall.count('charge'), 0);
+  assert.equal(wall.count('reposition'), 1);
+
+  const trunk = start({ x: 0, z: 0, yaw: 0 });
+  trunk.boar.begin();
+  const tree = { id: 'tree', x: 0, z: 1.2, r: .175 };
+  trunk.play(3, { player: { x: 0, z: 2.5 }, obstacles: [tree] });
+  assert.equal(trunk.count('daze'), 0, 'hiding behind a trunk at point blank does not stun it for free');
+  assert.equal(trunk.count('reposition'), 1);
+});
+
+test('while moving it cannot be cleansed and does not hit', () => {
+  const r = start({ x: 0, z: 9 });
+  r.boar.begin();
+  r.playUntil('reposition', { player: { x: 0, z: 9.5 }, bounds: BOUNDS });
+  r.play(.4, { player: { x: r.boar.x + .5, z: r.boar.z }, bounds: BOUNDS, cleanseHeld: true });
+  assert.equal(r.boar.state, 'reposition');
+  assert.equal(r.boar.cleanseProgress, 0);
+  assert.equal(r.count('hit'), 0);
+});
+
+test('in a corner with nowhere to go it still charges, and never circles for ever', () => {
+  const tiny = { minX: -1.5, maxX: 1.5, minZ: -1.5, maxZ: 1.5 };
+  const r = start({ x: 0, z: 0 });
+  r.boar.begin();
+  r.play(10, { player: { x: 0, z: 1 }, bounds: tiny });
+  assert.ok(r.count('charge') > 0);
+});
+
+test('standing behind the same tree works only once: after the daze it comes round the tree', () => {
+  const tree = { id: 'tree', x: 0, z: 5, r: .175 };
+  const hide = { x: 0, z: 6.4 };   // right behind the trunk, and never moving
+  const r = start({ x: 0, z: 0 });
+  r.boar.begin();
+  r.play(60, { player: hide, obstacles: [tree], until: b => b.hits > 0 });
+  const stuns = r.count('daze');
+  assert.equal(stuns, 1, 'one stun from that tree');
+  assert.equal(r.boar.hits, 1, 'then it reached the player who stayed put');
+});
+
+test('moving again to put a tree in the way still works', () => {
+  const tree = { id: 'tree', x: 0, z: 5, r: .175 };
+  const r = start({ x: 0, z: 0 });
+  r.boar.begin();
+  // A player who keeps the trunk between them and the boar, as a person would.
+  for (let i = 0; i < 400 && r.count('daze') < 2; i++) {
+    const away = { x: tree.x - r.boar.x, z: tree.z - r.boar.z }, m = Math.hypot(away.x, away.z) || 1;
+    const spot = { x: tree.x + away.x / m * 1.4, z: tree.z + away.z / m * 1.4 };
+    r.play(.1, { player: r.boar.state === 'charge' ? r.held : (r.held = spot), obstacles: [tree] });
+  }
+  assert.equal(r.count('daze'), 2);
+});
+
+test('it never walks into an obstacle while moving', () => {
+  const trees = [{ id: 'a', x: 2, z: 7, r: .175 }, { id: 'b', x: -2, z: 6, r: .175 }, { id: 'c', x: 0, z: 4.5, r: .8 }];
+  const r = start({ x: 0, z: 9 });
+  r.boar.begin();
+  const input = { player: { x: 0, z: 9.6 }, bounds: BOUNDS, obstacles: trees };
+  r.playUntil('reposition', input);
+  while (r.boar.state === 'reposition') {
+    r.play(.05, input);
+    for (const t of trees) assert.ok(Math.hypot(t.x - r.boar.x, t.z - r.boar.z) > t.r + .4, `near ${t.id}`);
+  }
 });
 
 test('a player who ran far away is not charged', () => {

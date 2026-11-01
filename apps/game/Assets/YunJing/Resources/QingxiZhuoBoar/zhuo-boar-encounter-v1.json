@@ -29,7 +29,12 @@
     "playerRadiusM": 0.15,
     "cleansedStandSeconds": 2,
     "fleeSpeedMps": 6,
-    "fleeSeconds": 3.5
+    "fleeSeconds": 3.5,
+    "minChargeRunM": 3,
+    "repositionDistanceM": 5.5,
+    "repositionSpeedMps": 4.5,
+    "repositionTurnDegPerSecond": 300,
+    "repositionMaxSeconds": 3.5
   },
   "texts": {
     "prompt": "F 靠近山豬",
@@ -41,6 +46,7 @@
       "dazeFar": "牠暈了，快靠近",
       "dazeNear": "按住驅掉濁氣",
       "brake": "牠煞住了，喘口氣",
+      "reposition": "牠退開了，要換位置再衝",
       "hit": "被撞到了",
       "firstCleanse": "濁氣淡了一些"
     },

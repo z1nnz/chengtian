@@ -82,6 +82,16 @@ def preview_material(key, name='M_Preview'):
     mul = N(nt, 'ShaderNodeMix', data_type='RGBA', blend_type='MULTIPLY', clamp_factor=True); mul.inputs[0].default_value = 1
     L(nt, c, mul.inputs[6]); L(nt, va.outputs['Color'], mul.inputs[7])
     L(nt, mul.outputs[2], b.inputs['Base Color'])
+    fur_path = tdir / f'T_{key}_Fur.png'
+    if fur_path.exists():
+        uv2 = N(nt, 'ShaderNodeUVMap', uv_map='UV2')
+        fur = N(nt, 'ShaderNodeTexImage', image=img('Fur', 'Non-Color'))
+        L(nt, uv2.outputs['UV'], fur.inputs['Vector'])
+        L(nt, math_(nt, 'GREATER_THAN', fur.outputs['Alpha'], .5), b.inputs['Alpha'])
+        tone = N(nt, 'ShaderNodeMix', data_type='RGBA', blend_type='MULTIPLY', clamp_factor=True); tone.inputs[0].default_value = 1
+        L(nt, mul.outputs[2], tone.inputs[6]); L(nt, fur.outputs['Color'], tone.inputs[7])
+        L(nt, tone.outputs[2], b.inputs['Base Color'])
+        m.surface_render_method = 'DITHERED'
     return m
 
 

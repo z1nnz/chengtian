@@ -10,9 +10,9 @@ namespace YunJing
         public const double Step = 1.0 / 120;
         public const string CleansedEvent = "zhuoBoar.cleansed", EscapedEvent = "zhuoBoar.escaped";
 
-        [Serializable] public sealed class Tuning { public double alertSeconds, dodgeCooldownSeconds, boarLengthM, boarWidthM, playerRadiusM, cleansedStandSeconds, fleeSpeedMps, fleeSeconds; }
+        [Serializable] public sealed class Tuning { public double alertSeconds, dodgeCooldownSeconds, boarLengthM, boarWidthM, playerRadiusM, cleansedStandSeconds, fleeSpeedMps, fleeSeconds, minChargeRunM, repositionDistanceM, repositionSpeedMps, repositionTurnDegPerSecond, repositionMaxSeconds; }
         [Serializable] public sealed class ButtonTexts { public string dodge, cleanse, cleanseKey, dodgeKey; }
-        [Serializable] public sealed class TipTexts { public string alert, telegraph, charge, dazeFar, dazeNear, brake, hit, firstCleanse; }
+        [Serializable] public sealed class TipTexts { public string alert, telegraph, charge, dazeFar, dazeNear, brake, reposition, hit, firstCleanse; }
         [Serializable] public sealed class HudTexts { public string zhuo, stamina, hits; }
         [Serializable] public sealed class Texts { public string prompt, cleansed, cleansedHint, escaped, escapedHint, cooldown; public ButtonTexts button; public TipTexts tip; public HudTexts hud; }
         [Serializable]
@@ -45,7 +45,8 @@ namespace YunJing
         {
             readonly Content c; readonly Tuning t;
             readonly double homeX, homeZ, homeYaw;
-            bool armed, chargeHit;
+            bool armed, chargeHit, wall, repositioned;
+            P moveTo;
             double accumulator, iFrameUntil = -1, dodgeReadyAt, retryAt = -1, stateAt, cleanseHeld;
             double? lastNow, startedAt;
             P chargeFrom; P? fleeDir;
@@ -72,7 +73,7 @@ namespace YunJing
             void Reset()
             {
                 state = "idle"; x = homeX; z = homeZ; yaw = homeYaw; stateAt = time;
-                hits = 0; cleanses = 0; cleanseHeld = 0; chargeHit = false; line = null; visible = true; fleeDir = null;
+                hits = 0; cleanses = 0; cleanseHeld = 0; chargeHit = false; line = null; visible = true; fleeDir = null; wall = false; repositioned = false;
             }
 
             P Pos => new P(x, z);
@@ -150,6 +151,8 @@ namespace YunJing
                         line = ChargeLine(obstacles, input.bounds);
                         if (Elapsed >= c.pawTelegraphSeconds)
                         {
+                            if (!repositioned && line.length < t.minChargeRunM && StartReposition(player, obstacles, input.bounds)) break;
+                            repositioned = false;
                             line = ChargeLine(obstacles, input.bounds);
                             line.isFixed = true;
                             chargeFrom = Pos;
@@ -162,10 +165,20 @@ namespace YunJing
                         TickCharge(player, obstacles, input.bounds);
                         break;
                     case "brake":
-                        if (Elapsed >= c.brakeRecoverSeconds) { Enter("alert"); events.Add(new Event { type = "alert" }); }
+                        if (Elapsed >= c.brakeRecoverSeconds)
+                        {
+                            bool hitWall = wall;
+                            wall = false;
+                            if (hitWall && StartReposition(player, obstacles, input.bounds)) break;
+                            Enter("alert");
+                            events.Add(new Event { type = "alert" });
+                        }
+                        break;
+                    case "reposition":
+                        TickReposition();
                         break;
                     case "daze":
-                        TickDaze(player, input.cleanseHeld, obstacles);
+                        TickDaze(player, input.cleanseHeld, obstacles, input.bounds);
                         break;
                     case "cleansed":
                         if (Elapsed >= t.cleansedStandSeconds) TickFlee(player, obstacles, Elapsed - t.cleansedStandSeconds);
@@ -242,11 +255,72 @@ namespace YunJing
                     events.Add(new Event { type = "daze", obstacle = obstacle.id });
                     return;
                 }
-                if (Len(Sub(Pos, chargeFrom)) >= c.chargeMaxDistanceM || OutOfBounds(bounds))
+                bool atWall = OutOfBounds(bounds);
+                if (Len(Sub(Pos, chargeFrom)) >= c.chargeMaxDistanceM || atWall)
                 {
                     line = null;
+                    wall = atWall;
                     Enter("brake");
                     events.Add(new Event { type = "brake" });
+                }
+            }
+
+            // Trots to a spot with room to charge at the player, on a path clear of obstacles and inside the bounds. False when
+            // nowhere qualifies (a tight corner): it then charges from where it stands, so it can never circle for ever.
+            bool StartReposition(P player, IList<Obstacle> obstacles, Bounds bounds)
+            {
+                double margin = t.boarLengthM, radius = t.boarWidthM / 2 + .2, bestScore = double.NegativeInfinity;
+                P? best = null;
+                foreach (double scale in new[] { 1, .6 })
+                    for (int i = 0; i < 16; i++)
+                    {
+                        P dir = FromYaw(i / 16.0 * 2 * Math.PI);
+                        double reach = t.repositionDistanceM * scale;
+                        var spot = new P(x + dir.x * reach, z + dir.z * reach);
+                        if (bounds != null && (spot.x < bounds.minX + margin || spot.x > bounds.maxX - margin || spot.z < bounds.minZ + margin || spot.z > bounds.maxZ - margin)) continue;
+                        bool blocked = false;
+                        for (int k = 0; k < obstacles.Count && !blocked; k++)
+                        {
+                            var to = Sub(new P(obstacles[k].x, obstacles[k].z), Pos);
+                            double along = Math.Max(0, Math.Min(reach, Dot(to, dir))), lx = to.x - dir.x * along, lz = to.z - dir.z * along;
+                            blocked = Math.Sqrt(lx * lx + lz * lz) < radius + obstacles[k].r;
+                        }
+                        if (blocked) continue;
+                        double room = RunFrom(spot, ToYaw(Sub(player, spot)), obstacles, bounds);
+                        if (room < t.minChargeRunM) continue;
+                        // A clear line to the player beats everything: it comes round the tree they are hiding behind.
+                        bool clear = room >= Math.Min(Len(Sub(player, spot)) - .6, c.chargeMaxDistanceM - .01);
+                        double score = (clear ? 30 : 0) + Math.Min(room, c.chargeMaxDistanceM) + reach * .1;
+                        if (score > bestScore) { bestScore = score; best = spot; }
+                    }
+                if (best == null) return false;
+                moveTo = best.Value;
+                line = null;
+                repositioned = true;
+                Enter("reposition");
+                events.Add(new Event { type = "reposition" });
+                return true;
+            }
+
+            void TickReposition()
+            {
+                var to = Sub(moveTo, Pos);
+                double left = Len(to);
+                if (left > 1e-3)
+                {
+                    double max = t.repositionTurnDegPerSecond * Math.PI / 180 * Step, d = Wrap(ToYaw(to) - yaw);
+                    yaw = Wrap(yaw + Math.Max(-max, Math.Min(max, d)));
+                    if (Math.Abs(d) < .6)
+                    {
+                        double step = Math.Min(left, t.repositionSpeedMps * Step);
+                        x += to.x / left * step;
+                        z += to.z / left * step;
+                    }
+                }
+                if (left < .05 || Elapsed >= t.repositionMaxSeconds)
+                {
+                    Enter("alert");
+                    events.Add(new Event { type = "alert" });
                 }
             }
 
@@ -259,7 +333,7 @@ namespace YunJing
                 return Len(Sub(player, closest)) < t.boarWidthM / 2 + t.playerRadiusM;
             }
 
-            void TickDaze(P player, bool held, IList<Obstacle> obstacles)
+            void TickDaze(P player, bool held, IList<Obstacle> obstacles, Bounds bounds)
             {
                 if (held && CanCleanse(player))
                 {
@@ -282,6 +356,7 @@ namespace YunJing
                 if (Elapsed >= c.dazeSeconds)
                 {
                     cleanseHeld = 0;
+                    if (StartReposition(player, obstacles, bounds)) return;
                     Enter("alert");
                     events.Add(new Event { type = "alert" });
                 }
@@ -330,9 +405,15 @@ namespace YunJing
             }
 
             // Where the charge would go from here: from the boar, up to the first obstacle, the bounds or the maximum distance.
-            Line ChargeLine(IList<Obstacle> obstacles, Bounds bounds)
+            Line ChargeLine(IList<Obstacle> obstacles, Bounds bounds) =>
+                new Line { x = x, z = z, yaw = yaw, length = RunFrom(Pos, yaw, obstacles, bounds), width = c.chargeLineWidthM, isFixed = false };
+
+            // How far a charge from this spot along this yaw would run.
+            double RunFrom(P from, double along0, IList<Obstacle> obstacles, Bounds bounds)
             {
-                P dir = FromYaw(yaw), head = Head();
+                P dir = FromYaw(along0);
+                double reachHead = (t.boarLengthM - t.boarWidthM) / 2;
+                var head = new P(from.x + dir.x * reachHead, from.z + dir.z * reachHead);
                 double radius = t.boarWidthM / 2, length = c.chargeMaxDistanceM;
                 for (int i = 0; i < obstacles.Count; i++)
                 {
@@ -344,7 +425,7 @@ namespace YunJing
                 }
                 if (bounds != null)
                     length = Math.Min(length, Math.Max(0, Math.Min(ToEdge(head.x, dir.x, bounds.minX, bounds.maxX), ToEdge(head.z, dir.z, bounds.minZ, bounds.maxZ))));
-                return new Line { x = x, z = z, yaw = yaw, length = length, width = c.chargeLineWidthM, isFixed = false };
+                return length;
             }
 
             static double ToEdge(double from, double d, double min, double max) => d > 1e-6 ? (max - from) / d : d < -1e-6 ? (min - from) / d : double.PositiveInfinity;

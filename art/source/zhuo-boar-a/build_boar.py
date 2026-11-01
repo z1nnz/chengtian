@@ -30,6 +30,7 @@ OUT = K.EXPORTS / KEY
 BLEND = K.HERE / 'blend'
 PART_BODY, PART_EAR_L, PART_EAR_R, PART_HEAD, PART_HOOF_FL, PART_HOOF_FR, PART_HOOF_HL, PART_HOOF_HR, PART_TAIL, PART_FUR, PART_JAW = range(11)
 rnd = random.Random(1103)
+EYE_NODES = []
 EYES = []   # eye centres, so fur keeps off them and never samples their red
 
 
@@ -202,25 +203,37 @@ def m_fur():
     base = mix(nt, mud_mask, base, (.30, .205, .105))
     # The head: grey-brown speckle, bare skin on the snout, a dark wet nose.
     head = smooth(nt, y, -.5, -.62)
-    face = mix(nt, smooth(nt, mid, .4, .62), (.10, .062, .036), (.27, .175, .10))
+    face = mix(nt, smooth(nt, mid, .4, .62), (.085, .052, .03), (.205, .13, .074))
     base = mix(nt, math_(nt, 'MULTIPLY', head, .9), base, face)
     snout = smooth(nt, y, -.72, -.76)
     base = mix(nt, snout, base, (.10, .06, .046))
     nose = smooth(nt, y, -.778, -.79)
     base = mix(nt, nose, base, (.075, .045, .05))
+    # The skin round the eyes is dark and bare, as on a real boar, so the eye sits in a shadow rather than a pale patch.
+    eye_at = N(nt, 'ShaderNodeCombineXYZ'); EYE_NODES.append(eye_at)
+    abs_p = N(nt, 'ShaderNodeCombineXYZ'); L(nt, ax, abs_p.inputs[0]); L(nt, y, abs_p.inputs[1]); L(nt, z, abs_p.inputs[2])
+    eye_d = N(nt, 'ShaderNodeVectorMath', operation='DISTANCE'); L(nt, abs_p.outputs[0], eye_d.inputs[0]); L(nt, eye_at.outputs[0], eye_d.inputs[1])
+    eye_rim = smooth(nt, eye_d.outputs['Value'], .05, .018)
+    # A dark lip line and creases on the bare snout; pores in the nose leather.
+    lip = math_(nt, 'MULTIPLY', smooth(nt, z, .385, .372), smooth(nt, y, -.62, -.68))
+    base = mix(nt, math_(nt, 'MULTIPLY', lip, .7), base, (.05, .03, .028))
     # Worn lighter on the brow and cheeks.
-    brow = math_(nt, 'MULTIPLY', head, math_(nt, 'MULTIPLY', smooth(nt, z, .55, .62), .12))
-    base = mix(nt, brow, base, (.36, .27, .17))
+    brow = math_(nt, 'MULTIPLY', head, math_(nt, 'MULTIPLY', smooth(nt, z, .55, .62), .08))
+    base = mix(nt, brow, base, (.27, .19, .115))
+    base = mix(nt, math_(nt, 'MULTIPLY', eye_rim, .85), base, (.045, .028, .022))
 
     # Mask R: ink-like dark qi, branching across the shoulder and haunch and along the spine.
     w1 = noise(nt, P, 7.0, 4.0, .55); w2 = noise(nt, P, 21.0, 3.0, .5)
     warp = N(nt, 'ShaderNodeCombineXYZ'); L(nt, math_(nt, 'MULTIPLY', math_(nt, 'SUBTRACT', w1, .5), .22), warp.inputs[0]); L(nt, math_(nt, 'MULTIPLY', math_(nt, 'SUBTRACT', w2, .5), .16), warp.inputs[1]); L(nt, math_(nt, 'MULTIPLY', math_(nt, 'SUBTRACT', w1, .5), .3), warp.inputs[2])
     add = N(nt, 'ShaderNodeVectorMath', operation='ADD'); L(nt, P, add.inputs[0]); L(nt, warp.outputs[0], add.inputs[1])
     Q = add.outputs[0]
-    def edge(scale, width):
-        v = N(nt, 'ShaderNodeTexVoronoi', feature='DISTANCE_TO_EDGE'); L(nt, Q, v.inputs['Vector']); v.inputs['Scale'].default_value = scale
-        return smooth(nt, v.outputs['Distance'], width, 0)
-    v1 = edge(5.2, .075); v2 = math_(nt, 'MULTIPLY', edge(11.5, .055), .82)
+    # Ridged noise stretched along the coat: long branching strands running with the fur, not cells.
+    flow_map = N(nt, 'ShaderNodeMapping'); L(nt, Q, flow_map.inputs['Vector']); flow_map.inputs['Scale'].default_value = (1.0, .42, .85)
+    def ridge(scale, lo, hi):
+        n = noise(nt, flow_map.outputs['Vector'], scale, 3.0, .45)
+        r = math_(nt, 'SUBTRACT', 1.0, math_(nt, 'ABSOLUTE', math_(nt, 'SUBTRACT', math_(nt, 'MULTIPLY', n, 2.0), 1.0)))
+        return smooth(nt, r, lo, hi)
+    v1 = ridge(4.6, .955, .995); v2 = math_(nt, 'MULTIPLY', ridge(10.5, .965, .995), .75)
     def blobm(cx, cy, cz, r):
         c = N(nt, 'ShaderNodeCombineXYZ'); c.inputs[0].default_value = cx; c.inputs[1].default_value = cy; c.inputs[2].default_value = cz
         absv = N(nt, 'ShaderNodeCombineXYZ'); L(nt, ax, absv.inputs[0]); L(nt, y, absv.inputs[1]); L(nt, z, absv.inputs[2])
@@ -231,8 +244,7 @@ def m_fur():
     region = math_(nt, 'MAXIMUM', region, blobm(.1, -.56, .5, .13))    # reaching onto the cheek
     region = math_(nt, 'MAXIMUM', region, spine)
     region = math_(nt, 'MULTIPLY', region, smooth(nt, z, .22, .32))
-    halo_v = N(nt, 'ShaderNodeTexVoronoi', feature='DISTANCE_TO_EDGE'); L(nt, Q, halo_v.inputs['Vector']); halo_v.inputs['Scale'].default_value = 5.2
-    halo = math_(nt, 'MULTIPLY', smooth(nt, halo_v.outputs['Distance'], .17, 0), .2)
+    halo = math_(nt, 'MULTIPLY', ridge(4.6, .87, .97), .17)   # the ink's bleed around the main strands
     veins = math_(nt, 'MAXIMUM', math_(nt, 'MAXIMUM', v1, v2), halo)
     r_ = math_(nt, 'MULTIPLY', veins, region)
     # Bristles stain first: the spine strip always carries a little.
@@ -240,6 +252,8 @@ def m_fur():
     cm = N(nt, 'ShaderNodeCombineColor'); L(nt, r_, cm.inputs[0])
     rough = mixf(nt, nose, mixf(nt, mud_mask, .84, .92), .32)
     height = math_(nt, 'ADD', math_(nt, 'MULTIPLY', streak, .7), math_(nt, 'MULTIPLY', mud_mask, .6))
+    pores = noise(nt, P, 240.0, 2.0, .5)
+    height = math_(nt, 'ADD', height, math_(nt, 'MULTIPLY', math_(nt, 'MULTIPLY', pores, snout), .55))
     return K.finish(m, nt, b, base, rough, height=height, bump=.004, bump_strength=.75, mask=cm.outputs[0])
 
 
@@ -260,8 +274,8 @@ def m_ear():
     m, nt, b = K.new_mat('BoarEar')
     P = world_pos(nt)
     inner = N(nt, 'ShaderNodeAttribute', attribute_name='qa_inner', attribute_type='GEOMETRY').outputs['Fac']
-    outer = mix(nt, smooth(nt, noise(nt, P, 70.0, 3.0, .6), .35, .65), (.11, .06, .03), (.30, .17, .08))
-    hair = mix(nt, smooth(nt, noise(nt, P, 60.0, 3.0, .6), .3, .7), (.10, .045, .035), (.24, .10, .075))
+    outer = mix(nt, smooth(nt, noise(nt, P, 70.0, 3.0, .6), .35, .65), (.07, .04, .022), (.2, .115, .056))
+    hair = mix(nt, smooth(nt, noise(nt, P, 60.0, 3.0, .6), .3, .7), (.06, .03, .024), (.15, .068, .05))
     return K.finish(m, nt, b, mix(nt, inner, outer, hair), .8)
 
 
@@ -295,7 +309,7 @@ def build_skin(fur):
             blob(f'ShoulderMass{s}', (s * .175, -.2, .62), (.08, .17, .2), fur),
             blob(f'HaunchMass{s}', (s * .15, .44, .59), (.075, .16, .16), fur),
             blob(f'Cheek{s}', (s * .085, -.585, .455), (.062, .082, .075), fur, rot=(.3, 0, 0)),
-            blob(f'Brow{s}', (s * .068, -.60, .588), (.04, .05, .025), fur, rot=(.5, 0, 0)),
+            blob(f'Brow{s}', (s * .082, -.595, .588), (.05, .066, .022), fur, rot=(.5, s * -.2, 0)),
             blob(f'Lip{s}', (s * .046, -.715, .372), (.03, .07, .024), fur, rot=(.12, 0, 0)),
         ]
     parts += [
@@ -317,13 +331,19 @@ def build_skin(fur):
     p = coords_of(skin); n = normals_of(skin)
     for s in (1, -1):
         p = dent(p, n, (s * .05, -.79, .372), (s * .082, -.655, .395), .014, .012)        # mouth line
-        p = dent(p, n, (s * .09, -.60, .54), (s * .106, -.575, .545), .024, .012)         # eye socket
+        p = dent(p, n, (s * .076, -.63, .545), (s * .122, -.565, .545), .03, .017)        # eye socket, long towards the temple
+        p = dent(p, n, (s * .05, -.685, .44), (s * .095, -.61, .47), .014, .006)          # the crease from snout to cheek
+        p = dent(p, n, (s * .1, -.565, .49), (s * .118, -.49, .44), .018, .007)           # under the eye, down the jowl
+        for y_ in (-.75, -.72, -.69):
+            p = dent(p, n, (s * .012, y_, .432 - (y_ + .75) * .25), (s * .05, y_ + .006, .41 - (y_ + .75) * .2), .007, .0034)   # snout folds, side
+        p = dent(p, n, (s * .037, -.79, .39), (s * .037, -.79, .39), .012, .007)          # the nose disc's rim
         p = dent(p, n, (s * .019, -.803, .392), (s * .019, -.803, .392), .012, .016)      # nostril
         p = dent(p, n, (s * .155, -.05, .40), (s * .15, -.09, .72), .10, .009)            # behind the shoulder
         p = dent(p, n, (s * .175, .27, .40), (s * .17, .24, .72), .09, .008)              # before the haunch
         p = dent(p, n, (s * .13, -.47, .69), (s * .13, -.47, .69), .045, .008)            # ear root
-    for y_ in (-.735, -.705, -.675):
-        p = dent(p, n, (-.06, y_, .455), (.06, y_ - .004, .455), .009, .0035)             # snout wrinkles
+    for y_ in (-.745, -.718, -.692, -.665):
+        p = dent(p, n, (-.055, y_, .44 + (y_ + .745) * .3), (.055, y_ - .004, .44 + (y_ + .745) * .3), .008, .0045)   # snout wrinkles
+    p = dent(p, n, (0, -.8, .425), (0, -.8, .425), .009, .004)                        # the groove above the nose
     n = n * 1.0
     shag = np.zeros(len(p))
     for i, co in enumerate(p):
@@ -337,7 +357,7 @@ def build_skin(fur):
     p[:, 2] = np.maximum(p[:, 2], 0)
     set_coords(skin, p)
 
-    d = skin.modifiers.new('Decimate', 'DECIMATE'); d.ratio = 30000 / K.tri_count(skin); d.use_collapse_triangulate = True
+    d = skin.modifiers.new('Decimate', 'DECIMATE'); d.ratio = 36000 / K.tri_count(skin); d.use_collapse_triangulate = True
     K.apply_mods(skin)
     tag(skin, PART_BODY)
     for poly in skin.data.polygons: poly.use_smooth = True
@@ -488,21 +508,69 @@ def blade_mesh(name, roots, segments):
     return o
 
 
-def card_mesh(name, cards):
-    """Flat diamond tufts lying on the skin, shingled along the coat: root, two shoulders, tip. Two triangles each."""
-    verts, faces, shade, skin_normals = [], [], [], []
+TUFT_CELLS = 3
+
+
+def make_tuft_map(path):
+    """The fur tufts' alpha: three cells of tapering strands fanning from a root at the bottom centre to the top edge, and
+    an opaque last column for everything that is not a tuft. R shades each strand, A cuts it out."""
+    S = 1024
+    cell = S // 4
+    tone, alpha = np.zeros((S, S), np.float32), np.zeros((S, S), np.float32)
+    r = random.Random(4)
+    for c in range(TUFT_CELLS):
+        for _ in range(64):
+            start_x = c * cell + cell / 2 + r.uniform(-.06, .06) * cell
+            spread = r.uniform(-1, 1)
+            end_x = c * cell + cell / 2 + spread * cell * .41
+            end_y = r.uniform(.62, .985) * S
+            bend = r.uniform(-.1, .1) * cell
+            thick = r.uniform(5.5, 10.5)
+            shade = r.uniform(.68, 1.0)
+            for k in range(420):
+                t = k / 419
+                x = start_x + (end_x - start_x) * t + bend * math.sin(t * math.pi)
+                y = t * end_y
+                # Widest low down, then a long taper to a point: reads as hair, not a leaf.
+                rad = thick * min(1, .55 + t * 3) * (1 - t) ** .7 + .7
+                x0, x1 = int(max(c * cell + 2, x - rad - 1)), int(min((c + 1) * cell - 2, x + rad + 2))
+                y0, y1 = int(max(0, y - rad - 1)), int(min(S, y + rad + 2))
+                if x1 <= x0 or y1 <= y0: continue
+                yy, xx = np.mgrid[y0:y1, x0:x1]
+                d = np.hypot(xx - x, yy - y)
+                a = np.clip(rad + .5 - d, 0, 1)
+                region = alpha[y0:y1, x0:x1]
+                take = a > region
+                tone[y0:y1, x0:x1][take] = shade * (.82 + .18 * t)
+                alpha[y0:y1, x0:x1] = np.maximum(region, a)
+    alpha[:, cell * TUFT_CELLS:] = 1
+    tone[:, cell * TUFT_CELLS:] = 1
+    # Colour bleeds past the strands so mip levels do not pick up black fringes.
+    rgb = np.where(alpha > 0, tone, .85)
+    return K._np_img('T_Fur', np.dstack([rgb, rgb, rgb, alpha]), 'Non-Color', path)
+
+
+def card_mesh(name, cards, seed=3):
+    """Fans of hair on the skin: a root and four outline corners, three triangles, cut out by the tuft map through the second UV.
+    Lit with the skin's normal, so the coat reads as one soft mass."""
+    r = random.Random(seed)
+    verts, faces, shade, skin_normals, uv2 = [], [], [], [], []
+    corners = ((.5, 0), (0, .5), (.19, 1), (.81, 1), (1, .5))
     for root, d, n, length, width, tint in cards:
         side = d.cross(n).normalized() * width * .5
-        lift = n * length * .14
-        mid = root + d * length * .4 + lift
+        lift = n * length * .13
         base = len(verts)
-        verts += [root, mid + side, root + d * length + lift * .55, mid - side]
-        skin_normals += [n, n, n, n]
-        shade += [(tint[0] * .58, tint[1] * .56, tint[2] * .54, 1), (tint[0] * .84, tint[1] * .82, tint[2] * .78, 1), (min(1, tint[0] * 1.12), min(1, tint[1] * 1.02), min(1, tint[2] * .86), 1), (tint[0] * .84, tint[1] * .82, tint[2] * .78, 1)]
-        a, b, c, e = base, base + 1, base + 2, base + 3
-        # Wound so the face looks out along the skin normal.
-        if (Vector(verts[b]) - Vector(verts[a])).cross(Vector(verts[c]) - Vector(verts[a])).dot(n) > 0: faces += [(a, b, c), (a, c, e)]
-        else: faces += [(a, c, b), (a, e, c)]
+        cell = r.randrange(TUFT_CELLS)
+        verts += [root, root + d * length * .5 - side + lift, root + d * length - side * .62 + lift * .6, root + d * length + side * .62 + lift * .6, root + d * length * .5 + side + lift]
+        skin_normals += [n] * 5
+        dark = (tint[0] * .62, tint[1] * .6, tint[2] * .58, 1)
+        mid = (tint[0] * .86, tint[1] * .84, tint[2] * .8, 1)
+        tip = (min(1, tint[0] * 1.1), min(1, tint[1] * 1.0), min(1, tint[2] * .86), 1)
+        shade += [dark, mid, tip, tip, mid]
+        uv2 += [((cell + u) / 4, v) for u, v in corners]
+        a, b_, c, e, f = range(base, base + 5)
+        if (Vector(verts[b_]) - Vector(verts[a])).cross(Vector(verts[c]) - Vector(verts[a])).dot(n) > 0: faces += [(a, b_, c), (a, c, e), (a, e, f)]
+        else: faces += [(a, c, b_), (a, e, c), (a, f, e)]
     me = bpy.data.meshes.new(name)
     me.from_pydata([tuple(p) for p in verts], [], faces)
     me.update()
@@ -510,9 +578,22 @@ def card_mesh(name, cards):
     for p in me.polygons: p.use_smooth = True
     col = me.color_attributes.new('Col', 'BYTE_COLOR', 'POINT')
     col.data.foreach_set('color', np.array([min(1, c) for rgba in shade for c in rgba], np.float32))
-    # Lit like the skin under them, so the coat reads as one soft mass instead of separate scales.
+    set_uv2(me, np.array(uv2, np.float32))
     me.normals_split_custom_set_from_vertices([tuple(n) for n in skin_normals])
     return o
+
+
+OPAQUE_UV2 = (.875, .5)
+
+
+def set_uv2(me, per_vertex=None):
+    """UV2 reads the tuft map. Anything that is not a tuft sits in the map's opaque column."""
+    layer = me.uv_layers.get('UV2') or me.uv_layers.new(name='UV2', do_init=False)
+    if per_vertex is None:
+        layer.data.foreach_set('uv', np.tile(np.array(OPAQUE_UV2, np.float32), len(me.loops)))
+        return
+    loop_v = np.zeros(len(me.loops), np.int32); me.loops.foreach_get('vertex_index', loop_v)
+    layer.data.foreach_set('uv', per_vertex[loop_v].ravel())
 
 
 def coat_cards(body, count, size_k=1.0, seed=5):
@@ -525,8 +606,8 @@ def coat_cards(body, count, size_k=1.0, seed=5):
     for t in tris:
         if part_attr[t.vertices[0]].value > .5: weights.append(0.0); continue
         c = (v[t.vertices[0]].co + v[t.vertices[1]].co + v[t.vertices[2]].co) / 3
-        near_eye = any((c - e).length < .036 for e in EYES)
-        weights.append(0.0 if c.y < -.725 or c.z < .05 or near_eye else t.area * (2.4 if c.y < -.45 else 1))
+        near_eye = any((c - e).length < .03 for e in EYES)
+        weights.append(0.0 if c.y < -.74 or c.z < .05 or near_eye else t.area * (4.0 if c.y < -.5 else 1))
     out = []
     for i in r.choices(range(len(tris)), weights=weights, k=count):
         t = tris[i]
@@ -535,18 +616,18 @@ def coat_cards(body, count, size_k=1.0, seed=5):
         p = v[t.vertices[0]].co * a + v[t.vertices[1]].co * b + v[t.vertices[2]].co * (1 - a - b)
         n = t.normal.copy()
         flow = Vector((0, 1, -.5))
-        length = .056
-        if p.z < .36: flow = Vector((math.copysign(.12, p.x), .18, -1)); length = .05
-        if p.z < .2: length = .036
-        if p.y < -.48 and p.z > .5: flow = Vector((math.copysign(.3, p.x), .9, .05)); length = .055
-        if p.y < -.6: length = .03
-        if p.y < -.68: length = .02
+        length = .082
+        if p.z < .36: flow = Vector((math.copysign(.12, p.x), .18, -1)); length = .068
+        if p.z < .2: length = .05
+        if p.y < -.48 and p.z > .5: flow = Vector((math.copysign(.3, p.x), .9, .05)); length = .058
+        if p.y < -.56: length = .032
+        if p.y < -.66: length = .02
         flow = flow - n * flow.dot(n)
         if flow.length < 1e-3: continue
         d = (flow.normalized() + Vector((r.uniform(-.28, .28), r.uniform(-.28, .28), r.uniform(-.28, .28)))).normalized()
         d = (d - n * d.dot(n)).normalized()
         g = r.uniform(.82, 1.0)
-        out.append((p + n * .0015, d, n, length * r.uniform(.85, 1.3) * size_k, length * r.uniform(.27, .4) * size_k, (g, g * r.uniform(.96, 1.0), g * r.uniform(.9, 1.0))))
+        out.append((p + n * .0015, d, n, length * r.uniform(.85, 1.25) * size_k, length * r.uniform(.5, .72) * size_k, (g, g * r.uniform(.96, 1.0), g * r.uniform(.9, 1.0))))
     return out
 
 
@@ -562,7 +643,7 @@ def fur_roots(body, count, length_k=1.0, width_k=1.0, seed=7):
         if part_attr[t.vertices[0]].value > .5: areas.append(0.0); continue
         c = (v[t.vertices[0]].co + v[t.vertices[1]].co + v[t.vertices[2]].co) / 3
         k = 1.0
-        if c.y < -.62 or c.z < .05 or any((c - e).length < .06 for e in EYES): k = 0
+        if c.y < -.62 or c.z < .05 or any((c - e).length < .05 for e in EYES): k = 0
         elif c.z > .4 and not (-.62 < c.y < -.44): k = .06            # keep spikes to the belly, the ruff and the legs' backs
         areas.append(t.area * k)
     picks = r.choices(range(len(tris)), weights=areas, k=count)
@@ -676,7 +757,7 @@ def attach_to_atlas(fur, body_bvh, body):
         u = bu[t.loops[0]].uv * w[0] + bu[t.loops[1]].uv * w[1] + bu[t.loops[2]].uv * w[2]
         for k, i in enumerate(island):
             uu = None
-            if len(island) == 4:   # a card: each corner reads the skin under it, so the veins and streaks run on across the coat
+            if len(island) == 5:   # a card: each corner reads the skin under it, so the veins and streaks run on across the coat
                 loc2, _, idx2, _ = body_bvh.find_nearest(colv[i].co)
                 t2 = tris[idx2]
                 w2 = _bary(loc2, vs[t2.vertices[0]].co, vs[t2.vertices[1]].co, vs[t2.vertices[2]].co)
@@ -808,8 +889,8 @@ def skin_to_rig(mesh, arm):
         weights[tail, idx['Tail2']] = k
     fur = part_ids == PART_FUR
     if fur.any():
-        tree = kdtree.KDTree(int(is_body.sum() + tail.sum()))
         src = np.where(is_body | tail)[0]
+        tree = kdtree.KDTree(len(src))
         for n_, i in enumerate(src): tree.insert(co[i], n_)
         tree.balance()
         for i in np.where(fur)[0]:
@@ -1044,6 +1125,8 @@ def main():
         if not o.data.attributes.get('qa_inner'):
             a = o.data.attributes.new('qa_inner', 'FLOAT', 'POINT')
             a.data.foreach_set('value', [0.0] * len(o.data.vertices))
+    for node in EYE_NODES:
+        node.inputs[0].default_value = abs(EYES[0].x); node.inputs[1].default_value = EYES[0].y; node.inputs[2].default_value = EYES[0].z
     K.finalize_parts(parts)
     gcoll = K.coll('Game')
     G, _ = K.game_mesh(KEY, parts, gcoll)
@@ -1056,6 +1139,10 @@ def main():
     mat = K.game_material(KEY, imgs)
     G.data.materials.clear(); G.data.materials.append(mat)
 
+    make_tuft_map(tdir / f'T_{KEY}_Fur.png')
+    set_uv2(G.data)
+    G.data.uv_layers.active_index = 0
+
     # LOD levels: decimate the baked skin and details, then grow each level's own fur on it.
     body_bvh = K.bvh_of(G)
     lods = [G] + K.make_lods(G, ratios=(.5, .16), gcoll=gcoll)
@@ -1064,9 +1151,9 @@ def main():
     specs = [
         # blades on the coat, segments, length, width; bristles; tail
         # cards, card size; spikes, segments, length, width; bristles; tail
-        (12000, 1.0, 620, 2, 1.0, 1.0, 460, 1.0, 1.0, 60),
-        (5600, 1.32, 300, 2, 1.1, 1.3, 260, 1.05, 1.25, 30),
-        (1000, 2.4, 70, 1, 1.3, 2.3, 110, 1.1, 2.2, 8),
+        (9000, 1.0, 620, 2, 1.0, 1.0, 460, 1.0, 1.0, 60),
+        (4200, 1.32, 300, 2, 1.1, 1.3, 260, 1.05, 1.25, 30),
+        (800, 2.5, 70, 1, 1.3, 2.3, 110, 1.1, 2.2, 8),
     ]
     finals = []
     G.data.calc_loop_triangles()
@@ -1075,7 +1162,9 @@ def main():
         roots = clip_width(fur_roots(G, coat_n, lk, wk, seed=7))
         ridge = clip_height(bristle_roots(ridge_n, rl, rw, body_bvh))
         tail = tail_roots(tail_n, 1.0, 1.0 + level * .7)
-        fur = join([blade_mesh(f'Fur_L{level}', roots + ridge + tail, segs), card_mesh(f'Cards_L{level}', coat_cards(G, card_n, card_k))], f'Fur_L{level}')
+        spikes = blade_mesh(f'Fur_L{level}', roots + ridge + tail, segs)
+        set_uv2(spikes.data)
+        fur = join([spikes, card_mesh(f'Cards_L{level}', coat_cards(G, card_n, card_k))], f'Fur_L{level}')
         attach_to_atlas(fur, body_bvh, G)
         tips = coords_of(fur)
         tips[:, 0] = np.clip(tips[:, 0], -.298, .298); tips[:, 2] = np.clip(tips[:, 2], .002, .995); tips[:, 1] = np.clip(tips[:, 1], -.8, .795)
@@ -1143,7 +1232,7 @@ def main():
         'limitM': {'length': 1.6, 'width': .6, 'height': 1.0},
         'tris': {f'LOD{i}': K.tri_count(o) for i, o in enumerate(finals)},
         'collision': {'name': col.name, 'kind': 'convex hull of the torso, above z = 0.3', 'tris': K.tri_count(col)},
-        'material': {'name': mat.name, 'textures': [f'textures/T_{KEY}_{n}.png' for n in ('BaseColor', 'ORM', 'Normal', 'Mask')], 'atlas': 2048, 'unityShader': 'YunJing/QingxiZhuoBoar', 'vertexColour': 'fur root-to-tip shade, multiplied onto the base colour'},
+        'material': {'name': mat.name, 'textures': [f'textures/T_{KEY}_{n}.png' for n in ('BaseColor', 'ORM', 'Normal', 'Mask', 'Fur')], 'atlas': 2048, 'uv2': 'fur tufts: A of T_Fur cuts them out; needs alpha clip, as the Unity shader does', 'unityShader': 'YunJing/QingxiZhuoBoar', 'vertexColour': 'fur root-to-tip shade, multiplied onto the base colour'},
         'state': {'_Zhuo': {'range': [0, 1], 'meaning': '1 = dark qi veins and dull red eyes, 0 = healthy warm brown', 'mask': 'Mask R (veins), G (eyes)'}},
         'skeleton': {'bones': [b[0] for b in BONES], 'count': len(BONES), 'deformExceptRoot': len(BONES) - 1},
         'animations': clip_info, 'fps': FPS,

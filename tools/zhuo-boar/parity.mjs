@@ -61,6 +61,11 @@ function stand(boar, memo) {
   return { player: memo.spot };
 }
 
+/** Pressed into a corner, so it keeps having to move. */
+function corner(boar, memo) {
+  return { player: { x: 9.2, z: 9.2 } };
+}
+
 /** Dodges every charge once it is close, and stays in the open. */
 function dodging(boar, memo) {
   const player = { x: 0, z: 0 };
@@ -75,6 +80,7 @@ const data = {
     run('cleanse-30fps', 1 / 30, 40, clean),
     run('three-hits-then-return', 1 / 60, 50, stand),
     run('dodging', 1 / 45, 20, dodging),
+    run('cornered', 1 / 60, 30, corner),
   ],
 };
 const unity = resolve(root, 'apps/game/Assets/YunJing/Resources/QingxiZhuoBoar');

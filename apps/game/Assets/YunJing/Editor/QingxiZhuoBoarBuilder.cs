@@ -211,6 +211,7 @@ namespace YunJing.Editor
                 AssetDatabase.CreateAsset(m, path);
             }
             m.SetTexture("_BaseMap", Tex(key, "BaseColor")); m.SetTexture("_NormalMap", Tex(key, "Normal")); m.SetTexture("_OrmMap", Tex(key, "ORM")); m.SetTexture("_MaskMap", Tex(key, "Mask"));
+            if (kind == 0) m.SetTexture("_FurMap", Tex(key, "Fur"));
             if (kind == 1) { m.SetFloat("_Strength", .05f); m.SetFloat("_Flutter", .012f); m.SetFloat("_Height", 5); m.SetFloat("_Wrap", .45f); m.SetFloat("_Zhuo", 0); }
             EditorUtility.SetDirty(m);
             return m;
@@ -245,6 +246,14 @@ namespace YunJing.Editor
                     ti.sRGBTexture = !linear; ti.textureType = normal ? TextureImporterType.NormalMap : TextureImporterType.Default;
                     ti.alphaSource = TextureImporterAlphaSource.None; ti.maxTextureSize = 2048;
                     ti.SaveAndReimport();
+                }
+                if (key == Boar)
+                {
+                    var fur = (TextureImporter)AssetImporter.GetAtPath($"{Models}/{key}/textures/T_{key}_Fur.png");
+                    fur.sRGBTexture = false; fur.alphaSource = TextureImporterAlphaSource.FromInput; fur.alphaIsTransparency = false;
+                    fur.mipmapEnabled = true; fur.mipMapsPreserveCoverage = true; fur.alphaTestReferenceValue = .5f;
+                    fur.wrapMode = TextureWrapMode.Clamp; fur.maxTextureSize = 1024;
+                    fur.SaveAndReimport();
                 }
                 var mi = (ModelImporter)AssetImporter.GetAtPath($"{Models}/{key}/{key}_v001.fbx");
                 mi.globalScale = 1; mi.useFileScale = true;
