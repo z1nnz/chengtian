@@ -1,7 +1,7 @@
 // One material for the sick boar (BR01) and the pine it runs into (BR02) (Johnnnny0823). The base map is the healthy look;
 // _MaskMap holds the states, so nothing needs a second mesh or a texture swap:
 //   R = where the dark qi seeps through the fur, in order: the highest values are the last to clear as _Zhuo falls
-//   G = the eyes' dull red
+//   G = the eyes' red
 //   B = the pale scraped bark
 // _Zhuo: 1 = sick, 0 = an ordinary warm brown boar. _Scar: 0 = whole bark, 1 = scraped.
 // Lighting matches YunJing/QingxiFoliageWind (main light with shadows, ambient SH, fog, wrapped diffuse), with the wind

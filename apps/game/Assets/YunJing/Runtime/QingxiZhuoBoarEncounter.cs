@@ -631,6 +631,14 @@ namespace YunJing
                 tex.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0); tex.Apply();
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder, $"boar_{name}.png"), tex.EncodeToPNG());
             }
+            shotZhuo = 1;
+            cam.transform.position = body.position + body.forward * 1.15f + body.right * .35f + Vector3.up * .68f;
+            cam.transform.LookAt(body.position + body.forward * .6f + Vector3.up * .52f);
+            yield return new WaitForSeconds(.4f);
+            yield return new WaitForEndOfFrame();
+            var close = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+            close.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0); close.Apply();
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder, "boar_head_zhuo_1.png"), close.EncodeToPNG());
             Debug.Log("QINGXI_ZHUO_BOAR_SHOTS saved");
             Application.Quit();
         }

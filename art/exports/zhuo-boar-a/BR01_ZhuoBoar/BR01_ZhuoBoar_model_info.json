@@ -6,8 +6,8 @@
  "front": "-Y (Blender); see Unity note in README",
  "origin": "footprint centre, lowest vertex at z = 0, no ground plate",
  "sizeM": {
-  "length": 1.584,
-  "width": 0.565,
+  "length": 1.581,
+  "width": 0.564,
   "height": 0.973
  },
  "limitM": {

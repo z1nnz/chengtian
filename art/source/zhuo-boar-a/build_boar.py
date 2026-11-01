@@ -30,6 +30,7 @@ OUT = K.EXPORTS / KEY
 BLEND = K.HERE / 'blend'
 PART_BODY, PART_EAR_L, PART_EAR_R, PART_HEAD, PART_HOOF_FL, PART_HOOF_FR, PART_HOOF_HL, PART_HOOF_HR, PART_TAIL, PART_FUR, PART_JAW = range(11)
 rnd = random.Random(1103)
+EYES = []   # eye centres, so fur keeps off them and never samples their red
 
 
 # ----------------------------------------------------------------------------- geometry
@@ -251,7 +252,7 @@ def m_plain(name, c1, c2, rough, scale=40.0, mask=None):
 
 def m_eye():
     m, nt, b = K.new_mat('BoarEye')
-    rgb = N(nt, 'ShaderNodeRGB'); rgb.outputs[0].default_value = (0, .5, 0, 1)
+    rgb = N(nt, 'ShaderNodeRGB'); rgb.outputs[0].default_value = (0, 1, 0, 1)
     return K.finish(m, nt, b, (.028, .016, .011), .16, mask=rgb.outputs[0])
 
 
@@ -403,9 +404,10 @@ def build_details(bvh, ivory, hoof, deco, needle):
     for side, (x, ear_id, hooves) in ((1, (.14, PART_EAR_L, (PART_HOOF_FL, PART_HOOF_HL))), (-1, (.14, PART_EAR_R, (PART_HOOF_FR, PART_HOOF_HR)))):
         # Eyes sit in the sockets the sculpt left, found by ray so they stay on the skin.
         hit, nrm = surface_point(bvh, (side * .3, -.655, .595), (side * .05, -.57, .535))
-        centre = hit - nrm * .007
-        parts.append(blob(f'Eye{side}', centre, (.0135, .0135, .0135), eye, part_id=PART_HEAD, subd=3))
-        parts.append(blob(f'Lid{side}', centre + Vector((0, 0, .0105)) + nrm * .0005, (.0165, .0155, .0055), None, rot=(.2, side * -.25, 0), part_id=PART_HEAD))
+        centre = hit - nrm * .002
+        EYES.append(centre.copy())
+        parts.append(blob(f'Eye{side}', centre, (.0145, .0145, .0145), eye, part_id=PART_HEAD, subd=3))
+        parts.append(blob(f'Lid{side}', centre + Vector((0, 0, .012)) + nrm * .004, (.018, .017, .0075), None, rot=(.2, side * -.25, 0), part_id=PART_HEAD))
         parts[-1].data.materials.append(bpy.data.materials['BoarFur'])
         # Short curved tusks from the upper lip, tips turning out and up.
         t = [(side * .054, -.70, .372, .0135), (side * .068, -.71, .405, .0115), (side * .08, -.715, .44, .008), (side * .086, -.706, .468, .0035), (side * .087, -.702, .474, .0012)]
@@ -523,7 +525,7 @@ def coat_cards(body, count, size_k=1.0, seed=5):
     for t in tris:
         if part_attr[t.vertices[0]].value > .5: weights.append(0.0); continue
         c = (v[t.vertices[0]].co + v[t.vertices[1]].co + v[t.vertices[2]].co) / 3
-        near_eye = abs(abs(c.x) - .1) < .03 and abs(c.y + .6) < .03 and abs(c.z - .54) < .026
+        near_eye = any((c - e).length < .036 for e in EYES)
         weights.append(0.0 if c.y < -.725 or c.z < .05 or near_eye else t.area * (2.4 if c.y < -.45 else 1))
     out = []
     for i in r.choices(range(len(tris)), weights=weights, k=count):
@@ -560,7 +562,7 @@ def fur_roots(body, count, length_k=1.0, width_k=1.0, seed=7):
         if part_attr[t.vertices[0]].value > .5: areas.append(0.0); continue
         c = (v[t.vertices[0]].co + v[t.vertices[1]].co + v[t.vertices[2]].co) / 3
         k = 1.0
-        if c.y < -.62 or c.z < .05: k = 0
+        if c.y < -.62 or c.z < .05 or any((c - e).length < .06 for e in EYES): k = 0
         elif c.z > .4 and not (-.62 < c.y < -.44): k = .06            # keep spikes to the belly, the ruff and the legs' backs
         areas.append(t.area * k)
     picks = r.choices(range(len(tris)), weights=areas, k=count)
