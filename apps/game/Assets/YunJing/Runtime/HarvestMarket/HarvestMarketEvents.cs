@@ -48,6 +48,8 @@ namespace YunJing.HarvestMarket
         public static List<HerbBundle> Bundles = new List<HerbBundle>();
         public static readonly Dictionary<string, int> Kept = new Dictionary<string, int>();
         public static int Coins;
-        public static void Reset() { Bundles = new List<HerbBundle>(); Kept.Clear(); Coins = 0; }
+        /// The first sale is weighed by hand (it teaches the steelyard); after that 秤 balances itself unless the player drags.
+        public static int Weighings;
+        public static void Reset() { Bundles = new List<HerbBundle>(); Kept.Clear(); Coins = 0; Weighings = 0; }
     }
 }

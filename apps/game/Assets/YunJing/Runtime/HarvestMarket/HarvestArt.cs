@@ -101,6 +101,20 @@ namespace YunJing.HarvestMarket
             return cache["coin"] = Make(px, n);
         }
 
+        /// White anti-aliased ring for the root timer (tinted and radially filled by the Image).
+        public static Sprite Ring()
+        {
+            if (cache.TryGetValue("ring", out var s)) return s;
+            const int n = 128; var px = new Color[n * n];
+            for (int y = 0; y < n; y++) for (int x = 0; x < n; x++)
+            {
+                float d = Mathf.Sqrt((x - 63.5f) * (x - 63.5f) + (y - 63.5f) * (y - 63.5f));
+                float a = Mathf.Clamp01(Mathf.Min(63.5f - d, d - 46f) + .5f);
+                px[y * n + x] = new Color(1, 1, 1, a);
+            }
+            return cache["ring"] = Make(px, n);
+        }
+
         static Sprite Make(Color[] px, int n)
         {
             var t = new Texture2D(n, n, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Bilinear };

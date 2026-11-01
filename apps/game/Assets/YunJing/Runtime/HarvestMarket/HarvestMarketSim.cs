@@ -11,6 +11,7 @@ namespace YunJing.HarvestMarket
         public const string item = "qingling-herb", stall = "Market_HerbalStall";
         public const double pullSafeSeconds = 0.8;
         public const int bundleSize = 3;
+        public const int sortBonus = 1;   // a sold bundle whose every plant is the bundle grade earns this much more
         public static readonly string[] grades = { "top", "mid", "low" };   // best first
         public static readonly (string id, string label, int bundlePrice, string look)[] gradeRows =
         {
@@ -47,7 +48,7 @@ namespace YunJing.HarvestMarket
     public sealed class HerbBundle
     {
         public string bin, quality; public List<int> plants = new List<int>(); public List<string> grades = new List<string>();
-        public bool sold; public int coins; public string line = "";
+        public bool sold, sorted; public int coins; public string line = "";
     }
 
     public sealed class HarvestSettlement
@@ -96,9 +97,11 @@ namespace YunJing.HarvestMarket
             void Say(string id) { if (!string.IsNullOrEmpty(id) && !lines.Contains(id)) lines.Add(id); }
             for (int i = 0; i < bundles.Count; i++)
             {
-                var b = bundles[i]; b.sold = sell[i]; b.coins = b.sold ? BundleCoins(b.grades, day) : 0;
+                var b = bundles[i]; b.sold = sell[i];
                 int bin = HarvestContent.Rank(b.bin);
                 bool lower = b.grades.Any(g => HarvestContent.Rank(g) > bin), higher = b.grades.Any(g => HarvestContent.Rank(g) < bin);
+                b.sorted = !lower && !higher;   // clean bundles earn the sort bonus; mixed ones are paid by real grade
+                b.coins = b.sold ? BundleCoins(b.grades, day) + (b.sorted ? HarvestContent.sortBonus : 0) : 0;
                 b.line = !b.sold ? "" : lower ? "mixed-lower" : higher ? "mixed-higher" : "";
             }
             var sold = bundles.Where(b => b.sold).ToList();

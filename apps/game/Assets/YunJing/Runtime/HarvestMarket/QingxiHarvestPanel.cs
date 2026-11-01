@@ -30,6 +30,9 @@ namespace YunJing.HarvestMarket
         public float pullPixels = 170;        // drag distance (reference px) for a full pull
         public float keyPullSeconds = 1.1f;   // holding F; Shift pulls four times faster
         public float liftMeters = .32f;
+        /// Herbs stand in the soil up to the root crown (MK02 roots are 14% of the 0.30 m plant); pulling brings the roots out.
+        public float rootDepth = .045f;
+        public Material soilMat;              // loose soil heaped round each stem (Lit); empty means no mound
 
         public enum Phase { Idle, Pull, Sort, Done }
         public Phase Stage { get; private set; }
@@ -40,7 +43,8 @@ namespace YunJing.HarvestMarket
         public sealed class Plant
         {
             public int index; public string original, grade; public bool pulled, snapped; public float seconds;
-            public Transform root, visual, frame; public Renderer frameRenderer; public float progress;
+            public Transform root, visual, frame; public Renderer frameRenderer; public float progress; public Vector3 baseScale = Vector3.one;
+            public GameObject mound, hole;   // heaped soil round the stem; the hole it leaves once pulled
             public Transform sortItem; public Vector3 sortTarget; public Quaternion sortTurn = Quaternion.identity;
         }
 
@@ -50,8 +54,18 @@ namespace YunJing.HarvestMarket
         public Transform[] trays = new Transform[3], tags = new Transform[3];          // top, mid, low: small sieves and MK03 tags
 
         Canvas canvas; RectTransform hud, sortUi, card; Text hint, toast, cardBody; float toastUntil;
-        Plant active; float pressTime, pressY; bool keyHeld;
+        Plant active; float pressTime; Vector2 pressAt; bool keyHeld;
         Button tieButton; Material frameMat, frameMatOn;
+        // Root timer beside the held herb: fills over pullSafeSeconds, amber while the root still holds, jade once it
+        // has let go. Before that the herb strains (faster wobble, stretch, soil trickling off the root).
+        RectTransform ring; Image ringFill; Text ringStatus; bool ringSafe; float ringPunch, trickle; ParticleSystem strainSoil;
+        // Each herb leans its own way and comes out cleanly only along its lean (screen degrees, + = right); pulling
+        // across it barely moves the herb. An arrow above the selected herb shows the way.
+        static readonly float[] Lean = { 0, -30, 28, -24, 34, 12 };
+        const float AcrossDrag = .7f;   // how much of the sideways drag is lost against the lean
+        Text arrow;
+        // While a herb is held the view leans in over it, then eases back to the whole plot.
+        Vector3 fieldPos; Quaternion fieldRot; bool fieldPoseSet; float focus, shakeUntil; Transform focusHerb;
         static readonly string[] TrayBins = { "top", "mid", "low" };
         readonly Text[] trayNames = new Text[3], trayCounts = new Text[3];
         int picked = -1, down = -1; Vector2 downAt; bool dragging, tied;
@@ -72,10 +86,37 @@ namespace YunJing.HarvestMarket
                 var root = new GameObject($"HerbSlot_{i + 1}").transform; root.SetParent(transform, false); root.localPosition = at;
                 var p = new Plant { index = i, original = grades[i], grade = grades[i], root = root };
                 p.frame = SlotFrame(root, out p.frameRenderer);
-                p.visual = HerbVisual(grades[i], root);
+                p.visual = HerbVisual(grades[i], root); p.baseScale = p.visual.localScale;
+                p.visual.localRotation = LeanTilt(i); p.visual.localPosition = Vector3.down * rootDepth;
+                Mound(p);
                 var hit = root.gameObject.AddComponent<BoxCollider>(); hit.center = new Vector3(0, .25f, 0); hit.size = new Vector3(.6f, .55f, .6f);
                 Plants.Add(p);
             }
+        }
+
+        // A low heap of loose soil round the stem (nine flat, overlapping lumps that read as one heap, not pebbles), and the dark hole that replaces it once the
+        // herb is out. Deterministic per slot, so every run looks the same.
+        void Mound(Plant p)
+        {
+            if (soilMat == null) return;
+            var rnd = new System.Random(17 + p.index * 31);
+            float R(float a, float b) => a + (float)rnd.NextDouble() * (b - a);
+            p.mound = new GameObject("SoilMound"); p.mound.transform.SetParent(p.root, false);
+            for (int k = 0; k < 9; k++)
+            {
+                var lump = GameObject.CreatePrimitive(PrimitiveType.Sphere); Destroy(lump.GetComponent<Collider>());
+                lump.name = "Lump"; lump.transform.SetParent(p.mound.transform, false);
+                float a = k * Mathf.PI * 2 / 8 + R(-.25f, .25f), r = k == 0 ? 0 : R(.03f, .05f), w = k == 0 ? .13f : R(.08f, .11f);
+                lump.transform.localPosition = new Vector3(Mathf.Cos(a) * r, 0, Mathf.Sin(a) * r);
+                lump.transform.localScale = new Vector3(w, k == 0 ? .032f : R(.012f, .022f), w * R(.75f, 1.05f));
+                lump.transform.localRotation = Quaternion.Euler(0, R(0, 180), 0);
+                lump.GetComponent<Renderer>().sharedMaterial = soilMat;
+            }
+            p.hole = GameObject.CreatePrimitive(PrimitiveType.Cylinder); Destroy(p.hole.GetComponent<Collider>());
+            p.hole.name = "PulledHole"; p.hole.transform.SetParent(p.root, false);
+            p.hole.transform.localPosition = new Vector3(0, .003f, 0); p.hole.transform.localScale = new Vector3(.09f, .003f, .09f);
+            var dark = new Material(soilMat); dark.SetColor("_BaseColor", new Color(.16f, .11f, .07f)); p.hole.GetComponent<Renderer>().sharedMaterial = dark;
+            p.hole.SetActive(false);
         }
 
         // 6 green slot frames: placeholder until the core team swaps in A's TY02 herb.
@@ -129,7 +170,9 @@ namespace YunJing.HarvestMarket
         {
             if (Stage != Phase.Idle) return;
             Stage = Phase.Pull; BuildHud(); SelectNext(0);
-            Hint("按住青靈草往上拉。慢慢拉，根才不會斷。");
+            var cam = view != null ? view : Camera.main;
+            if (cam != null) { fieldPos = cam.transform.position; fieldRot = cam.transform.rotation; fieldPoseSet = true; }
+            Hint("按住青靈草，順著箭頭拉。旁邊的圈變綠（根鬆了）再拉到頂。");
             QingxiFirstPerson.Current?.SetMenuOpen(true);
         }
 
@@ -140,8 +183,78 @@ namespace YunJing.HarvestMarket
             HarvestUi.Fixed(hud, new Vector2(.5f, 1), new Vector2(0, -24), new Vector2(980, 96));
             hint = HarvestUi.Label("Hint", hud, "", 32, TextAnchor.MiddleCenter, AlchemyUi.Ink);
             var tb = AlchemyUi.Panel("Toast", canvas.transform, new Vector2(.5f, .5f), new Vector2(.5f, .5f), Vector2.zero, Vector2.zero, AlchemyUi.Shade);
-            HarvestUi.Fixed((RectTransform)tb.transform, new Vector2(.5f, .5f), new Vector2(0, 220), new Vector2(560, 84));
+            HarvestUi.Fixed((RectTransform)tb.transform, new Vector2(.5f, .5f), new Vector2(0, 220), new Vector2(640, 84));
             toast = HarvestUi.Label("Text", tb.transform, "", 34, TextAnchor.MiddleCenter, Color.white); tb.gameObject.SetActive(false);
+
+            ring = AlchemyUi.Rect("RootRing", canvas.transform, new Vector2(.5f, .5f), new Vector2(.5f, .5f), Vector2.zero, Vector2.zero);
+            ring.sizeDelta = new Vector2(120, 120);
+            var back = ring.gameObject.AddComponent<Image>(); back.sprite = HarvestArt.Ring(); back.color = new Color(.1f, .08f, .05f, .55f); back.raycastTarget = false;
+            ringFill = AlchemyUi.Rect("Fill", ring, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero).gameObject.AddComponent<Image>();
+            ringFill.sprite = HarvestArt.Ring(); ringFill.type = Image.Type.Filled; ringFill.fillMethod = Image.FillMethod.Radial360;
+            ringFill.fillOrigin = (int)Image.Origin360.Top; ringFill.fillClockwise = true; ringFill.raycastTarget = false;
+            var glyph = HarvestUi.Label("Glyph", ring, "根", 44, TextAnchor.MiddleCenter, Color.white);
+            glyph.gameObject.AddComponent<Outline>().effectColor = new Color(.1f, .06f, .03f, .9f);
+            ringStatus = HarvestUi.Label("Status", ring, "", 28, TextAnchor.UpperCenter, Color.white);
+            var srt = (RectTransform)ringStatus.transform; srt.anchorMin = srt.anchorMax = new Vector2(.5f, 0); srt.sizeDelta = new Vector2(260, 40); srt.anchoredPosition = new Vector2(0, -26);
+            ringStatus.gameObject.AddComponent<Outline>().effectColor = new Color(.1f, .06f, .03f, .9f);
+            ring.gameObject.SetActive(false);
+
+            arrow = HarvestUi.Label("PullArrow", canvas.transform, "↑", 72, TextAnchor.MiddleCenter, new Color(1f, .95f, .75f));
+            var art = (RectTransform)arrow.transform; art.anchorMin = art.anchorMax = new Vector2(.5f, .5f); art.sizeDelta = new Vector2(100, 100);
+            var edge = arrow.gameObject.AddComponent<Outline>(); edge.effectColor = new Color(.15f, .09f, .04f, .9f); edge.effectDistance = new Vector2(2, -2);
+            arrow.gameObject.SetActive(false);
+        }
+
+        public bool RingShowing => ring != null && ring.gameObject.activeSelf;
+        public bool RingSafe => ringSafe;
+        /// Screen direction a herb comes out along (unit, y up).
+        public Vector2 PullDir(int plant) { float a = Lean[plant % Lean.Length] * Mathf.Deg2Rad; return new Vector2(Mathf.Sin(a), Mathf.Cos(a)); }
+        Quaternion LeanTilt(int plant) => Quaternion.Euler(0, 0, -Lean[plant % Lean.Length] * .6f);   // top toward the pull side
+
+        void UpdateFocus()
+        {
+            var cam = view != null ? view : Camera.main; if (cam == null || !fieldPoseSet) return;
+            if (active != null) focusHerb = active.root;
+            focus = Mathf.Lerp(focus, active != null ? 1 : 0, 1 - Mathf.Exp(-Time.deltaTime * 5));
+            Vector3 pos = fieldPos; Quaternion rot = fieldRot;
+            if (focusHerb != null)
+            {
+                var look = focusHerb.position + Vector3.up * .25f; var near = look + new Vector3(0, 1.55f, -1.6f);
+                pos = Vector3.Lerp(fieldPos, near, focus); rot = Quaternion.Slerp(fieldRot, Quaternion.LookRotation(look - near), focus);
+            }
+            if (Time.time < shakeUntil) pos += UnityEngine.Random.insideUnitSphere * .035f * (shakeUntil - Time.time) / .22f;   // a snapped root jolts the view
+            cam.transform.SetPositionAndRotation(pos, rot);
+        }
+
+        void UpdateArrow()
+        {
+            if (arrow == null) return;
+            var cam = view != null ? view : Camera.main;
+            var p = Stage == Phase.Pull && Selected >= 0 && Selected < Plants.Count ? Plants[Selected] : null;
+            bool show = cam != null && p != null && !p.pulled && (active == null || active == p);
+            arrow.gameObject.SetActive(show); if (!show) return;
+            arrow.transform.position = cam.WorldToScreenPoint(p.root.position + Vector3.up * (.5f + p.progress * liftMeters));
+            arrow.transform.localRotation = Quaternion.Euler(0, 0, -Lean[p.index % Lean.Length]);
+            arrow.transform.localScale = Vector3.one * (1 + .08f * Mathf.Sin(Time.time * 6));
+        }
+
+        void UpdateRing()
+        {
+            UpdateArrow();
+            if (ring == null) return;
+            bool show = Stage == Phase.Pull && active != null && !active.pulled;
+            ring.gameObject.SetActive(show);
+            if (!show) { ringSafe = false; ringPunch = 0; return; }
+            float f = (Time.time - pressTime) / (float)HarvestContent.pullSafeSeconds;
+            if (f >= 1 && !ringSafe) { ringSafe = true; ringPunch = 1; }
+            ringPunch = Mathf.MoveTowards(ringPunch, 0, Time.deltaTime * 4);
+            ringFill.fillAmount = Mathf.Min(1, f);
+            ringFill.color = ringSafe ? new Color(.42f, .93f, .6f) : Color.Lerp(new Color(.95f, .4f, .22f), new Color(1f, .8f, .32f), f);
+            ringStatus.text = ringSafe ? "根鬆了，拉！" : "根還抓著土";
+            ringStatus.color = ringSafe ? new Color(.75f, 1f, .8f) : new Color(1f, .9f, .7f);
+            ring.localScale = Vector3.one * (1 + .35f * ringPunch);
+            var cam = view != null ? view : Camera.main;
+            if (cam != null) ring.position = cam.WorldToScreenPoint(active.root.position + cam.transform.right * .5f + Vector3.up * .25f);
         }
 
         void Hint(string text) { if (hint != null) hint.text = text; }
@@ -157,8 +270,9 @@ namespace YunJing.HarvestMarket
         void Update()
         {
             if (toast != null && toast.transform.parent.gameObject.activeSelf && Time.time > toastUntil) toast.transform.parent.gameObject.SetActive(false);
-            if (Stage == Phase.Pull) UpdatePull();
+            if (Stage == Phase.Pull) { UpdatePull(); UpdateFocus(); }
             else if (Stage == Phase.Sort || tied) UpdateSort();
+            UpdateRing();
         }
 
         void UpdatePull()
@@ -171,11 +285,16 @@ namespace YunJing.HarvestMarket
                 if (pointer.press.wasPressedThisFrame && active == null && Physics.Raycast(cam.ScreenPointToRay(pos), out var hit, 50f))
                 {
                     var p = Plants.FirstOrDefault(x => !x.pulled && hit.collider.transform == x.root);
-                    if (p != null) { active = p; pressTime = Time.time; pressY = pos.y; Selected = p.index; SelectNext(p.index); }
+                    if (p != null) { active = p; pressTime = Time.time; pressAt = pos; Selected = p.index; SelectNext(p.index); }
                 }
                 if (active != null && !keyHeld)
                 {
-                    if (pointer.press.isPressed) SetProgress(active, (pos.y - pressY) / (pullPixels * (canvas != null ? canvas.scaleFactor : 1)));
+                    if (pointer.press.isPressed)
+                    {
+                        // along the lean counts, across it is lost: a herb pulled the wrong way barely moves
+                        Vector2 d = pos - pressAt, dir = PullDir(active.index); float along = Vector2.Dot(d, dir), across = Mathf.Abs(d.x * dir.y - d.y * dir.x);
+                        SetProgress(active, (along - AcrossDrag * across) / (pullPixels * (canvas != null ? canvas.scaleFactor : 1)));
+                    }
                     else { SetProgress(active, 0); active = null; }   // let go early: the herb settles back, nothing lost
                 }
             }
@@ -206,9 +325,23 @@ namespace YunJing.HarvestMarket
         void SetProgress(Plant p, float value)
         {
             p.progress = Mathf.Clamp01(value);
-            p.visual.localPosition = Vector3.up * (p.progress * liftMeters);
-            p.visual.localRotation = Quaternion.Euler(Mathf.Sin(Time.time * 30) * 3 * p.progress, 0, 0);   // a little tug wobble
-            if (p.progress >= 1) Complete(p, Time.time - pressTime);
+            // Before the root lets go the herb fights back: the higher it is pulled that early, the harder it strains.
+            float held = Time.time - pressTime, safe = (float)HarvestContent.pullSafeSeconds;
+            float strain = p.progress > 0 && held < safe ? p.progress * (1 - held / safe) : 0;
+            var way = PullDir(p.index);   // the herb rises along its lean
+            p.visual.localPosition = new Vector3(way.x * .6f, way.y, 0) * (p.progress * liftMeters) + Vector3.down * rootDepth;
+            p.visual.localRotation = LeanTilt(p.index) * Quaternion.Euler(Mathf.Sin(Time.time * (30 + 30 * strain)) * (3 * p.progress + 10 * strain), 0, Mathf.Cos(Time.time * 41) * 7 * strain);
+            p.visual.localScale = Vector3.Scale(p.baseScale, new Vector3(1 - .06f * strain, 1 + .14f * strain, 1 - .06f * strain));
+            if (strain > .15f) Trickle(p.root.position, strain);
+            if (p.progress >= 1) Complete(p, held);
+        }
+
+        void Trickle(Vector3 at, float strain)
+        {
+            if (strainSoil == null) strainSoil = Burst("StrainSoil", at, 0, .7f, .055f, new Color(.66f, .5f, .32f), .6f, 1.4f, false);
+            strainSoil.transform.position = at + Vector3.up * .04f;
+            trickle += strain * Time.deltaTime * 60; int n = (int)trickle; trickle -= n;
+            if (n > 0) strainSoil.Emit(n);
         }
 
         void Complete(Plant p, float seconds)
@@ -216,32 +349,53 @@ namespace YunJing.HarvestMarket
             p.pulled = true; p.seconds = seconds; p.grade = HarvestRules.PullGrade(p.original, seconds); p.snapped = p.grade != p.original;
             active = null; keyHeld = false;
             Debug.Log($"HARVEST_PULL {p.index} {p.original}->{p.grade} {seconds:0.00}s");
-            Toast(p.snapped ? "啪！拉太快，根斷了" : "整株連根拔起", p.snapped ? 1.8f : 1f);
+            Toast(p.snapped ? $"啪！根斷了（{seconds:0.0} 秒，太急）" : $"整株連根拔起（{seconds:0.0} 秒）", p.snapped ? 1.8f : 1.1f);
             StartCoroutine(FlyOff(p));
-            if (Plants.All(x => x.pulled)) StartCoroutine(OpenSortSoon());
+            if (Plants.All(x => x.pulled))
+            {
+                if (Plants.All(x => !x.snapped)) Toast("六株全數完好，一根沒斷！", 1.6f);
+                StartCoroutine(OpenSortSoon());
+            }
             else SelectNext(p.index + 1);
         }
 
         IEnumerator FlyOff(Plant p)
         {
-            if (p.snapped) Crumbs(p.root.position);
+            var at = p.root.position;
+            if (p.mound != null) { p.mound.transform.localScale = new Vector3(1.25f, .55f, 1.25f); p.mound.transform.GetChild(0).gameObject.SetActive(false); p.hole.SetActive(true); }   // the heap spreads round an open hole
+            if (p.snapped)
+            {
+                // Soil bursts, broken root ends fly, the view jolts.
+                // lighter than the plot soil so the burst reads against it from the field view
+                Burst("SnapSoil", at, 40, 2f, .09f, new Color(.66f, .5f, .32f), .8f, 1.2f, true);
+                Burst("SnapRoots", at, 16, 1.6f, .06f, new Color(.95f, .88f, .7f), 1f, 1f, true);
+                shakeUntil = Time.time + .22f;   // UpdateFocus jolts the view
+            }
+            else
+            {
+                // A clean pull: a little soil falls off the whole root ball, the leaves give off a few motes.
+                Burst("PullSoil", at, 10, .6f, .035f, new Color(.42f, .3f, .18f), .5f, 1.2f, true);
+                Burst("PullMotes", at + Vector3.up * (.25f + liftMeters), 14, .55f, .03f, p.grade == "top" ? HarvestArt.Glow : HarvestArt.LeafLight, .7f, -.15f, true);
+            }
             var from = p.visual.localPosition; float t = 0;
-            while (t < .35f) { t += Time.deltaTime; p.visual.localPosition = from + Vector3.up * (t * 1.4f); p.visual.localScale = Vector3.one * (1 - t / .35f); yield return null; }
+            while (t < .35f) { t += Time.deltaTime; p.visual.localPosition = from + Vector3.up * (t * 1.4f); p.visual.localScale = p.baseScale * (1 - t / .35f); yield return null; }
             p.visual.gameObject.SetActive(false);
             p.frame.gameObject.SetActive(false);
         }
 
-        // A puff of soil where a root snapped.
-        void Crumbs(Vector3 at)
+        // A burst of flat-coloured bits at a point (soil, root ends, leaf motes); kept alive when reused by Emit.
+        ParticleSystem Burst(string name, Vector3 at, int count, float speed, float size, Color color, float life, float gravity, bool destroy)
         {
-            var go = new GameObject("SnapSoil"); go.transform.position = at + Vector3.up * .05f;
+            var go = new GameObject(name); go.transform.position = at + Vector3.up * .05f;
             var ps = go.AddComponent<ParticleSystem>(); ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            var main = ps.main; main.duration = .3f; main.loop = false; main.startLifetime = .7f; main.startSpeed = 1.4f; main.startSize = .05f; main.gravityModifier = 1.2f;
-            main.startColor = new Color(.42f, .3f, .18f); main.stopAction = ParticleSystemStopAction.Destroy;
-            var em = ps.emission; em.rateOverTime = 0; em.SetBursts(new[] { new ParticleSystem.Burst(0, 24) });
+            var main = ps.main; main.duration = .3f; main.loop = false; main.startLifetime = life; main.startSpeed = new ParticleSystem.MinMaxCurve(speed * .5f, speed);
+            main.startSize = new ParticleSystem.MinMaxCurve(size * .6f, size); main.gravityModifier = gravity; main.startColor = color;
+            main.simulationSpace = ParticleSystemSimulationSpace.World; main.stopAction = destroy ? ParticleSystemStopAction.Destroy : ParticleSystemStopAction.None;
+            var em = ps.emission; em.rateOverTime = 0; if (count > 0) em.SetBursts(new[] { new ParticleSystem.Burst(0, count) });
             var shape = ps.shape; shape.shapeType = ParticleSystemShapeType.Hemisphere; shape.radius = .08f; shape.rotation = new Vector3(-90, 0, 0);
-            go.GetComponent<ParticleSystemRenderer>().sharedMaterial = Unlit(new Color(.42f, .3f, .18f));
-            ps.Play();
+            go.GetComponent<ParticleSystemRenderer>().sharedMaterial = Unlit(color);
+            if (count > 0) ps.Play();
+            return ps;
         }
 
         IEnumerator OpenSortSoon() { yield return new WaitForSeconds(.8f); OpenSort(); }
@@ -251,7 +405,7 @@ namespace YunJing.HarvestMarket
         {
             Stage = Phase.Sort; Bins = new string[Plants.Count];
             if (rig != null) StartCoroutine(rig.MoveTo(sortView, 1f));
-            Hint("分揀：拿起一株細看，再拖到上品／中品／次品竹匾（也可以點草再點竹匾，或按 1 2 3）。");
+            Hint($"拿起細看，拖進竹匾。整捆同一等級，攤主每捆多給 {HarvestContent.sortBonus} 靈石。");
             sortUi = AlchemyUi.Rect("SortUi", canvas.transform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             sortUi.SetAsFirstSibling();   // under the hint strip and the toast
             for (int k = 0; k < 3; k++)

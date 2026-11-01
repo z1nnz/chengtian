@@ -19,7 +19,7 @@ export interface HarvestInput {
   sell: boolean[];
 }
 export interface Bundle { bin: Grade; plants: number[]; grades: Grade[]; quality: Grade }
-export interface SettledBundle extends Bundle { sold: boolean; coins: number; line: string | null }
+export interface SettledBundle extends Bundle { sold: boolean; coins: number; line: string | null; /** every plant really is the bundle grade */ sorted: boolean }
 export interface HarvestResult {
   plants: Grade[];
   bundles: SettledBundle[];
@@ -82,9 +82,10 @@ export function settle(day: number, bundles: Bundle[], sell: boolean[]): Omit<Ha
   if (!Number.isInteger(day) || day < 1) fail('DAY');
   if (!Array.isArray(sell) || sell.length !== bundles.length || sell.some(s => typeof s !== 'boolean')) fail('SELL_COUNT');
   const settled: SettledBundle[] = bundles.map((b, i) => {
-    const sold = sell[i], coins = sold ? bundleCoins(b.grades, day) : 0;
     const lower = b.grades.some(g => rank(g) > rank(b.bin)), higher = b.grades.some(g => rank(g) < rank(b.bin));
-    return { ...b, sold, coins, line: !sold ? null : lower ? 'mixed-lower' : higher ? 'mixed-higher' : null };
+    // A cleanly sorted bundle earns sortBonus on top; a mixed one is simply paid by real grade (no penalty).
+    const sorted = !lower && !higher, sold = sell[i], coins = sold ? bundleCoins(b.grades, day) + (sorted ? content.sortBonus.perBundle : 0) : 0;
+    return { ...b, sold, coins, sorted, line: !sold ? null : lower ? 'mixed-lower' : higher ? 'mixed-higher' : null };
   });
   const keptCount = new Map<Grade, number>();
   for (const b of settled) if (!b.sold) for (const g of b.grades) keptCount.set(g, (keptCount.get(g) ?? 0) + 1);

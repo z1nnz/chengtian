@@ -104,12 +104,23 @@ namespace YunJing.HarvestMarket
             for (int i = 0; i < 6; i++)
             {
                 var at = PlantOnScreen(i);
-                yield return Drag(at, at + Vector2.up * pullPx, pulls[i]);
-                yield return Wait(.6f);
+                var drag = StartCoroutine(Drag(at, at + field.PullDir(i) * pullPx, pulls[i]));   // along each herb's lean
+                if (i == 0)
+                {
+                    // The root timer beside the herb: amber while the root holds, jade after 0.8 s.
+                    yield return Wait(.45f);
+                    Mark("pull_ring", field.RingShowing && !field.RingSafe, "按住 0.45 s：根計時圈未滿（琥珀色），草繃緊抖動、掉土");
+                    yield return Shot("pull_ring");
+                    yield return Wait(.5f);
+                    Mark("pull_ring_safe", field.RingShowing && field.RingSafe, "按住 0.95 s：圈滿變綠「根鬆了，拉！」");
+                    yield return Shot("pull_ring_safe");
+                }
+                yield return drag;
+                yield return Wait(i == 1 ? .1f : .6f);
                 var p = field.Plants[i];
                 Mark($"pull_{i + 1}", p.pulled && p.grade == HarvestRules.PullGrade(p.original, pulls[i]),
                     $"{HarvestContent.Label(p.original)} → {HarvestContent.Label(p.grade)}，{p.seconds:0.00}s{(p.snapped ? "（斷根）" : "")}");
-                if (i == 1) yield return Shot("pull_snapped");
+                if (i == 1) { yield return Shot("pull_snapped"); yield return Wait(.5f); }
             }
             yield return Wait(2.4f);   // sort opens 0.8 s after the last pull, then the camera moves for 1 s
             Mark("sieve_open", field.Stage == QingxiHarvestPanel.Phase.Sort && field.Plants.All(p => p.sortItem != null), "6 株躺在 MK02 竹篩上（3D 分揀台）");
@@ -139,22 +150,47 @@ namespace YunJing.HarvestMarket
             yield return Tap(stall.ToggleButton(2)); yield return Wait(.6f);
             Mark("keep_one", stall.Sell.SequenceEqual(new[] { true, true, false }), "第三捆改成「留著」");
             yield return Shot("keep_one");
-            yield return Tap(stall.WeighButton); yield return Wait(.9f);   // sheet faded out, counterweight mid-slide
-            Mark("weighing", stall.Weighed, "秤砣滑動 1 秒");
+            yield return Tap(stall.WeighButton); yield return Wait(1.4f);   // view leaned in over the counter, bundles in the pan
+            Mark("weighing", stall.Weighed && stall.Balancing, "鏡頭推近秤與櫃台，草藥捆落進秤盤；秤砣在內側，秤尾翹起");
             yield return Shot("weighing");
-            yield return Wait(1.4f);
-            yield return Shot("coins");
-            yield return Wait(.6f); yield return Shot("coins_on_counter");
+            // Drag the counterweight out past the balance point (the beam droops), then back onto it and let go.
+            var past = stall.BalanceScreen + (stall.BalanceScreen - stall.WeightScreen) * .35f;
+            yield return Drag(stall.WeightScreen, past, .7f);
+            Touch(TouchPhase.Began, past); yield return null; yield return null;
+            Touch(TouchPhase.Moved, past); yield return Wait(.25f);
+            yield return Shot("weigh_droop");
+            for (float t = 0; t < .5f; t += Time.deltaTime) { Touch(TouchPhase.Moved, Vector2.Lerp(past, stall.BalanceScreen, t / .5f)); yield return null; }
+            Touch(TouchPhase.Moved, stall.BalanceScreen); yield return Wait(.15f);
+            Touch(TouchPhase.Ended, stall.BalanceScreen); yield return null;
+            yield return Wait(.3f);
+            Mark("level_reading", stall.Balancing && !stall.AutoWeigh, "第一次手動秤：秤桿平，秤砣上的讀數定在 7 靈石，秤桿上標 2–12 秤星");
+            yield return Shot("weigh_reading");
+            float waitLevel = Time.time + 3; while (!stall.Balanced && Time.time < waitLevel) yield return null;
+            Mark("balanced", stall.Balanced, "拖秤砣過頭（秤尾垂下）再收回平衡點，放手後秤桿平");
+            yield return Wait(1.2f);
+            yield return Shot("coins_flying");   // coin string landed, coins flying up into the count
+            yield return Wait(1.1f); yield return Shot("coins_on_counter");
             float waitDone = Time.time + 12; while (stall.DoneButton == null && Time.time < waitDone) yield return null;
             var s = stall.Last;
-            Mark("settled", s != null && s.totalCoins == 6 && s.lines.SequenceEqual(new[] { "mixed-lower", "demand-bonus", "thanks" }),
+            Mark("settled", s != null && s.totalCoins == 7 && s.lines.SequenceEqual(new[] { "mixed-lower", "demand-bonus", "thanks" }),
                 s == null ? "no result" : $"得 {s.totalCoins}：{string.Join("、", s.bundles.Select(b => $"{HarvestContent.Label(b.bin)}捆 {(b.sold ? b.coins + "" : "留著")}"))}；攤主 {string.Join("／", s.lines)}");
             yield return Shot("keeper");
             yield return Tap(stall.DoneButton); yield return Wait(.6f);
             var sold = HarvestMarketEvents.Log.LastOrDefault(e => e.name == HarvestMarketEvents.MarketSoldName).json;
-            Mark("market_sold", sold != null && sold.Contains("\"totalCoins\":6") && !stall.Open, sold);
-            Mark("kept_in_bag", HarvestCarry.Kept.TryGetValue("mid", out var mid) && mid == 2 && HarvestCarry.Coins == 6, $"留下 中品 {mid} 株；身上 {HarvestCarry.Coins} 靈石");
-            yield return Wait(1.2f);
+            Mark("market_sold", sold != null && sold.Contains("\"totalCoins\":7") && !stall.Open, sold);
+            Mark("kept_in_bag", HarvestCarry.Kept.TryGetValue("mid", out var mid) && mid == 2 && HarvestCarry.Coins == 7, $"留下 中品 {mid} 株；身上 {HarvestCarry.Coins} 靈石");
+
+            // 4. A later sale weighs itself: no touch at all after 秤, the counterweight slides to its reading.
+            yield return Wait(.8f);
+            HarvestCarry.Bundles = HarvestRules.BundleUp(new[] { "mid", "mid" }, new[] { "mid", "mid" });
+            stall.Show(); yield return Wait(1f);
+            yield return Tap(stall.WeighButton);
+            float autoFrom = Time.time, autoUntil = Time.time + 8;
+            while (!stall.Balanced && Time.time < autoUntil) yield return null;
+            Mark("auto_weigh", stall.AutoWeigh && stall.Balanced && stall.Last.totalCoins == 4, $"第二次賣（2 株中品）：按秤後不碰，{Time.time - autoFrom:0.0} s 自己秤平，得 {stall.Last?.totalCoins}");
+            yield return Wait(.3f); yield return Shot("auto_weigh");
+            waitDone = Time.time + 12; while (stall.DoneButton == null && Time.time < waitDone) yield return null;
+            yield return Tap(stall.DoneButton); yield return Wait(1f);
             capturing = false; yield return Wait(.3f);
             report.frames = frame; report.pass = report.steps.All(x => x.pass);
             File.WriteAllText(Path.Combine(outDir, "harvest-playtest.json"), JsonUtility.ToJson(report, true));

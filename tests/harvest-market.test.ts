@@ -47,7 +47,8 @@ test('a plant on the wrong bundle is paid by its real grade, and the stall keepe
   assert.equal(hidden.bundles[0].line, 'mixed-higher');
   // Correctly sorted bundles say nothing about mixing.
   const clean = settle(day, bundleUp(['mid', 'mid', 'mid'], ['mid', 'mid', 'mid']), [true]);
-  assert.equal(clean.bundles[0].line, null); assert.equal(clean.totalCoins, 3);
+  assert.equal(clean.bundles[0].line, null); assert.equal(clean.totalCoins, 3 + c.sortBonus.perBundle, 'a clean bundle earns the sort bonus');
+  assert.ok(clean.bundles[0].sorted && !mixed.bundles[0].sorted && !hidden.bundles[0].sorted);
 });
 
 test('a bundle short of 3 plants is paid pro rata, rounded up', () => {
@@ -72,13 +73,26 @@ test('day 4 pays +1 per qingling bundle, day 5 does not', () => {
   assert.equal(demandBonus(4, 'lotus-herb'), 0);
   const careful = { fieldId: FIELD, pullSeconds: Array(6).fill(SLOW), bins: fieldPlants(FIELD), sell: [true, true, true] };
   const d4 = runHarvestMarket({ ...careful, day: 4 }), d5 = runHarvestMarket({ ...careful, day: 5 });
-  // top 2 plants, mid 3, low 1: 5*2/3→4, 3, 2*1/3→1  (day 5) — and each plant earns a third of the +1 on day 4.
-  assert.deepEqual(d5.bundles.map(b => b.coins), [4, 3, 1]);
-  assert.deepEqual(d4.bundles.map(b => b.coins), [Math.ceil(12 / 3), 4, 1]);
-  assert.equal(d4.totalCoins, 9); assert.equal(d5.totalCoins, 8);
+  // top 2 plants, mid 3, low 1: 5*2/3→4, 3, 2*1/3→1  (day 5) — and each plant earns a third of the +1 on day 4;
+  // all three bundles are cleanly sorted, so each also earns the sort bonus.
+  const sb = c.sortBonus.perBundle;
+  assert.deepEqual(d5.bundles.map(b => b.coins), [4 + sb, 3 + sb, 1 + sb]);
+  assert.deepEqual(d4.bundles.map(b => b.coins), [Math.ceil(12 / 3) + sb, 4 + sb, 1 + sb]);
+  assert.equal(d4.totalCoins, 9 + 3 * sb); assert.equal(d5.totalCoins, 8 + 3 * sb);
   assert.ok(d4.lines.includes('demand-bonus')); assert.ok(!d5.lines.includes('demand-bonus'));
   // A full top bundle on day 4 is worth 5 + 1, better than the shop's qingling-bundle at 4.
   assert.equal(bundleCoins(['top', 'top', 'top'], 4), 6);
+});
+
+test('careful sorting pays more, careless sorting never pays less than the real grades', () => {
+  const pulls = Array(6).fill(SLOW), plants = harvest(FIELD, pulls);
+  const careful = settle(5, bundleUp(plants, plants), [true, true, true]);
+  const dumped = settle(5, bundleUp(plants, Array(6).fill('mid')), [true, true]);
+  assert.ok(careful.bundles.every(b => b.sorted));
+  assert.ok(careful.totalCoins > dumped.totalCoins, `careful ${careful.totalCoins} > dumped ${dumped.totalCoins}`);
+  // Dumped bundles (field order: mid top low | mid top mid) are still paid by every plant's real grade, rounded up.
+  assert.deepEqual(dumped.bundles.map(b => b.coins), [Math.ceil((3 + 5 + 2) / 3), Math.ceil((3 + 5 + 3) / 3)]);
+  assert.ok(c.sortBonus.perBundle > 0);
 });
 
 test('keeping everything pays 0 and every plant stays in the bag', () => {
@@ -109,15 +123,15 @@ test('the recorded run: one rushed pull, one misplaced plant, sell two bundles a
   });
   assert.deepEqual(r.plants, ['mid', 'mid', 'low', 'mid', 'top', 'mid']);
   assert.deepEqual(r.bundles.map(b => [b.bin, b.grades.join('+'), b.sold, b.coins]), [
-    ['top', 'top', true, 2], ['mid', 'mid+mid+low', true, 4], ['mid', 'mid+mid', false, 0],
-  ]);
-  assert.equal(r.totalCoins, 6);
+    ['top', 'top', true, 3], ['mid', 'mid+mid+low', true, 4], ['mid', 'mid+mid', false, 0],
+  ]);   // the lone top is cleanly sorted (2 + 1); the mixed mid bundle gets no bonus but loses nothing
+  assert.equal(r.totalCoins, 7);
   assert.deepEqual(r.kept, [{ item: 'qingling-herb', quality: 'mid', quantity: 2 }]);
   assert.deepEqual(r.lines, ['mixed-lower', 'demand-bonus', 'thanks']);
   assert.deepEqual(r.events['harvest.completed'], { fieldId: FIELD, plants: r.plants.map(quality => ({ quality })) });
   assert.deepEqual(r.events['market.sold'], {
-    day: 4, totalCoins: 6,
-    bundles: [{ quality: 'top', sold: true, coins: 2 }, { quality: 'low', sold: true, coins: 4 }, { quality: 'mid', sold: false, coins: 0 }],
+    day: 4, totalCoins: 7,
+    bundles: [{ quality: 'top', sold: true, coins: 3 }, { quality: 'low', sold: true, coins: 4 }, { quality: 'mid', sold: false, coins: 0 }],
   });
 });
 
@@ -142,6 +156,7 @@ test('the C# port carries the same content', async () => {
   assert.ok(cs.includes(`item = "${c.item}"`));
   for (const g of c.grades) assert.ok(cs.includes(`("${g.id}", "${g.label}", ${g.bundlePrice}, "${c.looks[g.look as keyof typeof c.looks]}")`), `grade ${g.id}`);
   for (const f of c.fields) assert.ok(cs.includes(`("${f.id}", new[] { ${f.plants.map(p => `"${p}"`).join(', ')} })`), `field ${f.id}`);
+  assert.ok(cs.includes(`sortBonus = ${c.sortBonus.perBundle};`), 'sort bonus');
   for (const d of c.dailyDemand) assert.ok(cs.includes(`(${d.day}, "${d.item}", ${d.bonusPerBundle})`), `demand day ${d.day}`);
   for (const l of c.lines) assert.ok(cs.includes(`("${l.id}", "${l.text}")`), `line ${l.id}`);
 });

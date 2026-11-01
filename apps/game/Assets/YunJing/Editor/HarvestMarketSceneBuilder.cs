@@ -53,8 +53,16 @@ namespace YunJing.Editor
             // --- field: A's TY01 slot stand-in, 2.6 × 3.4 m of tilled soil with the harvest panel at its centre
             var fieldAt = new Vector3(-3.4f, 0, .6f);
             Box(world, "Placeholder_FieldSoil_TY01", fieldAt + new Vector3(0, .03f, 0), new Vector3(2.6f, .06f, 3.4f), Flat("Graybox_Soil", new Color(.3f, .22f, .15f), .05f));
-            var fieldGo = new GameObject("TY_Field01"); fieldGo.transform.SetParent(world); fieldGo.transform.position = fieldAt + new Vector3(0, .06f, 0);
+            // Two raised planting ridges, one per herb column (±0.65 m), so the herbs grow out of a bed, not a flat slab.
+            const float ridge = .05f;
+            foreach (var x in new[] { -.65f, .65f })
+            {
+                var bed = Box(world, $"Placeholder_FieldRidge_{(x < 0 ? "L" : "R")}", fieldAt + new Vector3(x, .06f + ridge / 2, 0), new Vector3(.74f, ridge, 3.2f), Flat("Graybox_SoilRidge", new Color(.34f, .25f, .17f), .05f));
+                UnityEngine.Object.DestroyImmediate(bed.GetComponent<Collider>());
+            }
+            var fieldGo = new GameObject("TY_Field01"); fieldGo.transform.SetParent(world); fieldGo.transform.position = fieldAt + new Vector3(0, .06f + ridge, 0);
             var field = fieldGo.AddComponent<QingxiHarvestPanel>();
+            field.soilMat = Flat("Soil_Loose", new Color(.27f, .19f, .12f), .12f);
             field.topPlant = HerbPrefab("top"); field.midPlant = HerbPrefab("mid"); field.lowPlant = HerbPrefab("low");
 
             var mk02 = Place("MK02_HarvestSieve", "MK02_SieveAndBundles", world, fieldAt + new Vector3(2.0f, 0, -2.1f), 200);
@@ -104,6 +112,21 @@ namespace YunJing.Editor
             var sellGo = new GameObject("Market_HerbalStall_Sell"); sellGo.transform.SetParent(world);
             var sell = sellGo.AddComponent<QingxiMarketSellPanel>();
             sell.scaleWeight = weight; sell.weightMin = 0; sell.weightMax = .5f; sell.coinDrop = counter.transform; sell.coinStringPrefab = coinString;
+            // What is being weighed: one MK02 bundle per grade, hidden until the sold bundles drop into the MK01 pan.
+            // SOCKET_pan is where the cords hang from; the bundles lie in the bowl, so use the Pan mesh bounds.
+            var panBowl = Bounds(mk01.GetComponentsInChildren<Transform>(true).First(t => t.name == "MK01_Steelyard_Pan" && t.GetComponent<LODGroup>() != null).gameObject, "_LOD0");
+            var panLoad = new GameObject("PanLoad").transform; panLoad.SetParent(mk01.transform, false);
+            panLoad.SetPositionAndRotation(new Vector3(panBowl.center.x, panBowl.min.y, panBowl.center.z), stall.transform.rotation);
+            var panBins = new[] { ("top", "_BundleTop"), ("mid", "_BundleMid"), ("low", "_BundleLow") };
+            for (int k = 0; k < 3; k++)
+            {
+                var b = PieceCopy("MK02_HarvestSieve", panBins[k].Item2, "Pan_Bundle_" + panBins[k].Item1, panLoad, Vector3.zero);
+                b.transform.localRotation = Quaternion.Euler(0, (k - 1) * 18, 90); b.transform.localScale = Vector3.one * .55f;   // lying across the bowl
+                var lay = Bounds(b, "_LOD0");   // centre it in the bowl, resting a little above the bowl floor, stacked by grade
+                b.transform.position += new Vector3(panBowl.center.x - lay.center.x, panBowl.min.y + .012f + k * .012f - lay.min.y, panBowl.center.z - lay.center.z);
+                Report.Add($"Pan bundle {panBins[k].Item1}: {lay.size.x:0.00}×{lay.size.y:0.00}×{lay.size.z:0.00} m in a {panBowl.size.x:0.00} m pan");
+                b.SetActive(false); sell.panBundles[k] = b;
+            }
 
             // --- a 1.75 m post where the keeper stands, only for scale in screenshots (no NPC)
             var post = GameObject.CreatePrimitive(PrimitiveType.Capsule); post.name = "Placeholder_Keeper175"; post.transform.SetParent(stall.transform, false);
@@ -118,7 +141,11 @@ namespace YunJing.Editor
             var fieldView = View("View_Field", world, fieldAt + new Vector3(0, 3.6f, -3.3f), fieldAt + new Vector3(0, 0, .25f));
             var stallView = View("View_Stall", world, stall.transform.position + new Vector3(-.15f, 1.85f, -2.7f), stall.transform.position + new Vector3(-.15f, 1.3f, 0));
             var sortView = View("View_Sort", world, stationAt + new Vector3(.06f, 1.24f, -.7f), stationAt + new Vector3(.06f, 0, -.04f));
-            rig.views = new[] { fieldView, stallView, sortView }; field.rig = rig; field.sortView = 2;
+            // weighing close-up: leans in over the counter so the counterweight and the coin string fill the frame
+            var weighLook = Vector3.Lerp(weight.position, counter.transform.position, .5f) + Vector3.up * .12f;   // beam low enough that the stars and reading clear the top strip
+            var weighView = View("View_Weigh", world, weighLook + new Vector3(0, .5f, -1.3f), weighLook);
+            rig.views = new[] { fieldView, stallView, sortView, weighView }; field.rig = rig; field.sortView = 2;
+            sell.rig = rig; sell.weighView = 3; sell.steelyard = mk01.transform; sell.hook = Find(mk01.transform, "SOCKET_hook");
             cameraGo.transform.SetPositionAndRotation(fieldView.position, fieldView.rotation);
             field.view = camera;
             BuildLighting(world);
@@ -404,7 +431,7 @@ namespace YunJing.Editor
         // ---------------------------------------------------------------- batch entry points
 
         [Serializable] class Kept { public string item, quality; public int quantity; }
-        [Serializable] class FixBundle { public string bin, quality, line; public string[] grades; public bool sold; public int coins; }
+        [Serializable] class FixBundle { public string bin, quality, line; public string[] grades; public bool sold, sorted; public int coins; }
         [Serializable] class FixCase { public string name, fieldId; public int day; public double[] pullSeconds; public string[] bins, plants, lines; public bool[] sell; public FixBundle[] bundles; public int totalCoins; public Kept[] kept; }
         [Serializable] class Fixture { public FixCase[] cases; }
 
@@ -424,8 +451,8 @@ namespace YunJing.Editor
                 for (int i = 0; i < c.bundles.Length; i++)
                 {
                     var a = s.bundles[i]; var e = c.bundles[i];
-                    if (a.bin != e.bin || a.quality != e.quality || a.sold != e.sold || a.coins != e.coins || (a.line ?? "") != (e.line ?? "") || !a.grades.SequenceEqual(e.grades))
-                        throw new InvalidDataException($"{c.name} bundle {i}: {a.bin}/{a.quality}/{a.sold}/{a.coins}/{a.line} != {e.bin}/{e.quality}/{e.sold}/{e.coins}/{e.line}");
+                    if (a.bin != e.bin || a.quality != e.quality || a.sold != e.sold || a.sorted != e.sorted || a.coins != e.coins || (a.line ?? "") != (e.line ?? "") || !a.grades.SequenceEqual(e.grades))
+                        throw new InvalidDataException($"{c.name} bundle {i}: {a.bin}/{a.quality}/{a.sold}/{a.sorted}/{a.coins}/{a.line} != {e.bin}/{e.quality}/{e.sold}/{e.sorted}/{e.coins}/{e.line}");
                 }
                 if (s.totalCoins != c.totalCoins) throw new InvalidDataException($"{c.name}: total {s.totalCoins} != {c.totalCoins}");
                 if (!s.lines.SequenceEqual(c.lines)) throw new InvalidDataException($"{c.name}: lines {string.Join(",", s.lines)} != {string.Join(",", c.lines)}");

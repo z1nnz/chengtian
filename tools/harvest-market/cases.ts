@@ -21,7 +21,7 @@ export const harvestTraceCases = () => harvestCases.map(c => {
   return {
     name: c.name, ...c.input,
     plants: r.plants,
-    bundles: r.bundles.map(b => ({ bin: b.bin, grades: b.grades, quality: b.quality, sold: b.sold, coins: b.coins, line: b.line ?? '' })),
+    bundles: r.bundles.map(b => ({ bin: b.bin, grades: b.grades, quality: b.quality, sold: b.sold, coins: b.coins, line: b.line ?? '', sorted: b.sorted })),
     totalCoins: r.totalCoins, kept: r.kept, lines: r.lines,
   };
 });

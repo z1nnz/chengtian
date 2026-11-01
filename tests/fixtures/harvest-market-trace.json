@@ -42,8 +42,9 @@
      ],
      "quality": "top",
      "sold": true,
-     "coins": 4,
-     "line": ""
+     "coins": 5,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "mid",
@@ -54,8 +55,9 @@
      ],
      "quality": "mid",
      "sold": true,
-     "coins": 4,
-     "line": ""
+     "coins": 5,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "low",
@@ -64,11 +66,12 @@
      ],
      "quality": "low",
      "sold": true,
-     "coins": 1,
-     "line": ""
+     "coins": 2,
+     "line": "",
+     "sorted": true
     }
    ],
-   "totalCoins": 9,
+   "totalCoins": 12,
    "kept": [],
    "lines": [
     "demand-bonus",
@@ -117,8 +120,9 @@
      ],
      "quality": "top",
      "sold": true,
-     "coins": 4,
-     "line": ""
+     "coins": 5,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "mid",
@@ -129,8 +133,9 @@
      ],
      "quality": "mid",
      "sold": true,
-     "coins": 3,
-     "line": ""
+     "coins": 4,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "low",
@@ -139,11 +144,12 @@
      ],
      "quality": "low",
      "sold": true,
-     "coins": 1,
-     "line": ""
+     "coins": 2,
+     "line": "",
+     "sorted": true
     }
    ],
-   "totalCoins": 8,
+   "totalCoins": 11,
    "kept": [],
    "lines": [
     "thanks"
@@ -190,8 +196,9 @@
      ],
      "quality": "top",
      "sold": true,
-     "coins": 2,
-     "line": ""
+     "coins": 3,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "mid",
@@ -203,7 +210,8 @@
      "quality": "low",
      "sold": true,
      "coins": 4,
-     "line": "mixed-lower"
+     "line": "mixed-lower",
+     "sorted": false
     },
     {
      "bin": "mid",
@@ -214,10 +222,11 @@
      "quality": "mid",
      "sold": false,
      "coins": 0,
-     "line": ""
+     "line": "",
+     "sorted": true
     }
    ],
-   "totalCoins": 6,
+   "totalCoins": 7,
    "kept": [
     {
      "item": "qingling-herb",
@@ -273,8 +282,9 @@
      ],
      "quality": "mid",
      "sold": true,
-     "coins": 3,
-     "line": ""
+     "coins": 4,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "low",
@@ -285,8 +295,9 @@
      ],
      "quality": "low",
      "sold": true,
-     "coins": 3,
-     "line": ""
+     "coins": 4,
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "low",
@@ -295,11 +306,12 @@
      ],
      "quality": "low",
      "sold": true,
-     "coins": 1,
-     "line": ""
+     "coins": 2,
+     "line": "",
+     "sorted": true
     }
    ],
-   "totalCoins": 7,
+   "totalCoins": 10,
    "kept": [],
    "lines": [
     "demand-bonus",
@@ -349,7 +361,8 @@
      "quality": "top",
      "sold": false,
      "coins": 0,
-     "line": ""
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "mid",
@@ -361,7 +374,8 @@
      "quality": "mid",
      "sold": false,
      "coins": 0,
-     "line": ""
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "low",
@@ -371,7 +385,8 @@
      "quality": "low",
      "sold": false,
      "coins": 0,
-     "line": ""
+     "line": "",
+     "sorted": true
     }
    ],
    "totalCoins": 0,
@@ -439,7 +454,8 @@
      "quality": "low",
      "sold": true,
      "coins": 5,
-     "line": "mixed-lower"
+     "line": "mixed-lower",
+     "sorted": false
     },
     {
      "bin": "top",
@@ -451,7 +467,8 @@
      "quality": "mid",
      "sold": true,
      "coins": 5,
-     "line": "mixed-lower"
+     "line": "mixed-lower",
+     "sorted": false
     }
    ],
    "totalCoins": 10,
@@ -505,7 +522,8 @@
      "quality": "top",
      "sold": false,
      "coins": 0,
-     "line": ""
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "mid",
@@ -517,7 +535,8 @@
      "quality": "mid",
      "sold": false,
      "coins": 0,
-     "line": ""
+     "line": "",
+     "sorted": true
     },
     {
      "bin": "low",
@@ -526,11 +545,12 @@
      ],
      "quality": "low",
      "sold": true,
-     "coins": 1,
-     "line": ""
+     "coins": 2,
+     "line": "",
+     "sorted": true
     }
    ],
-   "totalCoins": 1,
+   "totalCoins": 2,
    "kept": [
     {
      "item": "qingling-herb",

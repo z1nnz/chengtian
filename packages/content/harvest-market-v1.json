@@ -19,6 +19,7 @@
     "look.low": "葉子有破洞，邊緣發黃"
   },
   "bundleSize": 3,
+  "sortBonus": { "perBundle": 1, "note": "A sold bundle whose every plant really is the bundle grade earns this much more. A reward for careful sorting, never a penalty: mixed bundles still pay by real grade." },
   "dailyDemand": [
     { "day": 4, "item": "qingling-herb", "bonusPerBundle": 1 }
   ],
