@@ -1,0 +1,417 @@
+{
+ "source": "tools/zhuo-boar/zhuo-boar-rules.mjs (Johnnnny0823)",
+ "runs": [
+  {
+   "name": "cleanse-60fps",
+   "step": 0.016666666666666666,
+   "frames": 2401,
+   "inputs": [
+    {
+     "frame": 1,
+     "px": -4.937043,
+     "pz": 0.828697,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 161,
+     "px": -2.467058,
+     "pz": 2.666178,
+     "held": true,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 311,
+     "px": 5.498503,
+     "pz": 3.066992,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 475,
+     "px": 4.126357,
+     "pz": 2.960943,
+     "held": true,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 565,
+     "px": 5.498503,
+     "pz": 3.066992,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    }
+   ],
+   "log": [
+    "0.816667:telegraph",
+    "2.025:charge",
+    "2.641667:daze:D3_BoarTree_01",
+    "4.141667:cleanse:1",
+    "5.141667:alert",
+    "5.941667:telegraph",
+    "7.141667:charge",
+    "7.875:daze:D3_BoarTree_02",
+    "9.383333:cleanse:2",
+    "9.383333:zhuoBoar.cleansed",
+    "14.883333:gone"
+   ],
+   "state": "cleansed",
+   "x": -17.923643,
+   "z": 2.960943,
+   "yaw": -1.570796,
+   "hits": 0,
+   "cleanses": 2,
+   "stamina": 40
+  },
+  {
+   "name": "cleanse-30fps",
+   "step": 0.03333333333333333,
+   "frames": 1200,
+   "inputs": [
+    {
+     "frame": 1,
+     "px": -4.937043,
+     "pz": 0.828697,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 81,
+     "px": -2.467058,
+     "pz": 2.666178,
+     "held": true,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 157,
+     "px": 5.498503,
+     "pz": 3.066992,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 239,
+     "px": 4.126357,
+     "pz": 2.960943,
+     "held": true,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 284,
+     "px": 5.498503,
+     "pz": 3.066992,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    }
+   ],
+   "log": [
+    "0.833333:telegraph",
+    "2.033333:charge",
+    "2.633333:daze:D3_BoarTree_01",
+    "4.158333:cleanse:1",
+    "5.158333:alert",
+    "5.958333:telegraph",
+    "7.158333:charge",
+    "7.891667:daze:D3_BoarTree_02",
+    "9.391667:cleanse:2",
+    "9.391667:zhuoBoar.cleansed",
+    "14.925:gone"
+   ],
+   "state": "cleansed",
+   "x": -17.923643,
+   "z": 2.960943,
+   "yaw": -1.570796,
+   "hits": 0,
+   "cleanses": 2,
+   "stamina": 40
+  },
+  {
+   "name": "three-hits-then-return",
+   "step": 0.016666666666666666,
+   "frames": 3001,
+   "inputs": [
+    {
+     "frame": 1,
+     "px": 0,
+     "pz": 4,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 191,
+     "px": 0,
+     "pz": -6.125,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 462,
+     "px": 0,
+     "pz": -6.2,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 733,
+     "px": 0,
+     "pz": -6.275,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 1005,
+     "px": 0,
+     "pz": -6.35,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 1277,
+     "px": 0,
+     "pz": -6.425,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 1550,
+     "px": 0,
+     "pz": -6.5,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 1822,
+     "px": 0,
+     "pz": -6.575,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 2094,
+     "px": 0,
+     "pz": -6.65,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 2406,
+     "px": 0,
+     "pz": -12.725,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 2618,
+     "px": 0,
+     "pz": -12.8,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 2830,
+     "px": 0,
+     "pz": -12.875,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    }
+   ],
+   "log": [
+    "0.816667:telegraph",
+    "2.025:charge",
+    "2.258333:hit:1",
+    "3.141667:daze:D3_BoarTree_03",
+    "5.641667:alert",
+    "6.441667:telegraph",
+    "7.641667:charge",
+    "7.658333:daze:D3_BoarTree_03",
+    "10.166667:alert",
+    "10.966667:telegraph",
+    "12.183333:charge",
+    "12.183333:daze:D3_BoarTree_03",
+    "14.7:alert",
+    "15.5:telegraph",
+    "16.716667:charge",
+    "16.716667:daze:D3_BoarTree_03",
+    "19.233333:alert",
+    "20.033333:telegraph",
+    "21.25:charge",
+    "21.25:daze:D3_BoarTree_03",
+    "23.758333:alert",
+    "24.575:telegraph",
+    "25.775:charge",
+    "25.791667:daze:D3_BoarTree_03",
+    "28.291667:alert",
+    "29.108333:telegraph",
+    "30.308333:charge",
+    "30.325:daze:D3_BoarTree_03",
+    "32.825:alert",
+    "33.641667:telegraph",
+    "34.841667:charge",
+    "34.858333:daze:D3_BoarTree_03",
+    "37.358333:alert",
+    "38.175:telegraph",
+    "39.375:charge",
+    "39.608333:hit:2",
+    "40.058333:brake",
+    "41.558333:alert",
+    "42.375:telegraph",
+    "43.575:charge",
+    "43.591667:brake",
+    "45.091667:alert",
+    "45.908333:telegraph",
+    "47.108333:charge",
+    "47.125:brake",
+    "48.625:alert",
+    "49.441667:telegraph"
+   ],
+   "state": "telegraph",
+   "x": 0,
+   "z": -9.875,
+   "yaw": 3.141593,
+   "hits": 2,
+   "cleanses": 0,
+   "stamina": 10
+  },
+  {
+   "name": "dodging",
+   "step": 0.022222222222222223,
+   "frames": 901,
+   "inputs": [
+    {
+     "frame": 1,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 116,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": true,
+     "dx": 1,
+     "dz": 0
+    },
+    {
+     "frame": 141,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 350,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": true,
+     "dx": 1,
+     "dz": 0
+    },
+    {
+     "frame": 375,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    },
+    {
+     "frame": 606,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": true,
+     "dx": 1,
+     "dz": 0
+    },
+    {
+     "frame": 622,
+     "px": 0,
+     "pz": 0,
+     "held": false,
+     "hasDodge": false,
+     "dx": 0,
+     "dz": 0
+    }
+   ],
+   "log": [
+    "0.816667:telegraph",
+    "2.016667:charge",
+    "2.55:dodge",
+    "2.883333:hit:1",
+    "3.15:daze:D3_BoarTree_03",
+    "5.641667:alert",
+    "6.441667:telegraph",
+    "7.641667:charge",
+    "7.75:dodge",
+    "8.083333:hit:2",
+    "9.083333:brake",
+    "10.591667:alert",
+    "11.391667:telegraph",
+    "12.616667:charge",
+    "13.441667:dodge",
+    "13.775:hit:3",
+    "13.775:zhuoBoar.escaped",
+    "17.283333:gone"
+   ],
+   "state": "escaped",
+   "x": 8.055486,
+   "z": -20.247664,
+   "yaw": 2.748894,
+   "hits": 3,
+   "cleanses": 0,
+   "stamina": 1
+  }
+ ]
+}
