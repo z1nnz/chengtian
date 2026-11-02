@@ -620,6 +620,7 @@ namespace YunJing.Editor
             foreach (var p in all)
             {
                 if (p.Needed) { PlannedSlot(root, p); needed++; continue; }
+                if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Ensure(p.model);   // #57 ruins, #62 day 3-4 models
                 var source = AssetDatabase.LoadAssetAtPath<GameObject>(p.model);
                 if (source == null) throw new FileNotFoundException("Village placement model missing (Git LFS pulled?)", p.model);
                 var model = (GameObject)PrefabUtility.InstantiatePrefab(source);
@@ -627,6 +628,7 @@ namespace YunJing.Editor
                 model.transform.SetParent(root, false);
                 // PR #45 pieces: LOD group and their own convex collision shells.
                 if (QingxiWaterheadA.Owns(p.model)) QingxiWaterheadA.Prepare(model, walkable: false);
+                if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Prepare(model, p.model);
                 // Layout proxies (the 3 × 5 m plate under Eli-0731's assembled corner) mark an area, they are not ground.
                 foreach (var proxy in model.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("layout_proxy")).ToArray())
                     UnityEngine.Object.DestroyImmediate(proxy.gameObject);
@@ -638,6 +640,7 @@ namespace YunJing.Editor
                 if (renderers.Length == 0) throw new InvalidDataException("No renderer in " + p.model);
                 var b = renderers[0].bounds; foreach (var r in renderers) b.Encapsulate(r.bounds);
                 model.transform.position += Vector3.up * (At(p.x, p.z).y - b.min.y);
+                model.transform.position -= Vector3.up * p.sink;   // pieces built to sit partly underground (a well shaft)
                 if (p.collider == "box")
                 {
                     b = renderers[0].bounds; foreach (var r in renderers) b.Encapsulate(r.bounds);

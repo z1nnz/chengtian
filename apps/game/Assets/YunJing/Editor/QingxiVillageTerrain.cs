@@ -29,7 +29,7 @@ namespace YunJing.Editor
         public class Placement
         {
             public string id, role, model, author, collider, block, zone, owner, status, phase, note;
-            public float x, z, yaw, scale;
+            public float x, z, yaw, scale, sink;
             public float[] footprint;
             public bool Needed => status == "needed" || string.IsNullOrEmpty(model);
         }
@@ -59,7 +59,7 @@ namespace YunJing.Editor
             public Checkpoint[] checkpoints;
             public string[] route;
             public Placement[] placements;
-            public Placement[] crossingSlots;   // slots off the pads (bridges over the creek)
+            public Placement[] crossingSlots;   // slots off the pads: on or beside the creek (bridges, the D3 weir, bank stones)
             public Herb[] herbs;
             public FortuneSpot[] fortunes;   // 機緣 (K4): hidden finds, never on the map
             public Creek creek;

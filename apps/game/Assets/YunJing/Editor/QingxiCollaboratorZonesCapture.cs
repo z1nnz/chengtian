@@ -162,6 +162,47 @@ namespace YunJing.Editor
             Debug.Log($"QINGXI_UPSTREAM_CAPTURED to {dir}");
         }
 
+        // The pieces from PRs #57 (ruins kit) and #62 (day 3-4 models) in their slots. Output: artifacts/qingxi-delivered-2026-11-02/*.png
+        public static void CaptureDelivered()
+        {
+            EditorSceneManager.OpenScene(QingxiNoviceVillageBuilder.ScenePath);
+            foreach (var id in new[] { "A2", "D3" }) EditorSceneManager.OpenScene(QingxiBlockBuilder.ScenePath(id), OpenSceneMode.Additive);
+            Physics.SyncTransforms();
+            var dir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "..", "artifacts", "qingxi-delivered-2026-11-02"));
+            Directory.CreateDirectory(dir);
+            var camera = new GameObject("Review Camera").AddComponent<Camera>();
+            camera.fieldOfView = 55; camera.nearClipPlane = .05f; camera.farClipPlane = 400;
+            UnityEngine.Rendering.Universal.CameraExtensions.GetUniversalAdditionalCameraData(camera).renderPostProcessing = true;
+            var target = new RenderTexture(1600, 900, 24) { antiAliasing = 4 };
+            camera.targetTexture = target;
+            Vector3 Lift(Vector3 p)
+            {
+                var hits = Physics.RaycastAll(new Vector3(p.x, 200, p.z), Vector3.down, 400).Where(h => !h.collider.isTrigger).ToArray();
+                return p + Vector3.up * (hits.Length > 0 ? hits.Max(h => h.point.y) : 0);
+            }
+            void Shot(string file, Vector3 from, Vector3 at)
+            {
+                camera.transform.position = Lift(from); camera.transform.LookAt(Lift(at)); camera.Render();
+                RenderTexture.active = target;
+                var image = new Texture2D(target.width, target.height, TextureFormat.RGB24, false);
+                image.ReadPixels(new Rect(0, 0, target.width, target.height), 0, 0); image.Apply();
+                File.WriteAllBytes(Path.Combine(dir, file + ".png"), image.EncodeToPNG());
+                RenderTexture.active = null; Object.DestroyImmediate(image);
+            }
+            Shot("00-warmup", new Vector3(-110, 3, 116), new Vector3(-118, 1, 125));
+            Shot("01-weir-downstream", new Vector3(-110.2f, 3, 115.9f), new Vector3(-118, 1, 125));
+            Shot("02-weir-eye", new Vector3(-113.5f, 1.7f, 119.5f), new Vector3(-118, 1.5f, 125));
+            Shot("03-warm-stones", new Vector3(-64.2f, 1.3f, 80.6f), new Vector3(-67.8f, .2f, 84.7f));
+            Shot("04-water-mark", new Vector3(-107.4f, 1.5f, 121.2f), new Vector3(-110.6f, .6f, 124.1f));
+            Shot("05-drawing-stone", new Vector3(-111.2f, 1.5f, 100.4f), new Vector3(-113.3f, .1f, 102.2f));
+            Shot("06-hut-and-well", new Vector3(-103, 2.5f, 61), new Vector3(-112, 1, 71));
+            Shot("07-a2-overturned-cart", new Vector3(16, 1.8f, -118), new Vector3(22, .6f, -112));
+            Shot("08-a2-milestone", new Vector3(4.2f, 1.5f, -130.5f), new Vector3(2, .6f, -133.5f));
+            Shot("09-a2-stone-lantern", new Vector3(11.5f, 1.6f, -93.5f), new Vector3(14.5f, 1, -90.5f));
+            File.Delete(Path.Combine(dir, "00-warmup.png"));
+            Debug.Log($"QINGXI_DELIVERED_CAPTURED to {dir}");
+        }
+
         // The territory pocket world (territory.json): the hollow from above and at eye height, each facility,
         // the rim in mist, and the room. Output: artifacts/qingxi-territory/*.png
         public static void CaptureTerritory()

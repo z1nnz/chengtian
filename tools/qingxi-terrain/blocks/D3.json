@@ -13,12 +13,12 @@
   "nodes": [
     {
       "id": "d3-south",
-      "x": -66.0,
+      "x": -66,
       "z": 50.5
     },
     {
       "id": "d3-t1",
-      "x": -86.0,
+      "x": -86,
       "z": 62.8
     },
     {
@@ -57,42 +57,42 @@
       "id": "d3-trail-1",
       "from": "d3-south",
       "to": "d3-t1",
-      "width": 2.0,
+      "width": 2,
       "surface": "forest"
     },
     {
       "id": "d3-trail-2",
       "from": "d3-t1",
       "to": "d3-t2",
-      "width": 2.0,
+      "width": 2,
       "surface": "forest"
     },
     {
       "id": "d3-trail-3",
       "from": "d3-t2",
       "to": "d3-t3",
-      "width": 2.0,
+      "width": 2,
       "surface": "forest"
     },
     {
       "id": "d3-trail-4",
       "from": "d3-t3",
       "to": "d3-t4",
-      "width": 2.0,
+      "width": 2,
       "surface": "forest"
     },
     {
       "id": "d3-trail-5",
       "from": "d3-t4",
       "to": "d3-t5",
-      "width": 2.0,
+      "width": 2,
       "surface": "forest"
     },
     {
       "id": "d3-from-d1",
       "from": "d3-east",
       "to": "d3-ne",
-      "width": 2.0,
+      "width": 2,
       "surface": "dirt",
       "note": "從 D1 進來走溪的東北岸，到育幼區旁，再從 A08 踏石過溪接西南岸的步道"
     }
@@ -113,34 +113,34 @@
       "z": 81.6,
       "halfX": 5.5,
       "halfZ": 5.5,
-      "height": 5.0,
+      "height": 5,
       "surface": "forest"
     },
     {
       "id": "d3-nursery",
       "x": -84.6,
       "z": 111.8,
-      "halfX": 5.0,
-      "halfZ": 5.0,
-      "height": 6.0,
+      "halfX": 5,
+      "halfZ": 5,
+      "height": 6,
       "surface": "forest"
     },
     {
       "id": "d3-ruin",
       "x": -117.2,
-      "z": 106.0,
-      "halfX": 5.0,
-      "halfZ": 5.0,
-      "height": 8.0,
+      "z": 106,
+      "halfX": 5,
+      "halfZ": 5,
+      "height": 8,
       "surface": "forest"
     },
     {
       "id": "d3-source",
       "x": -130.7,
       "z": 120.6,
-      "halfX": 5.0,
-      "halfZ": 5.0,
-      "height": 11.0,
+      "halfX": 5,
+      "halfZ": 5,
+      "height": 11,
       "surface": "forest"
     },
     {
@@ -175,27 +175,27 @@
     {
       "x": -60,
       "z": 60,
-      "height": 3.0
+      "height": 3
     },
     {
       "x": -100,
       "z": 90,
-      "height": 7.0
+      "height": 7
     },
     {
       "x": -140,
       "z": 140,
-      "height": 15.0
+      "height": 15
     },
     {
       "x": -60,
       "z": 140,
-      "height": 12.0
+      "height": 12
     },
     {
       "x": -140,
       "z": 60,
-      "height": 6.0
+      "height": 6
     }
   ],
   "creek": {
@@ -266,7 +266,7 @@
       "zone": "d3-gauge",
       "role": "木樁水位尺（A09）",
       "model": "Assets/YunJing/Models/WaterheadA/A09_WaterGauge.fbx",
-      "x": -76.0,
+      "x": -76,
       "z": 69.6,
       "yaw": 0,
       "footprint": [
@@ -367,7 +367,7 @@
       "role": "倒伏竹林束（A10）",
       "model": "Assets/YunJing/Models/WaterheadA/A10_FallenBamboo.fbx",
       "x": -83.1,
-      "z": 114.0,
+      "z": 114,
       "yaw": 75,
       "footprint": [
         4.7,
@@ -387,7 +387,7 @@
       "role": "小型觀測亭殘基（A11）",
       "model": "Assets/YunJing/Models/WaterheadA/A11_PavilionRuin.fbx",
       "x": -117.2,
-      "z": 106.0,
+      "z": 106,
       "yaw": 40,
       "footprint": [
         3.6,
@@ -430,8 +430,8 @@
       "z": 118.1,
       "yaw": 40,
       "footprint": [
-        4.0,
-        2.0,
+        4,
+        2,
         2.5
       ],
       "owner": "core",
@@ -445,7 +445,7 @@
       "id": "D3_AbandonedHut",
       "zone": "d3-hut",
       "role": "廢棄的獵人小屋（屋頂塌了一半）",
-      "model": "",
+      "model": "Assets/YunJing/Models/RuinsB/H01_StoneTimberHouse/H01_StoneTimberHouse_v001.fbx",
       "x": -116.5,
       "z": 72,
       "yaw": 90,
@@ -455,17 +455,18 @@
         3.8
       ],
       "owner": "joshsu54",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
-      "collider": "box",
-      "author": "",
-      "note": "門板歪在一邊，屋裡只剩一張床架和掛在牆上的空箭袋；牆角刻著幾道計日的刻痕，刻到一半就停了"
+      "collider": "",
+      "author": "joshsu54（#57 世界廢墟套件）",
+      "note": "門板歪在一邊，屋裡只剩一張床架和掛在牆上的空箭袋；牆角刻著幾道計日的刻痕，刻到一半就停了",
+      "sink": 0.05
     },
     {
       "id": "D3_DryWell",
       "zone": "d3-hut",
       "role": "枯井（井繩斷了）",
-      "model": "",
+      "model": "Assets/YunJing/Models/RuinsB/D3_DryWell/D3_DryWell_v001.fbx",
       "x": -109,
       "z": 69.5,
       "yaw": 0,
@@ -475,11 +476,12 @@
         2.2
       ],
       "owner": "joshsu54",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
-      "collider": "box",
-      "author": "",
-      "note": "井口石圈有一塊缺角，木架上的井繩斷了半截；往下看是乾的"
+      "collider": "",
+      "author": "joshsu54（#57 世界廢墟套件）",
+      "note": "井口石圈有一塊缺角，木架上的井繩斷了半截；往下看是乾的",
+      "sink": 1.6
     },
     {
       "id": "D3_FallenShrine",
@@ -510,8 +512,8 @@
       "z": 102,
       "yaw": 30,
       "footprint": [
-        3.0,
-        3.0,
+        3,
+        3,
         1.2
       ],
       "owner": "Johnnnny0823",
@@ -520,6 +522,26 @@
       "collider": "box",
       "author": "",
       "note": "一圈石頭圍著冷掉的灰，旁邊一截木頭當凳子，插著一根晾皮的木架"
+    },
+    {
+      "id": "D3_DrawingStone",
+      "zone": "d3-ruin",
+      "role": "畫了水路的平石（UP04）",
+      "model": "Assets/YunJing/Models/Day34C/UP04/UP04.fbx",
+      "x": -113.3,
+      "z": 102.2,
+      "yaw": 0,
+      "footprint": [
+        1.4,
+        1,
+        0.35
+      ],
+      "owner": "a0902285608",
+      "status": "placed",
+      "phase": "P2",
+      "collider": "",
+      "author": "Eli-0731（#62 第 3、4 天模型）",
+      "note": "觀測亭殘基旁，不講話的孩子在這塊石頭上畫整條溪"
     }
   ],
   "herbs": [],
@@ -528,5 +550,107 @@
   "route": [],
   "relief": 3.5,
   "terrace": 1.2,
-  "cliffs": 6.5
+  "cliffs": 6.5,
+  "crossingSlots": [
+    {
+      "id": "D3_Weir",
+      "zone": "creek",
+      "role": "斷流石壩（UP01，堵住）",
+      "model": "Assets/YunJing/Models/Day34C/UP01/UP01.fbx",
+      "x": -119.1,
+      "z": 124,
+      "yaw": -40.6,
+      "footprint": [
+        14,
+        4,
+        3.5
+      ],
+      "owner": "a0902285608",
+      "status": "placed",
+      "phase": "P2",
+      "collider": "",
+      "author": "Eli-0731（#62 第 3、4 天模型）",
+      "note": "橫在溪上，閘口兩側堵著泥沙斷木；修好那天關掉 UP01_Debris、閘板拉起 1.2 m"
+    },
+    {
+      "id": "D3_WarmStone_01",
+      "zone": "creek",
+      "role": "溫石・大（UP02_01）",
+      "model": "Assets/YunJing/Models/Day34C/UP02_01/UP02_01.fbx",
+      "x": -70.6,
+      "z": 84.6,
+      "yaw": 20,
+      "footprint": [
+        0.9,
+        0.7,
+        0.6
+      ],
+      "owner": "a0902285608",
+      "status": "placed",
+      "phase": "P2",
+      "collider": "",
+      "author": "Eli-0731（#62 第 3、4 天模型）",
+      "note": "第 3 天：摸起來是溫的；終章才冷"
+    },
+    {
+      "id": "D3_WarmStone_02",
+      "zone": "creek",
+      "role": "溫石・中（UP02_02）",
+      "model": "Assets/YunJing/Models/Day34C/UP02_02/UP02_02.fbx",
+      "x": -68.9,
+      "z": 81.9,
+      "yaw": 110,
+      "footprint": [
+        0.9,
+        0.7,
+        0.6
+      ],
+      "owner": "a0902285608",
+      "status": "placed",
+      "phase": "P2",
+      "collider": "",
+      "author": "Eli-0731（#62 第 3、4 天模型）",
+      "note": ""
+    },
+    {
+      "id": "D3_WarmStone_03",
+      "zone": "creek",
+      "role": "溫石・小（UP02_03）",
+      "model": "Assets/YunJing/Models/Day34C/UP02_03/UP02_03.fbx",
+      "x": -71.9,
+      "z": 86.8,
+      "yaw": 250,
+      "footprint": [
+        0.9,
+        0.7,
+        0.6
+      ],
+      "owner": "a0902285608",
+      "status": "placed",
+      "phase": "P2",
+      "collider": "",
+      "author": "Eli-0731（#62 第 3、4 天模型）",
+      "note": ""
+    },
+    {
+      "id": "D3_WaterMark",
+      "zone": "creek",
+      "role": "水位刻痕石樁（UP03）",
+      "model": "Assets/YunJing/Models/Day34C/UP03/UP03.fbx",
+      "x": -110.6,
+      "z": 124.1,
+      "yaw": -40.6,
+      "footprint": [
+        0.5,
+        0.4,
+        1.4
+      ],
+      "owner": "a0902285608",
+      "status": "placed",
+      "phase": "P2",
+      "collider": "",
+      "author": "Eli-0731（#62 第 3、4 天模型）",
+      "note": "壩下游岸邊，刻痕朝步道"
+    }
+  ]
 }
