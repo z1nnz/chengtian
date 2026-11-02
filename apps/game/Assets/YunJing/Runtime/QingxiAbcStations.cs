@@ -19,6 +19,7 @@ namespace YunJing
         public Transform lodgingDoor;              // village: front door of the lodging house
         public Transform exitDoor, bed, chest;     // territory: the wicker gate back to the village, the room's bed and chest
         public Transform houseDoor, roomDoor;      // territory: the old house's door in the hollow and the room's door
+        public YunJing.Tea.TeaBrewingPanel teaStove; // joshsu54 work pack B: home tea stove (TI_TeaStove)
         public QingxiForestEncounter forest;
         public QingxiFirstPerson walker;
         public QingxiTrainingPractice training;   // Johnnnny0823's training drills (posts, or the cushion indoors)
@@ -63,6 +64,7 @@ namespace YunJing
             if (houseDoor != null && Flat(position, houseDoor.position) <= Reach) return "F 推門進屋";
             if (roomDoor != null && Flat(position, roomDoor.position) <= Reach) return "F 推門出去，到院子裡";
             if (bed != null && Flat(position, bed.position) <= Reach) return "F 在床上歇息片刻";
+            if (teaStove != null && teaStove.stove != null && Flat(position, teaStove.stove.position) <= Reach) return "F 在茶爐泡茶";
             if (chest != null && Flat(position, chest.position) <= Reach) return "F 打開儲物箱";
             if (alchemyDoor != null && Flat(position, alchemyDoor.position) <= Reach) return "F 進入溪畔丹房（joshsu54 煉製玩法，需本機 API）";
             if (returnTable != null && Flat(position, returnTable.position) <= Reach) return "F 在分揀桌整理回村樣本（保存／留待煉製／交委託展示）";
@@ -116,7 +118,15 @@ namespace YunJing
             if (bed != null && Flat(position, bed.position) <= Reach)
             {
                 QingxiSceneFade.Blink();
-                message = QingxiNoviceDays.Rest() ?? "歇息片刻，氣息平穩。（本機演練，不會跳過現實時間）";
+                bool tea = YunJing.Tea.TeaBrewingPanel.RestMultiplier > 1 && Time.time < YunJing.Tea.TeaBrewingPanel.RestUntil;
+                message = QingxiNoviceDays.Rest() ?? (tea ? $"喝過茶再躺下，恢復加快 ×{YunJing.Tea.TeaBrewingPanel.RestMultiplier:0.00}。（本機演練，不會跳過現實時間）"
+                              : "歇息片刻，氣息平穩。（本機演練，不會跳過現實時間）");
+                return true;
+            }
+            if (teaStove != null && teaStove.stove != null && Flat(position, teaStove.stove.position) <= Reach)
+            {
+                teaStove.Show();
+                message = "在茶爐前坐下";
                 return true;
             }
             if (chest != null && Flat(position, chest.position) <= Reach)

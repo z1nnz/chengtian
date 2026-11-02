@@ -22,6 +22,7 @@ namespace YunJing.Editor
         const string MaterialFolder = "Assets/QingxiWorld/Generated/Materials/Collaborators";
         const float W = 7f, D = 5f, H = 3.2f;   // room width (x), depth (z), height
         static readonly Vector3 RoomAt = new Vector3(0, 0, -120);   // the room stands outside the hollow, behind the mist
+        const float TeaStoveX = -.2f, TeaStoveZ = 2.0f;   // TI_TeaStove: back wall between the lamp and the chest
 
         public static void Generate()
         {
@@ -96,6 +97,10 @@ namespace YunJing.Editor
             training.qiPost = cushion.transform; training.qiLabel = "蒲團"; training.walker = walker;
             training.blockPost = practicePost;
             stations.fields = fields;
+            var teaStove = new GameObject("TeaStove_Station").transform; teaStove.SetParent(room, false);
+            teaStove.localPosition = new Vector3(TeaStoveX, 0, TeaStoveZ); teaStove.localRotation = Quaternion.Euler(0, 180, 0);
+            var tea = player.AddComponent<YunJing.Tea.TeaBrewingPanel>(); tea.stove = teaStove;
+            stations.teaStove = tea;
             QingxiNoviceVillageBuilder.TrainingGlow(training);
             stations.training = training;
             foraging.abc = stations;
@@ -217,7 +222,7 @@ namespace YunJing.Editor
             ("TI_Lamp_2", "燈架（TI04）", "joshsu54", 1.9f, -2.1f, 0, .45f, .45f, 1.7f),
             ("TI_Screen", "屏風（TI05）", "joshsu54", -1.4f, .4f, 0, 1.8f, .35f, 1.75f),
             ("TI_Rug", "地蓆（TI06）", "joshsu54", .6f, 0, 0, 2f, 1.4f, .03f),
-            ("TI_TeaStove", "茶爐（茶亭老人教過以後）", "core", -.2f, 2.0f, 180, .7f, .7f, .9f),
+            ("TI_TeaStove", "家用茶爐（TI09・泡茶）", "joshsu54", TeaStoveX, TeaStoveZ, 180, .7f, .7f, .9f),
         };
 
         static void TerritorySlots(Transform room)
