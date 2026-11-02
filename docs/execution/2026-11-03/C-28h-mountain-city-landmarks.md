@@ -5,13 +5,13 @@
 
 ## 0. 這些東西在故事裡
 
-玩家第 5 天第一次到山城，第 10 天回來測資。山城要讓人**第一眼就覺得這裡很了不起**：一面供著歷代飛升者的大榜、一口大鐘、遠遠一座高塔。這些都還沒有人做過。
+玩家第 5 天第一次到山城，第 10 天回來測資。依[故事定稿](../../story/承天-故事定稿.md)，飛升榜和大鐘都在**太玄道院的分院**裡：匾上寫著「天之道，損有餘而補不足」，大鐘六十年沒響，飛升榜最後一行空著，硯台每天磨好墨。第 10 天有人被帶上高塔。這些都還沒有人做過。
 
 | 編號 | 東西 | 格位 | 尺寸上限（寬 × 深 × 高 m） | 時數 |
 |---|---|---|---|---:|
-| L01 | 飛升榜 | `B_AscensionBoard` | 8 × 2 × 6 | 5 |
-| L02 | 大鐘和鐘架 | `B_GreatBell` | 5 × 5 × 6.5 | 5 |
-| L03 | 高塔 | `B_HighTower` | 12 × 12 × 40 | 8 |
+| L01 | 飛升榜 | `TX_AscensionBoard` | 8 × 2 × 6 | 5 |
+| L02 | 大鐘和鐘架 | `TX_GreatBell` | 5 × 5 × 6.5 | 5 |
+| L03 | 高塔 | `TX_HighTower` | 12 × 12 × 40 | 8 |
 | L04 | 被鑿掉一行的古碑 | `D_ChiselledStele` | 1.2 × 0.6 × 2.4 | 2 |
 | L05 | 小本子 | 拿在手上 | 0.1 × 0.14 | 1 |
 | L06 | 舊油紙傘 | 拿在手上 | Ø1.1，長 0.9 | 1 |
@@ -31,23 +31,23 @@
 
 ### L01 飛升榜（5 h）
 
-歷代飛升者的名字，世人供奉的榜。一道高大的石框木榜，分很多欄；每欄是**獨立的空白名牌** `Slot_01..40`，字由 UI 疊上去。**最後一行整排空著**，看得出很久沒有新名字。榜前一張石案，案上一方硯台和一支筆，硯台裡的墨是濕的（有人每天磨），香爐、供品。並排比較：測資廣場 `aptitude-plaza-v1`。
+歷代飛升者的名字，世人供奉的榜。一道高大的石框木榜，分很多欄；每欄是**獨立的空白名牌** `Slot_01..40`，字由 UI 疊上去。**最後一行整排空著**，看得出很久沒有新名字。榜前一張石案，案上一方硯台和一支筆，硯台裡的墨是濕的（有人每天磨），香爐、供品。另做一塊分院的匾 `TX_Plaque`（2.4 × 0.8 m，**正反兩面都空白**，字由遊戲疊上），算在這 5 小時內。並排比較：測資廣場 `aptitude-plaza-v1`。
 
 ```
-L01  Architectural concept of a monumental honour board for those who ascended to immortality, for a mountain city where every sect sends disciples, footprint about 8 m wide and 2 m deep, 6 m high, a tall timber post-and-beam frame with gently upturned eave corners, blue-grey clay tile roof with a moss-covered ridge, a huge dark lacquered panel divided into many columns of small blank name plates (completely blank, no letters, no text), the last row of plates visibly empty and unworn, worn stone plinth with three steps, details: a stone offering table in front with a wet inkstone and a brush, incense burners, offerings of fruit, weathering: centuries of incense smoke darkening the upper panel, hands-worn railing. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch).
+L01  Architectural concept of a monumental honour board for those who ascended to immortality, standing in the courtyard of an old academy in a mountain city, footprint about 8 m wide and 2 m deep, 6 m high, a tall timber post-and-beam frame with gently upturned eave corners, blue-grey clay tile roof with a moss-covered ridge, a huge dark lacquered panel divided into many columns of small blank name plates (completely blank, no letters, no text), the last row of plates visibly empty and unworn, worn stone plinth with three steps, details: a stone offering table in front with a wet inkstone and a brush, incense burners, offerings of fruit, weathering: centuries of incense smoke darkening the upper panel, hands-worn railing. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch).
 ```
 
 ### L02 大鐘和鐘架（5 h）
 
-一口很老的青銅大鐘（直徑 1.8 m），掛在重木鐘架或小亭裡。撞鐘木是獨立物件 `Striker`，pivot 在吊繩頂端，可以擺動；鐘本身也能微微晃，pivot 在吊環。鐘面紋路抽象，**沒有銘文**。附 `Socket_Ring`（核心組放聲波效果）。並排比較：L01。
+一口很老的青銅大鐘（直徑 1.8 m），掛在重木鐘架或小亭裡，要看得出很久沒有響過：撞擊點沒有新的磨亮，撞鐘木上有灰。撞鐘木是獨立物件 `Striker`，pivot 在吊繩頂端，可以擺動；鐘本身也能微微晃，pivot 在吊環。鐘面紋路抽象，**沒有銘文**。附 `Socket_Ring`（核心組放聲波效果）。並排比較：L01。
 
 ```
-L02  Architectural concept of an open bell pavilion holding one enormous ancient bronze bell, for the public square of a mountain city, footprint about 5 m wide and 5 m deep, 6.5 m high, a heavy timber post-and-beam frame with gently upturned eave corners, blue-grey clay tile roof, open on all sides, worn stone plinth with two steps, details: the bell about 1.8 m wide with abstract cloud and wave relief bands and no inscription, a long horizontal wooden striking log hung on two ropes, a stone drum seat, weathering: green patina streaks, a polished spot where the log strikes, rope-worn beam. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch).
+L02  Architectural concept of an open bell pavilion holding one enormous ancient bronze bell, in the courtyard of an old academy in a mountain city, footprint about 5 m wide and 5 m deep, 6.5 m high, a heavy timber post-and-beam frame with gently upturned eave corners, blue-grey clay tile roof, open on all sides, worn stone plinth with two steps, details: the bell about 1.8 m wide with abstract cloud and wave relief bands and no inscription, a long horizontal wooden striking log hung on two ropes, a stone drum seat, weathering: green patina streaks, an old dull strike mark that has not been touched for decades, dust on the striking log. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch).
 ```
 
 ### L03 高塔（8 h）
 
-第 10 天，有人被帶上這座塔。玩家第 5 天會從遠處看到它，還不知道裡面是什麼，只覺得很高、很安靜、窗戶很少。**不要畫成邪惡的黑塔**：是莊重、乾淨、白石和青瓦，只是太高太冷。七層八角，門可以開（`Door` 獨立物件）；只做外觀，內部不做。遠看的剪影要能在山城天際線上一眼認出，LOD2 也要保留。
+第 10 天，有人被帶上這座塔。它很高、很安靜、窗戶很少。玩家什麼時候看得到、放在山城哪裡，由核心組決定，你只做模型。**不要畫成邪惡的黑塔**：是莊重、乾淨、白石和青瓦，只是太高太冷。七層八角，門可以開（`Door` 獨立物件）；只做外觀，內部不做。遠看的剪影要一眼認得出，LOD2 也要保留。
 
 ```
 L03  Architectural concept of a tall solemn eight-sided pagoda tower of pale stone, for an ancient academy that guards a mountain city, footprint about 12 m wide and 12 m deep, seven storeys, 40 m high, timber post-and-beam eaves with gently upturned corners on every storey, blue-grey clay tile roofs with a slim bronze finial, smooth pale limestone walls with very few narrow windows, worn stone plinth with nine steps and one heavy door, details: small bronze wind chimes under the eaves, an empty stone courtyard railing, a single swept path to the door, weathering: rain streaks down the pale stone, moss only on the north side, very clean and very quiet. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch).
