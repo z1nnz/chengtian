@@ -41,7 +41,8 @@
 | 水槽、閘板、閘輪、補石、浮標、壓水樁、推車、完工碑座 | `art/exports/qingxi-waterworks-b` B01–B12 |
 | 水桶、扁擔、濕度木牌、施工布旗、修渠工具箱、共修石牌、議事矮桌 | `art/exports/qingxi-water-report-c` C01–C08 |
 | 斷流石壩、溫石、水位石樁、平石、蒲團矮几香爐、提燈 | `art/exports/qingxi-day34-c` |
-| 茶亭、茶攤、茶爐、茶具 | `art/exports/tea-brewing-b` 等 |
+| 茶攤、茶爐、茶具 | `art/exports/tea-brewing-b` |
+| 茶亭 RK03、村口石燈 G01、守燈 TY04、晾藥架 TY08、雜物組 TY09 | C 的 PR #60（審查中） |
 | 桿秤、竹篩、價目牌、背簍 | `art/exports/harvest-market-b` |
 | 回村背籠、分揀桌、座凳、油紙燈 | `art/exports/qingxi-return-c` |
 | 村中茶棚、水井、村口燈 | Codex 工作單 C7 |

@@ -124,7 +124,7 @@ SC02  Three-view orthographic turnaround sheet of an abandoned hunter's camp, ab
 SC03  Architectural concept of a collapsed old rest pavilion on a country road for travellers who no longer come this way, footprint about 4 m wide and 4 m deep, 3.2 m high at the one post still standing, timber post-and-beam frame with gently upturned eave corners, a caved-in blue-grey clay tile roof sliding to one side, open on all sides with a broken bench, worn stone plinth with one step, details: scattered roof tiles, a fallen beam, a wild vine climbing the standing post, a bird's nest, weathering: rotted timber, grass growing through the plinth. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch).
 ```
 
-SC01、SC02 的碰撞附 `_Collision`；SC03 讓人可以走進去，只擋柱子和大塊瓦堆。並排比較：SC01 和 SC02 放你的 A09 避雨龕；SC03 放茶亭 RK03。
+SC01、SC02 的碰撞附 `_Collision`；SC03 讓人可以走進去，只擋柱子和大塊瓦堆。並排比較：SC01 和 SC02 放你的 A09 避雨龕；SC03 放茶攤 RK04（`art/exports/tea-brewing-b`）。
 
 ## 3. 交件
 
