@@ -25,3 +25,5 @@
 **第一輪檢查與下一輪順序**：[review-2026-10-29.md](review-2026-10-29.md)（C5 → C3 → C2 → C4 → C6 → C7 → C8 → C9 → C10，一次做完一項）。
 
 所有工作位置都在 `D:\yun-jing-rpg-workspace\` 底下。Codex 不 commit；Claude Code 檢查後以 z1nnz 名義提交。
+
+> **2026-11-03：任務清單已由 [`../codex-v3/`](../codex-v3/00-README-rules.md) 取代。** 這裡的 `00-operating-rules.md` 製作流程仍然有效，C1–C12 的工作單只留作紀錄。
