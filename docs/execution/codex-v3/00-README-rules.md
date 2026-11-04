@@ -8,6 +8,7 @@
 | 順序 | 檔案 | 主題 | 時數 | 工作樹與分支 |
 |---|---|---|---:|---|
 | 必讀 | [01-project-briefing.md](01-project-briefing.md) | 故事、遊戲、進度、誰做什麼 | — | — |
+| 必讀 | [02-handoff-story-packs-review.md](02-handoff-story-packs-review.md) | 交接：改故事、全部工作包、提示詞與評分、PR 審查與合併 | — | — |
 | 第 1 天 | [D1-sky-and-distance.md](D1-sky-and-distance.md) | 抬頭看到的世界：月亮、遠景、雲、中景山、地面、小生命 | 50 | `yun-jing-rpg-codex-v3-d1`／`feature/codex-v3-d1-sky` |
 | 第 2 天 | [D2-valley-and-home.md](D2-valley-and-home.md) | 把河谷做完：屋內外殼、水井、茶棚、東坡茶田、稻田大水車、渡口、古林小地標 | 50 | `yun-jing-rpg-codex-v3-d2`／`feature/codex-v3-d2-valley` |
 | 第 3 天 | [D3-mountain-city.md](D3-mountain-city.md) | 垂直山城：飛升榜、大鐘、高塔、太玄分院、街屋、索橋 | 50 | `yun-jing-rpg-codex-v3-d3`／`feature/codex-v3-d3-city` |
