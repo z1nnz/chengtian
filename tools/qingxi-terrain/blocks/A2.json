@@ -186,7 +186,7 @@
       "id": "A2_RoadSign",
       "zone": "a2-start",
       "role": "岔路路牌（RK01）",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/RK01A/RK01A.fbx",
       "x": -3.5,
       "z": -131,
       "yaw": 0,
@@ -196,10 +196,10 @@
         2.6
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Johnnnny0823（world-props-a）",
       "note": ""
     },
     {
@@ -227,7 +227,7 @@
       "id": "A2_TeaPavilion",
       "zone": "a2-tea",
       "role": "路邊茶亭（RK03）",
-      "model": "",
+      "model": "Assets/YunJing/Models/Day12C/RK03/RK03.fbx",
       "x": -18,
       "z": -108.5,
       "yaw": 90,
@@ -237,10 +237,10 @@
         4.5
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Eli-0731（qingxi-day12-c）",
       "note": ""
     },
     {
@@ -267,7 +267,7 @@
       "id": "A2_Cart",
       "zone": "a2-tea",
       "role": "載貨板車（RK05）",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/RK05/RK05.fbx",
       "x": -18,
       "z": -103.6,
       "yaw": 0,
@@ -277,17 +277,17 @@
         1.4
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Johnnnny0823（world-props-a）",
       "note": ""
     },
     {
       "id": "A2_Shrine",
       "zone": "a2-shrine",
       "role": "土地祠・機緣點（RK06）",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/RK06/RK06.fbx",
       "x": 18.5,
       "z": -88,
       "yaw": -90,
@@ -297,10 +297,10 @@
         2.8
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Johnnnny0823（world-props-a）",
       "note": ""
     },
     {
@@ -327,7 +327,7 @@
       "id": "A2_ViewBench",
       "zone": "a2-view",
       "role": "觀景石凳（RK09）",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/RK09/RK09.fbx",
       "x": -6,
       "z": -64.5,
       "yaw": 0,
@@ -337,17 +337,17 @@
         0.6
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Johnnnny0823（world-props-a）",
       "note": ""
     },
     {
       "id": "A2_Haystack",
       "zone": "a2-view",
       "role": "草垛（RK10）",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/RK10A/RK10A.fbx",
       "x": -8.6,
       "z": -69.4,
       "yaw": 0,
@@ -357,10 +357,10 @@
         2.2
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Johnnnny0823（world-props-a）",
       "note": ""
     },
     {
@@ -407,7 +407,7 @@
       "id": "A2_RestPavilionRuin",
       "zone": "a2-pavilion",
       "role": "倒塌的歇腳亭",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/SC03/SC03.fbx",
       "x": -30,
       "z": -133,
       "yaw": 10,
@@ -417,10 +417,10 @@
         3.2
       ],
       "owner": "Johnnnny0823",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "",
+      "author": "Johnnnny0823（world-props-a）",
       "note": "四根柱子倒了兩根，亭頂斜壓在地上；亭裡的石桌還在，桌上刻著一個沒下完的棋盤"
     }
   ],

@@ -683,7 +683,7 @@
       "block": "A1",
       "zone": "gate-square",
       "role": "村口石燈（左）",
-      "model": "",
+      "model": "Assets/YunJing/Models/Day12C/G01/G01.fbx",
       "x": -3.6,
       "z": -27,
       "yaw": 0,
@@ -693,17 +693,17 @@
         2.2
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P1",
       "collider": "box",
-      "author": "Codex"
+      "author": "Eli-0731（qingxi-day12-c）"
     },
     {
       "id": "Gate_Lantern_R",
       "block": "A1",
       "zone": "gate-square",
       "role": "村口石燈（右）",
-      "model": "",
+      "model": "Assets/YunJing/Models/Day12C/G01/G01.fbx",
       "x": 3.6,
       "z": -27,
       "yaw": 0,
@@ -713,10 +713,10 @@
         2.2
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P1",
       "collider": "box",
-      "author": "Codex"
+      "author": "Eli-0731（qingxi-day12-c）"
     },
     {
       "id": "Plaza_ElderTree",

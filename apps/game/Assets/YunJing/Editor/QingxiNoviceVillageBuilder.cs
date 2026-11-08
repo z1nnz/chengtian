@@ -661,6 +661,7 @@ namespace YunJing.Editor
             {
                 if (p.Needed) { PlannedSlot(root, p); needed++; continue; }
                 if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Ensure(p.model);   // #57 ruins, #62 day 3-4 models
+                if (QingxiScenePropKits.Owns(p.model)) QingxiScenePropKits.Ensure(p.model);
                 var source = AssetDatabase.LoadAssetAtPath<GameObject>(p.model);
                 if (source == null) throw new FileNotFoundException("Village placement model missing (Git LFS pulled?)", p.model);
                 var model = (GameObject)PrefabUtility.InstantiatePrefab(source);
@@ -669,6 +670,7 @@ namespace YunJing.Editor
                 // PR #45 pieces: LOD group and their own convex collision shells.
                 if (QingxiWaterheadA.Owns(p.model)) QingxiWaterheadA.Prepare(model, walkable: false);
                 if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Prepare(model, p.model);
+                if (QingxiScenePropKits.Owns(p.model)) QingxiScenePropKits.Prepare(model, p.model);
                 // Layout proxies (the 3 × 5 m plate under Eli-0731's assembled corner) mark an area, they are not ground.
                 foreach (var proxy in model.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("layout_proxy")).ToArray())
                     UnityEngine.Object.DestroyImmediate(proxy.gameObject);

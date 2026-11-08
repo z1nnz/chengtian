@@ -193,7 +193,7 @@
       "id": "A3_MillHouse",
       "zone": "a3-mill",
       "role": "水磨坊主屋（WM01）",
-      "model": "",
+      "model": "Assets/YunJing/Models/CreekRepairB/WM01_MillHouse/WM01_MillHouse_v001.fbx",
       "x": -86,
       "z": 20,
       "yaw": 90,
@@ -203,17 +203,17 @@
         6
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "creek-repair-b",
       "note": ""
     },
     {
       "id": "A3_Millstones",
       "zone": "a3-mill",
       "role": "磨盤堆與麻袋（WM04）",
-      "model": "",
+      "model": "Assets/YunJing/Models/CreekRepairB/WM04_Millstones/WM04_Millstones_v001.fbx",
       "x": -80,
       "z": 21.5,
       "yaw": 0,
@@ -223,10 +223,10 @@
         1
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "creek-repair-b",
       "note": ""
     },
     {
@@ -253,7 +253,7 @@
       "id": "A3_BambooPavilion",
       "zone": "a3-bamboo",
       "role": "竹林小亭（WM09）",
-      "model": "",
+      "model": "Assets/YunJing/Models/CreekRepairB/WM09_BambooPavilion/WM09_BambooPavilion_v001.fbx",
       "x": -125,
       "z": 27,
       "yaw": 0,
@@ -263,10 +263,10 @@
         4
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "creek-repair-b",
       "note": ""
     },
     {
@@ -293,7 +293,7 @@
       "id": "A3_WestSign",
       "zone": "a3-west",
       "role": "往湖岸路牌",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/RK01B/RK01B.fbx",
       "x": -129,
       "z": 2.8,
       "yaw": 90,
@@ -303,10 +303,10 @@
         2.6
       ],
       "owner": "codex",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "Codex",
+      "author": "Johnnnny0823（world-props-a）",
       "note": ""
     }
   ],

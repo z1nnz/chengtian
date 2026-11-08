@@ -153,7 +153,7 @@
       "id": "D1_HunterShed",
       "zone": "d1-shed",
       "role": "獵人的工具棚",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/SC04/SC04.fbx",
       "x": -16,
       "z": 88,
       "yaw": 120,
@@ -163,10 +163,10 @@
         2.8
       ],
       "owner": "core",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "",
+      "author": "Johnnnny0823（world-props-a）",
       "note": "掛著陷阱和繩索，地上一堆劈好的柴"
     }
   ],

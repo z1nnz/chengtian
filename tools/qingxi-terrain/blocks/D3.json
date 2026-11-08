@@ -487,7 +487,7 @@
       "id": "D3_FallenShrine",
       "zone": "d3-shrine",
       "role": "倒在路邊的土地公小廟",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/SC01/SC01.fbx",
       "x": -100,
       "z": 65,
       "yaw": 200,
@@ -497,17 +497,17 @@
         1.8
       ],
       "owner": "Johnnnny0823",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "",
+      "author": "Johnnnny0823（world-props-a）",
       "note": "石龕歪了，香爐翻倒在一旁，裡面還有一小撮沒燒完的香"
     },
     {
       "id": "D3_HunterCamp",
       "zone": "d3-camp",
       "role": "熄掉的營火與獵人的木凳",
-      "model": "",
+      "model": "Assets/YunJing/Models/WorldPropsA/SC02/SC02.fbx",
       "x": -66,
       "z": 102,
       "yaw": 30,
@@ -517,10 +517,10 @@
         1.2
       ],
       "owner": "Johnnnny0823",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
       "collider": "box",
-      "author": "",
+      "author": "Johnnnny0823（world-props-a）",
       "note": "一圈石頭圍著冷掉的灰，旁邊一截木頭當凳子，插著一根晾皮的木架"
     },
     {
