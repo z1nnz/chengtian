@@ -43,8 +43,8 @@ const plannedBlocks = {
   'qingxi-mountain-rabbit-v003': 'D1', 'qingxi-return-c': 'A1', 'qingxi-training-yard-v1': 'A1',
   'qingxi-village-signs-v1': 'A1', 'qingxi-water-report-c': 'A1', 'qingxi-waterhead-a': 'A3／D3',
   'qingxi-waterworks-b': 'A1／A3', 'qingxi-world-ruins-b': 'A2／A3／D3',
-  'tea-brewing-b': 'A4', 'tea-terraces-b': 'A4', 'territory-backyard-a': '領地',
-  'territory-interior-b': '領地', 'world-props-a': 'A1／A2／A3／D1／D3', 'zhuo-boar-a': 'D1',
+  'tea-brewing-b': 'A4', 'tea-terraces-b': 'A4', 'territory-backyard-a': '屬領地',
+  'territory-interior-b': '屬領地', 'world-props-a': 'A1／A2／A3／D1／D3', 'zhuo-boar-a': 'D1',
 };
 
 const placementFiles = [join(root, 'tools', 'qingxi-terrain', 'novice-village.json'), ...files(join(root, 'tools', 'qingxi-terrain', 'blocks'), '.json')];

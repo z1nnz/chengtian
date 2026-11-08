@@ -2,14 +2,14 @@
 
 > 由 `node tools/registry/asset-placement.mjs` 從目前分支的 FBX（另補只含 GLB 的物件）、Unity 模型檔、區塊 JSON 與 Editor 程式產生。這是靜態證據；「配置」仍須遊戲截圖驗收。來源 PR 採 `docs/registry/folders.md`，新交付而尚無 PR 的資料夾標待查。
 
-模型檔 466 件；Unity 同名匯入 182 件；有資料配置或生成程式引用 20 件；空格位 34 件。
+模型檔 466 件；Unity 同名匯入 198 件；有資料配置或生成程式引用 35 件；空格位 18 件。
 
 ## 素材組總覽
 
 | 素材組 | 作者／組別 | 來源 PR | 模型檔 | Unity 同名 | 配置或程式引用 |
 |---|---|---|---:|---:|---:|
 | `aptitude-plaza-v1` | 核心組 | #5 | 1 | 0 | 0 |
-| `creek-repair-b` | B | #70 | 34 | 0 | 0 |
+| `creek-repair-b` | B | #70 | 34 | 3 | 3 |
 | `creek-repair-b-props` | B | #71 | 5 | 5 | 0 |
 | `elder-trees-v1` | 核心組 | 待查 | 33 | 33 | 0 |
 | `elder-world-tree-hero-v1` | 核心組 | #17 | 1 | 0 | 0 |
@@ -20,7 +20,7 @@
 | `modelling-basics-c` | C | #67 | 27 | 0 | 0 |
 | `qingxi-alchemy-b` | 核心組、B | #37 | 15 | 15 | 0 |
 | `qingxi-alchemy-table-v1` | 核心組 | #49 | 1 | 0 | 0 |
-| `qingxi-day12-c` | C | #60 | 5 | 0 | 0 |
+| `qingxi-day12-c` | C | #60 | 5 | 2 | 2 |
 | `qingxi-day34-c` | C | #62 | 11 | 11 | 6 |
 | `qingxi-detail-props-v2` | 核心組 | #17 | 4 | 0 | 0 |
 | `qingxi-encounter-a` | A | #39 | 13 | 13 | 0 |
@@ -42,13 +42,13 @@
 | `qingxi-waterworks-b` | B | #52 | 41 | 37 | 0 |
 | `qingxi-winding-road-v1` | 核心組 | #17 | 1 | 0 | 0 |
 | `qingxi-world-ruins-b` | B | #57 | 16 | 16 | 5 |
-| `sky-and-distance-v1` | Codex（舊分支交付） | 尚無 PR | 2 | 0 | 0 |
+| `sky-and-distance-v1` | Codex（舊分支交付） | 尚無 PR | 2 | 1 | 0 |
 | `tea-brewing-b` | B | #58 | 3 | 0 | 0 |
 | `tea-terraces-b` | 核心組 | #74 | 40 | 0 | 0 |
 | `territory-backyard-a` | A | #56 | 5 | 0 | 0 |
 | `territory-interior-b` | B | #54 | 22 | 0 | 0 |
 | `valley-and-home-v1` | Codex（舊分支交付） | 尚無 PR | 10 | 0 | 0 |
-| `world-props-a` | A、核心組 | #68 | 32 | 0 | 0 |
+| `world-props-a` | A、核心組 | #68 | 32 | 10 | 10 |
 | `zhuo-boar-a` | A | #61 | 3 | 0 | 0 |
 
 ## 逐件證據
@@ -89,12 +89,12 @@
 | `art/exports/creek-repair-b/CR15_DitchCross/CR15_DitchCross_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/creek-repair-b/CR15_DitchCross/CR15_DitchCross_water_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/creek-repair-b/F01_Field/F01_Field.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/creek-repair-b/WM01_MillHouse/WM01_MillHouse_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
+| `art/exports/creek-repair-b/WM01_MillHouse/WM01_MillHouse_v001.fbx` | B | #70 | A3 | `Assets/YunJing/Models/CreekRepairB/WM01_MillHouse/WM01_MillHouse_v001.fbx` | A3:A3_MillHouse | 區塊資料配置；未截圖確認 |
 | `art/exports/creek-repair-b/WM02_WaterWheel/WM02_WaterWheel_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/creek-repair-b/WM04_Millstones/WM04_Millstones_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
+| `art/exports/creek-repair-b/WM04_Millstones/WM04_Millstones_v001.fbx` | B | #70 | A3 | `Assets/YunJing/Models/CreekRepairB/WM04_Millstones/WM04_Millstones_v001.fbx` | A3:A3_Millstones | 區塊資料配置；未截圖確認 |
 | `art/exports/creek-repair-b/WM05_WashSteps/WM05_WashSteps_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/creek-repair-b/WM07_StoneBridge/WM07_StoneBridge_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/creek-repair-b/WM09_BambooPavilion/WM09_BambooPavilion_v001.fbx` | B | #70 | A3／D3 | — | — | 素材檔；未證實匯入 |
+| `art/exports/creek-repair-b/WM09_BambooPavilion/WM09_BambooPavilion_v001.fbx` | B | #70 | A3 | `Assets/YunJing/Models/CreekRepairB/WM09_BambooPavilion/WM09_BambooPavilion_v001.fbx` | A3:A3_BambooPavilion | 區塊資料配置；未截圖確認 |
 | `art/exports/elder-trees-v1/ElderCamphor_B.fbx` | 核心組 | 待查 | A1／D1 | `Assets/YunJing/Models/ElderTreesV1/ElderCamphor_B.fbx` | — | Unity 已匯入；未證實擺放 |
 | `art/exports/elder-trees-v1/ElderCamphor_C.fbx` | 核心組 | 待查 | A1／D1 | `Assets/YunJing/Models/ElderTreesV1/ElderCamphor_C.fbx` | — | Unity 已匯入；未證實擺放 |
 | `art/exports/elder-trees-v1/ElderCamphor_D.fbx` | 核心組 | 待查 | A1／D1 | `Assets/YunJing/Models/ElderTreesV1/ElderCamphor_D.fbx` | — | Unity 已匯入；未證實擺放 |
@@ -186,8 +186,8 @@
 | `art/exports/qingxi-alchemy-b/B11_BambooRecipeStand/v001/B11_BambooRecipeStand.fbx` | 核心組、B | #37 | A1 | `Assets/YunJing/Models/AlchemyB/B11_BambooRecipeStand/B11_BambooRecipeStand.fbx` | — | Unity 已匯入；未證實擺放 |
 | `art/exports/qingxi-alchemy-b/B12_WorkshopChimney/v001/B12_WorkshopChimney.fbx` | 核心組、B | #37 | A1 | `Assets/YunJing/Models/AlchemyB/B12_WorkshopChimney/B12_WorkshopChimney.fbx` | — | Unity 已匯入；未證實擺放 |
 | `art/exports/qingxi-alchemy-table-v1/QX_AlchemyWorkTable_v001.glb` | 核心組 | #49 | A1 | — | — | 素材檔；未證實匯入 |
-| `art/exports/qingxi-day12-c/G01.fbx` | C | #60 | A1／A2 | — | — | 素材檔；未證實匯入 |
-| `art/exports/qingxi-day12-c/RK03.fbx` | C | #60 | A1／A2 | — | — | 素材檔；未證實匯入 |
+| `art/exports/qingxi-day12-c/G01.fbx` | C | #60 | A1 | `Assets/YunJing/Models/Day12C/G01/G01.fbx` | A1:Gate_Lantern_L、A1:Gate_Lantern_R | 區塊資料配置；未截圖確認 |
+| `art/exports/qingxi-day12-c/RK03.fbx` | C | #60 | A2 | `Assets/YunJing/Models/Day12C/RK03/RK03.fbx` | A2:A2_TeaPavilion | 區塊資料配置；未截圖確認 |
 | `art/exports/qingxi-day12-c/TY04.fbx` | C | #60 | A1／A2 | — | — | 素材檔；未證實匯入 |
 | `art/exports/qingxi-day12-c/TY08.fbx` | C | #60 | A1／A2 | — | — | 素材檔；未證實匯入 |
 | `art/exports/qingxi-day12-c/TY09.fbx` | C | #60 | A1／A2 | — | — | 素材檔；未證實匯入 |
@@ -404,7 +404,7 @@
 | `art/exports/qingxi-world-ruins-b/R04_StoneLanternBroken/R04_StoneLanternBroken_v001.fbx` | B | #57 | A2／A3／D3 | `Assets/YunJing/Models/RuinsB/R04_StoneLanternBroken/R04_StoneLanternBroken_v001.fbx` | — | Unity 已匯入；未證實擺放 |
 | `art/exports/qingxi-world-ruins-b/R04_StoneLanternIntact/R04_StoneLanternIntact_v001.fbx` | B | #57 | A2 | `Assets/YunJing/Models/RuinsB/R04_StoneLanternIntact/R04_StoneLanternIntact_v001.fbx` | A2:A2_LampPost_1 | 區塊資料配置；未截圖確認 |
 | `art/exports/qingxi-world-ruins-b/R05_Milestone/R05_Milestone_v001.fbx` | B | #57 | A2 | `Assets/YunJing/Models/RuinsB/R05_Milestone/R05_Milestone_v001.fbx` | A2:A2_Milestone_1 | 區塊資料配置；未截圖確認 |
-| `art/exports/sky-and-distance-v1/MO01/SM_Moon.fbx` | Codex（舊分支交付） | 尚無 PR | 待指定 | — | — | 素材檔；未證實匯入 |
+| `art/exports/sky-and-distance-v1/MO01/SM_Moon.fbx` | Codex（舊分支交付） | 尚無 PR | 待指定 | `Assets/YunJing/Models/SkyAndDistance/SM_Moon.fbx` | — | Unity 已匯入；未證實擺放 |
 | `art/exports/sky-and-distance-v1/SK/SM_Skyline_Arc.fbx` | Codex（舊分支交付） | 尚無 PR | 待指定 | — | — | 素材檔；未證實匯入 |
 | `art/exports/tea-brewing-b/RK04_TeaStall/v001/RK04_TeaStall_v001.fbx` | B | #58 | A4 | — | — | 素材檔；未證實匯入 |
 | `art/exports/tea-brewing-b/TI09_TeaStove/v001/TI09_TeaStove_v001.fbx` | B | #58 | A4 | — | — | 素材檔；未證實匯入 |
@@ -449,33 +449,33 @@
 | `art/exports/tea-terraces-b/TE04_Basket/TE04_Basket_v001.fbx` | 核心組 | #74 | A4 | — | — | 素材檔；未證實匯入 |
 | `art/exports/tea-terraces-b/TE04_Tray/TE04_Tray_v001.fbx` | 核心組 | #74 | A4 | — | — | 素材檔；未證實匯入 |
 | `art/exports/tea-terraces-b/TE05_Pavilion/TE05_Pavilion_v001.fbx` | 核心組 | #74 | A4 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-backyard-a/TY01_SpiritField_v001.fbx` | A | #56 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-backyard-a/TY01_SpiritField_v002.fbx` | A | #56 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-backyard-a/TY02_QinglingGrass_v001.fbx` | A | #56 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-backyard-a/TY02_QinglingGrass_v002.fbx` | A | #56 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-backyard-a/TY07_Gate_v001.fbx` | A | #56 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI01_BoguShelf/TI01_BoguShelf_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI01_BoguShelf/TI01_BoguShelf_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI02_HomeFurnace/TI02_HomeFurnace_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI02_HomeFurnace/TI02_HomeFurnace_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI03_JournalDesk/TI03_JournalDesk_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI03_JournalDesk/TI03_JournalDesk_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI04_PaperLamp/TI04_PaperLamp_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI04_PaperLamp/TI04_PaperLamp_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI05_LandscapeScreen/TI05_LandscapeScreen_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI05_LandscapeScreen/TI05_LandscapeScreen_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI06_WovenMat/TI06_WovenMat_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI06_WovenMat/TI06_WovenMat_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI07_LinenCurtain/TI07_LinenCurtain_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI07_LinenCurtain/TI07_LinenCurtain_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08a_KeepsakeBox/TI08a_KeepsakeBox_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08a_KeepsakeBox/TI08a_KeepsakeBox_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08b_PaperScroll/TI08b_PaperScroll_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08b_PaperScroll/TI08b_PaperScroll_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08c_CeladonJar/TI08c_CeladonJar_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08c_CeladonJar/TI08c_CeladonJar_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08d_MedicinePot/TI08d_MedicinePot_v001.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
-| `art/exports/territory-interior-b/TI08d_MedicinePot/TI08d_MedicinePot_v002.fbx` | B | #54 | 領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-backyard-a/TY01_SpiritField_v001.fbx` | A | #56 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-backyard-a/TY01_SpiritField_v002.fbx` | A | #56 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-backyard-a/TY02_QinglingGrass_v001.fbx` | A | #56 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-backyard-a/TY02_QinglingGrass_v002.fbx` | A | #56 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-backyard-a/TY07_Gate_v001.fbx` | A | #56 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI01_BoguShelf/TI01_BoguShelf_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI01_BoguShelf/TI01_BoguShelf_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI02_HomeFurnace/TI02_HomeFurnace_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI02_HomeFurnace/TI02_HomeFurnace_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI03_JournalDesk/TI03_JournalDesk_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI03_JournalDesk/TI03_JournalDesk_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI04_PaperLamp/TI04_PaperLamp_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI04_PaperLamp/TI04_PaperLamp_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI05_LandscapeScreen/TI05_LandscapeScreen_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI05_LandscapeScreen/TI05_LandscapeScreen_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI06_WovenMat/TI06_WovenMat_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI06_WovenMat/TI06_WovenMat_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI07_LinenCurtain/TI07_LinenCurtain_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI07_LinenCurtain/TI07_LinenCurtain_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08a_KeepsakeBox/TI08a_KeepsakeBox_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08a_KeepsakeBox/TI08a_KeepsakeBox_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08b_PaperScroll/TI08b_PaperScroll_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08b_PaperScroll/TI08b_PaperScroll_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08c_CeladonJar/TI08c_CeladonJar_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08c_CeladonJar/TI08c_CeladonJar_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08d_MedicinePot/TI08d_MedicinePot_v001.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
+| `art/exports/territory-interior-b/TI08d_MedicinePot/TI08d_MedicinePot_v002.fbx` | B | #54 | 屬領地 | — | — | 素材檔；未證實匯入 |
 | `art/exports/valley-and-home-v1/FE01/Corner/v004/FE01_Corner.fbx` | Codex（舊分支交付） | 尚無 PR | A5 | — | — | 素材檔；未證實匯入 |
 | `art/exports/valley-and-home-v1/FE01/End/v004/FE01_End.fbx` | Codex（舊分支交付） | 尚無 PR | A5 | — | — | 素材檔；未證實匯入 |
 | `art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx` | Codex（舊分支交付） | 尚無 PR | A5 | — | — | 素材檔；未證實匯入 |
@@ -486,21 +486,21 @@
 | `art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_T.fbx` | Codex（舊分支交付） | 尚無 PR | A6 | — | — | 素材檔；未證實匯入 |
 | `art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx` | Codex（舊分支交付） | 尚無 PR | A6 | — | — | 素材檔；未證實匯入 |
 | `art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx` | Codex（舊分支交付） | 尚無 PR | A6 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/RK01A.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/RK01B.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/RK05.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/RK06.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/RK09.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/RK10A.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
+| `art/exports/world-props-a/RK01A.fbx` | A、核心組 | #68 | A2 | `Assets/YunJing/Models/WorldPropsA/RK01A/RK01A.fbx` | A2:A2_RoadSign | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/RK01B.fbx` | A、核心組 | #68 | A3 | `Assets/YunJing/Models/WorldPropsA/RK01B/RK01B.fbx` | A3:A3_WestSign | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/RK05.fbx` | A、核心組 | #68 | A2 | `Assets/YunJing/Models/WorldPropsA/RK05/RK05.fbx` | A2:A2_Cart | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/RK06.fbx` | A、核心組 | #68 | A2 | `Assets/YunJing/Models/WorldPropsA/RK06/RK06.fbx` | A2:A2_Shrine | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/RK09.fbx` | A、核心組 | #68 | A2 | `Assets/YunJing/Models/WorldPropsA/RK09/RK09.fbx` | A2:A2_ViewBench | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/RK10A.fbx` | A、核心組 | #68 | A2 | `Assets/YunJing/Models/WorldPropsA/RK10A/RK10A.fbx` | A2:A2_Haystack | 區塊資料配置；未截圖確認 |
 | `art/exports/world-props-a/RK10B.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/world-props-a/RK12A.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/world-props-a/RK12B.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/world-props-a/RK12C.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/world-props-a/RK12D.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/SC01.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/SC02.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/SC03.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
-| `art/exports/world-props-a/SC04.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
+| `art/exports/world-props-a/SC01.fbx` | A、核心組 | #68 | D3 | `Assets/YunJing/Models/WorldPropsA/SC01/SC01.fbx` | D3:D3_FallenShrine | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/SC02.fbx` | A、核心組 | #68 | D3 | `Assets/YunJing/Models/WorldPropsA/SC02/SC02.fbx` | D3:D3_HunterCamp | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/SC03.fbx` | A、核心組 | #68 | A2 | `Assets/YunJing/Models/WorldPropsA/SC03/SC03.fbx` | A2:A2_RestPavilionRuin | 區塊資料配置；未截圖確認 |
+| `art/exports/world-props-a/SC04.fbx` | A、核心組 | #68 | D1 | `Assets/YunJing/Models/WorldPropsA/SC04/SC04.fbx` | D1:D1_HunterShed | 區塊資料配置；未截圖確認 |
 | `art/exports/world-props-a/TY03A.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/world-props-a/TY03B.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
 | `art/exports/world-props-a/TY03C.fbx` | A、核心組 | #68 | A1／A2／A3／D1／D3 | — | — | 素材檔；未證實匯入 |
@@ -527,8 +527,6 @@
 | 區塊 | 格位 | 物件／角色 | 負責 | 配置檔 |
 |---|---|---|---|---|
 | A1 | `Creek_StoneBridge` | 石拱橋（取代木板踏步） | joshsu54 | `tools/qingxi-terrain/novice-village.json` |
-| A1 | `Gate_Lantern_L` | 村口石燈（左） | codex | `tools/qingxi-terrain/novice-village.json` |
-| A1 | `Gate_Lantern_R` | 村口石燈（右） | codex | `tools/qingxi-terrain/novice-village.json` |
 | A1 | `Homes_House_01` | 民居一（藥農家） | joshsu54 | `tools/qingxi-terrain/novice-village.json` |
 | A1 | `Homes_House_02` | 民居二（獵戶家） | joshsu54 | `tools/qingxi-terrain/novice-village.json` |
 | A1 | `Homes_House_03` | 民居三（老夫子家） | joshsu54 | `tools/qingxi-terrain/novice-village.json` |
@@ -537,29 +535,15 @@
 | A1 | `Plaza_ElderTree` | 村中古樹（地標） | codex | `tools/qingxi-terrain/novice-village.json` |
 | A1 | `Plaza_Well` | 水井 | codex | `tools/qingxi-terrain/novice-village.json` |
 | A1 | `Shops_Teahouse` | 茶棚（休息、聽傳聞） | codex | `tools/qingxi-terrain/novice-village.json` |
-| A2 | `A2_Cart` | 載貨板車（RK05） | codex | `tools/qingxi-terrain/blocks/A2.json` |
-| A2 | `A2_Haystack` | 草垛（RK10） | codex | `tools/qingxi-terrain/blocks/A2.json` |
-| A2 | `A2_RestPavilionRuin` | 倒塌的歇腳亭 | Johnnnny0823 | `tools/qingxi-terrain/blocks/A2.json` |
-| A2 | `A2_RoadSign` | 岔路路牌（RK01） | codex | `tools/qingxi-terrain/blocks/A2.json` |
-| A2 | `A2_Shrine` | 土地祠・機緣點（RK06） | codex | `tools/qingxi-terrain/blocks/A2.json` |
-| A2 | `A2_TeaPavilion` | 路邊茶亭（RK03） | codex | `tools/qingxi-terrain/blocks/A2.json` |
 | A2 | `A2_TeaStall` | 茶亭旁小攤（RK04） | codex | `tools/qingxi-terrain/blocks/A2.json` |
-| A2 | `A2_ViewBench` | 觀景石凳（RK09） | codex | `tools/qingxi-terrain/blocks/A2.json` |
 | A2 | `A2_Wayfarer` | 路人（靜態 NPC） | joshsu54 | `tools/qingxi-terrain/blocks/A2.json` |
-| A3 | `A3_BambooPavilion` | 竹林小亭（WM09） | codex | `tools/qingxi-terrain/blocks/A3.json` |
 | A3 | `A3_FishPlatform_Bank` | 釣魚台岸邊（WM06 接岸處） | codex | `tools/qingxi-terrain/blocks/A3.json` |
 | A3 | `A3_Miller` | 磨坊主（NPC） | joshsu54 | `tools/qingxi-terrain/blocks/A3.json` |
-| A3 | `A3_MillHouse` | 水磨坊主屋（WM01） | codex | `tools/qingxi-terrain/blocks/A3.json` |
-| A3 | `A3_Millstones` | 磨盤堆與麻袋（WM04） | codex | `tools/qingxi-terrain/blocks/A3.json` |
 | A3 | `A3_StoneBridge` | 單拱石橋（WM07） | codex | `tools/qingxi-terrain/blocks/A3.json` |
 | A3 | `A3_WashSteps` | 洗衣石階埠頭（WM05） | codex | `tools/qingxi-terrain/blocks/A3.json` |
 | A3 | `A3_WaterWheel` | 水車（WM02） | codex | `tools/qingxi-terrain/blocks/A3.json` |
-| A3 | `A3_WestSign` | 往湖岸路牌 | codex | `tools/qingxi-terrain/blocks/A3.json` |
-| D1 | `D1_HunterShed` | 獵人的工具棚 | core | `tools/qingxi-terrain/blocks/D1.json` |
 | D1 | `D1_WatchTower` | 林緣瞭望台（獵人用的木台） | core | `tools/qingxi-terrain/blocks/D1.json` |
 | D3 | `D3_DamRemains` | 斷流石壩遺跡（區塊地標，待規劃） | core | `tools/qingxi-terrain/blocks/D3.json` |
-| D3 | `D3_FallenShrine` | 倒在路邊的土地公小廟 | Johnnnny0823 | `tools/qingxi-terrain/blocks/D3.json` |
-| D3 | `D3_HunterCamp` | 熄掉的營火與獵人的木凳 | Johnnnny0823 | `tools/qingxi-terrain/blocks/D3.json` |
 
 ## 查核限制
 
