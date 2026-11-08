@@ -65,7 +65,7 @@ Claude Code 用檔名比對初查的結果，**只是起點，不保證準確**�
 | 只有程式提到（**要查是真的擺進世界，還是只有驗證腳本**） | `creek-repair-b`、`creek-repair-b-props`、`harvest-market-b`、`qingxi-alchemy-table-v1`、`qingxi-day12-c`、`qingxi-day34-c`、`qingxi-ground-v1`、`qingxi-world-ruins-b`、`tea-brewing-b`、`tea-terraces-b`、`world-props-a`、`zhuo-boar-a` |
 | 只有區塊資料提到（**要查格位是否真的有接模型**） | `elder-world-tree-hero-v1`、`giant-tree-v1`、`irrigation-v1`、`irrigation-v2`、`qingxi-detail-props-v2`、`qingxi-entry-assets-v13`、`qingxi-prop-kit-v1`、`qingxi-riverbank-v2`、`qingxi-road-props-v12`、`qingxi-road-props-v13`、`qingxi-village-signs-v1`、`qingxi-water-report-c`、`qingxi-winding-road-v1` |
 | 都沒提到（**多半完全沒進遊戲**） | `modelling-basics-c`（54 個）、`territory-backyard-a`、`territory-interior-b`、`qingxi-town-blockout-v1`（沒有模型檔） |
-| 另外還有 | `art/incoming/dondon/`（72 組，部分已用）；你自己 v3 的渡口、稻株、月亮（v4 A 部分）；Josh 的 PR #79 竹簍、竹匾、亭子、大水車（**等 z1nnz 同意合併**，還不在這條分支） |
+| 另外還有 | `art/incoming/dondon/`（72 組，部分已用）；你自己 v3 的渡口、稻株、月亮（v4 A 部分）；Josh 的 PR #79 竹簍、竹匾、亭子、大水車（已合併進這條分支，模型也下載了）；John 的 PR #80 山城街屋（審查中，還不要用） |
 
 協作者還在陸續交件（John：山城街屋；Josh：石階、巨根、步道、民居；Eli：村裡小物），所以這張表要能**重新產生**，不是手寫一次。
 
@@ -101,6 +101,8 @@ Claude Code 用檔名比對初查的結果，**只是起點，不保證準確**�
 
 ### 第 3 階段｜把現有區塊填滿（A1、A2、A3、D1、D3）
 
+對照 `codex-v5-scene-shots.md` 第二批畫面 KA02、KA01、KA00、KA03、KA07，先出主視覺再填，填完並排比。
+
 1. 依總表，把已交付但沒擺的模型擺進去：先補空格位，再加生活感小物。
 2. `modelling-basics-c`、`world-props-a`、`qingxi-world-ruins-b`、`creek-repair-b`、`qingxi-day34-c` 優先。
 3. 村子要像有人住：屋與屋之間有小路、圍籬、柴堆、晾衣，不是一件一件隔開展示。
@@ -113,7 +115,7 @@ Claude Code 用檔名比對初查的結果，**只是起點，不保證準確**�
 
 每一塊都走完四步（`docs/execution/2026-11-07/00-codex-notice-rename-and-direction.md` 有說明）：
 
-1. **主視覺**：v4 B 部分的對應圖 KA，並附氛圍卡；
+1. **主視覺**：照 [`codex-v5-scene-shots.md`](codex-v5-scene-shots.md) 的畫面清單做（站位、時間、三層構圖、模型、驗收都寫在裡面）；
 2. **灰模**：`blocks/<ID>.json` 地形、道路、平台、格位；從主視覺同角度截圖，**並排比對**，防止大空間被壓成一個小碗；
 3. **零件**：放已交付的模型；缺的寫進回報，交給協作者或之後的工作包，不要自己重做別人手上的東西；
 4. **光影**：調到接近主視覺。
