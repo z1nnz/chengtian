@@ -13,22 +13,26 @@ namespace YunJing.Editor
         const string World = "Assets/YunJing/Models/WorldPropsA";
         const string Day12 = "Assets/YunJing/Models/Day12C";
         const string Creek = "Assets/YunJing/Models/CreekRepairB";
+        const string Basics = "Assets/YunJing/Models/ModellingBasicsC";
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
 
         public static bool Owns(string model) => !string.IsNullOrEmpty(model) &&
-            (model.StartsWith(World + "/") || model.StartsWith(Day12 + "/") || model.StartsWith(Creek + "/"));
+            (model.StartsWith(World + "/") || model.StartsWith(Day12 + "/") || model.StartsWith(Creek + "/") || model.StartsWith(Basics + "/"));
 
         public static void Ensure(string model)
         {
             string id = Path.GetFileName(Path.GetDirectoryName(model));
-            string folder = model.StartsWith(World + "/") ? World : model.StartsWith(Day12 + "/") ? Day12 : Creek;
+            string folder = model.StartsWith(World + "/") ? World : model.StartsWith(Day12 + "/") ? Day12 :
+                model.StartsWith(Basics + "/") ? Basics : Creek;
             string target = Path.Combine(Repo, "apps/game", folder, id);
             string source = folder == World ? Path.Combine(Repo, "art/exports/world-props-a") :
                 folder == Day12 ? Path.Combine(Repo, "art/exports/qingxi-day12-c") :
+                folder == Basics ? Path.Combine(Repo, "art/exports/modelling-basics-c") :
                 Path.Combine(Repo, "art/exports/creek-repair-b", id);
             Copy(Path.Combine(source, Path.GetFileName(model)), Path.Combine(target, Path.GetFileName(model)));
             string textures = folder == World ? Path.Combine(Repo, "art/textures/world-props-a") :
-                folder == Day12 ? Path.Combine(Repo, "art/textures/qingxi-day12-c") : Path.Combine(source, "Textures");
+                folder == Day12 ? Path.Combine(Repo, "art/textures/qingxi-day12-c") :
+                folder == Basics ? Path.Combine(Repo, "art/textures/modelling-basics-c") : Path.Combine(source, "Textures");
             if (Directory.Exists(textures))
                 foreach (string file in Directory.GetFiles(textures, folder == World && (id.StartsWith("TY05") || id.StartsWith("TY10")) ? "T_" + id + "_*.png" : id + "_*.png"))
                     Copy(file, Path.Combine(target, "Textures", Path.GetFileName(file)));

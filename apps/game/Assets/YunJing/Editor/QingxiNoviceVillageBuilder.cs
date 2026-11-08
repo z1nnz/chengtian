@@ -65,6 +65,7 @@ namespace YunJing.Editor
             var signs = Signs(village, zones);
             var herbs = Herbs(village);
             var placed = Placements(village);
+            VillageLifeProps(village);
             Creek(village);
             Scenery(village);
             // The creek chapter in the village: joshsu54's old channel (PR #52) and Eli-0731's council corner (PR #47).
@@ -800,6 +801,8 @@ namespace YunJing.Editor
                 if (upstream || layout.creek != null) QingxiWaterheadA.Copy();   // river tiles; sedge for every creek bank
                 Placements(root);
                 Creek(root);
+                if (blockId == "A3") WestCreekProps(root);
+                if (blockId == "D3") UpstreamSiteProps(root);
                 if (upstream) QingxiWaterheadA.RiverKit(root, layout);
                 if (upstream && layout.placements.Any(p => p.id == "D3_CrackedSluice")) UpstreamClues(root);
                 if (blockId == "A2") TeaPavilion(root);
@@ -807,6 +810,62 @@ namespace YunJing.Editor
                 Debug.Log("QINGXI_WIND (block): " + WindFoliage(root) + " foliage renderers sway");
             }
             finally { layout = oldLayout; terrain = oldTerrain; }
+        }
+
+        // Creek-facing pieces belong to the bank or span the water, outside the flat building pads.
+        static void WestCreekProps(Transform parent)
+        {
+            PlaceSceneProps(parent, "WestCreekProps", "CreekRepairB", new[]
+            {
+                ("WM02_WaterWheel", -94.5f, 20f, 0f, .45f),
+                ("WM05_WashSteps", -92.8f, -3f, 90f, .25f),
+                ("WM07_StoneBridge", -99.5f, 4f, 90f, 0f),
+            });
+        }
+
+        static void UpstreamSiteProps(Transform parent)
+        {
+            PlaceSceneProps(parent, "UpstreamSiteProps", "CreekRepairB", new[]
+            {
+                ("CR04_Tools", -83f, 75f, 30f, 0f),
+                ("CR03_StonePile", -81f, 78f, 50f, 0f),
+                ("CR03_TimberRack", -91f, 79f, 120f, 0f),
+            });
+        }
+
+        static void VillageLifeProps(Transform parent)
+        {
+            PlaceSceneProps(parent, "MarketLifeProps", "ModellingBasicsC", new[]
+            {
+                ("BM01_01", -9.5f, -16.7f, 12f, 0f),
+                ("BM01_02", -12f, -16.5f, -18f, 0f),
+                ("BM03_01", -8.5f, -15.7f, 0f, 0f),
+                ("BM03_02", -8f, -16.5f, 30f, 0f),
+                ("BM05_03", -7f, -13.7f, 15f, 0f),
+            });
+        }
+
+        static void PlaceSceneProps(Transform parent, string name, string kit, (string id, float x, float z, float yaw, float sink)[] pieces)
+        {
+            var group = new GameObject(name + " (" + kit + ")").transform;
+            group.SetParent(parent, false);
+            foreach (var (id, x, z, yaw, sink) in pieces)
+            {
+                string modelPath = $"Assets/YunJing/Models/{kit}/{id}/{id}{(kit == "ModellingBasicsC" ? "" : "_v001")}.fbx";
+                QingxiScenePropKits.Ensure(modelPath);
+                var source = AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+                if (!source) throw new FileNotFoundException("Creek prop missing", modelPath);
+                var instance = (GameObject)PrefabUtility.InstantiatePrefab(source);
+                instance.name = id + " (" + kit + ")";
+                instance.transform.SetParent(group, false);
+                instance.transform.SetPositionAndRotation(At(x, z), Quaternion.Euler(0, yaw, 0));
+                QingxiScenePropKits.Prepare(instance, modelPath);
+                var visible = instance.GetComponentsInChildren<Renderer>(true).Where(r => r.enabled).ToArray();
+                if (visible.Length == 0) throw new InvalidDataException("Creek prop has no visible mesh: " + id);
+                var bounds = visible[0].bounds;
+                foreach (var r in visible) bounds.Encapsulate(r.bounds);
+                instance.transform.position += Vector3.up * (At(x, z).y - bounds.min.y - sink);
+            }
         }
 
         // D3: the three places where the upstream clues are read (server waterline.json observations). The

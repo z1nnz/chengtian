@@ -57,6 +57,15 @@ apps/game/Assets/YunJing/Models/Day12C/
 apps/game/Assets/YunJing/Models/Day12C.meta
 apps/game/Assets/YunJing/Models/WorldPropsA/
 apps/game/Assets/YunJing/Models/WorldPropsA.meta
+# Copies of art/exports/* made by QingxiScenePropKits.Ensure and the sky kit at generation time
+apps/game/Assets/YunJing/Models/CreekRepairB/
+apps/game/Assets/YunJing/Models/CreekRepairB.meta
+apps/game/Assets/YunJing/Models/ModellingBasicsC/
+apps/game/Assets/YunJing/Models/ModellingBasicsC.meta
+apps/game/Assets/YunJing/Models/SkyAndDistance/
+apps/game/Assets/YunJing/Models/SkyAndDistance.meta
+# Unity performance test package writes these on every build
+apps/game/Assets/Resources.meta
 # Harvest market 02-B: copies of art/exports/harvest-market-b + HerbalStall v002 made by HarvestMarketSceneBuilder.CopyExports
 apps/game/Assets/YunJing/Models/HarvestMarketB/
 apps/game/Assets/YunJing/Models/HarvestMarketB.meta
