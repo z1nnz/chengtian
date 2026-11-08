@@ -17,7 +17,7 @@ namespace YunJing.Editor
             var dir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "..", "artifacts", "qingxi-novice-village"));
             Directory.CreateDirectory(dir);
             var camera = new GameObject("Review Camera").AddComponent<Camera>();
-            camera.fieldOfView = 50; camera.nearClipPlane = .05f; camera.farClipPlane = 400;
+            camera.fieldOfView = 60; camera.nearClipPlane = .05f; camera.farClipPlane = 400;
             UnityEngine.Rendering.Universal.CameraExtensions.GetUniversalAdditionalCameraData(camera).renderPostProcessing = true;
             var target = new RenderTexture(1600, 900, 24) { antiAliasing = 4 };
             camera.targetTexture = target;

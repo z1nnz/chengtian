@@ -13,6 +13,8 @@ namespace YunJing
     {
         public Light sun;
         public Material sky;            // Skybox/Procedural
+        public Transform moon;
+        public Renderer moonRenderer;
         public Light[] nightLights = new Light[0];
         public Renderer[] nightGlows = new Renderer[0];   // emissive cards beside the night lights
         public float fogScale = 1;      // interiors and small scenes can keep a shorter fog
@@ -25,6 +27,7 @@ namespace YunJing
 
         float? fixedHour; float speed = 1; double startedAt; DateTime startClock;
         float[] lightBase;
+        Material moonMaterial;
 
         struct Key
         {
@@ -57,6 +60,7 @@ namespace YunJing
         {
             Current = this;
             if (sky != null) { sky = new Material(sky); RenderSettings.skybox = sky; }
+            if (moonRenderer != null) moonMaterial = moonRenderer.material;
             string args = string.Join(" ", Environment.GetCommandLineArgs()) + " " + Application.absoluteURL;
             var t = Regex.Match(args, @"time=(\d+(\.\d+)?)");
             if (t.Success) fixedHour = Mathf.Repeat(float.Parse(t.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture), 24);
@@ -122,6 +126,14 @@ namespace YunJing
             if (Mathf.Abs(Mathf.DeltaAngle(h * 15, Hour * 15)) > .01f) Apply(h);
         }
 
+        void LateUpdate()
+        {
+            if (moon == null || Camera.main == null) return;
+            // A fixed mark in the northern sky. Follow the camera only to keep it inside the fog distance.
+            moon.position = Camera.main.transform.position + new Vector3(-.25f, .55f, .80f).normalized * 35f;
+            moon.LookAt(Camera.main.transform.position, Vector3.up);
+        }
+
         void Apply(float hour)
         {
             Hour = hour;
@@ -151,6 +163,11 @@ namespace YunJing
             }
 
             Night = hour >= 19.5f || hour < 5f ? 1 : hour >= 18 ? Mathf.InverseLerp(18, 19.5f, hour) : hour < 6.5f ? Mathf.InverseLerp(6.5f, 5, hour) : 0;
+            if (moonMaterial != null)
+            {
+                moonMaterial.SetColor("_BaseColor", new Color(.92f, .95f, 1f, Mathf.Lerp(.18f, 1f, Night)));
+                moonRenderer.enabled = true;
+            }
             for (int n = 0; n < nightLights.Length; n++)
                 if (nightLights[n] != null)
                 {

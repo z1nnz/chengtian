@@ -74,7 +74,7 @@ namespace YunJing.Editor
                 mat.shader = shader; mat.enableInstancing = true;
                 mat.SetFloat("_Height", height); mat.SetFloat("_Wind", wind); mat.SetColor("_Tint", Color.white);
                 // The meadow turf's colour (QingxiVillageTerrain layer 0, or the sun-dried layer for dry grass).
-                mat.SetColor("_Ground", name == "GrassDry" ? new Color(.5f, .52f, .28f) : name.StartsWith("Pebbles") || name.StartsWith("Stones") ? new Color(.42f, .4f, .36f) : new Color(.32f, .5f, .22f));
+                mat.SetColor("_Ground", name == "GrassDry" ? new Color(.43f, .49f, .29f) : name.StartsWith("Pebbles") || name.StartsWith("Stones") ? new Color(.42f, .4f, .36f) : new Color(.31f, .42f, .23f));
                 EditorUtility.SetDirty(mat);
                 var importer = (ModelImporter)AssetImporter.GetAtPath($"{Models}/{name}.fbx");
                 importer.bakeAxisConversion = true; importer.importAnimation = false; importer.importCameras = false; importer.importLights = false;

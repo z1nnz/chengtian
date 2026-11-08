@@ -25,6 +25,8 @@ namespace YunJing.Editor
         const string MaterialFolder = "Assets/QingxiWorld/Generated/Materials/Collaborators";
         static Terrain terrain;
         static QingxiVillageTerrain.Layout layout;
+        static Transform moonObject;
+        static Renderer moonRenderer;
         const string GatheringModels = "Assets/YunJing/Models/GatheringB";   // copied from art/exports, gitignored
 
         static Vector3 At(float x, float z) => new Vector3(x, QingxiVillageTerrain.Ground(terrain, x, z), z);
@@ -166,16 +168,53 @@ namespace YunJing.Editor
             var sun = new GameObject("Sun").AddComponent<Light>();
             sun.transform.SetParent(village, false);
             // The direction images' light: a warm, lowish sun that rims the trees and fills the valley with haze.
-            sun.type = LightType.Directional; sun.intensity = 1.35f; sun.shadows = LightShadows.Soft; sun.color = new Color(1f, .96f, .86f);
+            sun.type = LightType.Directional; sun.intensity = 1.1f; sun.shadows = LightShadows.Soft; sun.color = new Color(1f, .96f, .86f);
             sun.transform.rotation = Quaternion.Euler(34, -35, 0);
             RenderSettings.sun = sun;
             RenderSettings.ambientMode = AmbientMode.Trilight;
             RenderSettings.ambientSkyColor = new Color(.52f, .66f, .9f); RenderSettings.ambientEquatorColor = new Color(.56f, .64f, .66f); RenderSettings.ambientGroundColor = new Color(.34f, .36f, .3f);
             // Clear-day haze is blue, not grey (the Genshin reference): far hills fade into the sky's own colour.
-            RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogColor = new Color(.66f, .79f, .94f);
-            RenderSettings.fogStartDistance = 60; RenderSettings.fogEndDistance = 170;
+            RenderSettings.fog = true; RenderSettings.fogMode = FogMode.Linear; RenderSettings.fogColor = new Color(.56f, .66f, .71f);
+            RenderSettings.fogStartDistance = 75; RenderSettings.fogEndDistance = 190;
             RenderSettings.skybox = Sky();
+            Moon(village);
             PostCard(village);
+        }
+
+        static void Moon(Transform village)
+        {
+            const string imported = "Assets/YunJing/Models/SkyAndDistance";
+            string repo = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
+            string source = Path.Combine(repo, "art/exports/sky-and-distance-v1/MO01");
+            string target = Path.Combine(repo, "apps/game", imported);
+            Directory.CreateDirectory(target);
+            foreach (var name in new[] { "SM_Moon.fbx", "moon_night.png" })
+            {
+                string from = Path.Combine(source, name), to = Path.Combine(target, name);
+                if (new FileInfo(from).Length < 1024) throw new InvalidDataException("MO01 is a Git LFS pointer: " + from);
+                if (!File.Exists(to) || new FileInfo(to).Length != new FileInfo(from).Length) File.Copy(from, to, true);
+            }
+            AssetDatabase.Refresh();
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(imported + "/SM_Moon.fbx");
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(imported + "/moon_night.png");
+            if (model == null || texture == null) throw new FileNotFoundException("MO01 import failed");
+            var moon = (GameObject)PrefabUtility.InstantiatePrefab(model);
+            moon.name = "MO01 Fixed Crescent"; moon.transform.SetParent(village, false);
+            moon.transform.localScale = Vector3.one * 2.2f;
+            moonObject = moon.transform;
+            moonRenderer = moon.GetComponentInChildren<Renderer>();
+            if (moonRenderer == null) throw new InvalidDataException("MO01 has no renderer");
+            string path = MaterialFolder + "/MO01_Moon_URP.mat";
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (mat == null) { mat = new Material(Shader.Find("Universal Render Pipeline/Unlit")); AssetDatabase.CreateAsset(mat, path); }
+            mat.SetTexture("_BaseMap", texture); mat.SetColor("_BaseColor", Color.white);
+            mat.SetFloat("_Surface", 1); mat.SetFloat("_Blend", 0); mat.SetFloat("_ZWrite", 0); mat.SetFloat("_Cull", 0);
+            mat.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha); mat.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+            mat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT"); mat.renderQueue = (int)RenderQueue.Transparent;
+            moonRenderer.sharedMaterial = mat;
+            moonRenderer.shadowCastingMode = ShadowCastingMode.Off;
+            moonRenderer.enabled = false; // QingxiDayNight enables and positions it on the first runtime frame.
+            EditorUtility.SetDirty(mat);
         }
 
         // K11: the day follows the real clock (QingxiDayNight). Night lights stand where people live and work:
@@ -228,6 +267,7 @@ namespace YunJing.Editor
             if (third != null) Lamp("ThirdLantern", At(third.x, third.z), 1.6f, 1.2f, 5, new Color(.85f, .92f, 1f));
             var dayNight = new GameObject("Qingxi Day and Night (K11)").AddComponent<QingxiDayNight>();
             dayNight.sun = RenderSettings.sun; dayNight.sky = RenderSettings.skybox;
+            dayNight.moon = moonObject; dayNight.moonRenderer = moonRenderer;
             dayNight.nightLights = lights.ToArray(); dayNight.nightGlows = glows.ToArray();
         }
 
@@ -275,10 +315,10 @@ namespace YunJing.Editor
             }
             var tone = Get<UnityEngine.Rendering.Universal.Tonemapping>(); tone.mode.Override(UnityEngine.Rendering.Universal.TonemappingMode.ACES);
             var colour = Get<UnityEngine.Rendering.Universal.ColorAdjustments>();
-            colour.postExposure.Override(.25f); colour.contrast.Override(10); colour.saturation.Override(14);
+            colour.postExposure.Override(-.35f); colour.contrast.Override(8); colour.saturation.Override(-8);
             var white = Get<UnityEngine.Rendering.Universal.WhiteBalance>(); white.temperature.Override(2); white.tint.Override(-2);   // clear day, a touch warm
             var bloom = Get<UnityEngine.Rendering.Universal.Bloom>();
-            bloom.threshold.Override(.92f); bloom.intensity.Override(.55f); bloom.scatter.Override(.75f); bloom.highQualityFiltering.Override(false);
+            bloom.threshold.Override(1.2f); bloom.intensity.Override(.25f); bloom.scatter.Override(.65f); bloom.highQualityFiltering.Override(false);
             var vignette = Get<UnityEngine.Rendering.Universal.Vignette>(); vignette.intensity.Override(.2f); vignette.smoothness.Override(.45f);
             EditorUtility.SetDirty(profile);
             var volume = new GameObject("PostCard Volume").AddComponent<UnityEngine.Rendering.Volume>();
@@ -304,15 +344,15 @@ namespace YunJing.Editor
             var player = new GameObject("Player_FirstPerson");
             player.transform.SetParent(village, false);
             player.transform.position = spawn + Vector3.up * .05f;
-            var cc = player.AddComponent<CharacterController>(); cc.radius = .35f; cc.height = 1.4f; cc.center = Vector3.up * .7f; cc.slopeLimit = 35; cc.stepOffset = .3f; cc.skinWidth = .03f;
+            var cc = player.AddComponent<CharacterController>(); cc.radius = .35f; cc.height = 1.75f; cc.center = Vector3.up * .875f; cc.slopeLimit = 35; cc.stepOffset = .3f; cc.skinWidth = .03f;
             var camGo = new GameObject("PlayerCamera") { tag = "MainCamera" }; camGo.transform.SetParent(player.transform, false); camGo.transform.localPosition = Vector3.up * 1.2f;
-            var cam = camGo.AddComponent<Camera>(); cam.fieldOfView = 70; cam.nearClipPlane = .05f; cam.farClipPlane = 400; camGo.AddComponent<AudioListener>();
+            var cam = camGo.AddComponent<Camera>(); cam.fieldOfView = 60; cam.nearClipPlane = .05f; cam.farClipPlane = 400; camGo.AddComponent<AudioListener>();
             UnityEngine.Rendering.Universal.CameraExtensions.GetUniversalAdditionalCameraData(cam).renderPostProcessing = true;
             // Original novice study mesh (saved AI three-view first); a walk-through avatar, not Heroine-01.
             var body = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/QingxiWorld/Models/ArtV001/NoviceCultivatorV1.fbx"));
             body.name = "Body_NoviceCultivatorV1"; body.transform.SetParent(player.transform, false);
             body.AddComponent<QingxiNoviceMotion>();
-            var fp = player.AddComponent<global::QingxiWorld.QingxiFirstPerson>(); fp.cam = cam; fp.body = body;
+            var fp = player.AddComponent<global::QingxiWorld.QingxiFirstPerson>(); fp.cam = cam; fp.body = body; fp.eyeHeight = 1.6f;
             return player;
         }
 
@@ -723,6 +763,9 @@ namespace YunJing.Editor
             label.characterSize = .045f; label.fontSize = 64; label.color = new Color(.11f, .12f, .12f);
             if (font != null) { label.font = font; label.GetComponent<MeshRenderer>().sharedMaterial = font.material; }
             label.gameObject.AddComponent<QingxiBillboard>();
+            // Keep the planning marker in the scene for editor inspection, but hide it in normal views and builds.
+            // It may be enabled by hand when reviewing empty slots; it is not world dressing.
+            slot.gameObject.SetActive(false);
             return slot;
         }
 

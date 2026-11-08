@@ -506,7 +506,7 @@ namespace YunJing.Editor
                 layer.tileSize = new Vector2(tile, tile);
                 // The sun-dried meadow is the meadow painting, warmed toward straw.
                 layer.diffuseRemapMin = Vector4.zero;
-                layer.diffuseRemapMax = LayerNames[i] == "MeadowDry" ? new Vector4(1.02f, 1.0f, .6f, 1) : LayerNames[i] == "OchreRock" ? new Vector4(.6f, .66f, .76f, 1) : LayerNames[i] == "VillageMeadow" ? new Vector4(.78f, .86f, .7f, 1) : Vector4.one;
+                layer.diffuseRemapMax = LayerNames[i] == "MeadowDry" ? new Vector4(.78f, .78f, .55f, 1) : LayerNames[i] == "OchreRock" ? new Vector4(.6f, .66f, .76f, 1) : LayerNames[i] == "VillageMeadow" ? new Vector4(.58f, .72f, .48f, 1) : Vector4.one;
                 layer.smoothness = 0; layer.metallic = 0;
                 EditorUtility.SetDirty(layer);
                 result[i] = layer;

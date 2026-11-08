@@ -84,7 +84,7 @@ Shader "YunJing/QingxiGrass"
                 half3 ambient = SampleSH(float3(0, 1, 0));
                 half3 c = albedo * (light.color * diffuse * lerp(.45, 1, light.shadowAttenuation) + ambient);
                 float3 view = GetWorldSpaceNormalizeViewDir(i.positionWS);
-                c += albedo * light.color * pow(saturate(dot(-view, light.direction)), 4) * i.tip * .4;   // backlit tips
+                c += albedo * light.color * pow(saturate(dot(-view, light.direction)), 4) * i.tip * .15;   // backlit tips
                 return half4(MixFog(c, i.fog), 1);
             }
             ENDHLSL

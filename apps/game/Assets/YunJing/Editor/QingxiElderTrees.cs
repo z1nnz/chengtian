@@ -90,12 +90,17 @@ namespace YunJing.Editor
                 var card = Shader.Find("YunJing/QingxiFoliageCard");
                 if (foliage != null && card != null) { leaves.shader = card; leaves.SetTexture("_BaseMap", foliage); leaves.SetFloat("_Cutoff", .5f); leaves.SetFloat("_Height", 12); }
                 else leaves.shader = Shader.Find("Universal Render Pipeline/Lit");
-                leaves.SetColor("_BaseColor", Color.white); leaves.SetFloat("_Smoothness", .08f);
+                // The source palette is already bright. Tint only the generated Unity material, keeping the
+                // authored texture untouched and bringing canopy highlights back into the valley palette.
+                var leafTint = kind == "ElderGinkgo" ? new Color(.72f, .68f, .52f)
+                    : kind == "ElderMaple" ? new Color(.78f, .64f, .58f)
+                    : new Color(.68f, .76f, .65f);
+                leaves.SetColor("_BaseColor", leafTint); leaves.SetFloat("_Smoothness", .08f);
                 leaves.SetFloat("_Cull", 0);   // single-sided leaf cards
                 // Light through the leaves (the Genshin crowns glow even in shade): the palette itself, a third as
                 // emission, so the shaded side stays a clear bright green instead of going dark.
                 leaves.EnableKeyword("_EMISSION"); leaves.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
-                leaves.SetTexture("_EmissionMap", leaves.GetTexture("_BaseMap")); leaves.SetColor("_EmissionColor", new Color(.16f, .16f, .16f));
+                leaves.SetTexture("_EmissionMap", leaves.GetTexture("_BaseMap")); leaves.SetColor("_EmissionColor", new Color(.03f, .03f, .03f));
                 leaves.SetFloat("_SpecularHighlights", 0); leaves.EnableKeyword("_SPECULARHIGHLIGHTS_OFF");
                 EditorUtility.SetDirty(leaves);
                 importer.bakeAxisConversion = true; importer.importAnimation = false; importer.importCameras = false; importer.importLights = false;
