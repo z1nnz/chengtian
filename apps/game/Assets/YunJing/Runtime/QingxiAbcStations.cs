@@ -53,9 +53,12 @@ namespace YunJing
         }
 
         static float Flat(Vector3 a, Vector3 b) => Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+        bool AtChest(Vector3 position) => chest != null && Flat(position, chest.position) <= 1.5f;
 
         public string Prompt(Vector3 position)
         {
+            // The chest shares the room with the cushion and the tea stove, whose reach covers it: standing right at it wins.
+            if (AtChest(position)) return "F 打開儲物箱";
             var practice = training != null ? training.Prompt(position) : null;
             if (practice != null) return practice;
             foreach (var spot in QingxiDayOneSpots.All) { var line = spot.Prompt(position); if (line != null) return line; }
@@ -82,6 +85,7 @@ namespace YunJing
 
         public bool TryInteract(Vector3 position, out string message)
         {
+            if (AtChest(position)) { message = "箱子是空的。正式背包接上服務端後，物品會放在這裡。"; return true; }
             message = null;
             if (training != null && training.TryInteract(position, out message)) return true;
             foreach (var spot in QingxiDayOneSpots.All) if (spot.TryInteract(position, out message)) return true;

@@ -135,9 +135,17 @@ namespace YunJing
                 training.End();
                 Teleport(walker, training.blockPost.position + training.blockPost.forward * -1.1f);
                 yield return Frames(5);
-                Check("agility post offers blocking", (foraging.Prompt(walker.transform.position) ?? "").Contains("武技格擋"));
+                // The post runs 沈岳's first lesson until it has been passed once; after that it is the plain drill.
+                var lesson = training.GetComponent<QingxiBodyLesson>();
+                string postPrompt = foraging.Prompt(walker.transform.position) ?? "";
+                if (lesson == null) lesson = training.GetComponent<QingxiBodyLesson>();   // created by the prompt
+                bool lessonFirst = lesson != null && !lesson.EverPassed && lesson.PromptText != null;
+                Check(lessonFirst ? "agility post offers the first lesson" : "agility post offers blocking",
+                    lessonFirst ? postPrompt == lesson.PromptText : postPrompt.Contains("武技格擋"));
                 foraging.TryInteract(walker.transform.position, out _);
-                Check("block drill starts", training.Block != null && training.Block.strikes.Count == 12);
+                Check(lessonFirst ? "first lesson starts" : "block drill starts",
+                    lessonFirst ? lesson.Running : training.Block != null && training.Block.strikes.Count == 12);
+                if (lessonFirst) lesson.End();
                 training.End();
                 Check("walker free after the drill", !training.Frozen && walker.enabled);
             }
@@ -291,7 +299,7 @@ namespace YunJing
                     Teleport(walker, inside.bed.position + Vector3.right * 1.3f);
                     yield return Frames(5);
                     Check("bed offers rest", (indoorForaging.Prompt(walker.transform.position) ?? "").Contains("歇息"));
-                    Teleport(walker, inside.chest.position + Vector3.left * 1.1f);
+                    Teleport(walker, inside.chest.position + Vector3.back * 1.2f);   // from the front: the tea stove answers on the stove side
                     yield return Frames(5);
                     Check("chest can be opened", (indoorForaging.Prompt(walker.transform.position) ?? "").Contains("儲物箱"));
                     Teleport(walker, inside.training.qiPost.position + Vector3.back * .9f);
@@ -337,7 +345,10 @@ namespace YunJing
                         }
                         Teleport(walker, inside.training.blockPost.position + Vector3.back * 1.4f);
                         yield return Frames(5);
-                        Check("the practice ground post offers blocking", (indoorForaging.Prompt(walker.transform.position) ?? "").Contains("武技格擋"));
+                        string yardPrompt = indoorForaging.Prompt(walker.transform.position) ?? "";
+                        var yardLesson = inside.training.GetComponent<QingxiBodyLesson>();
+                        Check("the practice ground post offers its lesson or blocking",
+                            yardPrompt.Contains("武技格擋") || (yardLesson != null && yardPrompt == yardLesson.PromptText));
                     }
                     Teleport(walker, inside.exitDoor.position);
                     yield return Frames(5);
