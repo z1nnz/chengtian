@@ -243,7 +243,7 @@ namespace YunJing
                 until = Time.realtimeSinceStartup + 20;
                 while ((!streamer.IsLoaded("D3") || QingxiUpstreamClues.Current == null) && Time.realtimeSinceStartup < until) yield return null;
                 Check("walking up A3's north path streams in the upstream valley D3", streamer.IsLoaded("D3") && QingxiUpstreamClues.Current != null);
-                Check("the upstream brook is laid with PR #45 river tiles", GameObject.Find("UpstreamBrook (creekKit, PR #45)") is GameObject brook && brook.transform.childCount >= 15);
+                Check("the upstream brook is laid with PR #45 river tiles", FindObjectsByType<Transform>(FindObjectsSortMode.None).Any(t => t.name == "UpstreamBrook (creekKit, PR #45)" && t.childCount >= 15));   // D1 has a short brook of the same name
                 var clues = QingxiUpstreamClues.Current;
                 if (clues != null)
                 {
