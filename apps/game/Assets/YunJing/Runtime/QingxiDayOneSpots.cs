@@ -65,18 +65,12 @@ namespace YunJing
 
         void Say(string line) { spoken = line; spokenUntil = Time.unscaledTime + 7f; }
 
-        // The old man's words in a box at the bottom of the screen, long enough to read.
+        // The old man's words low in the middle of the screen, long enough to read. Outdoors the HUD already
+        // shows them (QingxiHud.ShowsToasts); this is for scenes without it.
         void OnGUI()
         {
-            if (spoken == null || Time.unscaledTime > spokenUntil) return;
-            QingxiFonts.ApplyImgui();
-            float scale = Mathf.Clamp(Screen.height / 720f, .7f, 2f);
-            var previous = GUI.matrix;
-            GUI.matrix = Matrix4x4.Scale(Vector3.one * scale);
-            float w = Screen.width / scale, h = Screen.height / scale;
-            var style = new GUIStyle(GUI.skin.box) { wordWrap = true, fontSize = 18, alignment = TextAnchor.MiddleLeft, padding = new RectOffset(18, 18, 12, 12) };
-            GUI.Box(new Rect(w * .5f - 330, h - 150, 660, 96), spoken, style);
-            GUI.matrix = previous;
+            if (spoken == null || Time.unscaledTime > spokenUntil || QingxiHud.ShowsToasts) return;
+            QingxiInteriorHud.Subtitle(spoken);
         }
     }
 }

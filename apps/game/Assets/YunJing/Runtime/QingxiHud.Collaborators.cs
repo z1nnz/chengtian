@@ -34,7 +34,7 @@ namespace YunJing
             {
                 var panel = Panel("Forest Encounter", safe, new Vector2(.5f, 1), new Vector2(.5f, 1),
                     new Vector2(0, -92), new Vector2(600, 140), new Color(.035f, .07f, .09f, .84f));
-                Label("Encounter Title", panel, "林地山兔遭遇 · 本機演練（A：Johnnnny0823）", 17, FontStyle.Bold,
+                Label("Encounter Title", panel, "林地・山兔", 17, FontStyle.Bold,
                     new Vector2(16, -9), new Vector2(570, 26), new Color(.94f, .87f, .66f));
                 encounterState = Label("Encounter State", panel, "", 16, FontStyle.Normal,
                     new Vector2(16, -37), new Vector2(570, 44), new Color(.9f, .93f, .88f));
@@ -52,7 +52,7 @@ namespace YunJing
             {
                 var page = Panel("Return Sorting", safe, new Vector2(.5f, .5f), new Vector2(.5f, .5f),
                     Vector2.zero, new Vector2(620, 420), new Color(.055f, .095f, .10f, .97f));
-                Label("Sorting Title", page, "回村分揀桌 · 本機展示（C：Eli-0731）", 24, FontStyle.Bold,
+                Label("Sorting Title", page, "回村分揀桌", 24, FontStyle.Bold,
                     new Vector2(26, -20), new Vector2(570, 36), new Color(.94f, .87f, .65f));
                 sortingBody = Label("Sorting Body", page, "", 16, FontStyle.Normal,
                     new Vector2(26, -62), new Vector2(570, 120), new Color(.9f, .92f, .87f));
@@ -79,7 +79,7 @@ namespace YunJing
                 sortingPanel = page.gameObject;
                 sortingPanel.SetActive(false);
                 stations.SortingRequested += () => SetSorting(true);
-                RefreshSorting("選一份樣本，再選去向；三個選項都自由，沒有每日清單。");
+                RefreshSorting("選一份樣本，再選去向。");
             }
             BuildWaterPanel();
         }

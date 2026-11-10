@@ -27,11 +27,14 @@ namespace YunJing
         public int PracticePellets { get; private set; }
         public int ObservedClues => observedClues.Count;
         int basicPracticeCount;
-        public string LastMessage { get; private set; } = "沿溪探索，按 F 與靈草、山兔或坊市互動";
+        public string LastMessage { get; private set; } = "";
         public event Action Changed;
 
         static float Distance(Vector3 a, Vector3 b) =>
             Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+
+        /// <summary>What Prompt returns when nothing is within reach (the HUD shows nothing for it).</summary>
+        public const string IdlePrompt = "探索線索、採藥、追兔，或回聽風台練氣";
 
         public string Prompt(Vector3 playerPosition)
         {
@@ -51,7 +54,7 @@ namespace YunJing
                 return "F 交換材料  ·  E 用兩株靈草煉調息散";
             if (trainingSpot != null && Distance(playerPosition, trainingSpot.position) <= 3f)
                 return "F 練習引氣訣  ·  E 服用調息散";
-            return "探索線索、採藥、追兔，或回聽風台練氣";
+            return IdlePrompt;
         }
 
         public bool IsHarvested(Transform herb) => harvestedUntil.TryGetValue(herb, out var until) && Time.time < until;
