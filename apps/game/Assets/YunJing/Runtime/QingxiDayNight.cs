@@ -176,7 +176,8 @@ namespace YunJing
             if (moonMaterial != null)
             {
                 moonMaterial.SetColor("_BaseColor", new Color(.92f, .95f, 1f, Mathf.Lerp(.18f, 1f, Night)));
-                moonRenderer.enabled = true;
+                // QingxiSky draws the crescent itself; the card is only for skies that cannot.
+                moonRenderer.enabled = sky == null || !sky.HasProperty("_Night");
             }
             for (int n = 0; n < nightLights.Length; n++)
                 if (nightLights[n] != null)

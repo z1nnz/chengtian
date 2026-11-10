@@ -90,14 +90,24 @@ Shader "YunJing/QingxiSky"
                 float s = saturate(dot(d, sun));
                 c += half3(1, .93, .8) * (pow(s, 900 / max(_SunSize * 30, .1)) * 3 + pow(s, 12) * .25) * (1 - cover * .8);
                 // Stars and the moon's halo, at night only, behind the clouds.
-                float2 sp = d.xz / (abs(up) + .35) * 70;
-                float2 cell = floor(sp);
-                float star = step(.988, Hash(cell)) * smoothstep(.45, .0, length(frac(sp) - .5));
+                // Cells in the direction itself (not a flat projection), so stars stay round down to the horizon.
+                float3 sp = d * 95;
+                float3 cell3 = floor(sp);
+                float2 cell = cell3.xy + cell3.z * 17.31;
+                float star = step(.955, Hash(cell)) * smoothstep(.34, .0, length(frac(sp) - .5));
                 star *= .6 + .4 * sin(_Time.y * (1 + Hash(cell + 3) * 2) + Hash(cell + 7) * 6.28);
                 float m = saturate(dot(d, normalize(_MoonDir.xyz)));
                 half3 night = half3(.85, .9, 1) * star * 2.2 * smoothstep(.02, .3, up)
                     + half3(.55, .68, 1) * (pow(m, 90) * .9 + pow(m, 7) * .22);
                 c += night * _Night * (1 - cover * .85) / max(_Exposure * .82, .05) * .35;
+                // The moon itself: a crescent (承天's sign is the waning moon), pale by day, bright at night.
+                float3 md = normalize(_MoonDir.xyz);
+                float3 mr = normalize(cross(float3(0, 1, 0), md));
+                float cosR = cos(.046);
+                float disc = smoothstep(cosR, cosR + .00016, dot(d, md));
+                float bite = smoothstep(cosR, cosR + .00016, dot(d, normalize(md + mr * .03 + float3(0, .012, 0))));
+                float crescent = disc * (1 - bite) * (1 - cover * .9);
+                c = lerp(c, half3(.96, .98, 1) * 1.45 / max(_Exposure * .82, .05), crescent * lerp(.22, 1, _Night));
                 // Far mountains in three layers, each paler and bluer than the one in front, sinking into the haze
                 // at their feet, so the land does not end at the edge of the walkable ground.
                 half3 haze = lerp(_GroundColor.rgb, c, .25);

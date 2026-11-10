@@ -72,9 +72,9 @@ namespace YunJing.Editor
                 var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
                 if (mat == null) { mat = new Material(shader); AssetDatabase.CreateAsset(mat, path); }
                 mat.shader = shader; mat.enableInstancing = true;
-                mat.SetFloat("_Height", height); mat.SetFloat("_Wind", wind); mat.SetColor("_Tint", Color.white);
+                mat.SetFloat("_Height", height); mat.SetFloat("_Wind", wind); mat.SetColor("_Tint", name.StartsWith("Grass") ? new Color(.8f, .74f, .8f) : Color.white);   // blades a little greyer than the paint
                 // The meadow turf's colour (QingxiVillageTerrain layer 0, or the sun-dried layer for dry grass).
-                mat.SetColor("_Ground", name == "GrassDry" ? new Color(.43f, .49f, .29f) : name.StartsWith("Pebbles") || name.StartsWith("Stones") ? new Color(.42f, .4f, .36f) : new Color(.31f, .42f, .23f));
+                mat.SetColor("_Ground", name == "GrassDry" ? new Color(.4f, .4f, .24f) : name.StartsWith("Pebbles") || name.StartsWith("Stones") ? new Color(.42f, .4f, .36f) : new Color(.27f, .34f, .19f));
                 EditorUtility.SetDirty(mat);
                 var importer = (ModelImporter)AssetImporter.GetAtPath($"{Models}/{name}.fbx");
                 importer.bakeAxisConversion = true; importer.importAnimation = false; importer.importCameras = false; importer.importLights = false;
