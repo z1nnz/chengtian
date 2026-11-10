@@ -201,7 +201,7 @@ namespace YunJing.Editor
             if (model == null || texture == null) throw new FileNotFoundException("MO01 import failed");
             var moon = (GameObject)PrefabUtility.InstantiatePrefab(model);
             moon.name = "MO01 Fixed Crescent"; moon.transform.SetParent(village, false);
-            moon.transform.localScale = Vector3.one * 2.2f;
+            moon.transform.localScale = Vector3.one * 3.8f;
             moonObject = moon.transform;
             moonRenderer = moon.GetComponentInChildren<Renderer>();
             if (moonRenderer == null) throw new InvalidDataException("MO01 has no renderer");
@@ -277,7 +277,7 @@ namespace YunJing.Editor
             var path = $"{MaterialFolder}/NightGlow_{ColorUtility.ToHtmlStringRGB(colour)}_URP.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (mat == null) { mat = new Material(Shader.Find("Universal Render Pipeline/Lit")); AssetDatabase.CreateAsset(mat, path); }
-            mat.SetColor("_BaseColor", Color.black); mat.SetColor("_EmissionColor", colour * 3.2f); mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_BaseColor", Color.black); mat.SetColor("_EmissionColor", colour * 1.7f); mat.EnableKeyword("_EMISSION");
             mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
             EditorUtility.SetDirty(mat);
             return mat;
@@ -314,12 +314,14 @@ namespace YunJing.Editor
                 c.active = true;
                 return c;
             }
-            var tone = Get<UnityEngine.Rendering.Universal.Tonemapping>(); tone.mode.Override(UnityEngine.Rendering.Universal.TonemappingMode.ACES);
+            // 11/11 review: grass read as fluorescent and paths as bright yellow under ACES, and the night was
+            // black. Neutral tone mapping keeps hues where they are; saturation comes down further; exposure up.
+            var tone = Get<UnityEngine.Rendering.Universal.Tonemapping>(); tone.mode.Override(UnityEngine.Rendering.Universal.TonemappingMode.Neutral);
             var colour = Get<UnityEngine.Rendering.Universal.ColorAdjustments>();
-            colour.postExposure.Override(-.35f); colour.contrast.Override(8); colour.saturation.Override(-8);
+            colour.postExposure.Override(-.12f); colour.contrast.Override(8); colour.saturation.Override(-22);
             var white = Get<UnityEngine.Rendering.Universal.WhiteBalance>(); white.temperature.Override(2); white.tint.Override(-2);   // clear day, a touch warm
             var bloom = Get<UnityEngine.Rendering.Universal.Bloom>();
-            bloom.threshold.Override(1.2f); bloom.intensity.Override(.25f); bloom.scatter.Override(.65f); bloom.highQualityFiltering.Override(false);
+            bloom.threshold.Override(1.05f); bloom.intensity.Override(.32f); bloom.scatter.Override(.65f); bloom.highQualityFiltering.Override(false);
             var vignette = Get<UnityEngine.Rendering.Universal.Vignette>(); vignette.intensity.Override(.2f); vignette.smoothness.Override(.45f);
             EditorUtility.SetDirty(profile);
             var volume = new GameObject("PostCard Volume").AddComponent<UnityEngine.Rendering.Volume>();

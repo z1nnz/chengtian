@@ -39,19 +39,22 @@ namespace YunJing
         // is the moon, high in the south-east.
         static readonly Key[] Keys =
         {
-            K(0, 40, 140, .32f, new Color(.6f, .7f, .95f), new Color(.2f, .25f, .38f), new Color(.15f, .17f, .24f), new Color(.07f, .07f, .09f), new Color(.13f, .16f, .24f), .22f, new Color(.2f, .27f, .5f), 90),
-            K(4.8f, 38, 150, .3f,  new Color(.6f, .7f, .95f), new Color(.21f, .25f, .38f), new Color(.16f, .17f, .24f), new Color(.07f, .07f, .09f), new Color(.15f, .17f, .25f), .25f, new Color(.22f, .28f, .5f), 90),
+            K(0, 40, 140, .58f, new Color(.62f, .74f, 1f), new Color(.31f, .38f, .58f), new Color(.23f, .27f, .38f), new Color(.11f, .12f, .17f), new Color(.17f, .22f, .33f), .4f, new Color(.24f, .32f, .58f), 125),
+            K(4.8f, 38, 150, .52f,  new Color(.62f, .74f, 1f), new Color(.31f, .37f, .56f), new Color(.24f, .27f, .37f), new Color(.11f, .12f, .16f), new Color(.19f, .23f, .33f), .4f, new Color(.25f, .32f, .56f), 125),
             K(5.8f, 5, -100, .5f,  new Color(1f, .62f, .44f),  new Color(.46f, .44f, .54f), new Color(.52f, .42f, .40f), new Color(.2f, .17f, .16f),  new Color(.78f, .66f, .64f), .7f, new Color(.62f, .52f, .58f), 100),
-            K(8,    38, -35, 1.45f, new Color(1f, .95f, .84f), new Color(.52f, .66f, .9f),  new Color(.56f, .64f, .66f), new Color(.34f, .36f, .3f),  new Color(.66f, .79f, .94f), 1.25f, new Color(.3f, .52f, .88f), 170),
-            K(12.5f, 58, 5, 1.5f, new Color(1f, .97f, .9f),  new Color(.54f, .68f, .92f), new Color(.58f, .66f, .68f),  new Color(.36f, .38f, .32f), new Color(.68f, .81f, .95f),  1.3f, new Color(.28f, .5f, .9f), 180),
-            K(16,   36, 60, 1.35f,  new Color(1f, .93f, .8f),   new Color(.52f, .64f, .88f), new Color(.6f, .62f, .6f),  new Color(.34f, .32f, .28f), new Color(.7f, .79f, .92f),   1.2f, new Color(.32f, .52f, .86f), 165),
+            K(8,    38, -35, 1.22f, new Color(1f, .95f, .84f), new Color(.52f, .66f, .9f),  new Color(.56f, .64f, .66f), new Color(.34f, .36f, .3f),  new Color(.66f, .79f, .94f), 1.25f, new Color(.3f, .52f, .88f), 170),
+            K(12.5f, 58, 5, 1.28f, new Color(1f, .97f, .9f),  new Color(.54f, .68f, .92f), new Color(.58f, .66f, .68f),  new Color(.36f, .38f, .32f), new Color(.68f, .81f, .95f),  1.3f, new Color(.28f, .5f, .9f), 180),
+            K(16,   36, 60, 1.18f,  new Color(1f, .93f, .8f),   new Color(.52f, .64f, .88f), new Color(.6f, .62f, .6f),  new Color(.34f, .32f, .28f), new Color(.7f, .79f, .92f),   1.2f, new Color(.32f, .52f, .86f), 165),
             K(18,   6, 95, .6f,    new Color(1f, .55f, .32f),  new Color(.5f, .42f, .5f),   new Color(.56f, .4f, .34f),  new Color(.22f, .16f, .14f), new Color(.76f, .56f, .48f), .75f, new Color(.72f, .46f, .42f), 105),
-            K(19.5f, 30, 130, .18f, new Color(.5f, .55f, .85f), new Color(.2f, .2f, .32f),   new Color(.16f, .14f, .2f),  new Color(.07f, .06f, .08f), new Color(.2f, .19f, .28f),  .28f, new Color(.28f, .26f, .5f), 90),
-            K(21, 38, 140, .32f, new Color(.6f, .7f, .95f), new Color(.2f, .25f, .38f), new Color(.15f, .17f, .24f), new Color(.07f, .07f, .09f), new Color(.13f, .16f, .24f), .22f, new Color(.2f, .27f, .5f), 90),
+            K(19.5f, 30, 130, .4f, new Color(.56f, .62f, .92f), new Color(.28f, .3f, .46f),   new Color(.22f, .21f, .3f),  new Color(.1f, .1f, .13f), new Color(.22f, .23f, .34f),  .36f, new Color(.3f, .3f, .55f), 115),
+            K(21, 38, 140, .58f, new Color(.62f, .74f, 1f), new Color(.31f, .38f, .58f), new Color(.23f, .27f, .38f), new Color(.11f, .12f, .17f), new Color(.17f, .22f, .33f), .4f, new Color(.24f, .32f, .58f), 125),
         };
 
         static Key K(float h, float pitch, float yaw, float intensity, Color light, Color sky, Color equator, Color ground, Color fog, float exposure, Color tint, float fogEnd)
             => new Key { hour = h, pitch = pitch, yaw = yaw, intensity = intensity, light = light, sky = sky, equator = equator, ground = ground, fog = fog, exposure = exposure, tint = tint, fogEnd = fogEnd };
+
+        /// <summary>Where the moon stands (世界座標，+Z 北). The sky draws its halo around the same direction.</summary>
+        public static readonly Vector3 MoonDirection = new Vector3(-.3f, .4f, .86f).normalized;
 
         public static string PhaseName(float hour) =>
             hour < 5 ? "深夜" : hour < 7 ? "清晨" : hour < 11 ? "上午" : hour < 14 ? "正午" : hour < 17 ? "午後" : hour < 19.5f ? "黃昏" : "入夜";
@@ -129,8 +132,9 @@ namespace YunJing
         void LateUpdate()
         {
             if (moon == null || Camera.main == null) return;
-            // A fixed mark in the northern sky. Follow the camera only to keep it inside the fog distance.
-            moon.position = Camera.main.transform.position + new Vector3(-.25f, .55f, .80f).normalized * 35f;
+            // A fixed mark in the northern sky, low enough to be seen without looking straight up. Follow the
+            // camera only to keep it inside the fog distance.
+            moon.position = Camera.main.transform.position + MoonDirection * 35f;
             moon.LookAt(Camera.main.transform.position, Vector3.up);
         }
 
@@ -163,6 +167,12 @@ namespace YunJing
             }
 
             Night = hour >= 19.5f || hour < 5f ? 1 : hour >= 18 ? Mathf.InverseLerp(18, 19.5f, hour) : hour < 6.5f ? Mathf.InverseLerp(6.5f, 5, hour) : 0;
+            if (sky != null && sky.HasProperty("_Night"))
+            {
+                sky.SetFloat("_Night", Night);
+                sky.SetVector("_MoonDir", MoonDirection);
+            }
+
             if (moonMaterial != null)
             {
                 moonMaterial.SetColor("_BaseColor", new Color(.92f, .95f, 1f, Mathf.Lerp(.18f, 1f, Night)));

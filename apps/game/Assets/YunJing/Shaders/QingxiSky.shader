@@ -10,6 +10,9 @@ Shader "YunJing/QingxiSky"
         _Exposure ("Exposure", Float) = 1.2
         _SunSize ("Sun size", Float) = .035
         _Clouds ("Cloud cover", Range(0, 1)) = .5
+        _Night ("Night", Range(0, 1)) = 0
+        _MoonDir ("Moon direction", Vector) = (-.3, .4, .86, 0)
+        _Ridges ("Distant ridges", Range(0, 1)) = 1
     }
     SubShader
     {
@@ -28,6 +31,9 @@ Shader "YunJing/QingxiSky"
                 float _Exposure;
                 float _SunSize;
                 float _Clouds;
+                float _Night;
+                float4 _MoonDir;
+                float _Ridges;
             CBUFFER_END
 
             struct Attributes { float4 positionOS : POSITION; };
@@ -55,6 +61,15 @@ Shader "YunJing/QingxiSky"
                 return v;
             }
 
+            // One layer of far mountains: a ridge line around the whole horizon (seamless: the noise runs on a circle).
+            // Returns how much of this pixel the layer covers.
+            float Ridge(float3 d, float freq, float seed, float base, float amp)
+            {
+                float2 ring = normalize(d.xz + 1e-5) * freq;
+                float h = base + amp * (Fbm(ring + seed) * .75 + Noise(ring * 3.1 + seed) * .25);
+                return smoothstep(h + .004, h - .004, d.y);
+            }
+
             half4 Frag(Varyings i) : SV_Target
             {
                 float3 d = normalize(i.dir);
@@ -74,6 +89,23 @@ Shader "YunJing/QingxiSky"
                 // The sun: a small soft disc and a wide glow.
                 float s = saturate(dot(d, sun));
                 c += half3(1, .93, .8) * (pow(s, 900 / max(_SunSize * 30, .1)) * 3 + pow(s, 12) * .25) * (1 - cover * .8);
+                // Stars and the moon's halo, at night only, behind the clouds.
+                float2 sp = d.xz / (abs(up) + .35) * 70;
+                float2 cell = floor(sp);
+                float star = step(.988, Hash(cell)) * smoothstep(.45, .0, length(frac(sp) - .5));
+                star *= .6 + .4 * sin(_Time.y * (1 + Hash(cell + 3) * 2) + Hash(cell + 7) * 6.28);
+                float m = saturate(dot(d, normalize(_MoonDir.xyz)));
+                half3 night = half3(.85, .9, 1) * star * 2.2 * smoothstep(.02, .3, up)
+                    + half3(.55, .68, 1) * (pow(m, 90) * .9 + pow(m, 7) * .22);
+                c += night * _Night * (1 - cover * .85) / max(_Exposure * .82, .05) * .35;
+                // Far mountains in three layers, each paler and bluer than the one in front, sinking into the haze
+                // at their feet, so the land does not end at the edge of the walkable ground.
+                half3 haze = lerp(_GroundColor.rgb, c, .25);
+                half3 rock = _GroundColor.rgb * half3(.5, .58, .7);
+                float foot = smoothstep(-.02, .09, up);
+                c = lerp(c, lerp(haze, rock, .22 * foot + .06), Ridge(d, 2.1, 11.3, .03, .15) * _Ridges);
+                c = lerp(c, lerp(haze, rock, .42 * foot + .1), Ridge(d, 3.4, 47.9, .012, .105) * _Ridges);
+                c = lerp(c, lerp(haze, rock, .66 * foot + .14), Ridge(d, 5.6, 83.1, -.004, .062) * _Ridges);
                 return half4(c * _Exposure * .82, 1);
             }
             ENDHLSL
