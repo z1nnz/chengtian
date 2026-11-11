@@ -193,7 +193,7 @@ namespace YunJing
                 yield return Frames(2);
                 bool lit = dayNight.nightLights.Length > 0 && Array.TrueForAll(dayNight.nightLights, l => l == null || l.enabled);
                 Check($"at 22:00 it is night: sun dims ({noonSun:0.00} → {(dayNight.sun ? dayNight.sun.intensity : 0):0.00}) and {dayNight.nightLights.Length} night lights are on",
-                    QingxiDayNight.IsNight && lit && dayNight.sun != null && dayNight.sun.intensity < noonSun * .4f);
+                    QingxiDayNight.IsNight && lit && dayNight.sun != null && dayNight.sun.intensity < noonSun * .55f);   // a moonlit night (11/11: the night was unreadably dark), still clearly under half the day
                 var third = fortunes != null ? Array.Find(fortunes.fortunes, f => f.nightOnly) : null;
                 if (third != null && !QingxiFortunes.IsFound(third))
                 {

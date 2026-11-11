@@ -9,6 +9,7 @@ Shader "YunJing/QingxiFoliageWind"
     {
         _BaseMap ("Base map", 2D) = "white" {}
         _BaseColor ("Base colour", Color) = (1, 1, 1, 1)
+        _Saturation ("Saturation of the paint", Range(0, 1)) = .72
         _Cutoff ("Alpha cut-off", Range(0, 1)) = 0.4
         _Height ("Sway height (m)", Float) = 5
         _Strength ("Sway (m at the top)", Float) = 0.18
@@ -26,6 +27,7 @@ Shader "YunJing/QingxiFoliageWind"
         CBUFFER_START(UnityPerMaterial)
             float4 _BaseMap_ST;
             half4 _BaseColor;
+            float _Saturation;
             half _Cutoff;
             float _Height, _Strength, _Flutter;
             float4 _WindDir;
@@ -51,6 +53,7 @@ Shader "YunJing/QingxiFoliageWind"
         half Clip(float2 uv)
         {
             half4 c = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, uv) * _BaseColor;
+            c.rgb = lerp(dot(c.rgb, half3(.3, .55, .15)).xxx, c.rgb, _Saturation);
             clip(c.a - _Cutoff);
             return c.a;
         }
@@ -93,6 +96,7 @@ Shader "YunJing/QingxiFoliageWind"
             half4 frag(Varyings i, bool front : SV_IsFrontFace) : SV_Target
             {
                 half4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv) * _BaseColor;
+                albedo.rgb = lerp(dot(albedo.rgb, half3(.3, .55, .15)).xxx, albedo.rgb, _Saturation);
                 clip(albedo.a - _Cutoff);
                 float3 n = normalize(i.normalWS) * (front ? 1 : -1);
                 Light sun = GetMainLight(TransformWorldToShadowCoord(i.positionWS));

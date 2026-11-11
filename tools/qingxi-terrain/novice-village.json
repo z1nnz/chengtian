@@ -805,7 +805,7 @@
       "block": "A1",
       "zone": "homes-ne",
       "role": "民居一（藥農家）",
-      "model": "",
+      "model": "Assets/YunJing/Models/VillageHousesB/VL04_DiligentFamilyHouse/VL04_DiligentFamilyHouse_v001.fbx",
       "x": 20.5,
       "z": 13,
       "yaw": 0,
@@ -815,9 +815,9 @@
         5.6
       ],
       "owner": "joshsu54",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
-      "collider": "box",
+      "collider": "none",
       "author": "joshsu54",
       "note": "StarterHouse 變體：換屋頂、加曬架"
     },
@@ -826,7 +826,7 @@
       "block": "A1",
       "zone": "homes-ne",
       "role": "民居二（獵戶家）",
-      "model": "",
+      "model": "Assets/YunJing/Models/VillageHousesB/VL02_MovedInHouse/VL02_MovedInHouse_v001.fbx",
       "x": 33.5,
       "z": 13,
       "yaw": 0,
@@ -836,9 +836,9 @@
         5.6
       ],
       "owner": "joshsu54",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
-      "collider": "box",
+      "collider": "none",
       "author": "joshsu54",
       "note": "StarterHouse 變體：獸皮、柴堆"
     },
@@ -847,7 +847,7 @@
       "block": "A1",
       "zone": "homes-ne",
       "role": "民居三（老夫子家）",
-      "model": "",
+      "model": "Assets/YunJing/Models/VillageHousesB/VL05_ElderlyCoupleHouse/VL05_ElderlyCoupleHouse_v001.fbx",
       "x": 20.5,
       "z": 24,
       "yaw": 180,
@@ -857,9 +857,9 @@
         5.6
       ],
       "owner": "joshsu54",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
-      "collider": "box",
+      "collider": "none",
       "author": "joshsu54",
       "note": "兩層小樓，書卷窗"
     },
@@ -868,7 +868,7 @@
       "block": "A1",
       "zone": "homes-ne",
       "role": "民居四（空屋，機緣）",
-      "model": "",
+      "model": "Assets/YunJing/Models/VillageHousesB/VL01_LongEmptyHouse/VL01_LongEmptyHouse_v001.fbx",
       "x": 33.5,
       "z": 24,
       "yaw": 180,
@@ -878,9 +878,9 @@
         5.6
       ],
       "owner": "joshsu54",
-      "status": "needed",
+      "status": "placed",
       "phase": "P2",
-      "collider": "box",
+      "collider": "none",
       "author": "joshsu54",
       "note": "破舊空屋，藏機緣線索"
     },

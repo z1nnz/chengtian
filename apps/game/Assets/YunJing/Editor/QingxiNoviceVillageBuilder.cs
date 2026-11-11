@@ -665,6 +665,7 @@ namespace YunJing.Editor
                 if (p.Needed) { PlannedSlot(root, p); needed++; continue; }
                 if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Ensure(p.model);   // #57 ruins, #62 day 3-4 models
                 if (QingxiScenePropKits.Owns(p.model)) QingxiScenePropKits.Ensure(p.model);
+                if (QingxiVillageHouseKit.Owns(p.model)) QingxiVillageHouseKit.Ensure(p.model);   // #85, #89 village houses
                 var source = AssetDatabase.LoadAssetAtPath<GameObject>(p.model);
                 if (source == null) throw new FileNotFoundException("Village placement model missing (Git LFS pulled?)", p.model);
                 var model = (GameObject)PrefabUtility.InstantiatePrefab(source);
@@ -674,6 +675,7 @@ namespace YunJing.Editor
                 if (QingxiWaterheadA.Owns(p.model)) QingxiWaterheadA.Prepare(model, walkable: false);
                 if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Prepare(model, p.model);
                 if (QingxiScenePropKits.Owns(p.model)) QingxiScenePropKits.Prepare(model, p.model);
+                if (QingxiVillageHouseKit.Owns(p.model)) QingxiVillageHouseKit.Prepare(model, p.model);
                 // Layout proxies (the 3 × 5 m plate under Eli-0731's assembled corner) mark an area, they are not ground.
                 foreach (var proxy in model.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("layout_proxy")).ToArray())
                     UnityEngine.Object.DestroyImmediate(proxy.gameObject);
@@ -1002,7 +1004,7 @@ namespace YunJing.Editor
                     Tree(QingxiElderTrees.Source(kind), root, new Vector3(x, 0, z), h * Grand * (.85f + R() * .3f), R() * 360);
                     elders++;
                 }
-                else Tree(pine, root, new Vector3(x, 0, z), 7f + R() * 5.5f, R() * 360);
+                else Tree(OldPineStandIn(), root, new Vector3(x, 0, z), NaturalHeight["ElderPine"] * (.8f + R() * .3f), R() * 360);
                 trees++;
             }
             int target = Mathf.RoundToInt(biome.trees * .3f);
@@ -1185,6 +1187,15 @@ namespace YunJing.Editor
         static readonly System.Collections.Generic.Dictionary<string, float> NaturalHeight = new System.Collections.Generic.Dictionary<string, float> {
             ["ElderGuardian"] = 10.6f, ["JianmuSapling"] = 3.9f, ["ElderCamphor"] = 15.81f, ["ElderMaple"] = 8.71f, ["ElderGinkgo"] = 18.42f, ["ElderWillow"] = 13.10f, ["ElderPlum"] = 8.00f, ["ElderPine"] = 13.59f, ["ElderCypress"] = 9.46f, ["ElderWithered"] = 9.01f };
 
+        // 2026-11-11 (z1nnz): the first-generation pine (Dondon CommonPine, flat needle pads) is retired from the
+        // world; wherever it stood, the grown Elder pine stands now.
+        static GameObject OldPineStandIn()
+        {
+            if (!QingxiElderTrees.Available) throw new InvalidOperationException("Elder trees missing: the old CommonPine is retired and has no stand-in");
+            ElderKit();
+            return QingxiElderTrees.Source("ElderPine");
+        }
+
         static bool elderCopied;
         static void ElderKit() { if (!elderCopied) { QingxiElderTrees.Copy(); elderCopied = true; } }
 
@@ -1219,7 +1230,7 @@ namespace YunJing.Editor
                 if (creek < 6f) continue;
                 bool wet = creek < 14f;
                 if (wet || random.NextDouble() < .2) Tree(bamboo, root, new Vector3(x, 0, z), 4.5f + (float)random.NextDouble(), (float)random.NextDouble() * 360);
-                else Tree(pine, root, new Vector3(x, 0, z), 8f + (float)random.NextDouble() * 4, (float)random.NextDouble() * 360);
+                else Tree(OldPineStandIn(), root, new Vector3(x, 0, z), NaturalHeight["ElderPine"] * (.8f + (float)random.NextDouble() * .3f), (float)random.NextDouble() * 360);
             }
         }
 
@@ -1245,13 +1256,13 @@ namespace YunJing.Editor
                 var kind = n % 3 == 0 ? null : pick();
                 if (n++ % 3 == 0) Tree(bamboo, root, at, 4.5f, (float)random.NextDouble() * 360);
                 else if (kind != null) Tree(QingxiElderTrees.Source(kind), root, at, NaturalHeight[kind] * (.85f + (float)random.NextDouble() * .3f), (float)random.NextDouble() * 360);
-                else Tree(pine, root, at, 9f + (float)random.NextDouble() * 3, (float)random.NextDouble() * 360);
+                else Tree(OldPineStandIn(), root, at, NaturalHeight["ElderPine"] * (.85f + (float)random.NextDouble() * .25f), (float)random.NextDouble() * 360);
             }
             Landmarks(root, "A1");
             SoilUnder(root);
             // a darker stand of pines behind the forest encounter
             foreach (var x in new[] { -13f, -10f, 10f, 13f, -6f, 6f })
-                Tree(pine, root, new Vector3(x, 0, 30 + Mathf.Abs(x) * .3f), 10f, x * 31);
+                Tree(QingxiElderTrees.Source("ElderCypress"), root, new Vector3(x, 0, 30 + Mathf.Abs(x) * .3f), NaturalHeight["ElderCypress"] * (1f + Mathf.Abs(x) * .012f), x * 31);
         }
 
         // Each species' own soil under its crown (QingxiVillageTerrain.PaintSoils), from the trees just planted under root (world positions).

@@ -118,6 +118,16 @@ namespace YunJing
                 body.enabled = true;
                 SetHour(22);
                 yield return Shot("22.0-入夜-坊市");
+                // The homes lane in the north-east (novice-village.json homes-ne), morning and late afternoon.
+                foreach (var (hour, x, z, yaw, name) in new[] { (10f, 12f, 4f, 45f, "10.0-民居巷"), (16.5f, 27f, 2f, 0f, "16.5-民居巷-南口") })
+                {
+                    body.enabled = false;
+                    walker.transform.SetPositionAndRotation(new Vector3(x, walker.transform.position.y + 1.5f, z), Quaternion.Euler(0, yaw, 0));
+                    body.enabled = true;
+                    SetHour(hour);
+                    yield return new WaitForSeconds(1.2f);   // settle on the ground
+                    yield return Shot(name);
+                }
             }
             Debug.Log("QINGXI_TIME_SHOTS saved to " + dir);
             Application.Quit();

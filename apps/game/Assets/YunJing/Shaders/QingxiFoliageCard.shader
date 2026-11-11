@@ -8,6 +8,7 @@ Shader "YunJing/QingxiFoliageCard"
     {
         _BaseMap ("Foliage clusters", 2D) = "white" {}
         _BaseColor ("Tint", Color) = (1, 1, 1, 1)
+        _Saturation ("Saturation of the paint", Range(0, 1)) = .68
         _Cutoff ("Alpha cut", Range(0, 1)) = .5
         _Height ("Tree height (m)", Float) = 10
         _Strength ("Wind (m at the top)", Float) = .08
@@ -22,6 +23,7 @@ Shader "YunJing/QingxiFoliageCard"
         CBUFFER_START(UnityPerMaterial)
             float4 _BaseMap_ST;
             half4 _BaseColor;
+            float _Saturation;
             half _Cutoff;
             float _Height, _Strength;
         CBUFFER_END
@@ -68,6 +70,7 @@ Shader "YunJing/QingxiFoliageCard"
             half4 Frag(V i) : SV_Target
             {
                 half4 c = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv) * _BaseColor;
+                c.rgb = lerp(dot(c.rgb, half3(.3, .55, .15)).xxx, c.rgb, _Saturation);   // 11/11: crowns were too vivid for the valley
                 float3 view = GetWorldSpaceNormalizeViewDir(i.ws);
                 float3 face = normalize(cross(ddy(i.ws), ddx(i.ws)));
                 float facing = abs(dot(face, view));

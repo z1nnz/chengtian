@@ -100,14 +100,28 @@ Shader "YunJing/QingxiSky"
                 half3 night = half3(.85, .9, 1) * star * 2.2 * smoothstep(.02, .3, up)
                     + half3(.55, .68, 1) * (pow(m, 90) * .9 + pow(m, 7) * .22);
                 c += night * _Night * (1 - cover * .85) / max(_Exposure * .82, .05) * .35;
-                // The moon itself: a crescent (承天's sign is the waning moon), pale by day, bright at night.
+                // The moon: a small sphere lit from the side and a little behind, so it shows as a waning crescent
+                // (承天's sign) with a soft terminator, darker seas, a dimmed limb and, at night, faint earthshine on
+                // the dark side. Pale by day.
                 float3 md = normalize(_MoonDir.xyz);
                 float3 mr = normalize(cross(float3(0, 1, 0), md));
-                float cosR = cos(.046);
-                float disc = smoothstep(cosR, cosR + .00016, dot(d, md));
-                float bite = smoothstep(cosR, cosR + .00016, dot(d, normalize(md + mr * .03 + float3(0, .012, 0))));
-                float crescent = disc * (1 - bite) * (1 - cover * .9);
-                c = lerp(c, half3(.96, .98, 1) * 1.45 / max(_Exposure * .82, .05), crescent * lerp(.22, 1, _Night));
+                float3 mu = cross(md, mr);
+                float2 mp = float2(dot(d, mr), dot(d, mu)) / .034;
+                float mrad = dot(mp, mp);
+                if (mrad < 1 && dot(d, md) > 0)
+                {
+                    float3 mn = float3(mp, -sqrt(1 - mrad));                 // towards the viewer is -z here
+                    float3 ml = normalize(float3(-.86, .22, .46));           // sunlight from the left, slightly behind
+                    float lit = smoothstep(-.04, .22, dot(mn, ml));
+                    float seas = lerp(.62, 1, smoothstep(.35, .7, Fbm(mp * 2.1 + 5.3)));
+                    seas *= lerp(.88, 1, Noise(mp * 9 + 2.7));
+                    float limb = lerp(.72, 1, pow(1 - mrad, .35));
+                    half3 face = half3(1, .98, .92) * seas * limb * lit * 1.5
+                        + half3(.16, .2, .3) * seas * limb * (1 - lit) * _Night;
+                    float edge = smoothstep(1, .93, mrad);
+                    float show = edge * (1 - cover * .9) * lerp(lit * .3, 1, _Night);
+                    c = lerp(c, face / max(_Exposure * .82, .05), show);
+                }
                 // Far mountains in three layers, each paler and bluer than the one in front, sinking into the haze
                 // at their feet, so the land does not end at the edge of the walkable ground.
                 half3 haze = lerp(_GroundColor.rgb, c, .25);

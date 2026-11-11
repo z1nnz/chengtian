@@ -92,9 +92,11 @@ namespace YunJing.Editor
                 else leaves.shader = Shader.Find("Universal Render Pipeline/Lit");
                 // The source palette is already bright. Tint only the generated Unity material, keeping the
                 // authored texture untouched and bringing canopy highlights back into the valley palette.
-                var leafTint = kind == "ElderGinkgo" ? new Color(.72f, .68f, .52f)
-                    : kind == "ElderMaple" ? new Color(.78f, .64f, .58f)
-                    : new Color(.68f, .76f, .65f);
+                var leafTint = kind == "ElderGinkgo" ? new Color(.66f, .63f, .52f)
+                    : kind == "ElderMaple" ? new Color(.7f, .58f, .54f)
+                    : new Color(.62f, .68f, .62f);
+                // Species the Lit shader draws (no painted clusters) cannot use _Saturation; the others do.
+                if (leaves.HasProperty("_Saturation")) leaves.SetFloat("_Saturation", kind == "ElderGinkgo" || kind == "ElderMaple" ? .6f : .68f);
                 leaves.SetColor("_BaseColor", leafTint); leaves.SetFloat("_Smoothness", .08f);
                 leaves.SetFloat("_Cull", 0);   // single-sided leaf cards
                 // Light through the leaves (the Genshin crowns glow even in shade): the palette itself, a third as
