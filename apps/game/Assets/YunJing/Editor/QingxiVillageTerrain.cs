@@ -71,7 +71,7 @@ namespace YunJing.Editor
             public string block;              // block id; names the generated creek water mesh
             public bool isolated;             // a pocket world of its own (the territory): no blend to the shared world height
         }
-        [Serializable] public class Flat { public string id, note; public float x, z, halfX, halfZ, height, blend = 1.5f; }
+        [Serializable] public class Flat { public string id, note; public float x, z, halfX, halfZ, height, blend = 1.5f, blendX; }   // blendX > 0: a softer fall-off at the two X ends (terrace rows run out into the hillside)
         [Serializable] public class CreekKitSpan { public float from, to; public string pieces, note; }
 
         // Distance to the creek's centre line, and the land height there (the bed follows the land, so the
@@ -292,7 +292,8 @@ namespace YunJing.Editor
             foreach (var f in layout.flats ?? new Flat[0])
             {
                 float edge = Mathf.Max(Mathf.Abs(x - f.x) - f.halfX, Mathf.Abs(z - f.z) - f.halfZ);
-                h = Mathf.Lerp(f.height, h, Smooth(0f, f.blend, edge));
+                float away = f.blendX > 0 ? Mathf.Max(Smooth(0f, f.blendX, Mathf.Abs(x - f.x) - f.halfX), Smooth(0f, f.blend, Mathf.Abs(z - f.z) - f.halfZ)) : Smooth(0f, f.blend, edge);
+                h = Mathf.Lerp(f.height, h, away);
             }
             // Pads last: each zone stands on one flat platform at its stated height. The edge wanders so the platform
             // is not a box cut into the hill, and the bank around it is wider the more it has to climb or fall, so it

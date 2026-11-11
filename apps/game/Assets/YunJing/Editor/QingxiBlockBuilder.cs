@@ -13,7 +13,7 @@ namespace YunJing.Editor
     {
         // Which sides of each block are open (comma-separated); the rest are walled for now. A3 opens east onto
         // A1 and north onto D3, the upstream valley (PR #45); D1, the forest edge, opens south onto A1 and west onto D3.
-        public static readonly (string id, string open)[] Blocks = { ("A2", "north"), ("A3", "east,north"), ("D3", "south,east"), ("D1", "south,west") };
+        public static readonly (string id, string open)[] Blocks = { ("A2", "north"), ("A3", "east,north"), ("D3", "south,east"), ("D1", "south,west"), ("A4", "west") };   // A4 東坡茶田 opens west onto A1
 
         public static string ScenePath(string id) => $"Assets/YunJing/Generated/QingxiBlock_{id}.unity";
 

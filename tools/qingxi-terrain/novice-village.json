@@ -124,6 +124,16 @@
       "id": "north-pass",
       "x": 12,
       "z": 49.5
+    },
+    {
+      "id": "east-lane",
+      "x": 27,
+      "z": -14.5
+    },
+    {
+      "id": "east-exit",
+      "x": 49.5,
+      "z": -14.5
     }
   ],
   "edges": [
@@ -258,6 +268,20 @@
       "from": "rabbit-trail",
       "to": "north-pass",
       "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "shops-east-lane",
+      "from": "shop-front",
+      "to": "east-lane",
+      "width": 2.6,
+      "surface": "dirt"
+    },
+    {
+      "id": "east-road",
+      "from": "east-lane",
+      "to": "east-exit",
+      "width": 2.6,
       "surface": "dirt"
     }
   ],

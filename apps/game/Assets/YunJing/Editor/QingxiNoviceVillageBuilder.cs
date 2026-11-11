@@ -134,6 +134,7 @@ namespace YunJing.Editor
             new GameObject("Qingxi Server Link (K7)").AddComponent<QingxiServerLink>();   // online when the game server runs, offline otherwise
             var streamer = new GameObject("Qingxi Block Streamer (K5)").AddComponent<QingxiBlockStreamer>();
             streamer.gameObject.AddComponent<QingxiUpstreamShots>();   // --upstream-shots: review views of D3
+            streamer.gameObject.AddComponent<QingxiTeaTerraceShots>();   // --tea-shots: review views of A4
             streamer.blocks = QingxiBlockBuilder.Blocks.Select(b =>
             {
                 var a = QingxiVillageTerrain.Load($"tools/qingxi-terrain/blocks/{b.id}.json").bounds;
@@ -330,11 +331,11 @@ namespace YunJing.Editor
         }
 
         // Keep the traveller inside the review village; tall enough for the hills at the edge.
-        // K5: the south side opens onto A2 and the west side onto A3 (streamed in by QingxiBlockStreamer), so only
-        // the east is walled until that block exists (the north opens onto D1, the forest edge).
+        // K5: the south side opens onto A2, the west onto A3, the north onto D1 and (since 11/11) the east onto A4,
+        // all streamed in by QingxiBlockStreamer. No village wall is left; the outer blocks wall their own far sides.
         static void Boundary(Transform village)
         {
-            foreach (var (x, z, w, d) in new[] { (45f, 0f, 1f, 90f) })
+            foreach (var (x, z, w, d) in new (float, float, float, float)[0])
             {
                 var wall = new GameObject("Boundary"); wall.transform.SetParent(village, false);
                 wall.transform.localPosition = new Vector3(x, 5, z);
@@ -810,6 +811,7 @@ namespace YunJing.Editor
                 if (upstream) QingxiWaterheadA.RiverKit(root, layout);
                 if (upstream && layout.placements.Any(p => p.id == "D3_CrackedSluice")) UpstreamClues(root);
                 if (blockId == "A2") TeaPavilion(root);
+                if (blockId == "A4") QingxiTeaTerraceKit.Build(root);   // joshsu54's tea terraces, stairs and pavilion
                 Dressing(root, blockId);
                 Debug.Log("QINGXI_WIND (block): " + WindFoliage(root) + " foliage renderers sway");
             }
@@ -967,6 +969,8 @@ namespace YunJing.Editor
                 if (layout.isolated && Mathf.Max(Mathf.Abs(x - (a.minX + a.sizeX / 2)), Mathf.Abs(z - (a.minZ + a.sizeZ / 2))) < a.sizeX * .28f) return false;
                 if (QingxiVillageTerrain.PadDistance(layout, x, z, out _) < pad || QingxiVillageTerrain.RoadDistance(layout, x, z, out _) < road) return false;
                 if (QingxiVillageTerrain.CreekDistance(layout, x, z, out _) < (creekGap < 0 ? clear : creekGap)) return false;
+                // Nothing grows on levelled works (A4's terrace treads) or within 5 m of them.
+                if (layout.flats != null && layout.flats.Any(f => Mathf.Abs(x - f.x) < f.halfX + 5 && Mathf.Abs(z - f.z) < f.halfZ + 5)) return false;
                 return layout.placements == null || layout.placements.All(p => Vector2.Distance(new Vector2(p.x, p.z), new Vector2(x, z)) > 3f);
             }
             Vector2 Somewhere(Func<float, float, bool> ok)
