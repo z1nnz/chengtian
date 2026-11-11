@@ -76,6 +76,7 @@ Shader "YunJing/QingxiSky"
                 float up = d.y;
                 float3 sun = normalize(_MainLightPosition.xyz);
                 half3 zenith = _SkyTint.rgb * half3(.62, .85, 1.25);
+                zenith = lerp(dot(zenith, half3(.3, .55, .15)).xxx, zenith, .78);   // a softer blue: the 11/11 sky was louder than the land
                 half3 horizon = lerp(_GroundColor.rgb, half3(.86, .92, .97), .45);
                 half3 c = lerp(horizon, zenith, pow(saturate(up), .5));
                 c = lerp(c, _GroundColor.rgb * .85, saturate(-up * 5));   // below the horizon: haze

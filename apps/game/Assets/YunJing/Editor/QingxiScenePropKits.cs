@@ -14,28 +14,31 @@ namespace YunJing.Editor
         const string Day12 = "Assets/YunJing/Models/Day12C";
         const string Creek = "Assets/YunJing/Models/CreekRepairB";
         const string Basics = "Assets/YunJing/Models/ModellingBasicsC";
+        const string Creekside = "Assets/YunJing/Models/CreeksideC";   // Eli-0731 #88, #93: WL washing and FI fishing props, one material each
         const string Core = "Assets/YunJing/Models/CoreRuins";   // core team: art/exports/core-ruins-v1/<id>/, textures in art/textures/core-ruins-v1
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
 
         public static bool Owns(string model) => !string.IsNullOrEmpty(model) &&
-            (model.StartsWith(World + "/") || model.StartsWith(Day12 + "/") || model.StartsWith(Creek + "/") || model.StartsWith(Basics + "/") || model.StartsWith(Core + "/"));
+            (model.StartsWith(World + "/") || model.StartsWith(Day12 + "/") || model.StartsWith(Creek + "/") || model.StartsWith(Basics + "/") || model.StartsWith(Core + "/") || model.StartsWith(Creekside + "/"));
 
         public static void Ensure(string model)
         {
             string id = Path.GetFileName(Path.GetDirectoryName(model));
             string folder = model.StartsWith(World + "/") ? World : model.StartsWith(Day12 + "/") ? Day12 :
-                model.StartsWith(Basics + "/") ? Basics : model.StartsWith(Core + "/") ? Core : Creek;
+                model.StartsWith(Basics + "/") ? Basics : model.StartsWith(Core + "/") ? Core : model.StartsWith(Creekside + "/") ? Creekside : Creek;
             string target = Path.Combine(Repo, "apps/game", folder, id);
             string source = folder == World ? Path.Combine(Repo, "art/exports/world-props-a") :
                 folder == Day12 ? Path.Combine(Repo, "art/exports/qingxi-day12-c") :
                 folder == Basics ? Path.Combine(Repo, "art/exports/modelling-basics-c") :
                 folder == Core ? Path.Combine(Repo, "art/exports/core-ruins-v1", id) :
+                folder == Creekside ? Path.Combine(Repo, "art/exports/creekside-life-c") :
                 Path.Combine(Repo, "art/exports/creek-repair-b", id);
             Copy(Path.Combine(source, Path.GetFileName(model)), Path.Combine(target, Path.GetFileName(model)));
             string textures = folder == World ? Path.Combine(Repo, "art/textures/world-props-a") :
                 folder == Day12 ? Path.Combine(Repo, "art/textures/qingxi-day12-c") :
                 folder == Basics ? Path.Combine(Repo, "art/textures/modelling-basics-c") :
-                folder == Core ? Path.Combine(Repo, "art/textures/core-ruins-v1") : Path.Combine(source, "Textures");
+                folder == Core ? Path.Combine(Repo, "art/textures/core-ruins-v1") :
+                folder == Creekside ? Path.Combine(Repo, "art/textures/creekside-life-c") : Path.Combine(source, "Textures");
             if (Directory.Exists(textures))
                 foreach (string file in Directory.GetFiles(textures, folder == World && (id.StartsWith("TY05") || id.StartsWith("TY10")) ? "T_" + id + "_*.png" : id + "_*.png"))
                     Copy(file, Path.Combine(target, "Textures", Path.GetFileName(file)));
@@ -87,7 +90,7 @@ namespace YunJing.Editor
             if (normal) { mat.SetTexture("_BumpMap", normal); mat.EnableKeyword("_NORMALMAP"); }
             var mask = Tex(model.StartsWith(Creek + "/") ? "MetallicSmoothness" : "MaskURP");
             if (mask) { mat.SetTexture("_MetallicGlossMap", mask); mat.EnableKeyword("_METALLICSPECGLOSSMAP"); mat.SetFloat("_Smoothness", 1); }
-            if (group.Contains("_Detail_Ferns"))   // alpha-cut leaf cards, seen from both sides
+            if (group.Contains("_Detail_Ferns") || id.StartsWith("CO04") || (model.StartsWith(Creekside + "/") && id == "FI03"))   // alpha-cut cards (ferns; the hand net's far LOD), seen from both sides
             {
                 mat.SetFloat("_AlphaClip", 1); mat.SetFloat("_Cutoff", .45f); mat.EnableKeyword("_ALPHATEST_ON"); mat.SetFloat("_Cull", 0);
                 mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest; mat.SetFloat("_Smoothness", 0);
@@ -106,7 +109,7 @@ namespace YunJing.Editor
             {
                 if (r.name.Contains("_Collision") || r.name.StartsWith("UCX_")) { r.enabled = false; continue; }
                 var match = Regex.Match(r.name, @"^(.+)_LOD\d$");
-                string group = creek ? id : match.Success ? match.Groups[1].Value : null;
+                string group = creek || model.StartsWith(Creekside + "/") ? id : match.Success ? match.Groups[1].Value : null;
                 if (group != null) r.sharedMaterials = Enumerable.Repeat(Material(model, group), r.sharedMaterials.Length).ToArray();
             }
             var levels = go.GetComponentsInChildren<Renderer>(true).Where(r => r.enabled && Regex.IsMatch(r.name, @"_LOD[012]$")).ToArray();

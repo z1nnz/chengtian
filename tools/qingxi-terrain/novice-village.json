@@ -984,6 +984,206 @@
       "phase": "P2",
       "collider": "box",
       "author": "Codex"
+    },
+    {
+      "id": "Creek_Wash_Board",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "洗衣板",
+      "model": "Assets/YunJing/Models/CreeksideC/WL01/WL01_v001.fbx",
+      "x": -22.9,
+      "z": 8.0,
+      "yaw": 80,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Wash_Mallet",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "洗衣木槌",
+      "model": "Assets/YunJing/Models/CreeksideC/WL02/WL02_v001.fbx",
+      "x": -22.5,
+      "z": 8.5,
+      "yaw": 30,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Wash_ClothRoll",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "捲起的粗布",
+      "model": "Assets/YunJing/Models/CreeksideC/WL03/WL03_v001.fbx",
+      "x": -22.2,
+      "z": 7.5,
+      "yaw": 0,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Wash_FoldedCloth",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "折好的濕布",
+      "model": "Assets/YunJing/Models/CreeksideC/WL04/WL04_v001.fbx",
+      "x": -22.0,
+      "z": 9.0,
+      "yaw": 120,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Wash_SoapDish",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "皂灰小盤",
+      "model": "Assets/YunJing/Models/CreeksideC/WL05/WL05_v001.fbx",
+      "x": -22.8,
+      "z": 7.2,
+      "yaw": 0,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Fish_Net",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "抄網（斜插岸邊）",
+      "model": "Assets/YunJing/Models/CreeksideC/FI03/FI03_v001.fbx",
+      "x": -23.0,
+      "z": -2.6,
+      "yaw": 100,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Fish_Trap",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "魚筌",
+      "model": "Assets/YunJing/Models/CreeksideC/FI04/FI04_v001.fbx",
+      "x": -22.5,
+      "z": -3.7,
+      "yaw": 40,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Fish_Rod",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "收起的釣竿",
+      "model": "Assets/YunJing/Models/CreeksideC/FI01/FI01_v001.fbx",
+      "x": -22.0,
+      "z": -2.0,
+      "yaw": 15,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Fish_Reel",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "木線輪",
+      "model": "Assets/YunJing/Models/CreeksideC/FI02/FI02_v001.fbx",
+      "x": -22.4,
+      "z": -2.9,
+      "yaw": 0,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Creek_Fish_Floats",
+      "block": "A1",
+      "zone": "creek-bank",
+      "role": "木浮子",
+      "model": "Assets/YunJing/Models/CreeksideC/FI05/FI05_v001.fbx",
+      "x": -22.9,
+      "z": -3.3,
+      "yaw": 0,
+      "footprint": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "owner": "Eli-0731",
+      "author": "Eli-0731（#88、#93）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
     }
   ],
   "herbs": [

@@ -331,13 +331,21 @@ def build_co02():
     finish(ID, game, info, [lod0, ferns])
 
 # ---------------------------------------------------------------- shared painting for loose pieces
-def paint_piece(ob, kind, moss_bias=0.0, seed=0.0):
-    """Vertex colour for a sculpt piece in world space. kind: stone, tile, timber."""
+def paint_piece(ob, kind, moss_bias=0.0, seed=0.0, ground=True):
+    """Vertex colour for a sculpt piece in world space. kind: stone, granite, tile, timber, rope. ground: the piece stands on soil at z = 0."""
     ob.data.update(); pts = coords(ob) + seed; nn = normals(ob); up = np.clip(nn[:, 2], 0, 1); z = pts[:, 2] - seed
     if kind == 'stone':
         base = mix((.25, .27, .25), (.47, .48, .43), smooth(.3, .7, fbm(pts * 3.1 + 5)))
         base = mix(base, (.42, .38, .3), .3 * smooth(.5, .8, fbm(pts * 1.6 + 77)))
         base = mix(base, (.1, .12, .12), .4 * smooth(.5, .78, fbm(pts * np.array([14, 14, 1.2]) + 11)))
+    elif kind == 'granite':   # B 區: pale grey-white granite, cool shadows in the cracks, a little warm staining
+        base = mix((.56, .57, .55), (.8, .8, .76), smooth(.3, .7, fbm(pts * 1.9 + 5)))
+        base = mix(base, (.7, .64, .54), .25 * smooth(.5, .8, fbm(pts * .9 + 77)))
+        base = mix(base, (.3, .33, .36), .5 * smooth(.6, .82, fbm(pts * np.array([7, 7, 1.1]) + 11)))
+        base = mix(base, (.42, .45, .47), .35 * smooth(.62, .7, fbm(pts * 5 + 300, 2)))
+    elif kind == 'rope':
+        twist = .5 + .5 * np.sin((pts[:, 0] * 60 + pts[:, 2] * 40 + pts[:, 1] * 40))
+        base = mix((.36, .29, .18), (.6, .52, .34), twist)
     elif kind == 'tile':
         base = mix((.16, .18, .21), (.3, .32, .35), smooth(.3, .7, fbm(pts * 9 + 5)))
         base = mix(base, (.36, .25, .2), .25 * smooth(.6, .8, fbm(pts * 5 + 31)))                   # a little fired clay showing
@@ -346,13 +354,13 @@ def paint_piece(ob, kind, moss_bias=0.0, seed=0.0):
         base = mix(base, (.06, .05, .04), .55 * smooth(.55, .8, fbm(pts * np.array([1.5, 30, 30]) + 60)))   # rot along the grain
         base = mix(base, (.5, .45, .36), .2 * smooth(.6, .85, fbm(pts * 7 + 13)))
     m = fbm(pts * 3.4 + 90) * .9 + fbm(pts * 12 + 14) * .35
-    moss = smooth(.76, .92, m + .34 * up + .2 * smooth(.3, 0, z) + moss_bias)
+    moss = smooth(.76, .92, m + .34 * up + (.2 * smooth(.3, 0, z) if ground else 0) + moss_bias)
     mossc = mix((.11, .16, .07), (.25, .31, .13), smooth(.3, .75, fbm(pts * 14 + 3)))
     mossc = mix(mossc, (.4, .43, .2), .45 * smooth(.6, .85, fbm(pts * 30 + 8)) * up)
     col = mix(base, mossc, moss)
     lichen = smooth(.69, .74, fbm(pts * 7 + 200, 2)) * smooth(.45, .6, fbm(pts * 2.2 + 55)) * (1 - moss)
     col = mix(col, (.55, .6, .47), lichen * (.75 if kind == 'stone' else .3))
-    col = mix(col, (.17, .13, .09), smooth(.05, -.04, z) * .8)
+    if ground: col = mix(col, (.17, .13, .09), smooth(.05, -.04, z) * .8)
     set_colour(ob, col)
     set_coords(ob, coords(ob) + normals(ob) * (moss * .012)[:, None])
     for poly in ob.data.polygons: poly.use_smooth = True
@@ -703,6 +711,58 @@ def build_co04():
     }
     finish(ID, [lod0, lod1, lod2], info, [lod0], target=(.4, 0, 1.0), dist=.9)
 
+# ---------------------------------------------------------------- CO05
+def build_co05():
+    """One 4 m section of a cliffside plank walk (D8 東山徑): beams socketed into pale granite, braces, a plank deck, a rope rail.
+    Origin: on the deck surface at the cliff face, centre of the section. The deck runs along X; the drop is on -Y."""
+    ID = 'CO05_CliffPlankWalk'
+    reset(); rng = np.random.default_rng(20261114); parts = []
+    cliff = stone_block('cliff', (4.3, .8, 4.6), 42, 46, rng, .07)
+    cp = coords(cliff); cp[:, 1] += .1 * (fbm(cp * np.array([.9, 1, .9]) + 4) - .5) * 2 + .05 * (fbm(cp * 3 + 9) - .5); set_coords(cliff, cp)
+    place(cliff, (0, .42, -2.2)); parts.append((cliff, 'granite', -.12))
+    for i, x in enumerate((-1.55, -.52, .52, 1.55)):
+        beam = place(stone_block(f'beam{i}', (.2, 2.05, .2), 120, 8, rng, .012), (x, -.72, -.3)); parts.append((beam, 'timber', -.08))
+        brace = stone_block(f'brace{i}', (.14, 1.75, .14), 120, 6, rng, .01)
+        place(brace, (0, 0, -.07)); place(brace, (x, -.62, -.92), (-47, 0, 0)); parts.append((brace, 'timber', -.1))
+        sock = place(stone_block(f'socket{i}', (.3, .1, .3), 110, 4, rng, .01), (x, .02, -.35)); parts.append((sock, 'granite', -.3))
+    edge = place(stone_block('edge_beam', (4.1, .16, .16), 110, 10, rng, .012), (0, -1.62, -.2)); parts.append((edge, 'timber', -.08))
+    n = 9; w = 4.0 / n
+    for i in range(n):
+        L = 1.72 + rng.uniform(-.05, .08)
+        plank = stone_block(f'plank{i}', (w - .025, L, .06), 130, 7, rng, .008)
+        pp = coords(plank)
+        if i == 5:   # the cracked one: split along its length, one half dropped a little
+            half = pp[:, 0] > .02 * np.sin(pp[:, 1] * 9); pp[half, 2] -= .035; pp[half, 0] += .012
+        pp[:, 2] += .012 * np.sin(pp[:, 1] * 2.2 + i)                                    # planks cup and warp
+        set_coords(plank, pp)
+        place(plank, (-2 + w * (i + .5), -.86 + rng.uniform(-.03, .03), -.06), (rng.uniform(-1.2, 1.2), 0, rng.uniform(-1.4, 1.4))); parts.append((plank, 'timber', -.06))
+    posts = []
+    for i, x in enumerate((-1.92, -.64, .64, 1.92)):
+        post = place(stone_block(f'post{i}', (.11, .11, 1.12), 130, 6, rng, .008), (x, -1.62, -.12), (rng.uniform(-2, 2), rng.uniform(-3, 3), 0)); parts.append((post, 'timber', -.1))
+        posts.append((x, -1.62, .9))
+    for i, (a, b) in enumerate(zip(posts, posts[1:])):
+        mid = ((a[0] + b[0]) / 2, a[1] - .02, a[2] - .17)
+        rope = tube(f'rope{i}', [a, ((a[0] * 3 + b[0]) / 4, a[1] - .01, a[2] - .12), mid, ((a[0] + b[0] * 3) / 4, a[1] - .01, a[2] - .12), b], (.022,) * 5, segments=10, per_m=60)
+        parts.append((rope, 'rope', -1))
+    for o, kind, bias in parts: paint_piece(o, kind, bias, ground=False)
+    sculpts = [o for o, _, _ in parts]; sculpt_tris = sum(tri_count(o) for o in sculpts)
+    lod0, lod1, lod2 = bake_game_mesh(ID, sculpts, 9000, (4200, 1300), clip_ground=False)
+    col_deck = dense_box(ID + '_Collision', (4.0, 1.75, .14), 0); col_deck.location = (0, -.86, -.14); col_deck.display_type = 'WIRE'
+    col_rail = dense_box(ID + '_Rail_Collision', (4.0, .1, 1.1), 0); col_rail.location = (0, -1.62, 0); col_rail.display_type = 'WIRE'
+    col_wall = dense_box(ID + '_Cliff_Collision', (4.3, .7, 4.6), 0); col_wall.location = (0, .42, -2.2); col_wall.display_type = 'WIRE'
+    for o in sculpts: o.hide_render = True; o.hide_viewport = True
+    info = {
+        'asset': ID, 'version': 'v001', 'name_zh': '崖邊棧道（一段 4 m）', 'slot': 'D8_EastMountainPath_PlankWalk', 'minTier': 'low',
+        'note': 'B 區灰白花崗石風格。可首尾相接成一條路；橋面在原點高度，寬 1.75 m，外側有繩欄。崖面是一塊 4.3 × 4.6 m 的石板，接真正的山壁時埋進去即可。',
+        'units': 'meters', 'front': '-Y is the drop', 'origin': 'deck surface at the cliff face, section centre',
+        'dimensions_m': [round(v, 3) for v in lod0.dimensions], 'sculpt_triangles': sculpt_tris,
+        'lods': {'LOD0': tri_count(lod0), 'LOD1': tri_count(lod1), 'LOD2': tri_count(lod2)},
+        'materials': 1, 'textures_px': {f'{ID}_Albedo.png': SIZE, f'{ID}_Normal.png': SIZE, f'{ID}_MaskURP.png': SIZE},
+        'collision': 'three boxes: deck, rail, cliff', 'walkable': 'deck 4.0 x 1.75 m, clear width about 1.6 m',
+        'status': {'Exported': True, 'Imported': False, 'VisuallyVerified': False, 'InGameVerified': False},
+    }
+    finish(ID, [lod0, lod1, lod2, col_deck, col_rail, col_wall], info, [lod0], target=(0, -.5, -.2), dist=1.55, floor_z=-2.25, fig_at=(.6, -.9, 0))
+
 def fern_texture(name):
     """Two fern fronds and a few dead leaves on one 512 px alpha texture, drawn with numpy."""
     N = 512; yy, xx = np.mgrid[0:N, 0:N] / N
@@ -760,7 +820,7 @@ def fern_cards(name, spots):
     ob = bpy.data.objects.new(name, me); bpy.context.scene.collection.objects.link(ob)
     return ob
 
-def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0, floor_z=-.02, high=False):
+def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0, floor_z=-.02, high=False, fig_at=None):
     bpy.ops.wm.save_as_mainfile(filepath=str(SRC / f'{ID}_v001.blend'))
     for o in bpy.context.scene.objects: o.select_set(False)
     for o in game: o.hide_viewport = False; o.select_set(True)
@@ -772,7 +832,7 @@ def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0, floor_z=-.02, 
     # previews: three-quarter, front, side, back, with a 1.75 m figure
     s = bpy.context.scene; s.render.engine = 'BLENDER_EEVEE' if 'BLENDER_EEVEE' in [i.identifier for i in bpy.types.RenderSettings.bl_rna.properties['engine'].enum_items] else 'CYCLES'
     for o in game: o.hide_render = o not in show
-    fig = dense_box('figure_1.75m', (.42, .24, 1.75), 0); fig.location = (2.7 if high else 1.35, .2, 0)
+    fig = dense_box('figure_1.75m', (.42, .24, 1.75), 0); fig.location = fig_at if fig_at else (2.7 if high else 1.35, .2, 0)
     fm = bpy.data.materials.new('fig'); fm.diffuse_color = (.55, .6, .66, 1); fm.use_nodes = True
     next(n for n in fm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED').inputs['Base Color'].default_value = (.55, .6, .66, 1); fig.data.materials.append(fm)
     floor = dense_box('floor', (14, 14, .02), 0); floor.location = (0, 0, floor_z)
@@ -795,3 +855,4 @@ if 'CO02' in args: build_co02()
 if 'CO03' in args: build_co03()
 if 'CO01' in args: build_co01()
 if 'CO04' in args: build_co04()
+if 'CO05' in args: build_co05()
