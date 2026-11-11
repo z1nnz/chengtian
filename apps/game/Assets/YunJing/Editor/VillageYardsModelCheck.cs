@@ -17,18 +17,20 @@ namespace YunJing.Editor
     // CW01: pushed at each wall piece from the front it stops in front of it. CW02: through the open gate from the street into the yard
     // (over the 12 cm threshold); stopped by the closed doors. XB01: along the bridge deck from bank to bank (temporary bank blocks at
     // deck height at both ends); along the five stepping stones without dropping into the gaps.
+    // Batch B: GN01 granary: stopped by the ladder at the front, by the 0.6 m raised store (no walking under it) and by the stilts from the side.
     // CW02 interaction (YardGateDoors on a second CW02_A): shut -> stopped, opened -> walks through, closing onto a walker stops, then shuts.
+    // AN01 cattle shed: in through the open front to the trough on two lines, stopped by the left-bay front rails, the side rails and the back wall.
     // Writes artifacts/village-yards-unity/. Run with -executeMethod YunJing.Editor.VillageYardsModelCheck.Run
     // This is an editor batch check, not play in the game: nothing is placed in the main scene.
     public static class VillageYardsModelCheck
     {
         const string Root = "Assets/YunJing/Generated/VillageYardsB";
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
-        static readonly string[] RoadKit = { "WE", "CW", "XB" };
+        static readonly string[] RoadKit = { "WE", "CW", "XB", "GN", "AN" };
         static bool Road(string id) => RoadKit.Any(k => id.StartsWith(k));
         static string Exports(string id) => Path.Combine(Repo, "art", "exports", "village-yards-b");
         static string Out => Path.Combine(Repo, "artifacts", "village-yards-unity");
-        static readonly string[] Wanted = { "WE01_VillageWell", "CW01_A_StraightWall", "CW01_B_CornerWall", "CW01_C_EndWall", "CW01_D_BreachWall", "CW02_A_GateOpen", "CW02_B_GateClosed", "XB01_A_SlabBridge", "XB01_B_SteppingStones" };
+        static readonly string[] Wanted = { "WE01_VillageWell", "CW01_A_StraightWall", "CW01_B_CornerWall", "CW01_C_EndWall", "CW01_D_BreachWall", "CW02_A_GateOpen", "CW02_B_GateClosed", "XB01_A_SlabBridge", "XB01_B_SteppingStones", "GN01_RaisedGranary", "AN01_CattleShed" };
         static readonly string[] Slots = { "Main", "Stone", "Wood", "RoofTiles" };
         static readonly List<string> Report = new List<string>();
         static int failed;
@@ -96,6 +98,8 @@ namespace YunJing.Editor
                 else if (id.StartsWith("CW02")) { GateWalks(id, foot); if (id.StartsWith("CW02_A")) GateDoorsInteractive(id, at); }
                 else if (id.StartsWith("XB01_A")) BridgeDeckWalks(id, foot);
                 else if (id.StartsWith("XB01_B")) SteppingWalks(id, foot);
+                else if (id.StartsWith("GN01")) GranaryWalks(id, foot);
+                else if (id.StartsWith("AN01")) ShedWalks(id, foot);
                 else if (prop) FrontPush(id, foot);
                 else { UpTheSteps(id, foot); Walls(id, foot); }
                 if (id.StartsWith("VL03_")) OverTheRubble(id, foot);
@@ -600,6 +604,49 @@ namespace YunJing.Editor
             }
             var end = cc.transform.position - o;
             Check(end.x > 1.1f && lo > .15f, $"{id}: a walker steps along the five stones without dropping into the gaps (end x {end.x:F2} m, feet {lo:F3}-{hi:F3} m)");
+            UnityEngine.Object.DestroyImmediate(cc.gameObject);
+        }
+
+        // GN01 (Unity x, up, z = Blender x, z, y): ladder foot at z -1.9, ledge front z -1.46, store walls z +-1.14 from 0.6 m up, stilts x +-1.08.
+        static void GranaryWalks(string id, Vector3 o)
+        {
+            Physics.SyncTransforms(); var cc = Walker();
+            cc.transform.position = o + new Vector3(0, .02f, -3.6f); Physics.SyncTransforms();
+            var f0 = Stroll(cc, o, Vector3.forward, 240); var e0 = cc.transform.position - o;
+            Check(e0.z < -1.9f && e0.z > -2.6f && f0.y < .2f, $"{id}: a walker from the front on x 0.00 is stopped by the ladder (end z {e0.z:F2} m, feet {f0.x:F3}-{f0.y:F3} m)");
+            foreach (float x in new[] { -.6f, .6f })      // between the stilts (x +-1.08), clear of the ladder (x +-0.28)
+            {
+                cc.transform.position = o + new Vector3(x, .02f, -3.6f); Physics.SyncTransforms();
+                var f = Stroll(cc, o, Vector3.forward, 240); var e = cc.transform.position - o;
+                Check(e.z < -1.25f && e.z > -1.8f && f.y < .2f, $"{id}: a walker on x {x:F2} cannot walk in under the raised store, stopped at its front (end z {e.z:F2} m, feet {f.x:F3}-{f.y:F3} m)");
+            }
+            cc.transform.position = o + new Vector3(-3.4f, .02f, -.5f); Physics.SyncTransforms();
+            var f2 = Stroll(cc, o, Vector3.right, 240); var e2 = cc.transform.position - o;
+            Check(e2.x < -1.2f && f2.y < .2f, $"{id}: a walker from the left side is stopped by the stilts and the store (end x {e2.x:F2} m, feet {f2.x:F3}-{f2.y:F3} m)");
+            UnityEngine.Object.DestroyImmediate(cc.gameObject);
+        }
+
+        // AN01 (Unity x, up, z = Blender x, z, y): front posts z -1.45 at x +-0.88 / +-2.62, front plate underside about 1.86 m; front rails only in
+        // the left bay (x -2.62..-0.88); trough x +-2.1, front face z 0.65; side rails x +-2.72 up to 1.25 m; back plank wall z 1.63.
+        static void ShedWalks(string id, Vector3 o)
+        {
+            Physics.SyncTransforms(); var cc = Walker();
+            foreach (float x in new[] { 0f, 1.75f })
+            {
+                cc.transform.position = o + new Vector3(x, .02f, -3.6f); Physics.SyncTransforms();
+                var f = Stroll(cc, o, Vector3.forward, 300); var e = cc.transform.position - o;
+                Check(e.z > .2f && e.z < .55f && Mathf.Abs(e.x - x) < .15f && f.y < .12f,
+                      $"{id}: a 1.75 m walker on x {x:F2} walks in through the open front under the eave and stops at the trough (end z {e.z:F2} m, feet {f.x:F3}-{f.y:F3} m)");
+            }
+            cc.transform.position = o + new Vector3(-1.75f, .02f, -3.6f); Physics.SyncTransforms();
+            Stroll(cc, o, Vector3.forward, 240); var e1 = cc.transform.position - o;
+            Check(e1.z < -1.5f, $"{id}: a walker on x -1.75 is stopped by the front rails of the left bay (end z {e1.z:F2} m)");
+            cc.transform.position = o + new Vector3(-4.6f, .02f, -.6f); Physics.SyncTransforms();
+            Stroll(cc, o, Vector3.right, 240); var e2 = cc.transform.position - o;
+            Check(e2.x < -2.8f, $"{id}: a walker from the left side is stopped by the side rails (end x {e2.x:F2} m)");
+            cc.transform.position = o + new Vector3(0, .02f, 4.2f); Physics.SyncTransforms();
+            Stroll(cc, o, Vector3.back, 240); var e3 = cc.transform.position - o;
+            Check(e3.z > 1.7f, $"{id}: a walker from behind is stopped by the back plank wall (end z {e3.z:F2} m)");
             UnityEngine.Object.DestroyImmediate(cc.gameObject);
         }
 

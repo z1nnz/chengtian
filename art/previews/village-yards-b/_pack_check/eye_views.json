@@ -1,0 +1,254 @@
+{
+ "views": [
+  {
+   "name": "pack_yard_ruler_1p75",
+   "eye": [
+    17.0,
+    -30.0,
+    13.0
+   ],
+   "target": [
+    0.0,
+    -4.5,
+    1.2
+   ],
+   "lens": 30,
+   "label": "1.75 m figures at the gate, the well and the house"
+  },
+  {
+   "name": "pack_yard_eye_1p7_gate",
+   "eye": [
+    -0.9,
+    -19.5,
+    1.7
+   ],
+   "target": [
+    0.6,
+    -6.0,
+    1.7
+   ],
+   "lens": 24,
+   "label": "1.7 m eye, on the street before the open gate"
+  },
+  {
+   "name": "pack_yard_eye_1p7_yard",
+   "eye": [
+    -4.6,
+    -12.2,
+    1.7
+   ],
+   "target": [
+    3.0,
+    -5.5,
+    1.6
+   ],
+   "lens": 24,
+   "label": "1.7 m eye, inside the yard by the front wall, towards the well and the house"
+  }
+ ],
+ "pieces": [
+  {
+   "id": "VL04_DiligentFamilyHouse",
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "id": "WE01_VillageWell",
+   "offset": [
+    4.0,
+    -9.6,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "id": "CW01_B_CornerWall",
+   "offset": [
+    7.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "id": "CW01_B_CornerWall",
+   "offset": [
+    -7.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "id": "CW01_B_CornerWall",
+   "offset": [
+    7.2,
+    6.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "id": "CW01_B_CornerWall",
+   "offset": [
+    -7.2,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "id": "CW02_A_GateOpen",
+   "offset": [
+    0,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    3.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    -3.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "id": "CW02_B_GateClosed",
+   "offset": [
+    0,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    3.2,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    -3.2,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    7.2,
+    -10.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    -7.2,
+    -10.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    7.2,
+    -6.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    -7.2,
+    -6.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    7.2,
+    -2.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    -7.2,
+    -2.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "id": "CW01_A_StraightWall",
+   "offset": [
+    7.2,
+    2.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "id": "CW01_D_BreachWall",
+   "offset": [
+    -7.2,
+    2.0,
+    0
+   ],
+   "rot_z": 270
+  }
+ ],
+ "figures_1_75m": [
+  [
+   0.4,
+   -15.6,
+   0,
+   0
+  ],
+  [
+   2.9,
+   -9.6,
+   0,
+   -90
+  ],
+  [
+   -1.2,
+   -6.2,
+   0,
+   180
+  ]
+ ],
+ "placeholder_terrain_blocks": [],
+ "camera": "perspective, eye at the listed point (1.7 m above the surface stood on)",
+ "engine": "EEVEE"
+}
