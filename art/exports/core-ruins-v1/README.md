@@ -7,7 +7,7 @@
 | ID | CO01 神木旁被挖的坑、CO02 古林碑、CO03 祠內殘件、CO04 低面數蘆葦叢 |
 | 分支／PR | `game/core-1110-hud-redesign` |
 | 版本 | 全部 v001（首次交付） |
-| 狀態 | Exported ／ Blender 網格檢查；Imported、Visually Verified（遊戲內）、In-game Verified：未驗 |
+| 狀態 | **v001 判定不如協作者，要重做**（2026-11-11，見 `docs/standards/core-modelling-bar-v1.md` 第三節）。v001 不換進世界 |
 | 預定位置 | CO01：D2 古樹神木（`D2_GreatTree_DugPit`）；CO02、CO03：D4 苔石古祠（`D4_MossShrine_Stele`、`D4_MossShrine_Remnants`）。CO04：A5 河灣渡口、A3 西溪的水邊。區塊建好時落位 |
 | 素材來源 | 三視圖由 ChatGPT 圖像生成（`art/references/core-ruins-v1/`，目前存的是 624 × 416 的螢幕截圖）；模型和貼圖是原創，由 `tools/art/build_core_ruins_v1.py` 用 Blender 5.2 無介面模式生成 |
 
