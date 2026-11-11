@@ -626,6 +626,83 @@ def build_co01():
     }
     finish(ID, [lod0, lod1, lod2, ferns, f1, col_ob], info, [lod0, ferns], target=(0, 0, .0), dist=.95, floor_z=-.75, high=True)
 
+# ---------------------------------------------------------------- CO04
+def reed_texture(name, W=512, H=1024):
+    """A clump of reeds on one alpha texture: straw stalks, long bending leaves, feathery seed heads. Drawn with numpy."""
+    rgba = np.zeros((H, W, 4), dtype=np.float32); rng = np.random.default_rng(404)
+    def stamp(cx, cy, r, colour):
+        x0, x1 = max(0, int(cx - r - 1)), min(W, int(cx + r + 2)); y0, y1 = max(0, int(cy - r - 1)), min(H, int(cy + r + 2))
+        if x0 >= x1 or y0 >= y1: return
+        yy, xx = np.mgrid[y0:y1, x0:x1]
+        m = (xx - cx) ** 2 + (yy - cy) ** 2 <= r * r
+        rgba[y0:y1, x0:x1, :3][m] = colour; rgba[y0:y1, x0:x1, 3][m] = 1
+    stalks = []
+    for i in range(11):
+        x0 = rng.uniform(.14, .86) * W; lean = rng.uniform(-.16, .16) * W; top = rng.uniform(.62, .93) * H; stalks.append((x0, lean, top))
+    def sx(st, y): return st[0] + st[1] * (y / st[2]) ** 2
+    # leaves first (behind the stalks)
+    for st in stalks:
+        for _ in range(int(rng.integers(3, 6))):
+            y0 = rng.uniform(.12, .7) * st[2]; d = rng.choice([-1, 1]); L = rng.uniform(.16, .34) * H; wid = rng.uniform(3.2, 5.5)
+            tone = rng.uniform(0, 1); droop = rng.uniform(.25, .8)
+            for k in range(90):
+                s = k / 89
+                px = sx(st, y0) + d * L * (.42 * s + .2 * s * s); py = y0 + L * (.95 * s - droop * s * s)
+                w = wid * math.sin(max(.03, s) ** .6 * math.pi) ** .7 + .6
+                g = np.array([.3 + .12 * tone + .1 * s, .4 + .1 * tone + .05 * s, .17 + .05 * s]) * (.82 + .18 * math.sin(k * .7))
+                dry = max(0, s - .75) * 2.2                                                  # tips dry to straw
+                stamp(px, py, w, g * (1 - dry) + np.array([.6, .52, .3]) * dry)
+    for st in stalks:
+        for y in range(0, int(st[2])):
+            t = y / st[2]
+            c = np.array([.56, .5, .3]) * (1 - t) + np.array([.42, .46, .24]) * t
+            if (y // 46) % 2 == 0 and (y % 46) < 3: c = c * .7                                # nodes
+            stamp(sx(st, y), y, 2.6 - 1.2 * t, c)
+        # seed head: a soft plume leaning with the stalk
+        px, py = sx(st, st[2]), st[2]; ph = rng.uniform(.07, .11) * H; side = np.sign(st[1]) or 1
+        for k in range(260):
+            a = rng.uniform(0, 1); r = rng.normal(0, 1) * (1 - a) * 9 + 1
+            col = np.array([.5, .38, .26]) * rng.uniform(.75, 1.15) + np.array([.14, .12, .1]) * a
+            stamp(px + side * a * a * ph * .35 + r, py + a * ph, rng.uniform(1.2, 2.4), col)
+    edge = rgba[..., 3] < .5; rgba[edge, :3] = (.4, .44, .24)
+    return save(rgba, TEX / f'{name}_Albedo.png')
+
+def reed_cards(name, cards, width, height):
+    """Upright cards crossed through the centre, with a slight outward lean so the clump has body from above."""
+    bm = bmesh.new(); uv = bm.loops.layers.uv.new()
+    for i in range(cards):
+        a = math.pi * i / cards + .2; d = Vector((math.cos(a), math.sin(a), 0)); n = Vector((-d.y, d.x, 0))
+        off = n * (.07 * (1 if i % 2 else -1)); lean = n * (.16 * (1 if i % 2 else -1))
+        pts = [(-d * width * .5 + off, (0, 0)), (d * width * .5 + off, (1, 0)), (d * width * .5 + off + lean + Vector((0, 0, height * .5)), (1, .5)),
+               (-d * width * .5 + off + lean + Vector((0, 0, height * .5)), (0, .5))]
+        top = [(-d * width * .5 + off + lean * 1.6 + Vector((0, 0, height)), (0, 1)), (d * width * .5 + off + lean * 1.6 + Vector((0, 0, height)), (1, 1))]
+        v = [bm.verts.new(p) for p, _ in pts] + [bm.verts.new(p) for p, _ in top]
+        f1 = bm.faces.new((v[0], v[1], v[2], v[3])); f2 = bm.faces.new((v[3], v[2], v[5], v[4]))
+        for loop, st in zip(f1.loops, [(0, 0), (1, 0), (1, .5), (0, .5)]): loop[uv].uv = st
+        for loop, st in zip(f2.loops, [(0, .5), (1, .5), (1, 1), (0, 1)]): loop[uv].uv = st
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    ob = bpy.data.objects.new(name, me); bpy.context.scene.collection.objects.link(ob)
+    return ob
+
+def build_co04():
+    """A light reed clump for water edges (A5 ferry, A3 creek): crossed alpha cards, cheap enough to plant by the hundred."""
+    ID = 'CO04_ReedClump'
+    reset()
+    img = reed_texture(ID)
+    mat = game_material(ID, img, alpha=True)
+    lod0 = reed_cards(ID + '_LOD0', 4, 1.15, 2.3); lod1 = reed_cards(ID + '_LOD1', 3, 1.15, 2.3); lod2 = reed_cards(ID + '_LOD2', 2, 1.15, 2.3)
+    for o in (lod0, lod1, lod2): o.data.materials.append(mat)
+    info = {
+        'asset': ID, 'version': 'v001', 'name_zh': '低面數蘆葦叢', 'slot': 'A5_FerryReeds, A3_CreekReeds', 'minTier': 'low',
+        'note': '交叉面片加透明貼圖；可以大量種在水邊。沒有碰撞。QX_WaterReeds 面數太高，大片種植時用這件。',
+        'units': 'meters', 'origin': 'ground centre', 'dimensions_m': [round(v, 3) for v in lod0.dimensions],
+        'lods': {'LOD0': tri_count(lod0), 'LOD1': tri_count(lod1), 'LOD2': tri_count(lod2)},
+        'materials': 1, 'textures_px': {f'{ID}_Albedo.png': [512, 1024]}, 'collision': 'none',
+        'status': {'Exported': True, 'Imported': False, 'VisuallyVerified': False, 'InGameVerified': False},
+    }
+    finish(ID, [lod0, lod1, lod2], info, [lod0], target=(.4, 0, 1.0), dist=.9)
+
 def fern_texture(name):
     """Two fern fronds and a few dead leaves on one 512 px alpha texture, drawn with numpy."""
     N = 512; yy, xx = np.mgrid[0:N, 0:N] / N
@@ -717,3 +794,4 @@ def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0, floor_z=-.02, 
 if 'CO02' in args: build_co02()
 if 'CO03' in args: build_co03()
 if 'CO01' in args: build_co01()
+if 'CO04' in args: build_co04()

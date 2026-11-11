@@ -1,0 +1,34 @@
+{
+ "asset": "CO04_ReedClump",
+ "version": "v001",
+ "name_zh": "低面數蘆葦叢",
+ "slot": "A5_FerryReeds, A3_CreekReeds",
+ "minTier": "low",
+ "note": "交叉面片加透明貼圖；可以大量種在水邊。沒有碰撞。QX_WaterReeds 面數太高，大片種植時用這件。",
+ "units": "meters",
+ "origin": "ground centre",
+ "dimensions_m": [
+  1.288,
+  1.249,
+  2.3
+ ],
+ "lods": {
+  "LOD0": 16,
+  "LOD1": 12,
+  "LOD2": 8
+ },
+ "materials": 1,
+ "textures_px": {
+  "CO04_ReedClump_Albedo.png": [
+   512,
+   1024
+  ]
+ },
+ "collision": "none",
+ "status": {
+  "Exported": true,
+  "Imported": false,
+  "VisuallyVerified": false,
+  "InGameVerified": false
+ }
+}
