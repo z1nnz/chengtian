@@ -5,7 +5,7 @@
 | 誰做的 | B（joshsu54） |
 | 工作包 | 2026-11-11 B｜40 小時（院牆院門、水井、石板橋、穀倉、牛棚）A 段 |
 | ID | WE01 村中水井與井亭（樣品，使用者 11/12 通過）；CW01 院牆四件、CW02 院門兩件、XB01 石板橋與踏石兩件 |
-| 分支／PR | art/b-1111-cw-yard-walls-and-well ／ PR 待開（未提交） |
+| 分支／PR | art/b-1111-cw-yard-walls-and-well ／ z1nnz/chengtian#104 |
 | 版本 | 全部 v001（首次交付，沒有舊版） |
 | 狀態 | 9 件都是 Exported ／ Imported（Unity 編輯器批次檢查）／ Visually Verified；In-game Verified：未驗 |
 | 預定位置 | 由核心組落位（`slot` 寫在各件 model_info.json：A1_VillageCentre_Well、A1_Yard_Wall、A1_Yard_Gate、A1_to_A3_Creek_Crossing） |
