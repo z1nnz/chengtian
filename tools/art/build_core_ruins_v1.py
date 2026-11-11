@@ -390,16 +390,17 @@ def lathe(name, profile, segments=72):
     ob = bpy.data.objects.new(name, me); bpy.context.scene.collection.objects.link(ob)
     return ob
 
-def bake_game_mesh(ID, sculpts, tris, lods):
+def bake_game_mesh(ID, sculpts, tris, lods, clip_ground=True):
     """Join copies of the sculpt pieces, decimate, unwrap, bake colour, normal and occlusion. Returns LOD0, LOD1, LOD2."""
     for o in bpy.context.scene.objects: o.select_set(False)
     copies = []
     for o in sculpts:
         c = o.copy(); c.data = o.data.copy(); bpy.context.scene.collection.objects.link(c); c.select_set(True); copies.append(c)
     bpy.context.view_layer.objects.active = copies[0]; bpy.ops.object.join(); joined = copies[0]
-    bm = bmesh.new(); bm.from_mesh(joined.data)
-    bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=(0, 0, -.02), plane_no=(0, 0, -1), clear_outer=True)
-    bm.to_mesh(joined.data); bm.free()
+    if clip_ground:
+        bm = bmesh.new(); bm.from_mesh(joined.data)
+        bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=(0, 0, -.02), plane_no=(0, 0, -1), clear_outer=True)
+        bm.to_mesh(joined.data); bm.free()
     lod0 = decimated(joined, ID + '_LOD0', tris); bpy.data.objects.remove(joined); lod0.data.materials.clear()
     for o in bpy.context.scene.objects: o.select_set(False)
     lod0.select_set(True); bpy.context.view_layer.objects.active = lod0
@@ -490,6 +491,141 @@ def build_co03():
     }
     finish(ID, [lod0, lod1, lod2, ferns, f1, col_ob], info, [lod0, ferns], target=(.2, 0, .45), dist=.62)
 
+# ---------------------------------------------------------------- CO01
+def height_disk(name, radius, per_m, height):
+    """A round patch of ground as a dense height field: height(x, y) -> z. Faces outside the radius are dropped."""
+    n = int(radius * 2 * per_m) + 1
+    xs = np.linspace(-radius, radius, n); gx, gy = np.meshgrid(xs, xs, indexing='xy')
+    pts = np.stack([gx.ravel(), gy.ravel(), np.zeros(n * n)], -1)
+    pts[:, 2] = height(pts[:, 0], pts[:, 1])
+    idx = np.arange(n * n).reshape(n, n)
+    a, b, c, d = idx[:-1, :-1].ravel(), idx[:-1, 1:].ravel(), idx[1:, 1:].ravel(), idx[1:, :-1].ravel()
+    cx = (pts[a, 0] + pts[c, 0]) * .5; cy = (pts[a, 1] + pts[c, 1]) * .5
+    keep = np.hypot(cx, cy) < radius
+    faces = np.concatenate([np.stack([a, b, c], -1)[keep], np.stack([a, c, d], -1)[keep]])
+    me = bpy.data.meshes.new(name); me.from_pydata(pts.tolist(), [], faces.tolist()); me.update()
+    ob = bpy.data.objects.new(name, me); bpy.context.scene.collection.objects.link(ob)
+    bm = bmesh.new(); bm.from_mesh(me)
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context='VERTS'); bm.to_mesh(me); bm.free(); me.update()
+    return ob
+
+def tube(name, path, radii, segments=28, per_m=90):
+    """A dense tube along a polyline (root, branch): path points, a radius at each."""
+    path = [Vector(p) for p in path]; rings = []; bm = bmesh.new()
+    pts = []; rs = []
+    for (p0, p1), (r0, r1) in zip(zip(path, path[1:]), zip(radii, radii[1:])):
+        steps = max(2, int((p1 - p0).length * per_m))
+        for k in range(steps): t = k / steps; pts.append(p0.lerp(p1, t)); rs.append(r0 + (r1 - r0) * t)
+    pts.append(path[-1]); rs.append(radii[-1])
+    # smooth the polyline a little so the root bends instead of kinking
+    for _ in range(40):
+        pts = [pts[0]] + [(pts[i - 1] + pts[i] * 2 + pts[i + 1]) / 4 for i in range(1, len(pts) - 1)] + [pts[-1]]
+    up = Vector((0, 0, 1))
+    for i, (p, r) in enumerate(zip(pts, rs)):
+        d = (pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized()
+        side = d.cross(up); side = side.normalized() if side.length > 1e-4 else Vector((1, 0, 0)); top = side.cross(d).normalized()
+        rings.append([bm.verts.new(p + (side * math.cos(2 * math.pi * k / segments) + top * math.sin(2 * math.pi * k / segments)) * r) for k in range(segments)])
+    for a, b in zip(rings, rings[1:]):
+        for k in range(segments): bm.faces.new((a[k], a[(k + 1) % segments], b[(k + 1) % segments], b[k]))
+    bm.faces.new(rings[0][::-1]); bm.faces.new(rings[-1])
+    bmesh.ops.triangulate(bm, faces=bm.faces[:]); bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    ob = bpy.data.objects.new(name, me); bpy.context.scene.collection.objects.link(ob)
+    return ob
+
+def build_co01():
+    """A freshly dug pit between two roots of the great tree (D2): spade-cut walls, a ring of thrown-up earth and stones, torn root ends."""
+    ID = 'CO01_DugPit'
+    reset(); rng = np.random.default_rng(20261113)
+    DEPTH = .55; R = 2.0
+
+    def ell(x, y): return np.sqrt((x / 1.1) ** 2 + (y / .8) ** 2)
+    def spoil(x, y):
+        e = ell(x, y); ang = np.arctan2(y, x)
+        q = np.stack([x, y, np.zeros_like(x)], -1)
+        lump = .55 + .9 * fbm(q * 2.2 + 31)
+        side = .75 + .45 * np.cos(ang - .5)                                    # more earth thrown to one side
+        ring = np.exp(-((e - 1.42) / .3) ** 2) * .42 * lump * side
+        return ring
+    def height(x, y):
+        e = ell(x, y); ang = np.arctan2(y, x)
+        q = np.stack([x, y, np.zeros_like(x)], -1)
+        cut = e + .035 * np.sin(ang * 17 + 2 * fbm(q * 3)) + .05 * (fbm(q * 4 + 9) - .5)          # spade bites round the edge
+        pit = -DEPTH * smooth(1.02, .8, cut)
+        floor = .07 * (fbm(q * 5 + 50) - .5) * smooth(.9, .5, e)
+        ground = .05 * (fbm(q * 1.6 + 70) - .5) + .02 * (fbm(q * 7 + 20) - .5)
+        stones = .05 * smooth(.66, .78, fbm(q * 9 + 400, 3)) * smooth(1.05, 1.25, e)
+        skirt = -.14 * smooth(R - .35, R, np.hypot(x, y))                         # the rim sinks into the terrain it is laid on
+        return pit + floor + spoil(x, y) + ground + stones + skirt
+    ground = height_disk('sculpt_ground', R, 105, height)
+    gp = coords(ground); x, y, z = gp[:, 0], gp[:, 1], gp[:, 2]; e = ell(x, y)
+    q = np.stack([x, y, np.zeros_like(x)], -1); gn = normals(ground)
+    wall = smooth(1.08, .95, e) * smooth(.6, .85, e)
+    soil = mix((.2, .14, .09), (.34, .25, .16), smooth(.3, .7, fbm(gp * 4 + 3)))
+    fresh = mix((.36, .26, .17), (.48, .36, .23), smooth(.3, .7, fbm(gp * np.array([9, 9, 3]) + 12)))        # newly cut earth is paler
+    col = mix(soil, fresh, np.clip(wall * 1.1 + .7 * smooth(.25, .05, np.abs(e - 1.42)) * (spoil(x, y) > .12), 0, 1))
+    layers = .5 + .5 * np.sin(z * 34 + 2 * fbm(q * 2))                                                     # soil layers on the cut wall
+    col = mix(col, (.17, .12, .08), wall * smooth(.55, .9, layers) * .5)
+    col = mix(col, (.15, .1, .07), smooth(.75, .3, e) * .45)                                               # damp floor
+    stone = smooth(.66, .78, fbm(q * 9 + 400, 3)) * smooth(1.05, 1.25, e)
+    col = mix(col, mix((.33, .34, .32), (.5, .5, .46), smooth(.3, .7, fbm(gp * 13 + 5))), stone * .9)
+    leaf = smooth(.71, .76, fbm(q * 15 + 800, 2)) * smooth(1.2, 1.5, e)
+    col = mix(col, mix((.42, .26, .12), (.5, .36, .15), fbm(gp * 21 + 4)), leaf * .85)
+    old = smooth(1.5, 1.85, e) + .5 * smooth(.2, -.6, np.cos(np.arctan2(y, x) - .5)) * smooth(1.2, 1.5, e)   # the older, outer ground has greened over
+    moss = smooth(.6, .8, fbm(gp * 3 + 90) * .9 + fbm(gp * 12 + 14) * .35 + .3 * old) * (1 - wall) * smooth(.95, 1.2, e) * (1 - stone * .6)
+    col = mix(col, mix((.11, .17, .07), (.26, .33, .13), smooth(.3, .75, fbm(gp * 14 + 3))), moss * .9)
+    set_colour(ground, col)
+    for poly in ground.data.polygons: poly.use_smooth = True
+    ground.data.materials.append(colour_material('Sculpt_ground'))
+    sculpts = [ground]
+    # two roots of the great tree pass either side; the diggers cut through the small ones
+    def zat(px, py): return float(height(np.array([px]), np.array([py]))[0])
+    roots = [([(-1.95, .95), (-1.2, 1.05), (-.3, 1.2), (.7, 1.12), (1.9, 1.3)], (.2, .17, .15, .13, .1)),
+             ([(-1.9, -1.2), (-1.0, -1.02), (.1, -1.12), (1.0, -1.25), (1.85, -1.0)], (.16, .14, .13, .1, .08)),
+             ([(-.3, 1.2), (-.1, .95), (.05, .78)], (.07, .055, .04)), ([(.1, -1.12), (.0, -.9), (-.08, -.74)], (.06, .05, .035)),
+             ([(.7, 1.12), (.82, .9), (.86, .62)], (.05, .04, .03))]
+    for k, (pth, rad) in enumerate(roots):
+        cut_end = k >= 2
+        p3 = [(px, py, zat(px, py) + r * (.25 if not cut_end else .1) - (.18 if (cut_end and i == len(pth) - 1) else 0)) for i, ((px, py), r) in enumerate(zip(pth, rad))]
+        t = tube(f'sculpt_root{k}', p3, rad)
+        tp = coords(t); tn = normals(t)
+        ridged = .012 * np.sin(np.arctan2(tn[:, 2], tn[:, 0] + 1e-6) * 9 + 6 * fbm(tp * 3)) + .014 * (fbm(tp * 9 + k) - .5)
+        set_coords(t, tp + tn * ridged[:, None]); t.data.update()
+        tp = coords(t); tn = normals(t)
+        bark = mix((.17, .12, .08), (.33, .25, .17), smooth(.3, .7, fbm(tp * np.array([6, 6, 6]) + k)))
+        bark = mix(bark, (.09, .07, .05), .5 * smooth(.5, .8, fbm(tp * 22 + 3)))
+        if cut_end:
+            endp = Vector(p3[-1]); dist = np.linalg.norm(tp - np.array(endp), axis=1)
+            bark = mix(bark, (.72, .62, .44), smooth(rad[-1] * 1.5, rad[-1] * .6, dist))          # the torn end shows pale wood
+        m = smooth(.62, .8, fbm(tp * 4 + 90) + .35 * np.clip(tn[:, 2], 0, 1))
+        bark = mix(bark, mix((.11, .17, .07), (.26, .33, .13), fbm(tp * 14 + 3)), m * (.2 if cut_end else .8))
+        set_colour(t, bark)
+        for poly in t.data.polygons: poly.use_smooth = True
+        t.data.materials.append(colour_material(f'Sculpt_root{k}')); sculpts.append(t)
+    sculpt_tris = sum(tri_count(o) for o in sculpts)
+    lod0, lod1, lod2 = bake_game_mesh(ID, sculpts, 6000, (2800, 800), clip_ground=False)
+    fern_img = fern_texture(ID + '_Detail_Ferns')
+    spots = []
+    for (fx, fy, yaw, size) in [(-1.5, .45, 170, .5), (-1.62, -.3, 200, .42), (1.55, .4, 10, .46), (1.2, -1.55, -50, .44), (-.6, 1.62, 100, .4), (.4, -1.7, -90, .38), (1.7, -.3, -10, .36)]:
+        spots.append((fx, fy, zat(fx, fy) - .02, yaw, size))
+    ferns = fern_cards(ID + '_Detail_Ferns_LOD0', spots)
+    ferns.data.materials.append(game_material(ID + '_Detail_Ferns', fern_img, alpha=True))
+    f1 = decimated(ferns, ID + '_Detail_Ferns_LOD1', tri_count(ferns) // 2)
+    col_ob = dense_box(ID + '_Collision', (2.5, 1.9, .7), 0); col_ob.location = (0, 0, -.1); col_ob.display_type = 'WIRE'
+    for o in sculpts: o.hide_render = True; o.hide_viewport = True
+    info = {
+        'asset': ID, 'version': 'v001', 'name_zh': '神木旁被挖的坑', 'slot': 'D2_GreatTree_DugPit', 'minTier': 'standard',
+        'detailObjects': [ID + '_Detail_Ferns'], 'note': '坑是空的，沒有工具、人和文字。坑底在原點下方 0.55 m：落位時該處地形要先壓低約 0.6 m，模型的外緣會沉進地表 0.14 m 蓋住接縫。',
+        'units': 'meters', 'front': '-Y (Blender)', 'origin': 'ground level, pit centre',
+        'dimensions_m': [round(v, 3) for v in lod0.dimensions], 'sculpt_triangles': sculpt_tris,
+        'lods': {'LOD0': tri_count(lod0) + tri_count(ferns), 'LOD1': tri_count(lod1) + tri_count(f1), 'LOD2': tri_count(lod2)},
+        'detail_triangles': {'LOD0': tri_count(ferns), 'LOD1': tri_count(f1)},
+        'materials': 2, 'textures_px': {f'{ID}_Albedo.png': SIZE, f'{ID}_Normal.png': SIZE, f'{ID}_MaskURP.png': SIZE, f'{ID}_Detail_Ferns_Albedo.png': 512},
+        'collision': 'box 2.5 x 1.9 x 0.7 m over the pit (walk around it)',
+        'status': {'Exported': True, 'Imported': False, 'VisuallyVerified': False, 'InGameVerified': False},
+    }
+    finish(ID, [lod0, lod1, lod2, ferns, f1, col_ob], info, [lod0, ferns], target=(0, 0, .0), dist=.95, floor_z=-.75, high=True)
+
 def fern_texture(name):
     """Two fern fronds and a few dead leaves on one 512 px alpha texture, drawn with numpy."""
     N = 512; yy, xx = np.mgrid[0:N, 0:N] / N
@@ -547,7 +683,7 @@ def fern_cards(name, spots):
     ob = bpy.data.objects.new(name, me); bpy.context.scene.collection.objects.link(ob)
     return ob
 
-def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0):
+def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0, floor_z=-.02, high=False):
     bpy.ops.wm.save_as_mainfile(filepath=str(SRC / f'{ID}_v001.blend'))
     for o in bpy.context.scene.objects: o.select_set(False)
     for o in game: o.hide_viewport = False; o.select_set(True)
@@ -559,10 +695,10 @@ def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0):
     # previews: three-quarter, front, side, back, with a 1.75 m figure
     s = bpy.context.scene; s.render.engine = 'BLENDER_EEVEE' if 'BLENDER_EEVEE' in [i.identifier for i in bpy.types.RenderSettings.bl_rna.properties['engine'].enum_items] else 'CYCLES'
     for o in game: o.hide_render = o not in show
-    fig = dense_box('figure_1.75m', (.42, .24, 1.75), 0); fig.location = (1.35, .2, 0)
+    fig = dense_box('figure_1.75m', (.42, .24, 1.75), 0); fig.location = (2.7 if high else 1.35, .2, 0)
     fm = bpy.data.materials.new('fig'); fm.diffuse_color = (.55, .6, .66, 1); fm.use_nodes = True
     next(n for n in fm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED').inputs['Base Color'].default_value = (.55, .6, .66, 1); fig.data.materials.append(fm)
-    floor = dense_box('floor', (14, 14, .02), 0); floor.location = (0, 0, -.02)
+    floor = dense_box('floor', (14, 14, .02), 0); floor.location = (0, 0, floor_z)
     gm = bpy.data.materials.new('floor'); gm.use_nodes = True
     next(n for n in gm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED').inputs['Base Color'].default_value = (.56, .53, .49, 1); floor.data.materials.append(gm)
     sun = bpy.data.objects.new('sun', bpy.data.lights.new('sun', 'SUN')); sun.data.energy = 3.2; sun.rotation_euler = (math.radians(52), 0, math.radians(-38)); s.collection.objects.link(sun)
@@ -572,6 +708,7 @@ def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0):
     target = Vector(target)
     views = {k: tuple(target + (Vector(v) - Vector((.25, 0, 1.15))) * dist) for k, v in
              {'threequarter': (3.4, -4.6, 1.9), 'front': (0, -6.2, 1.25), 'side': (6.2, 0, 1.25), 'back': (0, 6.2, 1.25)}.items()}
+    if high: views = {'threequarter': tuple(target + Vector((3.6, -4.4, 4.4)) * dist), 'top': tuple(target + Vector((0, -.01, 7.5)) * dist), 'front': tuple(target + Vector((0, -6.2, 2.2)) * dist), 'side': tuple(target + Vector((6.2, 0, 2.2)) * dist)}
     for name, eye in views.items():
         cam.location = eye; cam.rotation_euler = (target - Vector(eye)).to_track_quat('-Z', 'Y').to_euler()
         s.render.filepath = str(PRE / f'{ID}_{name}.png'); bpy.ops.render.render(write_still=True)
@@ -579,3 +716,4 @@ def finish(ID, game, info, show, target=(.25, 0, 1.15), dist=1.0):
 
 if 'CO02' in args: build_co02()
 if 'CO03' in args: build_co03()
+if 'CO01' in args: build_co01()

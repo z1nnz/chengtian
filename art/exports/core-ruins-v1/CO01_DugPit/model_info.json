@@ -1,0 +1,43 @@
+{
+ "asset": "CO01_DugPit",
+ "version": "v001",
+ "name_zh": "神木旁被挖的坑",
+ "slot": "D2_GreatTree_DugPit",
+ "minTier": "standard",
+ "detailObjects": [
+  "CO01_DugPit_Detail_Ferns"
+ ],
+ "note": "坑是空的，沒有工具、人和文字。坑底在原點下方 0.55 m：落位時該處地形要先壓低約 0.6 m，模型的外緣會沉進地表 0.14 m 蓋住接縫。",
+ "units": "meters",
+ "front": "-Y (Blender)",
+ "origin": "ground level, pit centre",
+ "dimensions_m": [
+  4.005,
+  4.0,
+  1.165
+ ],
+ "sculpt_triangles": 329300,
+ "lods": {
+  "LOD0": 6182,
+  "LOD1": 2891,
+  "LOD2": 800
+ },
+ "detail_triangles": {
+  "LOD0": 182,
+  "LOD1": 91
+ },
+ "materials": 2,
+ "textures_px": {
+  "CO01_DugPit_Albedo.png": 2048,
+  "CO01_DugPit_Normal.png": 2048,
+  "CO01_DugPit_MaskURP.png": 2048,
+  "CO01_DugPit_Detail_Ferns_Albedo.png": 512
+ },
+ "collision": "box 2.5 x 1.9 x 0.7 m over the pit (walk around it)",
+ "status": {
+  "Exported": true,
+  "Imported": false,
+  "VisuallyVerified": false,
+  "InGameVerified": false
+ }
+}
