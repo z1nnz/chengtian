@@ -186,7 +186,7 @@ CW01 的 B（轉角）、C（端頭）上限高度用 2.0 m，不是 1.8 m：牆
 | 項目 | 內容 |
 |---|---|
 | 工作包 | 2026-11-11 B｜40 小時 B 段（GN01 是本段樣品） |
-| 分支／PR | art/b-1111-gn-granary-and-shed ／ PR 待開（未提交） |
+| 分支／PR | art/b-1111-gn-granary-and-shed ／ z1nnz/chengtian#105（接在 #104 後面） |
 | 版本 | 兩件都是 v001（首次交付） |
 | 狀態 | Exported ／ Imported（Unity 編輯器批次檢查）／ Visually Verified；In-game Verified：未驗 |
 | 預定位置 | 由核心組落位（`slot` = A1_VillageEdge_or_A6_Granary） |
