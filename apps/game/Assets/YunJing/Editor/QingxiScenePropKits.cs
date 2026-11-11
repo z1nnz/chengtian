@@ -14,25 +14,28 @@ namespace YunJing.Editor
         const string Day12 = "Assets/YunJing/Models/Day12C";
         const string Creek = "Assets/YunJing/Models/CreekRepairB";
         const string Basics = "Assets/YunJing/Models/ModellingBasicsC";
+        const string Core = "Assets/YunJing/Models/CoreRuins";   // core team: art/exports/core-ruins-v1/<id>/, textures in art/textures/core-ruins-v1
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
 
         public static bool Owns(string model) => !string.IsNullOrEmpty(model) &&
-            (model.StartsWith(World + "/") || model.StartsWith(Day12 + "/") || model.StartsWith(Creek + "/") || model.StartsWith(Basics + "/"));
+            (model.StartsWith(World + "/") || model.StartsWith(Day12 + "/") || model.StartsWith(Creek + "/") || model.StartsWith(Basics + "/") || model.StartsWith(Core + "/"));
 
         public static void Ensure(string model)
         {
             string id = Path.GetFileName(Path.GetDirectoryName(model));
             string folder = model.StartsWith(World + "/") ? World : model.StartsWith(Day12 + "/") ? Day12 :
-                model.StartsWith(Basics + "/") ? Basics : Creek;
+                model.StartsWith(Basics + "/") ? Basics : model.StartsWith(Core + "/") ? Core : Creek;
             string target = Path.Combine(Repo, "apps/game", folder, id);
             string source = folder == World ? Path.Combine(Repo, "art/exports/world-props-a") :
                 folder == Day12 ? Path.Combine(Repo, "art/exports/qingxi-day12-c") :
                 folder == Basics ? Path.Combine(Repo, "art/exports/modelling-basics-c") :
+                folder == Core ? Path.Combine(Repo, "art/exports/core-ruins-v1", id) :
                 Path.Combine(Repo, "art/exports/creek-repair-b", id);
             Copy(Path.Combine(source, Path.GetFileName(model)), Path.Combine(target, Path.GetFileName(model)));
             string textures = folder == World ? Path.Combine(Repo, "art/textures/world-props-a") :
                 folder == Day12 ? Path.Combine(Repo, "art/textures/qingxi-day12-c") :
-                folder == Basics ? Path.Combine(Repo, "art/textures/modelling-basics-c") : Path.Combine(source, "Textures");
+                folder == Basics ? Path.Combine(Repo, "art/textures/modelling-basics-c") :
+                folder == Core ? Path.Combine(Repo, "art/textures/core-ruins-v1") : Path.Combine(source, "Textures");
             if (Directory.Exists(textures))
                 foreach (string file in Directory.GetFiles(textures, folder == World && (id.StartsWith("TY05") || id.StartsWith("TY10")) ? "T_" + id + "_*.png" : id + "_*.png"))
                     Copy(file, Path.Combine(target, "Textures", Path.GetFileName(file)));
@@ -84,6 +87,11 @@ namespace YunJing.Editor
             if (normal) { mat.SetTexture("_BumpMap", normal); mat.EnableKeyword("_NORMALMAP"); }
             var mask = Tex(model.StartsWith(Creek + "/") ? "MetallicSmoothness" : "MaskURP");
             if (mask) { mat.SetTexture("_MetallicGlossMap", mask); mat.EnableKeyword("_METALLICSPECGLOSSMAP"); mat.SetFloat("_Smoothness", 1); }
+            if (group.Contains("_Detail_Ferns"))   // alpha-cut leaf cards, seen from both sides
+            {
+                mat.SetFloat("_AlphaClip", 1); mat.SetFloat("_Cutoff", .45f); mat.EnableKeyword("_ALPHATEST_ON"); mat.SetFloat("_Cull", 0);
+                mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.AlphaTest; mat.SetFloat("_Smoothness", 0);
+            }
             var glow = Tex("Emission");
             if (glow) { mat.SetTexture("_EmissionMap", glow); mat.SetColor("_EmissionColor", Color.black); mat.EnableKeyword("_EMISSION"); }
             EditorUtility.SetDirty(mat);

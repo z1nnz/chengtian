@@ -1,0 +1,41 @@
+# 承天｜核心組遺跡小件 v1：CO02 古林碑、CO03 祠內殘件
+
+| 項目 | 內容 |
+|---|---|
+| 誰做的 | 核心組（z1nnz） |
+| 工作包 | 無；依 `docs/execution/world-blueprint/完成清單.md` 第 3.2 節（核心組自己做的 6 項） |
+| ID | CO02 古林碑、CO03 祠內殘件 |
+| 分支／PR | `game/core-1110-hud-redesign` |
+| 版本 | 全部 v001（首次交付） |
+| 狀態 | Exported ／ Blender 網格檢查；Imported、Visually Verified（遊戲內）、In-game Verified：未驗 |
+| 預定位置 | D4 苔石古祠（`D4_MossShrine_Stele`、`D4_MossShrine_Remnants`），區塊建好時落位 |
+| 素材來源 | 三視圖由 ChatGPT 圖像生成（`art/references/core-ruins-v1/`，目前存的是 624 × 416 的螢幕截圖）；模型和貼圖是原創，由 `tools/art/build_core_ruins_v1.py` 用 Blender 5.2 無介面模式生成 |
+
+## 內容
+
+| ID | 名稱 | 尺寸（m） | LOD0／LOD1／LOD2 三角面 | 材質 | 貼圖 |
+|---|---|---|---|---|---|
+| CO02_OldForestStele | 古林碑 | 1.43 × 0.83 × 2.43 | 5,418／2,503／700 | 2 | 2048 × 3 ＋ 蕨葉 512 |
+| CO03_ShrineRemnants | 祠內殘件 | 1.50 × 1.26 × 0.79 | 6,359／2,978／849 | 2 | 2048 × 3 ＋ 蕨葉 512 |
+
+- **CO02 古林碑**：粗鑿的石碑立在半埋的石座上，略微傾斜。正面的碑文被一道道斜砍鑿掉，只留上方一枚缺月記號。**不寫任何字。**
+- **CO03 祠內殘件**：斷了一條腿而斜倒的石供桌、傾倒的空三足香爐、一小堆碎瓦、三段朽木。沒有神像、供品和文字。
+- 每件：`<ID>_LOD0/1/2` 本體、`<ID>_Detail_Ferns_LOD0/1`（蕨葉和落葉，低畫質可整個關掉）、`<ID>_Collision`（方盒碰撞）。
+- 貼圖在 `art/textures/core-ruins-v1/`：`_Albedo`、`_Normal`、`_MaskURP`（G 遮蔽、A 平滑度）。
+
+## 做法
+
+先用高面數網格做出形狀和頂點色（斷面、鑿痕、青苔、地衣、雨痕），再烘焙到減面後的遊戲網格（顏色、法線、遮蔽）。三級 LOD 共用同一張 UV。
+
+## 檢查結果
+
+- `tools/art/qa_lod0_basic.py`（嚴格）：CO02 0 項；CO03 1 項（碎瓦堆裡一對共面三角面，位置約 (0.40, -0.46, 0.04)）。
+- 預覽圖：`art/previews/core-ruins-v1/`，各四張（三分之四、正、側、背），附 1.75 m 人形尺。
+
+## 未驗與已知不足
+
+- **還沒進 Unity**：匯入、材質、LOD 切換、碰撞都沒有在 Unity 裡看過。D4 區塊還沒建，所以也沒有落位。匯入程式已加在 `QingxiScenePropKits`（`Assets/YunJing/Models/CoreRuins/`），沒有實際跑過。
+- **手機效能**：沒有量測。
+- **CO03 的一對共面三角面**還沒修。
+- **品質**：形狀和顏色達到可用，但筆觸感和細節不如 Josh 的 VL 民居；蕨葉是程式畫的，葉形偏簡單。
+- **三視圖原檔**：專案裡存的是截圖，不是原尺寸圖。

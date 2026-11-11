@@ -1,0 +1,43 @@
+{
+ "asset": "CO03_ShrineRemnants",
+ "version": "v001",
+ "name_zh": "祠內殘件",
+ "slot": "D4_MossShrine_Remnants",
+ "minTier": "standard",
+ "detailObjects": [
+  "CO03_ShrineRemnants_Detail_Ferns"
+ ],
+ "note": "斷腿供桌、傾倒的空香爐、碎瓦與朽木；沒有神像、供品和文字。",
+ "units": "meters",
+ "front": "-Y (Blender)",
+ "origin": "ground centre",
+ "dimensions_m": [
+  1.5,
+  1.258,
+  0.791
+ ],
+ "sculpt_triangles": 191632,
+ "lods": {
+  "LOD0": 6359,
+  "LOD1": 2978,
+  "LOD2": 849
+ },
+ "detail_triangles": {
+  "LOD0": 156,
+  "LOD1": 78
+ },
+ "materials": 2,
+ "textures_px": {
+  "CO03_ShrineRemnants_Albedo.png": 2048,
+  "CO03_ShrineRemnants_Normal.png": 2048,
+  "CO03_ShrineRemnants_MaskURP.png": 2048,
+  "CO03_ShrineRemnants_Detail_Ferns_Albedo.png": 512
+ },
+ "collision": "box 1.3 x 0.6 x 0.62 m (the table; the small pieces do not block)",
+ "status": {
+  "Exported": true,
+  "Imported": false,
+  "VisuallyVerified": false,
+  "InGameVerified": false
+ }
+}

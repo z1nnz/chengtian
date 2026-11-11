@@ -1,0 +1,43 @@
+{
+ "asset": "CO02_OldForestStele",
+ "version": "v001",
+ "name_zh": "古林碑",
+ "slot": "D4_MossShrine_Stele",
+ "minTier": "standard",
+ "detailObjects": [
+  "CO02_OldForestStele_Detail_Ferns"
+ ],
+ "note": "碑文被鑿掉，只留一枚缺月記號；不寫任何字。",
+ "units": "meters",
+ "front": "-Y (Blender)",
+ "origin": "ground centre",
+ "dimensions_m": [
+  1.426,
+  0.831,
+  2.43
+ ],
+ "sculpt_triangles": 196480,
+ "lods": {
+  "LOD0": 5418,
+  "LOD1": 2503,
+  "LOD2": 700
+ },
+ "detail_triangles": {
+  "LOD0": 208,
+  "LOD1": 104
+ },
+ "materials": 2,
+ "textures_px": {
+  "CO02_OldForestStele_Albedo.png": 2048,
+  "CO02_OldForestStele_Normal.png": 2048,
+  "CO02_OldForestStele_MaskURP.png": 2048,
+  "CO02_OldForestStele_Detail_Ferns_Albedo.png": 512
+ },
+ "collision": "box 1.2 x 0.7 x 2.3 m",
+ "status": {
+  "Exported": true,
+  "Imported": false,
+  "VisuallyVerified": false,
+  "InGameVerified": false
+ }
+}
