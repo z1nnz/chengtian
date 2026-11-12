@@ -1,7 +1,7 @@
 {
   "asset": "TR01_C_CliffPine",
   "version": "v001",
-  "built": "2026-11-12 06:27",
+  "built": "2026-11-13 00:17",
   "blender": "5.2.2 LTS",
   "checks": {
     "lod_caps": true,
@@ -23,29 +23,29 @@
     "TR01_C_CliffPine_Collision": {
       "tris": 28,
       "min": [
-        0.705,
-        -0.208,
+        -0.024,
+        -0.387,
         -0.0
       ],
       "max": [
-        1.516,
-        0.602,
+        0.645,
+        0.282,
         3.0
       ],
       "colour_layers": [],
       "materials": []
     },
     "TR01_C_CliffPine_LOD0": {
-      "tris": 15624,
+      "tris": 19172,
       "min": [
-        -2.244,
-        -3.682,
-        -0.3
+        -1.841,
+        -3.862,
+        -0.295
       ],
       "max": [
-        8.571,
-        4.992,
-        12.453
+        7.762,
+        2.873,
+        12.953
       ],
       "colour_layers": [
         "Wind"
@@ -56,16 +56,16 @@
       ]
     },
     "TR01_C_CliffPine_LOD1": {
-      "tris": 3810,
+      "tris": 3382,
       "min": [
-        -2.493,
-        -4.014,
-        -0.3
+        -2.126,
+        -4.327,
+        -0.292
       ],
       "max": [
-        8.806,
-        5.185,
-        12.646
+        8.279,
+        3.156,
+        13.286
       ],
       "colour_layers": [
         "Wind"
@@ -76,16 +76,16 @@
       ]
     },
     "TR01_C_CliffPine_LOD2": {
-      "tris": 728,
+      "tris": 1534,
       "min": [
-        -2.72,
-        -4.319,
-        -0.3
+        -2.214,
+        -4.387,
+        -0.311
       ],
       "max": [
-        9.064,
-        5.37,
-        13.009
+        8.437,
+        3.56,
+        13.283
       ],
       "colour_layers": [
         "Wind"
@@ -98,14 +98,14 @@
     "TR01_C_CliffPine_LOD3": {
       "tris": 4,
       "min": [
-        -8.742,
-        -8.742,
+        -7.918,
+        -7.918,
         -0.3
       ],
       "max": [
-        8.742,
-        8.742,
-        25.952
+        7.918,
+        7.918,
+        23.476
       ],
       "colour_layers": [
         "Wind"
@@ -116,7 +116,7 @@
     }
   },
   "files": {
-    "TR01_C_CliffPine_v001.fbx": "c7cd07c7c1aa4c2342f003b08b8643f42b711aebbd8a10ee59b4bab6fc30e39f",
-    "TR01_C_CliffPine_v001.glb": "7adab337f07fc5dd435f2e492227ad5cf3b158e22e8d916607072bdeda67be72"
+    "TR01_C_CliffPine_v001.fbx": "84cf5cb1a1d6b9761cb8303e7fdb376b23012706d925fffebab085797c394077",
+    "TR01_C_CliffPine_v001.glb": "335428b8ffa1144a7401504d1b84783fc35170671d6f11ed3e06938d9ef50296"
   }
 }

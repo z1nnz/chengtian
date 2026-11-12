@@ -159,6 +159,10 @@ def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_sha
     Lb = np.array([sum((br.pts[k + 1] - br.pts[k]).length for k in range(len(br.pts) - 1)) * 1.03 for br in branches])
     kk = np.array([max(1, round(2 * math.pi * float(np.mean(br.rads)) / TILE_M)) for br in branches])
     tw = np.array([getattr(br, 'twist', 0.) for br in branches])
+    # optional per-branch bark scale (TR01 trunk, 2026-11-13 "樹幹還是很塑膠"): `uv_k` tiles around, `uv_tile` metres per tile along.
+    # One tile round a thick pine base stretched the bark 3x sideways into soft horizontal waves.
+    for j, br in enumerate(branches):
+        if getattr(br, 'uv_k', None): kk[j] = br.uv_k
     arc = s * Lb[bi]
     u = (ang / (2 * math.pi) + .5) * kk[bi] + kk[bi] * tw[bi] * arc; v = arc / TILE_M
     # root flare: the surface there runs outward more than up, so v (height along the axis) alone smears the bark into stripes;
@@ -171,9 +175,9 @@ def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_sha
         br = branches[int(tb)]; tz = np.array([p.z for p in br.pts]); tx = np.array([p.x for p in br.pts]); ty = np.array([p.y for p in br.pts])
         z = co[m, 2]; dx = co[m, 0] - np.interp(z, tz, tx); dy = co[m, 1] - np.interp(z, tz, ty)
         rr = np.interp(z, tz, np.array(br.rads)); hd = np.hypot(dx, dy); a = np.arctan2(dy, dx)
-        k = kk[int(tb)]; zz = z - tz[0]
+        k = kk[int(tb)]; zz = z - tz[0]; T = getattr(br, 'uv_tile', TILE_M)
         u[m] = (a / (2 * math.pi) + .5) * k + k * tw[int(tb)] * zz
-        v[m] = (zz - np.maximum(0., hd - 1.12 * rr)) / TILE_M
+        v[m] = (zz - np.maximum(0., hd - 1.12 * rr)) / T
     w0 = np.array([br.w0 for br in branches]); w1 = np.array([br.w1 for br in branches]); ph = np.array([br.phase for br in branches])
     wind = w0[bi] + (w1 - w0)[bi] * s
     base = len(buf.v)

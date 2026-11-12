@@ -1,14 +1,14 @@
 {
   "asset": "TR01_A_Pine",
   "version": "v001",
-  "built": "2026-11-12 06:27",
+  "built": "2026-11-13 00:17",
   "blender": "5.2.2 LTS",
   "checks": {
     "lod_caps": true,
     "height_in_range": true,
     "origin_ground": true,
     "fbx_objects": true,
-    "fbx_lod0_height_err_m": 0.0003,
+    "fbx_lod0_height_err_m": 0.0001,
     "fbx_wind_colour": true
   },
   "fbx_roundtrip": {
@@ -23,29 +23,29 @@
     "TR01_A_Pine_Collision": {
       "tris": 28,
       "min": [
-        0.185,
-        -0.191,
+        -0.208,
+        -0.33,
         -0.0
       ],
       "max": [
-        1.278,
-        0.902,
+        0.608,
+        0.486,
         3.0
       ],
       "colour_layers": [],
       "materials": []
     },
     "TR01_A_Pine_LOD0": {
-      "tris": 23494,
+      "tris": 21391,
       "min": [
-        -5.802,
-        -4.853,
-        -0.3
+        -4.967,
+        -4.17,
+        -0.277
       ],
       "max": [
-        6.796,
-        5.319,
-        12.932
+        5.858,
+        5.694,
+        13.28
       ],
       "colour_layers": [
         "Wind"
@@ -56,16 +56,16 @@
       ]
     },
     "TR01_A_Pine_LOD1": {
-      "tris": 6856,
+      "tris": 3680,
       "min": [
-        -6.005,
-        -4.948,
-        -0.3
+        -5.199,
+        -4.464,
+        -0.276
       ],
       "max": [
-        7.146,
-        5.624,
-        13.1
+        6.208,
+        5.775,
+        13.547
       ],
       "colour_layers": [
         "Wind"
@@ -76,16 +76,16 @@
       ]
     },
     "TR01_A_Pine_LOD2": {
-      "tris": 1342,
+      "tris": 1828,
       "min": [
-        -6.146,
-        -5.465,
-        -0.3
+        -5.451,
+        -4.57,
+        -0.268
       ],
       "max": [
-        7.185,
-        6.077,
-        13.375
+        6.239,
+        5.915,
+        13.567
       ],
       "colour_layers": [
         "Wind"
@@ -98,14 +98,14 @@
     "TR01_A_Pine_LOD3": {
       "tris": 4,
       "min": [
-        -6.931,
-        -6.931,
+        -5.976,
+        -5.976,
         -0.3
       ],
       "max": [
-        6.931,
-        6.931,
-        20.515
+        5.976,
+        5.976,
+        17.644
       ],
       "colour_layers": [
         "Wind"
@@ -116,7 +116,7 @@
     }
   },
   "files": {
-    "TR01_A_Pine_v001.fbx": "526a170acd5c365ebd71b141b44adcc641eb24d041b53c791efd8ce4cd9472a8",
-    "TR01_A_Pine_v001.glb": "7a0903ea96ddc34cdc5f1cb3298d8831a50903916986ce9eb7f56f97b5dc43fa"
+    "TR01_A_Pine_v001.fbx": "7e18e386e15fc0cb901e37021f44ac9136f6bd507d7e68fa50593d4ace9b71f8",
+    "TR01_A_Pine_v001.glb": "4814b9a7975bb191fbc99be07e00c32badf6ff101d74185c4e050b8ffc8cdd5d"
   }
 }

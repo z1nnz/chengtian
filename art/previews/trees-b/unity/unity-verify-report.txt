@@ -1,60 +1,60 @@
 INFO species TR01; variants TR01_A_Pine, TR01_B_Pine, TR01_C_CliffPine
-PASS TR01_A_Pine: LODGroup with LOD0-LOD3, one renderer each (size 20.8 m, transition heights 0.953 / 0.572 / 0.220 / 0.038 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
-PASS TR01_A_Pine: LOD0 23494 triangles (model_info 23494, cap 25000)
-PASS TR01_A_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_A_Pine: LOD0 has the Wind vertex colour on every vertex (24761/24761)
-PASS TR01_A_Pine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.70
-PASS TR01_A_Pine: LOD1 6856 triangles (model_info 6856, cap 8000)
-PASS TR01_A_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_A_Pine: LOD1 has the Wind vertex colour on every vertex (9480/9480)
-PASS TR01_A_Pine: LOD2 1342 triangles (model_info 1342, cap 2500)
-PASS TR01_A_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_A_Pine: LOD2 has the Wind vertex colour on every vertex (2471/2471)
+PASS TR01_A_Pine: LODGroup with LOD0-LOD3, one renderer each (size 17.9 m, transition heights 0.822 / 0.493 / 0.190 / 0.033 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR01_A_Pine: LOD0 21391 triangles (model_info 21391, cap 25000)
+PASS TR01_A_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_A_Pine: LOD0 has the Wind vertex colour on every vertex (33733/33733)
+PASS TR01_A_Pine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR01_A_Pine: LOD1 3680 triangles (model_info 3680, cap 8000)
+PASS TR01_A_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_A_Pine: LOD1 has the Wind vertex colour on every vertex (4523/4523)
+PASS TR01_A_Pine: LOD2 1828 triangles (model_info 1828, cap 2500)
+PASS TR01_A_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_A_Pine: LOD2 has the Wind vertex colour on every vertex (2828/2828)
 PASS TR01_A_Pine: LOD3 4 triangles (model_info 4, cap 200)
-PASS TR01_A_Pine: LOD3 1 material(s), want 1 (M_TR01_Leaves 4)
+PASS TR01_A_Pine: LOD3 1 material(s), want 1 (M_TR01_Leaves 7)
 PASS TR01_A_Pine: LOD3 has the Wind vertex colour on every vertex (8/8)
-PASS TR01_A_Pine: height 12.93 m (model_info 12.93 m), roots down to -0.30 m
+PASS TR01_A_Pine: height 13.28 m (model_info 13.28 m), roots down to -0.28 m
 PASS TR01_A_Pine: TR01_A_Pine_Collision is a MeshCollider with its renderer hidden
 PASS TR01_A_Pine: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
-PASS TR01_B_Pine: LODGroup with LOD0-LOD3, one renderer each (size 23.2 m, transition heights 0.980 / 0.636 / 0.245 / 0.042 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
-PASS TR01_B_Pine: LOD0 23494 triangles (model_info 23494, cap 25000)
-PASS TR01_B_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_B_Pine: LOD0 has the Wind vertex colour on every vertex (24454/24454)
-PASS TR01_B_Pine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.71
-PASS TR01_B_Pine: LOD1 7518 triangles (model_info 7518, cap 8000)
-PASS TR01_B_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_B_Pine: LOD1 has the Wind vertex colour on every vertex (10349/10349)
-PASS TR01_B_Pine: LOD2 1670 triangles (model_info 1670, cap 2500)
-PASS TR01_B_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_B_Pine: LOD2 has the Wind vertex colour on every vertex (3099/3099)
+PASS TR01_B_Pine: LODGroup with LOD0-LOD3, one renderer each (size 19.7 m, transition heights 0.903 / 0.542 / 0.208 / 0.036 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR01_B_Pine: LOD0 21431 triangles (model_info 21431, cap 25000)
+PASS TR01_B_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_B_Pine: LOD0 has the Wind vertex colour on every vertex (33764/33764)
+PASS TR01_B_Pine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR01_B_Pine: LOD1 3788 triangles (model_info 3788, cap 8000)
+PASS TR01_B_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_B_Pine: LOD1 has the Wind vertex colour on every vertex (4898/4898)
+PASS TR01_B_Pine: LOD2 1937 triangles (model_info 1937, cap 2500)
+PASS TR01_B_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_B_Pine: LOD2 has the Wind vertex colour on every vertex (3080/3080)
 PASS TR01_B_Pine: LOD3 4 triangles (model_info 4, cap 200)
-PASS TR01_B_Pine: LOD3 1 material(s), want 1 (M_TR01_Leaves 4)
+PASS TR01_B_Pine: LOD3 1 material(s), want 1 (M_TR01_Leaves 7)
 PASS TR01_B_Pine: LOD3 has the Wind vertex colour on every vertex (8/8)
-PASS TR01_B_Pine: height 12.51 m (model_info 12.51 m), roots down to -0.30 m
+PASS TR01_B_Pine: height 13.59 m (model_info 13.59 m), roots down to -0.28 m
 PASS TR01_B_Pine: TR01_B_Pine_Collision is a MeshCollider with its renderer hidden
 PASS TR01_B_Pine: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
-PASS TR01_C_CliffPine: LODGroup with LOD0-LOD3, one renderer each (size 26.3 m, transition heights 0.980 / 0.721 / 0.277 / 0.048 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
-PASS TR01_C_CliffPine: LOD0 15624 triangles (model_info 15624, cap 25000)
-PASS TR01_C_CliffPine: LOD0 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_C_CliffPine: LOD0 has the Wind vertex colour on every vertex (16286/16286)
-PASS TR01_C_CliffPine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.69
-PASS TR01_C_CliffPine: LOD1 3810 triangles (model_info 3810, cap 8000)
-PASS TR01_C_CliffPine: LOD1 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_C_CliffPine: LOD1 has the Wind vertex colour on every vertex (5145/5145)
-PASS TR01_C_CliffPine: LOD2 728 triangles (model_info 728, cap 2500)
-PASS TR01_C_CliffPine: LOD2 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
-PASS TR01_C_CliffPine: LOD2 has the Wind vertex colour on every vertex (1288/1288)
+PASS TR01_C_CliffPine: LODGroup with LOD0-LOD3, one renderer each (size 23.8 m, transition heights 0.980 / 0.654 / 0.251 / 0.044 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR01_C_CliffPine: LOD0 19172 triangles (model_info 19172, cap 25000)
+PASS TR01_C_CliffPine: LOD0 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_C_CliffPine: LOD0 has the Wind vertex colour on every vertex (28565/28565)
+PASS TR01_C_CliffPine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR01_C_CliffPine: LOD1 3382 triangles (model_info 3382, cap 8000)
+PASS TR01_C_CliffPine: LOD1 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_C_CliffPine: LOD1 has the Wind vertex colour on every vertex (3720/3720)
+PASS TR01_C_CliffPine: LOD2 1534 triangles (model_info 1534, cap 2500)
+PASS TR01_C_CliffPine: LOD2 2 material(s), want 2 (M_TR01_Bark 7, M_TR01_Leaves 7)
+PASS TR01_C_CliffPine: LOD2 has the Wind vertex colour on every vertex (2191/2191)
 PASS TR01_C_CliffPine: LOD3 4 triangles (model_info 4, cap 200)
-PASS TR01_C_CliffPine: LOD3 1 material(s), want 1 (M_TR01_Leaves 4)
+PASS TR01_C_CliffPine: LOD3 1 material(s), want 1 (M_TR01_Leaves 7)
 PASS TR01_C_CliffPine: LOD3 has the Wind vertex colour on every vertex (8/8)
-PASS TR01_C_CliffPine: height 12.45 m (model_info 12.45 m), roots down to -0.30 m
+PASS TR01_C_CliffPine: height 12.95 m (model_info 12.95 m), roots down to -0.30 m
 PASS TR01_C_CliffPine: TR01_C_CliffPine_Collision is a MeshCollider with its renderer hidden
 PASS TR01_C_CliffPine: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
-PASS TR01_A_Pine: a walker heading at the trunk stops at it (0.82 m from the trunk axis, trunk collider radius 0.55 m)
+PASS TR01_A_Pine: a walker heading at the trunk stops at it (0.68 m from the trunk axis, trunk collider radius 0.41 m)
 PASS TR01_A_Pine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
-PASS TR01_B_Pine: a walker heading at the trunk stops at it (0.84 m from the trunk axis, trunk collider radius 0.57 m)
+PASS TR01_B_Pine: a walker heading at the trunk stops at it (0.67 m from the trunk axis, trunk collider radius 0.40 m)
 PASS TR01_B_Pine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
-PASS TR01_C_CliffPine: a walker heading at the trunk stops at it (0.68 m from the trunk axis, trunk collider radius 0.41 m)
+PASS TR01_C_CliffPine: a walker heading at the trunk stops at it (0.60 m from the trunk axis, trunk collider radius 0.33 m)
 PASS TR01_C_CliffPine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
 SHOT TR01_A_Pine_three_quarter
 SHOT TR01_A_Pine_under_crown_eye_1p7
