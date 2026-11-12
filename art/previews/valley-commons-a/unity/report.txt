@@ -1,0 +1,29 @@
+PASS T_ValleyCommons_*: Albedo / Normal / MetallicSmoothness / Emission imported
+PASS T_ValleyCommons_Albedo: source 2048, imported 1024 x 1024 (QingxiImportBudget caps model textures at 1024)
+Unity 6000.3.28f1, pipeline URP
+INFO axis: Blender +X -> Unity +X, Blender +Y -> Unity +Z, Blender +Z -> Unity +Y (CB01 Socket_EndA x = -8.000)
+PASS CB01: imported size 15.990 x 4.480 x 6.459 m matches model_info 15.99 x 4.48 x 6.458
+PASS CB01: lowest point y = 0.000 (model_info 0)
+PASS CB01: triangles LOD0/1/2 = 179691 / 87679 / 24371, model_info 179891 / 87679 / 24371
+PASS CB01: 2 LOD0 objects (model_info 2)
+PASS CB01: every FBX material slot mapped to a shared URP material
+PASS CB01: materials M_ValleyCommons_Trim (model_info M_ValleyCommons_Trim)
+PASS CB01: Socket_EndA at (-8.00, 1.91, 0.00) (Blender -8, 0, 1.914)
+PASS CB01: Socket_EndB at (8.00, 1.91, 0.00) (Blender 8, 0, 1.914)
+PASS CB01: LODGroup 3 levels x 2 renderers
+PASS CB01: collision imported as MeshCollider (312 tris), render hidden
+PASS CB01 deck: 63 rays along the centre line, 0 misses, max offset from +1.914 m = 0.0 cm, max step 0.0 cm
+PASS CB01 walk: a 1.75 m capsule (r .35) walks from end A to end B along the centre line without touching anything
+PASS CB01 clear width at x = -5.0: 2.58 m between the benches (>= 2.4)
+PASS CB01 clear height at x = -5.0: 3.01 m to the roof collision (>= 2.6; tie beams at 2.62 m)
+PASS CB01 railing: ray at 1.0 m from the centre toward +Z stops at 1.79 m
+PASS CB01 railing: ray at 1.0 m from the centre toward -Z stops at 1.79 m
+PASS CB01 clear width at x = 0.0: 2.58 m between the benches (>= 2.4)
+PASS CB01 clear height at x = 0.0: 3.01 m to the roof collision (>= 2.6; tie beams at 2.62 m)
+PASS CB01 railing: ray at 1.0 m from the centre toward +Z stops at 1.65 m
+PASS CB01 railing: ray at 1.0 m from the centre toward -Z stops at 1.65 m
+PASS CB01 clear width at x = 3.5: 2.58 m between the benches (>= 2.4)
+PASS CB01 clear height at x = 3.5: 3.01 m to the roof collision (>= 2.6; tie beams at 2.62 m)
+PASS CB01 railing: ray at 1.0 m from the centre toward +Z stops at 1.79 m
+PASS CB01 railing: ray at 1.0 m from the centre toward -Z stops at 1.79 m
+INFO renders written to art/previews/valley-commons-a/unity
