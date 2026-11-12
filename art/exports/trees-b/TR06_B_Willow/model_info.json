@@ -1,0 +1,138 @@
+{
+  "asset": "TR06_B_Willow",
+  "version": "v001",
+  "minTier": "low",
+  "detailObjects": [],
+  "name_zh": "垂柳（主幹大幅斜出水面、樹冠偏向斜的那側；溪邊用）",
+  "species": "TR06",
+  "species_zh": "垂柳",
+  "slot": "A1 溪邊（斜向水面）",
+  "work_pack": "2026-11-11 B｜64 小時：世界裡的樹全部重做（九種），B 批",
+  "reference": "art/references/TR06/prompt.txt",
+  "note": "TR06 weeping willow (垂柳), broadleaf engine tr_broad for the wood, its own hanging-strand foliage.",
+  "height_m": 12.106,
+  "dimensions_m": [
+    15.887,
+    13.47,
+    12.403
+  ],
+  "bounds_min_m": [
+    -4.948,
+    -6.429,
+    -0.296
+  ],
+  "bounds_max_m": [
+    10.94,
+    7.04,
+    12.106
+  ],
+  "ground_z_m": 0.0,
+  "root_depth_m": 0.3,
+  "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
+  "collision": true,
+  "collision_note": "TR06_B_Willow_Collision: 8-sided prism around the trunk (radius 0.56 m, z 0-3 m); hide its renderer and use it as a MeshCollider or replace it with a CapsuleCollider of the same size. The crown does not block.",
+  "collision_capsule": {
+    "radius": 0.56,
+    "height": 3.0,
+    "centre": [
+      0.043,
+      -0.002,
+      1.5
+    ]
+  },
+  "materials": [
+    "M_TR06_Bark",
+    "M_TR06_Leaves"
+  ],
+  "shared_textures": "art/exports/trees-b/TR06_Shared/Textures",
+  "leaf_material": "alpha clip 0.5 on BaseColor alpha, both faces drawn, import BaseColor with Mip Maps Preserve Coverage (reference 0.5)",
+  "wind_vertex_colour": "Wind (FBX vertex colour, linear): R sway weight (trunk 0, limbs 0.02-0.3, twigs 0.3-0.5, leaf masses 0.6-1), G phase per mass, B height 0..1, A 1",
+  "lod_switch_distance_m": [
+    60,
+    100,
+    260,
+    1500
+  ],
+  "lod3": "two crossed cards with a front impostor of LOD0 from the leaves atlas (bottom half, column 1)",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 19136,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 2,
+      "cap": 25000,
+      "wood_triangles": 9000,
+      "extra_leaf_triangles": 10138,
+      "leaf_cards": 5069
+    },
+    "LOD1": {
+      "triangles": 5504,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 2,
+      "cap": 8000,
+      "wood_triangles": 2599,
+      "extra_leaf_triangles": 2910,
+      "leaf_cards": 1455
+    },
+    "LOD2": {
+      "triangles": 2064,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 2,
+      "cap": 2500,
+      "wood_triangles": 750,
+      "extra_leaf_triangles": 1314,
+      "leaf_cards": 657
+    },
+    "LOD3": {
+      "triangles": 4,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 1,
+      "cap": 200,
+      "wood_triangles": 0,
+      "extra_leaf_triangles": 0,
+      "leaf_cards": 4
+    }
+  },
+  "lod_totals": {
+    "LOD0": 19136,
+    "LOD1": 5504,
+    "LOD2": 2064,
+    "LOD3": 4
+  },
+  "texture_resolution_px": {
+    "TR06_Bark_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "TR06_Bark_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "TR06_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "TR06_Leaves_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "TR06_Leaves_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "TR06_Leaves_Normal.png": [
+      2048,
+      2048
+    ]
+  },
+  "texture_naming": "BaseColor = Albedo; MetallicSmoothness = URP mask (R metallic 0, A smoothness), same naming as village-houses-b (VL)",
+  "status": {
+    "Exported": true,
+    "Imported": "未驗",
+    "Visually_Verified": "未驗",
+    "In_game_Verified": "未驗"
+  }
+}

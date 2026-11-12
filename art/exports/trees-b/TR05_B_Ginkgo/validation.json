@@ -1,0 +1,122 @@
+{
+  "asset": "TR05_B_Ginkgo",
+  "version": "v001",
+  "built": "2026-11-13 03:51",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0004,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR05_B_Ginkgo",
+      "TR05_B_Ginkgo_Collision",
+      "TR05_B_Ginkgo_LOD0",
+      "TR05_B_Ginkgo_LOD1",
+      "TR05_B_Ginkgo_LOD2",
+      "TR05_B_Ginkgo_LOD3"
+    ],
+    "TR05_B_Ginkgo_Collision": {
+      "tris": 28,
+      "min": [
+        -0.433,
+        -0.452,
+        -0.0
+      ],
+      "max": [
+        0.471,
+        0.452,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR05_B_Ginkgo_LOD0": {
+      "tris": 23759,
+      "min": [
+        -5.446,
+        -5.564,
+        -0.267
+      ],
+      "max": [
+        7.954,
+        6.509,
+        17.644
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR05_Bark.002",
+        "M_TR05_Leaves.002"
+      ]
+    },
+    "TR05_B_Ginkgo_LOD1": {
+      "tris": 4864,
+      "min": [
+        -5.614,
+        -5.609,
+        -0.267
+      ],
+      "max": [
+        8.034,
+        6.791,
+        17.762
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR05_Bark.002",
+        "M_TR05_Leaves.002"
+      ]
+    },
+    "TR05_B_Ginkgo_LOD2": {
+      "tris": 2327,
+      "min": [
+        -5.943,
+        -6.128,
+        -0.267
+      ],
+      "max": [
+        8.208,
+        7.092,
+        18.051
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR05_Bark.002",
+        "M_TR05_Leaves.002"
+      ]
+    },
+    "TR05_B_Ginkgo_LOD3": {
+      "tris": 4,
+      "min": [
+        -8.113,
+        -8.113,
+        -0.3
+      ],
+      "max": [
+        8.113,
+        8.113,
+        24.064
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR05_Leaves.002"
+      ]
+    }
+  },
+  "files": {
+    "TR05_B_Ginkgo_v001.fbx": "4b4bc14594ecad07a42e67235c7fcdd4d255c2464e1de7c285f837e53b240fc8",
+    "TR05_B_Ginkgo_v001.glb": "462a75424e33243a7de2a66f5c1b0336902c15c16a1ed6784cb32ac5c2be5aaf"
+  }
+}

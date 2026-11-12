@@ -283,8 +283,10 @@ def dilate(col, alpha, reach=32, blank=(.1, .15, .12)):
     return rgb
 
 
-def assemble_atlas(cells, impostors, tex_dir, prefix, size=2048, smooth_val=.18):
-    """cells: two dicts {'c','n'} (1024); impostors: three dicts {'c','n'} (1024 tall x 682 wide). Writes the three PNGs."""
+def assemble_atlas(cells, impostors, tex_dir, prefix, size=2048, smooth_val=.18, blank=None):
+    """cells: two dicts {'c','n'} (1024); impostors: three dicts {'c','n'} (1024 tall x 682 wide). Writes the three PNGs.
+    blank: colour of the empty atlas area past the dilation; None = the old dark green, 'mean' = the mean opaque colour (TR07: small
+    pale flowers on a mostly empty atlas would otherwise turn dark in the lower mips)."""
     h = size // 2; w3 = size // 3
     col = np.zeros((size, size, 4), np.float32); nrm = np.zeros((size, size, 4), np.float32); nrm[...] = (.5, .5, 1, 1)
     for k, c in enumerate(cells):            # top half: rows h..size
@@ -294,7 +296,8 @@ def assemble_atlas(cells, impostors, tex_dir, prefix, size=2048, smooth_val=.18)
         c0 = k * w3; ww = c['c'].shape[1]
         col[:h, c0:c0 + ww] = c['c']; nrm[:h, c0:c0 + ww] = np.where(c['c'][..., 3:4] > .5, c['n'], (.5, .5, 1, 1))
     a = col[..., 3]
-    rgb = dilate(col[..., :3], a)
+    if blank == 'mean': blank = tuple(float(x) for x in col[..., :3][a > .5].mean(0))
+    rgb = dilate(col[..., :3], a) if blank is None else dilate(col[..., :3], a, blank=blank)
     out = np.concatenate([rgb, (a > .5).astype(np.float32)[..., None]], -1)
     files = {'BaseColor': save_png(out, tex_dir / f'{prefix}_Leaves_BaseColor.png'),
              'Normal': save_png(nrm, tex_dir / f'{prefix}_Leaves_Normal.png', srgb=False)}

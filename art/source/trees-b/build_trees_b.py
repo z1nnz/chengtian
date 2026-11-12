@@ -39,6 +39,15 @@ SPECIES = {
                         1: dict(density=8., size=1.7, grid=(3, 2), bend=.14, rand_tilt=.12, depth=.2, spray_frac=.12),
                         2: dict(density=6., size=2.1, grid=(2, 2), bend=0., rand_tilt=.1, depth=.15, spray_frac=.2)}),
 }
+# batch B (TR03-TR07) and later: skin wood + leaf sprays only, so the tube / puff settings below are never used
+_SKIN_ONLY = dict(wood={0: (6, 1, 4, 1, 0, 0, False), 1: (6, 1, 4, 1, 0, 0, False), 2: (6, 1, 4, 1, 0, 0, False)},
+                  cards={l: dict(density=1., size=1., grid=(2, 2), bend=0.) for l in (0, 1, 2)})
+SPECIES['TR03'] = dict(module='tr_camphor', zh='樟', half=False, height=(14., 16.), slot={'A': 'A1 村中', 'B': 'A1 村中、院子', 'C': 'A1 村中（廣場大樹）'}, **_SKIN_ONLY)
+SPECIES['TR04'] = dict(module='tr_maple', zh='楓', half=False, height=(8., 9.), slot={'A': 'D3 上游、A3', 'B': 'D3 上游、A3', 'C': 'D3 上游'}, **_SKIN_ONLY)
+SPECIES['TR05'] = dict(module='tr_ginkgo', zh='銀杏', half=False, height=(17., 19.), slot={'A': 'A1 地標、D3', 'B': 'D3', 'C': 'A1 地標（村中一棵）'}, **_SKIN_ONLY)
+SPECIES['TR06'] = dict(module='tr_willow', zh='垂柳', half=False, height=(12., 13.), slot={'A': 'A3、A1 溪邊', 'B': 'A1 溪邊（斜向水面）', 'C': 'A3'}, **_SKIN_ONLY)
+SPECIES['TR07'] = dict(module='tr_plum', zh='梅', half=True, height=(6., 8.), slot={'A': 'A1 院子', 'B': 'A1 院子（院角老梅）', 'C': 'A1 院子'}, **_SKIN_ONLY)
+BATCH = {'TR01': 'A 批', 'TR02': 'A 批', 'TR03': 'B 批', 'TR04': 'B 批', 'TR05': 'B 批', 'TR06': 'B 批', 'TR07': 'B 批', 'TR08': 'C 批', 'TR09': 'C 批'}
 
 
 def reset():
@@ -115,7 +124,7 @@ def build_lod(mod, var, lod, mats, spc, rng_seed):
     return o, dict(wood=wood - extra, extra=extra, cards=len(cards) + (getattr(mod, 'last_extra_cards', 0) if extra else 0), tris=tris), (branches, puffs, H, P, R)
 
 
-def impostor(objs, k, tex_tmp, size=2048):
+def impostor(objs, k, tex_tmp, size=2048, leafy_fn=None):
     """Front view (looking +Y) of LOD0, orthographic, under a uniform white sky (= albedo x occlusion), into a 682 x 1024 column."""
     scene = bpy.context.scene
     for o in scene.objects: o.hide_render = o not in objs
@@ -135,7 +144,7 @@ def impostor(objs, k, tex_tmp, size=2048):
     fp = tex_tmp / f'imp_{k}.png'; scene.render.filepath = str(fp); bpy.ops.render.render(write_still=True)
     im = bpy.data.images.load(str(fp)); c = np.array(im.pixels[:], np.float32).reshape(Hh, W, 4); bpy.data.images.remove(im)
     c[..., 3] = (c[..., 3] > .5).astype(np.float32)
-    leafy = (c[..., 1] > c[..., 0] * 1.05)[..., None]     # foliage pixels only (green over red); the bark stays as rendered
+    leafy = (leafy_fn(c) if leafy_fn else (c[..., 1] > c[..., 0] * 1.05))[..., None]     # red / gold species pass their own test     # foliage pixels only (green over red); the bark stays as rendered
     c[..., :3] = np.where(leafy, np.clip(c[..., :3] * 1.18, 0, 1), c[..., :3])        # LOD3 foliage read a step darker than LOD0 in Unity
     n = TX.dome_normal(c[..., 3]); n = np.concatenate([n, np.ones((Hh, W, 1), np.float32)], -1)
     scene.world = keep_world; bpy.data.objects.remove(cam)
@@ -192,7 +201,7 @@ def main():
     else: bark = TX.bark_texture(shared, sp, TX.BARK_STYLES[mod.BARK], seed=int(hashlib.md5(sp.encode()).hexdigest()[:6], 16) % 1000)
     cells = TX.render_cells(mod.CELLS, shared, sp, cell_m=mod.CELL_M, ao_dist=getattr(mod, 'CELL_AO', .06))
     blank = [{'c': np.zeros((1024, 682, 4), np.float32), 'n': np.zeros((1024, 682, 4), np.float32)} for _ in range(3)]
-    leaves = TX.assemble_atlas(cells, blank, shared, sp)
+    leaves = TX.assemble_atlas(cells, blank, shared, sp, blank=getattr(mod, 'ATLAS_BLANK', None))
     mats = [material_bark(sp, bark), material_leaves(sp, leaves)]
     built = {}
     for k, var in enumerate(mod.VARIANTS):
@@ -205,8 +214,8 @@ def main():
         print('BUILT', aid, {l: s['tris'] for l, s in stats.items()}, flush=True)
     imps = []
     for k, var in enumerate(mod.VARIANTS):
-        res, frame = impostor([built[var]['lods'][0]], k, tmp); imps.append(res); built[var]['frame'] = frame
-    leaves = TX.assemble_atlas(cells, imps, shared, sp)
+        res, frame = impostor([built[var]['lods'][0]], k, tmp, leafy_fn=getattr(mod, 'IMPOSTOR_LEAFY', None)); imps.append(res); built[var]['frame'] = frame
+    leaves = TX.assemble_atlas(cells, imps, shared, sp, blank=getattr(mod, 'ATLAS_BLANK', None))
     for im in bpy.data.images:
         if im.filepath and Path(bpy.path.abspath(im.filepath)).name.startswith(f'{sp}_Leaves'): im.reload()
     for k, var in enumerate(mod.VARIANTS):
@@ -233,7 +242,7 @@ def main():
         for p in sorted(shared.glob('*.png')):
             im = bpy.data.images.load(str(p), check_existing=True); texres[p.name] = list(im.size)
         info = dict(asset=aid, version=VER, minTier='low', detailObjects=[], name_zh=mod.ZH[var], species=sp, species_zh=spc['zh'], slot=spc['slot'][var],
-                    work_pack='2026-11-11 B｜64 小時：世界裡的樹全部重做（九種），A 批', reference=f'art/references/{sp}/prompt.txt',
+                    work_pack='2026-11-11 B｜64 小時：世界裡的樹全部重做（九種），' + BATCH[sp], reference=f'art/references/{sp}/prompt.txt',
                     note=mod.__doc__.strip().splitlines()[0],
                     height_m=round(hi.z, 3), dimensions_m=[round(x, 3) for x in hi - lo], bounds_min_m=[round(x, 3) for x in lo], bounds_max_m=[round(x, 3) for x in hi],
                     ground_z_m=0., root_depth_m=.3, origin='trunk base centre, z = 0 on the ground; roots go down to z = -0.3',

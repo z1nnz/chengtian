@@ -1,0 +1,24 @@
+TR07 梅：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），B 批 TR07。
+
+選用：TR07-cand-1.png。備選：TR07-cand-3.png。
+選用理由：
+- 大枝往外開展、轉折有角度，細枝一節節往上，正是「枝幹虬曲」。
+- 花是小朵、淡白微粉，沿枝條稀疏點綴，看得到大量黑褐枝幹，正是「點綴不鋪滿」。
+沒選的原因：
+- cand-1：選用，但主幹扭得太粗太誇張，接近盆景；建模時照下面的修正做。
+- cand-2：主幹整根 S 形扭轉、還綁著木板，盆景感最重。
+- cand-3：可用，留作備選；樹冠形狀好，但主幹同樣太粗、綁著布條。
+- cand-4：主幹最粗、扭成好幾股，根盤巨大，完全是盆景比例。
+四張共同的問題（建模時不照做）：
+- 四張都偏盆景（工作包禁止「日式盆景」）：主幹太粗、扭轉太多、根盤太大。建模時 7 m 的梅，基部直徑約 0.45–0.55 m，主幹只做一兩個轉折的斜幹，樹冠開展、比例拉高。
+- 樹幹上的木板、布條、繩子不建（不建道具）；根部石頭、苔和草不建（地面歸地形）。
+- 只做花期：花團點綴，偶爾一片嫩葉，不做滿樹葉。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen。
+- 共 4 張（TR07-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-13。
+- 提示詞組法和 TR01–TR06 相同：物件句＋單件 Layout 段＋5.2 美術方向＋「Avoid:」接 5.3 與本包那句。全部用原文，完整內容在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of an old Chinese plum blossom tree about 7 m tall, a crooked dark brown-black trunk and angular twisting branches, sparse small clusters of pale white blossoms with a faint pink tint dotted along the branches, a few young leaves, a hand-painted stylized game tree.

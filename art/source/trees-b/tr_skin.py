@@ -31,6 +31,10 @@ def _graph(branches, levels):
             # hook onto the nearest vertex of a lower-level branch, measured from the first point outside the parent
             cand = [i for i in range(len(V)) if lvl[i] < max(1, lv) or (br.kind == 'stub' and lvl[i] == 0)]
             if not cand: cand = list(range(len(V)))
+            par = getattr(br, 'parent', None)      # broadleaf forks (tr_broad): hook onto the named parent branch, even at the same level
+            if par is not None:
+                cp_ = [i for i in range(len(V)) if owner[i] == par]
+                if cp_: cand = cp_
             P0 = np.array(pts[0]); C = np.array([V[i] for i in cand]); j = cand[int(np.argmin(((C - P0) ** 2).sum(1)))]
             if Rr[j] < 1.9 * rs[0]:          # a true fork (similar thickness): fuse into the parent vertex
                 ids.append(j); k0 = 1

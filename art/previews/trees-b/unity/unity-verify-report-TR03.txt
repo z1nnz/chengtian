@@ -1,0 +1,95 @@
+INFO species TR03; variants TR03_A_Camphor, TR03_B_Camphor, TR03_C_OldCamphor
+PASS TR03_A_Camphor: LODGroup with LOD0-LOD3, one renderer each (size 25.0 m, transition heights 0.980 / 0.686 / 0.264 / 0.046 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR03_A_Camphor: LOD0 22127 triangles (model_info 22127, cap 25000)
+PASS TR03_A_Camphor: LOD0 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_A_Camphor: LOD0 has the Wind vertex colour on every vertex (39839/39839)
+PASS TR03_A_Camphor: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR03_A_Camphor: LOD1 5133 triangles (model_info 5133, cap 8000)
+PASS TR03_A_Camphor: LOD1 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_A_Camphor: LOD1 has the Wind vertex colour on every vertex (8612/8612)
+PASS TR03_A_Camphor: LOD2 2330 triangles (model_info 2330, cap 2500)
+PASS TR03_A_Camphor: LOD2 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_A_Camphor: LOD2 has the Wind vertex colour on every vertex (3799/3799)
+PASS TR03_A_Camphor: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR03_A_Camphor: LOD3 1 material(s), want 1 (M_TR03_Leaves 3)
+PASS TR03_A_Camphor: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR03_A_Camphor: height 15.12 m (model_info 15.12 m), roots down to -0.26 m
+PASS TR03_A_Camphor: TR03_A_Camphor_Collision is a MeshCollider with its renderer hidden
+PASS TR03_A_Camphor: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR03_B_Camphor: LODGroup with LOD0-LOD3, one renderer each (size 33.5 m, transition heights 0.980 / 0.921 / 0.354 / 0.061 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR03_B_Camphor: LOD0 22131 triangles (model_info 22131, cap 25000)
+PASS TR03_B_Camphor: LOD0 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_B_Camphor: LOD0 has the Wind vertex colour on every vertex (39216/39216)
+PASS TR03_B_Camphor: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR03_B_Camphor: LOD1 4961 triangles (model_info 4961, cap 8000)
+PASS TR03_B_Camphor: LOD1 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_B_Camphor: LOD1 has the Wind vertex colour on every vertex (7798/7798)
+PASS TR03_B_Camphor: LOD2 2329 triangles (model_info 2329, cap 2500)
+PASS TR03_B_Camphor: LOD2 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_B_Camphor: LOD2 has the Wind vertex colour on every vertex (3712/3712)
+PASS TR03_B_Camphor: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR03_B_Camphor: LOD3 1 material(s), want 1 (M_TR03_Leaves 3)
+PASS TR03_B_Camphor: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR03_B_Camphor: height 15.51 m (model_info 15.51 m), roots down to -0.29 m
+PASS TR03_B_Camphor: TR03_B_Camphor_Collision is a MeshCollider with its renderer hidden
+PASS TR03_B_Camphor: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR03_C_OldCamphor: LODGroup with LOD0-LOD3, one renderer each (size 28.8 m, transition heights 0.980 / 0.790 / 0.304 / 0.053 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR03_C_OldCamphor: LOD0 22804 triangles (model_info 22804, cap 25000)
+PASS TR03_C_OldCamphor: LOD0 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_C_OldCamphor: LOD0 has the Wind vertex colour on every vertex (41582/41582)
+PASS TR03_C_OldCamphor: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR03_C_OldCamphor: LOD1 5355 triangles (model_info 5355, cap 8000)
+PASS TR03_C_OldCamphor: LOD1 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_C_OldCamphor: LOD1 has the Wind vertex colour on every vertex (8984/8984)
+PASS TR03_C_OldCamphor: LOD2 2329 triangles (model_info 2329, cap 2500)
+PASS TR03_C_OldCamphor: LOD2 2 material(s), want 2 (M_TR03_Bark 3, M_TR03_Leaves 3)
+PASS TR03_C_OldCamphor: LOD2 has the Wind vertex colour on every vertex (3672/3672)
+PASS TR03_C_OldCamphor: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR03_C_OldCamphor: LOD3 1 material(s), want 1 (M_TR03_Leaves 3)
+PASS TR03_C_OldCamphor: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR03_C_OldCamphor: height 14.56 m (model_info 14.56 m), roots down to -0.27 m
+PASS TR03_C_OldCamphor: TR03_C_OldCamphor_Collision is a MeshCollider with its renderer hidden
+PASS TR03_C_OldCamphor: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR03_A_Camphor: a walker heading at the trunk stops at it (0.98 m from the trunk axis, trunk collider radius 0.71 m)
+PASS TR03_A_Camphor: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR03_B_Camphor: a walker heading at the trunk stops at it (0.96 m from the trunk axis, trunk collider radius 0.69 m)
+PASS TR03_B_Camphor: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR03_C_OldCamphor: a walker heading at the trunk stops at it (1.06 m from the trunk axis, trunk collider radius 0.79 m)
+PASS TR03_C_OldCamphor: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR03_A_Camphor_three_quarter
+SHOT TR03_A_Camphor_under_crown_eye_1p7
+SHOT TR03_A_Camphor_front
+SHOT TR03_A_Camphor_LOD0
+SHOT TR03_A_Camphor_LOD1
+SHOT TR03_A_Camphor_LOD2
+SHOT TR03_A_Camphor_LOD3
+SHOT TR03_A_Camphor_far_50m
+INFO TR03_A_Camphor: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_A_Camphor_far_100m
+INFO TR03_A_Camphor: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR03_B_Camphor_three_quarter
+SHOT TR03_B_Camphor_under_crown_eye_1p7
+SHOT TR03_B_Camphor_front
+SHOT TR03_B_Camphor_LOD0
+SHOT TR03_B_Camphor_LOD1
+SHOT TR03_B_Camphor_LOD2
+SHOT TR03_B_Camphor_LOD3
+SHOT TR03_B_Camphor_far_50m
+INFO TR03_B_Camphor: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_B_Camphor_far_100m
+INFO TR03_B_Camphor: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR03_C_OldCamphor_three_quarter
+SHOT TR03_C_OldCamphor_under_crown_eye_1p7
+SHOT TR03_C_OldCamphor_front
+SHOT TR03_C_OldCamphor_LOD0
+SHOT TR03_C_OldCamphor_LOD1
+SHOT TR03_C_OldCamphor_LOD2
+SHOT TR03_C_OldCamphor_LOD3
+SHOT TR03_C_OldCamphor_far_50m
+INFO TR03_C_OldCamphor: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_C_OldCamphor_far_100m
+INFO TR03_C_OldCamphor: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR03_lineup_with_VL02_and_1p75m
+SHOT TR03_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

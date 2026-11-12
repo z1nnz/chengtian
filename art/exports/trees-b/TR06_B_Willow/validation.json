@@ -1,0 +1,122 @@
+{
+  "asset": "TR06_B_Willow",
+  "version": "v001",
+  "built": "2026-11-13 04:17",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0005,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR06_B_Willow",
+      "TR06_B_Willow_Collision",
+      "TR06_B_Willow_LOD0",
+      "TR06_B_Willow_LOD1",
+      "TR06_B_Willow_LOD2",
+      "TR06_B_Willow_LOD3"
+    ],
+    "TR06_B_Willow_Collision": {
+      "tris": 28,
+      "min": [
+        -0.517,
+        -0.561,
+        -0.0
+      ],
+      "max": [
+        0.603,
+        0.558,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR06_B_Willow_LOD0": {
+      "tris": 19136,
+      "min": [
+        -4.948,
+        -6.429,
+        -0.296
+      ],
+      "max": [
+        10.94,
+        7.04,
+        12.106
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR06_Bark.002",
+        "M_TR06_Leaves.002"
+      ]
+    },
+    "TR06_B_Willow_LOD1": {
+      "tris": 5504,
+      "min": [
+        -4.535,
+        -5.826,
+        -0.296
+      ],
+      "max": [
+        10.499,
+        6.47,
+        12.255
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR06_Bark.002",
+        "M_TR06_Leaves.002"
+      ]
+    },
+    "TR06_B_Willow_LOD2": {
+      "tris": 2064,
+      "min": [
+        -4.317,
+        -6.183,
+        -0.296
+      ],
+      "max": [
+        10.432,
+        6.701,
+        12.166
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR06_Bark.002",
+        "M_TR06_Leaves.002"
+      ]
+    },
+    "TR06_B_Willow_LOD3": {
+      "tris": 4,
+      "min": [
+        -11.158,
+        -11.158,
+        -0.3
+      ],
+      "max": [
+        11.158,
+        11.158,
+        33.208
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR06_Leaves.002"
+      ]
+    }
+  },
+  "files": {
+    "TR06_B_Willow_v001.fbx": "0396f074112be23c760da311d0d17442afa0e9d3da7f9a42bdb76c5b018a408e",
+    "TR06_B_Willow_v001.glb": "4b58e857ae3ea90af9e264bd43a64512d29fc900e6d04d3b4cff361d18f71d9c"
+  }
+}

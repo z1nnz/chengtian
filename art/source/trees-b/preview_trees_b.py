@@ -28,6 +28,21 @@ def lod(root, k):
     return next(c for c in root.children if c.name.endswith(f'_LOD{k}'))
 
 
+def _ext():
+    e = w = 0.
+    for r in ROOTS:
+        o = lod(r, 0); ws = [o.matrix_world @ Vector(v) for v in o.bound_box]
+        dx, dy = max(v.x for v in ws) - min(v.x for v in ws), max(v.y for v in ws) - min(v.y for v in ws)
+        e = max(e, dx, dy, max(v.z for v in ws)); w = max(w, dx)
+    return e, w
+
+
+_E, _W = _ext()
+# framing scale: 1 for TR01 / TR02 (up to 13.6 m); larger for the broad crowns of batch B; the width term keeps crowns wider than
+# 11 m (TR06 willow curtains) from touching their neighbours in the side-by-side shots
+F = max(1., _E / 13.6, _W / 11.)
+
+
 def env(sun_strength=6.5, samples=96, res=(1400, 1400)):
     for o in [o for o in bpy.data.objects if o.name.startswith('PV_')]: bpy.data.objects.remove(o, do_unlink=True)
     w = bpy.data.worlds.get('PV_Sky') or bpy.data.worlds.new('PV_Sky'); w.use_nodes = True; nt = w.node_tree
@@ -115,7 +130,7 @@ if MODE in ('hero', 'grey', 'wire'):
     for r in ROOTS:
         o = lod(r, 0); show([o])
         top = max((o.matrix_world @ Vector(v)).z for v in o.bound_box)
-        c = cam((8.5, -9.5, 2.0), (0, 0, top * .5), lens=20)
+        c = cam((8.5 * F, -9.5 * F, 2.0), (0, 0, top * .5), lens=20)
         if MODE == 'grey': grey(True)
         if MODE == 'wire':
             m = o.modifiers.new('PV_Wire', 'WIREFRAME'); m.thickness = .012; m.use_replace = False; m.material_offset = 5
@@ -131,8 +146,8 @@ if MODE in ('hero', 'grey', 'wire'):
         bpy.data.objects.remove(c)
 elif MODE == 'quick':
     env(samples=48, res=(2100, 1000))
-    show([lod(r, 0) for r in ROOTS]); undo = place(ROOTS, 11)
-    cam((0, -38, 4.5), (0, 0, 6), lens=32)
+    show([lod(r, 0) for r in ROOTS]); undo = place(ROOTS, max(11 * F, _W * 1.12))
+    cam((0, -38 * F, 4.5), (0, 0, 6 * F), lens=32)
     render(OUT / f'{SP}_quick.png')
     for r, l in undo: r.location = l
 elif MODE == 'lods':
@@ -140,16 +155,16 @@ elif MODE == 'lods':
     for r in ROOTS:
         objs = [lod(r, k) for k in range(4)]; show(objs)
         keep = [o.location.copy() for o in objs]
-        for k, o in enumerate(objs): o.location = Vector(((k - 1.5) * 14, 0, 0))
+        for k, o in enumerate(objs): o.location = Vector(((k - 1.5) * 14 * F, 0, 0))
         objs[3].visible_shadow = False      # LOD3 cards: no shadows, as set up in Unity
-        cam((0, -50, 5), (0, 0, 6), lens=35)
+        cam((0, -50 * F, 5), (0, 0, 6 * F), lens=35)
         render(OUT / r.name / f'{r.name}_LOD_comparison.png')
         for o, l in zip(objs, keep): o.location = l
 elif MODE == 'ruler':
     env(samples=64, res=(2400, 1100)); fig = figure()
-    show([lod(r, 0) for r in ROOTS] + fig); undo = place(ROOTS, 11)
-    for f in fig: f.location.x += -24; f.location.y += 0
-    cam((-3.5, -62, 5), (-3.5, 0, 6.2), lens=35)
+    show([lod(r, 0) for r in ROOTS] + fig); undo = place(ROOTS, max(11 * F, _W * 1.12))
+    for f in fig: f.location.x += -24 * F; f.location.y += 0
+    cam((-3.5 * F, -62 * F, 5), (-3.5 * F, 0, 6.2 * F), lens=35)
     render(OUT / f'{SP}_ruler_material.png'); grey(True); render(OUT / f'{SP}_ruler_grey.png'); grey(False)
     for r, l in undo: r.location = l
 elif MODE == 'ten':
