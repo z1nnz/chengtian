@@ -21,18 +21,17 @@
     "sec": 0.0
    },
    "CB01_LOD0": {
-    "tris": 179764,
+    "tris": 69400,
     "errors": [],
     "warnings": [
-     "CB01_LOD0: ~90.48% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
-     "CB01_LOD0: duplicate verts=2 loose verts=0",
-     "CB01_LOD0: 1292 n-gons",
-     "hidden back-to-back faces: CB01_LOD0 (392 pairs) - delete to save tris"
+     "CB01_LOD0: ~99.65% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "CB01_LOD0: 776 n-gons",
+     "hidden back-to-back faces: CB01_LOD0 (398 pairs) - delete to save tris"
     ],
-    "sec": 6.9
+    "sec": 9.8
    },
    "JOINED_CB01_Detail_Moss_LOD0+CB01_LOD0": {
-    "tris": 179891,
+    "tris": 69527,
     "floating_errors": [],
     "note": "joined check: floating only"
    }

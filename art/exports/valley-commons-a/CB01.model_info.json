@@ -2,7 +2,7 @@
  "id": "CB01",
  "package": "docs/execution/2026-11-11/A-40h-village-gathering-buildings.md",
  "author": "A (Johnnnny0823)",
- "version": "v001",
+ "version": "v002",
  "status": "Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗",
  "dimensions_m": [
   15.99,
@@ -29,19 +29,19 @@
  "lods": [
   {
    "lod": 0,
-   "triangles": 179891,
+   "triangles": 69527,
    "objects": 2,
    "materials": 1
   },
   {
    "lod": 1,
-   "triangles": 87679,
+   "triangles": 33399,
    "objects": 2,
    "materials": 1
   },
   {
    "lod": 2,
-   "triangles": 24371,
+   "triangles": 10019,
    "objects": 2,
    "materials": 1
   }

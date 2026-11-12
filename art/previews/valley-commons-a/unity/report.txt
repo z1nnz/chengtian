@@ -4,7 +4,7 @@ Unity 6000.3.28f1, pipeline URP
 INFO axis: Blender +X -> Unity +X, Blender +Y -> Unity +Z, Blender +Z -> Unity +Y (CB01 Socket_EndA x = -8.000)
 PASS CB01: imported size 15.990 x 4.480 x 6.459 m matches model_info 15.99 x 4.48 x 6.458
 PASS CB01: lowest point y = 0.000 (model_info 0)
-PASS CB01: triangles LOD0/1/2 = 179691 / 87679 / 24371, model_info 179891 / 87679 / 24371
+PASS CB01: triangles LOD0/1/2 = 69327 / 33399 / 10019, model_info 69527 / 33399 / 10019
 PASS CB01: 2 LOD0 objects (model_info 2)
 PASS CB01: every FBX material slot mapped to a shared URP material
 PASS CB01: materials M_ValleyCommons_Trim (model_info M_ValleyCommons_Trim)

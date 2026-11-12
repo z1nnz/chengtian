@@ -1,6 +1,7 @@
 """CB01 in a simple creek setting (Cycles, LOD0): the bridge over a creek bed with water, two grassy banks at deck height,
 1.75 m figures. Views: three-quarter, the walkway at 1.7 m eye height, the silhouette from 80 m away at the village path
-(package: recognisable from the village entrance 80 m away), and from the creek. --clay for the grey model.
+(package: recognisable from the village entrance 80 m away), from the creek, looking up at the open roof timbers from
+the walkway (review #113) and a close look at a gable end. --only name,name renders just those views. --clay for the grey model.
 
     blender -b --factory-startup -P art/source/valley-commons-a/scene_cb01.py -- [--clay] [--samples 64]
 """
@@ -10,7 +11,7 @@ from mathutils import Vector
 
 HERE = Path(__file__).resolve().parent; ROOT = HERE.parents[2]; PKG = 'valley-commons-a'
 args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
-CLAY = '--clay' in args; SAMPLES = int(args[args.index('--samples') + 1]) if '--samples' in args else 64
+CLAY = '--clay' in args; ONLY = args[args.index('--only') + 1].split(',') if '--only' in args else None; SAMPLES = int(args[args.index('--samples') + 1]) if '--samples' in args else 64
 OUT = ROOT / 'art/previews' / PKG / 'scene'; OUT.mkdir(parents=True, exist_ok=True)
 info = json.loads((ROOT / 'art/exports' / PKG / 'CB01.model_info.json').read_text(encoding='utf-8')); DT = info['extra']['deckTop_m']
 
@@ -49,10 +50,14 @@ def figure(p):
     for o in (b, h): o.data.materials.append(fm)
 for f in ((-1.5, .4, DT), (2.8, -.7, DT), (-10.5, -2.0, DT)): figure(f)
 cam = bpy.data.objects.new('cam', bpy.data.cameras.new('cam')); sc.collection.objects.link(cam); sc.camera = cam
-def shot(name, loc, look, lens):
+def shot(name, loc, look, lens, ev=0.0):
+    if ONLY and name not in ONLY: return
+    sc.view_settings.exposure = ev   # +EV only on the under-roof views, written in the file name
     cam.data.lens = lens; cam.location = Vector(loc); cam.rotation_euler = (Vector(look) - cam.location).to_track_quat('-Z', 'Y').to_euler()
-    sc.render.filepath = str(OUT / f'CB01_{name}{"_clay" if CLAY else ""}.png'); bpy.ops.render.render(write_still=True); print('wrote', sc.render.filepath, flush=True)
+    sc.render.filepath = str(OUT / f'CB01_{name}{"_clay" if CLAY else ""}{f"_ev+{ev:g}" if ev else ""}.png'); bpy.ops.render.render(write_still=True); print('wrote', sc.render.filepath, flush=True)
 shot('scene_three_quarter', (-17.0, -16.0, 7.5), (0, 0, 3.0), 32)
 shot('walkway_eye_1p7m', (-9.5, -.3, DT + 1.7), (6.0, .2, DT + 1.3), 22)
+shot('walkway_look_up', (-4.5, .25, DT + 1.6), (1.5, -.1, DT + 3.9), 16, ev=1.5)
+shot('gable_end_close', (-11.5, -4.5, 5.6), (-7.0, 0, 4.6), 30)
 shot('silhouette_80m', (-56.0, -57.0, DT + 1.7), (0, 0, 3.6), 50)
 shot('from_creek', (3.0, -15.0, 1.2), (0, 0, 2.8), 24)
