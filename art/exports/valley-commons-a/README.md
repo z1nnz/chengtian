@@ -3,7 +3,7 @@
 | 誰做的 | A（Johnnnny0823） |
 | 工作包 | docs/execution/2026-11-11/A-40h-village-gathering-buildings.md |
 | ID | CB01 西溪風雨橋（樣品；OS01、MH01、AW01 之後另開 PR） |
-| 分支／PR | art/a-1111-cb-covered-bridge ／ PR 待開 |
+| 分支／PR | art/a-1111-cb-covered-bridge ／ #113 |
 | 版本 | v001 |
 | 狀態 | Exported；Imported：見「驗收紀錄」的 Unity 6000.3.28f1 檢查；Visually Verified：預覽圖；In-game Verified：未驗 |
 | 素材來源 | 原創。建模腳本 `art/source/valley-commons-a/build_valley.py`，沿用 MC01（#80）的建模函式與 TX04（#90）的歇山屋頂函式；三視圖用 Codex CLI 生成，存 `art/references/CB01/` |
