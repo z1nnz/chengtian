@@ -1,0 +1,96 @@
+{
+  "asset": "TR02_C_OldCypress",
+  "render_of": "LOD0 with the exported textures",
+  "views": [
+    {
+      "file": "01_front.png",
+      "direction": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "02_right.png",
+      "direction": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "03_back.png",
+      "direction": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "04_left.png",
+      "direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "05_front_right.png",
+      "direction": [
+        0.7071067690849304,
+        -0.7071067690849304,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "06_back_right.png",
+      "direction": [
+        0.7071067690849304,
+        0.7071067690849304,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "07_back_left.png",
+      "direction": [
+        -0.7071067690849304,
+        0.7071067690849304,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "08_front_left.png",
+      "direction": [
+        -0.7071067690849304,
+        -0.7071067690849304,
+        0.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "09_top.png",
+      "direction": [
+        0.0,
+        -9.999999747378752e-05,
+        1.0
+      ],
+      "projection": "orthographic"
+    },
+    {
+      "file": "10_high_front.png",
+      "direction": [
+        0.0,
+        -0.7808687686920166,
+        0.6246950030326843
+      ],
+      "projection": "orthographic"
+    }
+  ]
+}

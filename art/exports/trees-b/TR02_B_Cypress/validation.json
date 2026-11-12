@@ -1,0 +1,122 @@
+{
+  "asset": "TR02_B_Cypress",
+  "version": "v001",
+  "built": "2026-11-12 23:41",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0001,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR02_B_Cypress",
+      "TR02_B_Cypress_Collision",
+      "TR02_B_Cypress_LOD0",
+      "TR02_B_Cypress_LOD1",
+      "TR02_B_Cypress_LOD2",
+      "TR02_B_Cypress_LOD3"
+    ],
+    "TR02_B_Cypress_Collision": {
+      "tris": 28,
+      "min": [
+        -0.343,
+        -0.611,
+        -0.0
+      ],
+      "max": [
+        0.763,
+        0.495,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR02_B_Cypress_LOD0": {
+      "tris": 22359,
+      "min": [
+        -4.779,
+        -4.24,
+        -0.278
+      ],
+      "max": [
+        5.911,
+        5.3,
+        10.445
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR02_Bark.002",
+        "M_TR02_Leaves.002"
+      ]
+    },
+    "TR02_B_Cypress_LOD1": {
+      "tris": 4520,
+      "min": [
+        -4.715,
+        -4.239,
+        -0.269
+      ],
+      "max": [
+        5.922,
+        5.293,
+        10.347
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR02_Bark.002",
+        "M_TR02_Leaves.002"
+      ]
+    },
+    "TR02_B_Cypress_LOD2": {
+      "tris": 2190,
+      "min": [
+        -4.904,
+        -4.347,
+        -0.224
+      ],
+      "max": [
+        6.144,
+        5.422,
+        10.664
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR02_Bark.002",
+        "M_TR02_Leaves.002"
+      ]
+    },
+    "TR02_B_Cypress_LOD3": {
+      "tris": 4,
+      "min": [
+        -6.03,
+        -6.03,
+        -0.3
+      ],
+      "max": [
+        6.03,
+        6.03,
+        17.806
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR02_Leaves.002"
+      ]
+    }
+  },
+  "files": {
+    "TR02_B_Cypress_v001.fbx": "31c1ca7b039cb552479d60da92fec4185940354e7c9f829f554c2d5eb0cc05c3",
+    "TR02_B_Cypress_v001.glb": "3136c8ba4bcf27319557e00042716fcc29f8f8c66fb23988df26b89a8e1e0801"
+  }
+}

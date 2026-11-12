@@ -19,6 +19,7 @@ import numpy as np
 from mathutils import Vector
 import tr_tex as TX
 import tr_tree as TT
+import tr_skin as TS
 
 KIT = 'trees-b'; VER = 'v001'
 ART = HERE.parents[1]
@@ -31,6 +32,12 @@ SPECIES = {
                  wood={0: (14, .42, 9, .36, 6, .35, True), 1: (9, .9, 6, .8, 4, .9, False), 2: (6, 2.2, 4, 1.8, 0, 0, False)},
                  cards={0: dict(density=12., size=1.0, grid=(3, 3), bend=.22), 1: dict(density=11., size=1.45, grid=(3, 2), bend=.16),
                         2: dict(density=8., size=1.9, grid=(2, 2), bend=0.)}),
+    'TR02': dict(module='tr_cypress', zh='柏', half=False, height=(9., 11.), slot={'A': 'D1/D2/D4 古林', 'B': 'D1/D2/D4 古林', 'C': 'D1/D2/D4 古林'},
+                 wood={0: (20, .24, 7, .4, 4, .45, True), 1: (10, .9, 5, 1.1, 3, 1.6, False), 2: (7, 1.6, 4, 1.6, 0, 0, False)},
+                 # stylised: fewer, larger cards facing out (calm masses, notched rims), the shading from the mass normals
+                 cards={0: dict(density=9., size=1.25, grid=(3, 3), bend=.2, rand_tilt=.12, depth=.22, spray_frac=.12),
+                        1: dict(density=8., size=1.7, grid=(3, 2), bend=.14, rand_tilt=.12, depth=.2, spray_frac=.12),
+                        2: dict(density=6., size=2.1, grid=(2, 2), bend=0., rand_tilt=.1, depth=.15, spray_frac=.2)}),
 }
 
 
@@ -79,22 +86,33 @@ def build_lod(mod, var, lod, mats, spc, rng_seed):
     branches, puffs, H, P, R = mod.skeleton(var)
     buf = TT.Buf(H)
     ts, tst, ls, lst, ws, wst, stubs = spc['wood'][lod]
-    for i, br in enumerate(branches):
-        if br.kind == 'trunk': buf.tube(br, ts, tst, seed=i)
+    trunk_range = (0, 0)
+    if getattr(mod, 'WOOD', 'tube') == 'skin':      # fused wood (golden-spirit-tree method): one Skin mesh, decimated to the budget
+        levels, subdiv, target = mod.SKIN_WOOD[lod]
+        _, b0, b1 = TS.skin_wood(buf, branches, levels, subdiv, target); trunk_range = (b0, b1); branches_iter = []
+    else: branches_iter = branches
+    for i, br in enumerate(branches_iter):
+        if br.kind == 'trunk': n0 = len(buf.v); buf.tube(br, ts, tst, seed=i); trunk_range = (n0, len(buf.v))
         elif br.kind == 'limb': buf.tube(br, ls, lst, seed=i)
         elif br.kind == 'twig' and ws: buf.tube(br, ws, wst, seed=i)
         elif br.kind == 'stub' and stubs: buf.tube(br, 6, .3, seed=i)
+    rng0 = np.random.default_rng(rng_seed + 50 + lod)
+    extra = mod.extra_geometry(buf, var, lod, P, R, rng0, trunk_range) if hasattr(mod, 'extra_geometry') else 0     # e.g. moss pads on the trunk (leaf material)
     wood = buf.tris()
     cc = spc['cards'][lod]; rng = np.random.default_rng(rng_seed + lod)
-    cards = TT.sample_cards(puffs, rng, cc['density'], cc['size'], grid=cc['grid'], bend=cc['bend'])
+    cards = TT.sample_cards(puffs, rng, cc['density'], cc['size'], grid=cc['grid'], bend=cc['bend'], **{k: cc[k] for k in ('depth', 'spray_frac', 'top_bias', 'rand_tilt') if k in cc})
+    if hasattr(mod, 'retone_cards'): mod.retone_cards(cards, H, rng)     # optional per-species atlas sub-cell choice (e.g. TR02 tone by height)
+    aspect = getattr(mod, 'CELL_ASPECT', {})
+    for cd in cards: cd['aspect'] = aspect.get(cd['cell'], 1.)
     per = (cc['grid'][0] - 1) * (cc['grid'][1] - 1) * 2
     cap = CAPS[lod] * (.5 if spc['half'] else 1.) * .94
     room = int((cap - wood) // per)
     if len(cards) > room:      # keep an even spread: drop the deepest cards first, then thin at random
         cards.sort(key=lambda c: c['dep']); keep = cards[:room]; cards = keep
-    TT.add_cards(buf, cards, cc['grid'], cc['bend'])
+    TT.add_cards(buf, cards, cc['grid'], cc['bend'], cells=getattr(mod, 'CELL_RECTS', None))
     o = buf.build(f'{spc["ids"][var]}_LOD{lod}', mats)
-    return o, dict(wood=wood, cards=len(cards), tris=buf.tris()), (branches, puffs, H, P, R)
+    tris = sum(len(p.vertices) - 2 for p in o.data.polygons)      # after mesh validation (it may drop a few degenerate faces, as Unity does)
+    return o, dict(wood=wood - extra, extra=extra, cards=len(cards) + (getattr(mod, 'last_extra_cards', 0) if extra else 0), tris=tris), (branches, puffs, H, P, R)
 
 
 def impostor(objs, k, tex_tmp, size=2048):
@@ -117,6 +135,8 @@ def impostor(objs, k, tex_tmp, size=2048):
     fp = tex_tmp / f'imp_{k}.png'; scene.render.filepath = str(fp); bpy.ops.render.render(write_still=True)
     im = bpy.data.images.load(str(fp)); c = np.array(im.pixels[:], np.float32).reshape(Hh, W, 4); bpy.data.images.remove(im)
     c[..., 3] = (c[..., 3] > .5).astype(np.float32)
+    leafy = (c[..., 1] > c[..., 0] * 1.05)[..., None]     # foliage pixels only (green over red); the bark stays as rendered
+    c[..., :3] = np.where(leafy, np.clip(c[..., :3] * 1.18, 0, 1), c[..., :3])        # LOD3 foliage read a step darker than LOD0 in Unity
     n = TX.dome_normal(c[..., 3]); n = np.concatenate([n, np.ones((Hh, W, 1), np.float32)], -1)
     scene.world = keep_world; bpy.data.objects.remove(cam)
     for o in scene.objects: o.hide_render = False
@@ -168,8 +188,9 @@ def main():
     t0 = time.time(); reset()
     shared = EXP / f'{sp}_Shared' / 'Textures'; shared.mkdir(parents=True, exist_ok=True)
     tmp = Path(bpy.app.tempdir or '.') / f'trees_b_{sp}'; tmp.mkdir(parents=True, exist_ok=True)
-    bark = TX.bark_texture(shared, sp, TX.BARK_STYLES[mod.BARK], seed=int(hashlib.md5(sp.encode()).hexdigest()[:6], 16) % 1000)
-    cells = TX.render_cells(mod.CELLS, shared, sp, cell_m=mod.CELL_M)
+    if hasattr(mod, 'BARK_PAINTED'): bark = TX.painted_bark(shared, sp, HERE / mod.BARK_PAINTED['src'], **{k: v for k, v in mod.BARK_PAINTED.items() if k != 'src'})
+    else: bark = TX.bark_texture(shared, sp, TX.BARK_STYLES[mod.BARK], seed=int(hashlib.md5(sp.encode()).hexdigest()[:6], 16) % 1000)
+    cells = TX.render_cells(mod.CELLS, shared, sp, cell_m=mod.CELL_M, ao_dist=getattr(mod, 'CELL_AO', .06))
     blank = [{'c': np.zeros((1024, 682, 4), np.float32), 'n': np.zeros((1024, 682, 4), np.float32)} for _ in range(3)]
     leaves = TX.assemble_atlas(cells, blank, shared, sp)
     mats = [material_bark(sp, bark), material_leaves(sp, leaves)]
@@ -206,7 +227,7 @@ def main():
         lo = Vector([min(v[i] for v in ws) for i in range(3)]); hi = Vector([max(v[i] for v in ws) for i in range(3)])
         H = b['skel'][2]; co, rc = b['coll']
         budget = {f'LOD{l}': dict(triangles=b['stats'][l]['tris'], objects=1, objects_without_detail=1, materials=len([m for m in b['lods'][l].data.materials if m]),
-                                  cap=int(CAPS[l] * (.5 if spc['half'] else 1)), wood_triangles=b['stats'][l]['wood'], leaf_cards=b['stats'][l]['cards'])
+                                  cap=int(CAPS[l] * (.5 if spc['half'] else 1)), wood_triangles=b['stats'][l]['wood'], extra_leaf_triangles=b['stats'][l].get('extra', 0), leaf_cards=b['stats'][l]['cards'])
                   for l in range(4)}
         texres = {}
         for p in sorted(shared.glob('*.png')):

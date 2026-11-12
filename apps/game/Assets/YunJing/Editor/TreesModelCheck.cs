@@ -208,11 +208,12 @@ namespace YunJing.Editor
                 Check(mesh != null && mesh.colors.Length == mesh.vertexCount && mesh.colors.Length > 0, $"{id}: LOD{l} has the Wind vertex colour on every vertex ({(mesh ? mesh.colors.Length : 0)}/{(mesh ? mesh.vertexCount : 0)})");
                 if (l == 0 && mesh != null)
                 {
-                    var c = mesh.colors; var vs = mesh.vertices; float trunkMax = 0, leafMin = 1;
+                    var c = mesh.colors; var vs = mesh.vertices; float trunkMax = 0, leafMin = 1, mossTop = 0; int moss = 0;
                     var sub0 = new HashSet<int>(mesh.GetTriangles(0)); var sub1 = new HashSet<int>(mesh.GetTriangles(1));
                     foreach (int v in sub0) if (vs[v].y < 2f) trunkMax = Mathf.Max(trunkMax, c[v].r);
-                    foreach (int v in sub1) leafMin = Mathf.Min(leafMin, c[v].r);
-                    Check(trunkMax < .05f && leafMin >= .5f, $"{id}: wind weights: bark below 2 m <= {trunkMax:F2} (trunk 0), leaf cards >= {leafMin:F2}");
+                    // leaf-material vertices with wind ~0 are moss pads stuck on the trunk base (TR02): they must stay low on the trunk
+                    foreach (int v in sub1) { if (c[v].r < .05f) { moss++; mossTop = Mathf.Max(mossTop, vs[v].y); } else leafMin = Mathf.Min(leafMin, c[v].r); }
+                    Check(trunkMax < .05f && leafMin >= .5f && mossTop < 2.2f, $"{id}: wind weights: bark below 2 m <= {trunkMax:F2} (trunk 0), leaf cards >= {leafMin:F2}, trunk moss vertices {moss} (wind 0, top {mossTop:F2} m)");
                 }
             }
             var b0 = lods[0].renderers[0].bounds;

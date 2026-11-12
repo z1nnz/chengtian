@@ -100,12 +100,14 @@ class Buf:
                 self.v.append(p); self.nrm.append(radial)
                 t = ss[i] / max(L, 1e-6)
                 self.col.append(self.wind(br.w0 + (br.w1 - br.w0) * t, br.phase, p.z))
+        tw = getattr(br, 'twist', 0.)       # turns per metre: the bark strips follow a spiralling trunk (u shifts with height)
         for i in range(n - 1):
+            o0, o1 = k * tw * ss[i], k * tw * ss[i + 1]
             for j in range(sides):
                 a = base + i * cols + j
                 self.f.append((a, a + 1, a + cols + 1, a + cols)); self.fmat.append(0)
                 u0, u1 = j / sides * k, (j + 1) / sides * k; v0, v1 = ss[i] / TILE_M, ss[i + 1] / TILE_M
-                self.fuv.append(((u0, v0), (u1, v0), (u1, v1), (u0, v1)))
+                self.fuv.append(((u0 + o0, v0), (u1 + o0, v0), (u1 + o1, v1), (u0 + o1, v1)))
         if br.cap:      # a broken end: a low cone of splinters
             c = base + (n - 1) * cols; tip = pts[-1] + T[-1] * rs[-1] * .6
             ti = len(self.v); self.v.append(tip); self.nrm.append(T[-1]); self.col.append(self.wind(br.w1, br.phase, tip.z))
@@ -191,9 +193,12 @@ def shade_for(pf, dep, shade_depth):
     return fn
 
 
-def add_cards(buf, cards, grid, bend, shade_depth=.35):
+def add_cards(buf, cards, grid, bend, shade_depth=.35, cells=None):
+    """cells: optional per-species atlas rectangles {cell: (u0, v0, u1, v1)}; a card may carry 'aspect' (width / height) and its own 'bend'."""
+    rects = cells or CELL
     for cd in cards:
-        buf.card(cd['c'], cd['n'], cd['size'], CELL[cd['cell']], cd['roll'], grid, bend, shade_for(cd['puff'], cd['dep'], shade_depth), cd['wind'], cd['phase'])
+        buf.card(cd['c'], cd['n'], cd['size'], rects[cd['cell']], cd['roll'], grid, cd.get('bend', bend), shade_for(cd['puff'], cd['dep'], shade_depth),
+                 cd['wind'], cd['phase'], aspect=cd.get('aspect', 1.))
 
 
 def cross_cards(buf, rect, x0, x1, z0, z1, wind=.25):

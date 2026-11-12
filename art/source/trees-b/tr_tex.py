@@ -116,6 +116,10 @@ def bark_texture(tex_dir, prefix, style, size=1024, seed=1):
     seam = 1 - smooth(.0, .05, yy) * (1 - smooth(.94, 1., yy))           # thin dark seam
     plate_h = .55 + .25 * ptone + .25 * (1 - yy) - .2 * seam + .1 * pnoise(S, S, 12, 16, rng, 2)
     h = plate_h * (1 - fiss) - .6 * vdepth * fiss
+    fib = None
+    if st.get('fibre'):     # stringy bark: fine vertical fibres over the strips (periodic: few rows, many columns)
+        fib = pnoise(S, S, 3, 110, rng, 2) * .6 + pnoise(S, S, 2, 46, rng, 2) * .4
+        h = h + st['fibre'] * .5 * (fib - .5) * (1 - fiss)
     h = blur(h, 1)
     big = pnoise(S, S, 2, 2, rng, 2)
     c_pl = [hexc(c) for c in st['plate']]; t = ptone[..., None]
@@ -133,6 +137,12 @@ def bark_texture(tex_dir, prefix, style, size=1024, seed=1):
     col = col * (.9 + .18 * big[..., None])
     strokes = pnoise(S, S, 2, 20, rng, 2)
     col = col + (lit - col) * (smooth(.64, .82, strokes) * (1 - fiss) * .1)[..., None]
+    if fib is not None:
+        col = col * (1 + st['fibre'] * (fib - .5) * (1 - fiss))[..., None]
+    if st.get('moss'):      # old-forest bark: moss settles in the furrows and in patches on the ridges
+        mm = smooth(.42, .7, pnoise(S, S, 3, 6, rng, 3)) * (.35 + .65 * fiss) * st['moss_amt']
+        mc = hexc(st['moss'][0]) * (1 - big[..., None]) + hexc(st['moss'][1]) * big[..., None]
+        col = col * (1 - mm[..., None]) + mc * mm[..., None]
     save_png(col, out['BaseColor'])
     save_png(normal_from_height(h, st['normal']), out['Normal'], srgb=False)
     write_ms(out['MetallicSmoothness'], np.clip(.2 - .12 * fiss + .05 * lip, 0, 1), S)
@@ -144,6 +154,10 @@ BARK_STYLES = {
     'pine': dict(ny=3, nx=7, sy=.36, warp=.7, fissure=.16, flakes=2.6,
                  plate=('#584A43', '#6C5B4F'), flake_lit='#8E7E70', weather='#6C6660', weather_amt=.55,
                  fissure_c='#3E3532', deep='#29252B', normal=26.),
+    # old cypress: long thin fibrous strips (spiral on the trunk through the UV twist), silver-grey weathering, moss in the furrows
+    'cypress': dict(ny=2, nx=10, sy=.2, warp=.95, fissure=.2, flakes=.35, fibre=.55,
+                    plate=('#5A4E47', '#6B5E55'), flake_lit='#8E857B', weather='#7B7872', weather_amt=.6,
+                    fissure_c='#3A3330', deep='#262229', normal=30., moss=('#3F4B31', '#58643E'), moss_amt=.38),
 }
 
 
@@ -293,3 +307,31 @@ def dome_normal(alpha, radius=40):
     a = (alpha > .5).astype(np.float32)
     h = blur(np.pad(a, radius, mode='constant'), max(4, radius // 3))[radius:-radius, radius:-radius]
     return normal_from_height(h * 1.0, 18.)
+
+
+# ------------------------------------------------------------------ painted bark (from a source painting)
+def painted_bark(tex_dir, prefix, src, size=1024, sat=1., gain=1., tint=(1., 1., 1.), normal=9., smooth_val=.14, contrast=1., crack=0., blur_n=(1, 4)):
+    """Bark tile from a hand-painted source image (not necessarily seamless): resized, made to tile by cross-fading the image with
+    a half-offset copy of itself (the copy's seam sits in the middle, where the original shows; the original's seam sits at the
+    border, where the copy shows), then a normal map from the painting's own light and dark (cracks are dark = low)."""
+    tex_dir.mkdir(parents=True, exist_ok=True)
+    out = {k: tex_dir / f'{prefix}_Bark_{k}.png' for k in ('BaseColor', 'Normal', 'MetallicSmoothness')}
+    im = bpy.data.images.load(str(src)); im.scale(size, size)
+    a = np.array(im.pixels[:], np.float32).reshape(size, size, 4)[..., :3]; bpy.data.images.remove(im)
+    b = np.roll(a, (size // 2, size // 2), (0, 1))
+    t = np.abs(np.arange(size, dtype=np.float32) / size - .5) * 2            # 0 at the middle, 1 at the border
+    edge = np.maximum(t[:, None], t[None, :])
+    w = smooth(.55, .9, edge)[..., None]                                       # copy takes over near the border
+    col = a * (1 - w) + b * w
+    lum = col @ np.array([.3, .59, .11], np.float32)
+    col = (lum[..., None] + (col - lum[..., None]) * sat) * gain * np.array(tint, np.float32)
+    if contrast != 1. or crack:      # 2026-11-12 "樹幹像塑膠": stretch light/dark round the mean, and sink the cracks to near black
+        m = float(lum.mean()); l2 = np.clip(m + (lum - m) * contrast, .01, 1.)
+        dk = smooth(m - .02, m - .12, lum) * crack                                 # 1 in the darkest cracks
+        l2 = l2 * (1 - .75 * dk)
+        col = col * (l2 / np.maximum(lum, .01))[..., None]
+    h = blur(lum, blur_n[0]) * .7 + blur(lum, blur_n[1]) * .3
+    save_png(col, out['BaseColor'])
+    save_png(normal_from_height(h, normal), out['Normal'], srgb=False)
+    write_ms(out['MetallicSmoothness'], np.clip(smooth_val * (.5 + lum), 0, 1), size)
+    return out

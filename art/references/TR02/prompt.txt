@@ -1,0 +1,25 @@
+TR02 柏：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），A 批 TR02。
+
+選用：TR02-cand-2.png。備選：TR02-cand-3.png。
+選用理由：
+- 樹冠一層一層往上收，頂端尖，是尖塔形；分層的葉團之間看得到枝和樹幹。
+- 主幹粗，往一側扭轉，木紋順著扭向，有兩三個圓鼓的樹瘤。
+- 苔從根部往上爬，向陽面多。
+- 三個方向的輪廓都不同，最像古林裡的老柏。
+沒選的原因：
+- cand-1：可用，但頂部分成兩三個尖，看起來像雲杉，莊重感不足。
+- cand-3：可用，扭幹最明顯，留作備選；但側視圖的樹冠偏向一邊太多。
+- cand-4：樹瘤太多、太大，像一串串堆上去的東西；頂部雙尖。
+四張共同的問題（建模時不照做）：
+- 根盤太寬、樹幹太粗，是童話比例：幹徑約為樹高的 1/4。10 m 的古柏，建模時胸徑取約 1.2 m，根部外擴到約 1.8 m。
+- 受光面偏黃綠，太亮。工作包要的是「深綠偏暗」，顏色改用暗綠，只在受光的梢頭稍微提亮。
+- 根部的石頭、蕨和草不建（地面歸地形）。苔做在樹皮貼圖的裂縫裡，另外在根部到約 1.5 m 高貼一圈苔片。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen。
+- 共 4 張（TR02-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-12。
+- 提示詞組法和 TR01 相同：物件句（工作包第 7 節 TR02 原文）＋單件 Layout 段＋5.2 美術方向＋「Avoid:」接 5.3 與本包那句。全部用原文，一字未改，完整內容在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of an ancient old-forest cypress tree about 10 m tall, a thick twisted trunk with burls, deep cracks and moss climbing from the roots, dense dark green foliage gathered in layered masses that narrow toward a tall pointed crown, a hand-painted stylized game tree, solemn and old.
