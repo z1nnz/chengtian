@@ -1,0 +1,95 @@
+INFO species TR01; variants TR01_A_Pine, TR01_B_Pine, TR01_C_CliffPine
+PASS TR01_A_Pine: LODGroup with LOD0-LOD3, one renderer each (size 20.8 m, transition heights 0.953 / 0.572 / 0.220 / 0.038 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR01_A_Pine: LOD0 23494 triangles (model_info 23494, cap 25000)
+PASS TR01_A_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_A_Pine: LOD0 has the Wind vertex colour on every vertex (24761/24761)
+PASS TR01_A_Pine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.70
+PASS TR01_A_Pine: LOD1 6856 triangles (model_info 6856, cap 8000)
+PASS TR01_A_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_A_Pine: LOD1 has the Wind vertex colour on every vertex (9480/9480)
+PASS TR01_A_Pine: LOD2 1342 triangles (model_info 1342, cap 2500)
+PASS TR01_A_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_A_Pine: LOD2 has the Wind vertex colour on every vertex (2471/2471)
+PASS TR01_A_Pine: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR01_A_Pine: LOD3 1 material(s), want 1 (M_TR01_Leaves 4)
+PASS TR01_A_Pine: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR01_A_Pine: height 12.93 m (model_info 12.93 m), roots down to -0.30 m
+PASS TR01_A_Pine: TR01_A_Pine_Collision is a MeshCollider with its renderer hidden
+PASS TR01_A_Pine: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR01_B_Pine: LODGroup with LOD0-LOD3, one renderer each (size 23.2 m, transition heights 0.980 / 0.636 / 0.245 / 0.042 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR01_B_Pine: LOD0 23494 triangles (model_info 23494, cap 25000)
+PASS TR01_B_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_B_Pine: LOD0 has the Wind vertex colour on every vertex (24454/24454)
+PASS TR01_B_Pine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.71
+PASS TR01_B_Pine: LOD1 7518 triangles (model_info 7518, cap 8000)
+PASS TR01_B_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_B_Pine: LOD1 has the Wind vertex colour on every vertex (10349/10349)
+PASS TR01_B_Pine: LOD2 1670 triangles (model_info 1670, cap 2500)
+PASS TR01_B_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_B_Pine: LOD2 has the Wind vertex colour on every vertex (3099/3099)
+PASS TR01_B_Pine: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR01_B_Pine: LOD3 1 material(s), want 1 (M_TR01_Leaves 4)
+PASS TR01_B_Pine: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR01_B_Pine: height 12.51 m (model_info 12.51 m), roots down to -0.30 m
+PASS TR01_B_Pine: TR01_B_Pine_Collision is a MeshCollider with its renderer hidden
+PASS TR01_B_Pine: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR01_C_CliffPine: LODGroup with LOD0-LOD3, one renderer each (size 26.3 m, transition heights 0.980 / 0.721 / 0.277 / 0.048 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR01_C_CliffPine: LOD0 15624 triangles (model_info 15624, cap 25000)
+PASS TR01_C_CliffPine: LOD0 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_C_CliffPine: LOD0 has the Wind vertex colour on every vertex (16286/16286)
+PASS TR01_C_CliffPine: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.69
+PASS TR01_C_CliffPine: LOD1 3810 triangles (model_info 3810, cap 8000)
+PASS TR01_C_CliffPine: LOD1 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_C_CliffPine: LOD1 has the Wind vertex colour on every vertex (5145/5145)
+PASS TR01_C_CliffPine: LOD2 728 triangles (model_info 728, cap 2500)
+PASS TR01_C_CliffPine: LOD2 2 material(s), want 2 (M_TR01_Bark 4, M_TR01_Leaves 4)
+PASS TR01_C_CliffPine: LOD2 has the Wind vertex colour on every vertex (1288/1288)
+PASS TR01_C_CliffPine: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR01_C_CliffPine: LOD3 1 material(s), want 1 (M_TR01_Leaves 4)
+PASS TR01_C_CliffPine: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR01_C_CliffPine: height 12.45 m (model_info 12.45 m), roots down to -0.30 m
+PASS TR01_C_CliffPine: TR01_C_CliffPine_Collision is a MeshCollider with its renderer hidden
+PASS TR01_C_CliffPine: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR01_A_Pine: a walker heading at the trunk stops at it (0.82 m from the trunk axis, trunk collider radius 0.55 m)
+PASS TR01_A_Pine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR01_B_Pine: a walker heading at the trunk stops at it (0.84 m from the trunk axis, trunk collider radius 0.57 m)
+PASS TR01_B_Pine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR01_C_CliffPine: a walker heading at the trunk stops at it (0.68 m from the trunk axis, trunk collider radius 0.41 m)
+PASS TR01_C_CliffPine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR01_A_Pine_three_quarter
+SHOT TR01_A_Pine_under_crown_eye_1p7
+SHOT TR01_A_Pine_front
+SHOT TR01_A_Pine_LOD0
+SHOT TR01_A_Pine_LOD1
+SHOT TR01_A_Pine_LOD2
+SHOT TR01_A_Pine_LOD3
+SHOT TR01_A_Pine_far_50m
+INFO TR01_A_Pine: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR01_A_Pine_far_100m
+INFO TR01_A_Pine: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR01_B_Pine_three_quarter
+SHOT TR01_B_Pine_under_crown_eye_1p7
+SHOT TR01_B_Pine_front
+SHOT TR01_B_Pine_LOD0
+SHOT TR01_B_Pine_LOD1
+SHOT TR01_B_Pine_LOD2
+SHOT TR01_B_Pine_LOD3
+SHOT TR01_B_Pine_far_50m
+INFO TR01_B_Pine: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR01_B_Pine_far_100m
+INFO TR01_B_Pine: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR01_C_CliffPine_three_quarter
+SHOT TR01_C_CliffPine_under_crown_eye_1p7
+SHOT TR01_C_CliffPine_front
+SHOT TR01_C_CliffPine_LOD0
+SHOT TR01_C_CliffPine_LOD1
+SHOT TR01_C_CliffPine_LOD2
+SHOT TR01_C_CliffPine_LOD3
+SHOT TR01_C_CliffPine_far_50m
+INFO TR01_C_CliffPine: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR01_C_CliffPine_far_100m
+INFO TR01_C_CliffPine: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR01_lineup_with_VL02_and_1p75m
+SHOT TR01_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene
