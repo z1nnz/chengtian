@@ -1,0 +1,735 @@
+{
+  "version": 2,
+  "units": "m",
+  "block": "A5",
+  "note": "A5 河灣渡口，cell [-1,-1]。世界座標，+Z 北。creek 保持 A3 接縫 4.5 m；河灣擴至約 18 m 與遠湖卡須程式延展。FE01 8 段 L 形、FE02 船、FE03 棚、R05 石、CO04 蘆葦、FI 釣具均有來源檔，需匯入。",
+  "bounds": {
+    "minX": -150,
+    "minZ": -150,
+    "sizeX": 100,
+    "sizeZ": 100
+  },
+  "noise": 0.15,
+  "relief": 0.75,
+  "terrace": 0,
+  "cliffs": 0,
+  "nodes": [
+    {
+      "id": "a5-north",
+      "x": -106,
+      "z": -50.5
+    },
+    {
+      "id": "a5-bank",
+      "x": -95,
+      "z": -68
+    },
+    {
+      "id": "a5-pier-base",
+      "x": -97,
+      "z": -80
+    },
+    {
+      "id": "a5-shed",
+      "x": -90,
+      "z": -82
+    },
+    {
+      "id": "a5-road",
+      "x": -75,
+      "z": -90
+    },
+    {
+      "id": "a5-east",
+      "x": -50.5,
+      "z": -90
+    },
+    {
+      "id": "a5-south",
+      "x": -90,
+      "z": -149.5
+    },
+    {
+      "id": "a5-reed-view",
+      "x": -115,
+      "z": -101
+    }
+  ],
+  "edges": [
+    {
+      "id": "a5-north-path",
+      "from": "a5-north",
+      "to": "a5-bank",
+      "width": 2,
+      "surface": "dirt"
+    },
+    {
+      "id": "a5-bank-pier",
+      "from": "a5-bank",
+      "to": "a5-pier-base",
+      "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "a5-pier-shed",
+      "from": "a5-pier-base",
+      "to": "a5-shed",
+      "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "a5-shed-road",
+      "from": "a5-shed",
+      "to": "a5-road",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "a5-east-road",
+      "from": "a5-road",
+      "to": "a5-east",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "a5-south-path",
+      "from": "a5-road",
+      "to": "a5-south",
+      "width": 2,
+      "surface": "dirt"
+    },
+    {
+      "id": "a5-reed-path",
+      "from": "a5-pier-base",
+      "to": "a5-reed-view",
+      "width": 1.8,
+      "surface": "dirt"
+    }
+  ],
+  "pads": [
+    {
+      "id": "a5-pier-pad",
+      "surface": "dirt",
+      "x": -97,
+      "z": -80,
+      "halfX": 4.5,
+      "halfZ": 4.5,
+      "height": 0.8
+    },
+    {
+      "id": "a5-shed-pad",
+      "surface": "dirt",
+      "x": -90,
+      "z": -82,
+      "halfX": 4,
+      "halfZ": 3,
+      "height": 1.0
+    },
+    {
+      "id": "a5-reed-view-pad",
+      "surface": "dirt",
+      "x": -115,
+      "z": -101,
+      "halfX": 2,
+      "halfZ": 2,
+      "height": 0.5
+    }
+  ],
+  "heightPoints": [
+    {
+      "x": -110,
+      "z": -52,
+      "height": 0.9
+    },
+    {
+      "x": -140,
+      "z": -52,
+      "height": 1.0
+    },
+    {
+      "x": -52,
+      "z": -90,
+      "height": 2.2
+    },
+    {
+      "x": -90,
+      "z": -82,
+      "height": 1.0
+    },
+    {
+      "x": -120,
+      "z": -85,
+      "height": 0.35
+    },
+    {
+      "x": -145,
+      "z": -95,
+      "height": 0.4
+    },
+    {
+      "x": -140,
+      "z": -140,
+      "height": 0.8
+    },
+    {
+      "x": -90,
+      "z": -145,
+      "height": 1.3
+    },
+    {
+      "x": -55,
+      "z": -140,
+      "height": 1.8
+    }
+  ],
+  "flats": [
+    {
+      "id": "a5-pier-bank",
+      "note": "木棧橋岸側前 5 m 底",
+      "x": -98,
+      "z": -79,
+      "halfX": 3,
+      "halfZ": 5,
+      "height": 0.8,
+      "blend": 2.5
+    }
+  ],
+  "creek": {
+    "note": "A3 南端進來，先用固定 4.5 m 寬保接縫；河灣在 (-121,-75) 需程式擴至 18 m，遠湖卡另做。",
+    "width": 4.5,
+    "depth": 1,
+    "bank": 3,
+    "waterLevel": 0.6,
+    "points": [
+      -110,
+      -50.5,
+      -110,
+      -60,
+      -112,
+      -68,
+      -121,
+      -75,
+      -134,
+      -85,
+      -148,
+      -96
+    ],
+    "sourceEnd": true
+  },
+  "placements": [
+    {
+      "id": "A5_Pier_01",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 1 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx",
+      "x": -97,
+      "z": -80,
+      "yaw": 0,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_02",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 2 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx",
+      "x": -97,
+      "z": -78,
+      "yaw": 0,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_03",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 3 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx",
+      "x": -97,
+      "z": -76,
+      "yaw": 0,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_04",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 4 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx",
+      "x": -97,
+      "z": -74,
+      "yaw": 0,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_05",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 5 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Corner/v004/FE01_Corner.fbx",
+      "x": -98,
+      "z": -72,
+      "yaw": 270,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_06",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 6 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx",
+      "x": -100,
+      "z": -72,
+      "yaw": 270,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_07",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 7 段",
+      "model": "art/exports/valley-and-home-v1/FE01/Straight/v006/FE01_Straight.fbx",
+      "x": -102,
+      "z": -72,
+      "yaw": 270,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Pier_08",
+      "zone": "a5-pier",
+      "role": "L 形木棧橋第 8 段",
+      "model": "art/exports/valley-and-home-v1/FE01/End/v004/FE01_End.fbx",
+      "x": -104,
+      "z": -72,
+      "yaw": 270,
+      "footprint": [
+        2.2,
+        2.4,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Ferry",
+      "zone": "a5-pier",
+      "role": "繫在棧橋末端的擺渡船",
+      "model": "art/exports/valley-and-home-v1/FE02/v007/FE02_Ferry.fbx",
+      "x": -109,
+      "z": -72,
+      "yaw": 45,
+      "footprint": [
+        5.5,
+        2.2,
+        1.7
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Shed",
+      "zone": "a5-shed",
+      "role": "南岸渡口小棚",
+      "model": "art/exports/valley-and-home-v1/FE03/v007/FE03_FerryShed.fbx",
+      "x": -90,
+      "z": -82,
+      "yaw": 230,
+      "footprint": [
+        5,
+        3.5,
+        3
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Milestone",
+      "zone": "a5-shed",
+      "role": "往官道的里程石",
+      "model": "Assets/YunJing/Models/RuinsB/R05_Milestone/R05_Milestone_v001.fbx",
+      "x": -64,
+      "z": -90,
+      "yaw": 90,
+      "footprint": [
+        0.9,
+        0.6,
+        1.6
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_01",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 1 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -101,
+      "z": -77,
+      "yaw": 37,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_02",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 2 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -94,
+      "z": -74,
+      "yaw": 74,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_03",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 3 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -116,
+      "z": -57,
+      "yaw": 111,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_04",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 4 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -119,
+      "z": -60,
+      "yaw": 148,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_05",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 5 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -123,
+      "z": -65,
+      "yaw": 185,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_06",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 6 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -127,
+      "z": -69,
+      "yaw": 222,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_07",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 7 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -133,
+      "z": -76,
+      "yaw": 259,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_08",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 8 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -138,
+      "z": -83,
+      "yaw": 296,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_09",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 9 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -143,
+      "z": -90,
+      "yaw": 333,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_10",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 10 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -122,
+      "z": -83,
+      "yaw": 10,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_11",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 11 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -118,
+      "z": -86,
+      "yaw": 47,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_12",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 12 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -113,
+      "z": -88,
+      "yaw": 84,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_13",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 13 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -107,
+      "z": -86,
+      "yaw": 121,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Reed_14",
+      "zone": "a5-pier",
+      "role": "河灣低面數蘆葦第 14 叢",
+      "model": "art/exports/core-ruins-v1/CO04_ReedClump/CO04_ReedClump_v001.fbx",
+      "x": -103,
+      "z": -84,
+      "yaw": 158,
+      "footprint": [
+        1.5,
+        1.5,
+        1.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Fishing_01",
+      "zone": "a5-shed",
+      "role": "渡口釣具第 1 件",
+      "model": "art/exports/creekside-life-c/FI01_v001.fbx",
+      "x": -94,
+      "z": -85,
+      "yaw": 53,
+      "footprint": [
+        0.8,
+        0.8,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Fishing_02",
+      "zone": "a5-shed",
+      "role": "渡口釣具第 2 件",
+      "model": "art/exports/creekside-life-c/FI02_v001.fbx",
+      "x": -92,
+      "z": -86,
+      "yaw": 106,
+      "footprint": [
+        0.8,
+        0.8,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Fishing_03",
+      "zone": "a5-shed",
+      "role": "渡口釣具第 3 件",
+      "model": "art/exports/creekside-life-c/FI03_v001.fbx",
+      "x": -90,
+      "z": -87,
+      "yaw": 159,
+      "footprint": [
+        0.8,
+        0.8,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Fishing_04",
+      "zone": "a5-shed",
+      "role": "渡口釣具第 4 件",
+      "model": "art/exports/creekside-life-c/FI04_v001.fbx",
+      "x": -88,
+      "z": -86,
+      "yaw": 212,
+      "footprint": [
+        0.8,
+        0.8,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A5_Fishing_05",
+      "zone": "a5-shed",
+      "role": "渡口釣具第 5 件",
+      "model": "art/exports/creekside-life-c/FI05_v001.fbx",
+      "x": -93,
+      "z": -88,
+      "yaw": 265,
+      "footprint": [
+        0.8,
+        0.8,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    }
+  ],
+  "herbs": [],
+  "fortunes": [],
+  "checkpoints": [],
+  "route": []
+}

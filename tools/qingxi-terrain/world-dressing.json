@@ -238,6 +238,15 @@
         "渡口木棧與擺渡船",
         "曬網架",
         "淺灘水鳥"
+      ],
+      "species": [
+        {"kind": "ElderWillow", "weight": 1.0}
+      ],
+      "waterside": "ElderWillow",
+      "landmarks": [
+        {"kind": "ElderWillow", "x": -55, "z": -60, "yaw": 45, "height": 10, "sink": 0, "note": "東北高岸單棵尋視樹，距 A2 接路 (-50.5,-90) 約 30 m。"},
+        {"kind": "ElderWillow", "x": -123, "z": -55, "yaw": 185, "height": 8, "sink": 0, "note": "北岸溪外單棵，距 A3 接溪 (-110,-50.5) 約 14 m。"},
+        {"kind": "ElderWillow", "x": -118, "z": -111, "yaw": 280, "height": 8, "sink": 0, "note": "南岸蘆葦外單棵，距渡口小棚 (-90,-82) 約 40 m。"}
       ]
     },
     {
