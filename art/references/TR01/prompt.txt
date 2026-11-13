@@ -1,0 +1,17 @@
+TR01 松：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），A 批 TR01（樣張）。
+
+選用：TR01-cand-4.png。備選：TR01-cand-2.png。
+選用理由：主幹 S 形彎，四到五條粗的橫向主枝，每條枝尾托一團有厚度的圓雲狀針葉團，頂上一團平頂；葉團上亮下暗分得開，枝在葉團下露出來；樹皮紅褐、龜裂成長片。輪廓最像中國的松，不像平的葉盤。
+沒選的原因：
+- cand-1：葉團形狀可用，但樹幹有兩個大樹洞、整體更像盆景。
+- cand-2：可用；樹幹扭得更厲害，樹皮有灰白剝落帶，作備選。
+- cand-3：主枝上綁了繩圈（像日式注連繩），根部是岩座，偏盆景。
+四張共同的問題（建模時不照做）：樹幹太粗、太短，整體是盆景比例。13 m 的松，胸徑約 0.55–0.65 m，樹幹到第一條主枝約 5 m；建模照這個真實比例，只取 cand-4 的枝序、葉團排法、顏色和樹皮紋。根部的石頭、草和苔不建（樹是世界填充用，地面由地形負責），只做根盤埋入地下 0.3 m。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen；共 4 張（TR01-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-12。
+- 提示詞組法：物件句＋單件 Layout 段＋5.2 美術方向；Codex 沒有負面欄，所以 5.3 加上本包那句，以「Avoid:」接在最後。全部原文，一字未改。完整原文在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of a mature Chinese pine tree about 13 m tall, a curved trunk with deeply fissured reddish-brown bark, a few strong horizontal limbs, the needles gathered into five to eight thick rounded cloud-like foliage masses with clear depth and soft shading, muted blue-green needles, a hand-painted stylized game tree with a strong readable silhouette.
