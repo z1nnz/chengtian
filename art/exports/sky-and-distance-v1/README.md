@@ -2,9 +2,9 @@
 |---|---|
 | 誰做的 | z1nnz |
 | 工作包 | `docs/execution/2026-11-08/codex-v4-score-and-next.md`，C |
-| ID | SK01、CL01–03（其餘待製作） |
+| ID | SK01、CL01–03、FA01 貼圖（其餘待製作） |
 | 分支／PR | `art/codex-1108-sky-layers` ／ PR 待核心組建立 |
-| 版本 | SK01 v002 候選；CL01–03 v001 候選 |
+| 版本 | SK01 v002 候選；CL01–03 v001 候選；FA01 v002 貼圖候選 |
 | 狀態 | 4K、切片、手機版尺寸與切片一致性已檢查；人工看圖後未通過美術定稿；Unity 未驗 |
 | 素材來源 | 原創程序繪製；`art/source/sky-and-distance-v1/generate_sk01.py` |
 
@@ -37,3 +37,10 @@
 - 兩張 2048×512 RGBA 薄霧，原始碼 `art/source/sky-and-distance-v1/generate_cl03.py`，alpha 最大 52/255，側邊柔和歸零。
 - 第 1 張分別在藍天和深綠背景上實際檢視，預覽 `CL03/CL03_preview_blue_sky.png`、`CL03/CL03_preview_dark_ground.png`。兩張尺寸與格式通過。
 - 自評 56/100，候選問題：淺色背景上幾乎不可辨，需在實際森林和地形上決定尺寸及數量。透明混合；暫建議同畫面最多 12 片，Unity 與手機效能未驗。
+
+## FA01 遠景瀑布貼圖
+
+- 三張 1024×2048 RGBA 縱向水流和一張 1024×512 底部霧團；原始碼 `art/source/sky-and-distance-v1/generate_fa01.py`。
+- v001 呈雜亂斑點；v002 調成縱向連續亮紋。第 1 張已疊在灰石底檢視，見 `FA01/FA01_preview_cliff.png`；霧團見 `FA01/FA01_preview_spray.png`。
+- 三張水流首尾整行逐像素相同，可供 V 軸向下捲動；左右邊 alpha 0；尺寸與 RGBA 檢查通過。
+- 自評 58/100，候選問題：遠處觀感可作瀑布，但近看水紋過於平滑；**尚未做瀑布卡片模型、材質 UV 捲動與 Unity 匯入**，不能稱 FA01 完成。建議卡片高度 80–140 m，只放遠景。
