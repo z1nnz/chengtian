@@ -1,0 +1,51 @@
+{
+ "CB01": {
+  "objects": {
+   "CB01_Detail_Moss_LOD0": {
+    "tris": 127,
+    "errors": [
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [-4.308, 1.903, 0.373])",
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [-5.378, 1.864, 0.707])",
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [-4.433, -1.84, 0.689])",
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [-4.853, 1.859, 0.072])",
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [-4.891, 1.831, 0.08])",
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [-4.989, -1.853, 0.076])",
+     "floating/detached part in CB01_Detail_Moss_LOD0 (3 verts at [5.497, 1.902, 0.359])"
+    ],
+    "warnings": [
+     "CB01_Detail_Moss_LOD0: ~77.78% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "hidden back-to-back faces: CB01_Detail_Moss_LOD0 (1 pairs) - delete to save tris",
+     "1 parts fully enclosed, not touching (eyes/internals?): ['CB01_Detail_Moss_LOD0']",
+     "asset lowest point z=0.02 (not resting on ground plane z=0)"
+    ],
+    "sec": 0.0
+   },
+   "CB01_LOD0": {
+    "tris": 69400,
+    "errors": [],
+    "warnings": [
+     "CB01_LOD0: ~99.65% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "CB01_LOD0: 776 n-gons",
+     "hidden back-to-back faces: CB01_LOD0 (398 pairs) - delete to save tris"
+    ],
+    "sec": 9.8
+   },
+   "JOINED_CB01_Detail_Moss_LOD0+CB01_LOD0": {
+    "tris": 69527,
+    "floating_errors": [],
+    "note": "joined check: floating only"
+   }
+  },
+  "reimport_dims": [
+   15.99,
+   4.48,
+   6.458
+  ],
+  "built_dims": [
+   15.99,
+   4.48,
+   6.458
+  ],
+  "reimport_error_m": 0.0
+ }
+}
