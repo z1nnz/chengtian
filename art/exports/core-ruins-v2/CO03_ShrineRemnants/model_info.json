@@ -1,0 +1,25 @@
+{
+  "asset": "CO03_ShrineRemnants",
+  "version": "v002",
+  "name_zh": "祠內殘件",
+  "slot": "D4",
+  "units": "meters",
+  "front": "-Y",
+  "dimensions_m": [
+    2.898,
+    1.982,
+    1.297
+  ],
+  "lod_triangles": {
+    "LOD0": 15290,
+    "LOD1": 6674,
+    "LOD2": 2392
+  },
+  "status": {
+    "Exported": true,
+    "Imported": false,
+    "VisuallyVerified": true,
+    "InGameVerified": false
+  },
+  "note": "無神像、供品或文字；桌腳斷裂、空三足香爐、碎瓦與三段朽木均為獨立零件；AI 三視圖先於建模保存。"
+}
