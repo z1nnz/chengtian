@@ -1,0 +1,35 @@
+{
+  "albedo": {
+    "size": [
+      2048,
+      2048
+    ],
+    "left_right_max_delta": 0,
+    "top_bottom_max_delta": 0
+  },
+  "normal": {
+    "size": [
+      2048,
+      2048
+    ],
+    "left_right_max_delta": 0,
+    "top_bottom_max_delta": 0
+  },
+  "mask": {
+    "size": [
+      2048,
+      2048
+    ],
+    "left_right_max_delta": 0,
+    "top_bottom_max_delta": 0
+  },
+  "source_size": [
+    1254,
+    1254
+  ],
+  "mean_rgb": [
+    98.6,
+    117.3,
+    91.9
+  ]
+}
