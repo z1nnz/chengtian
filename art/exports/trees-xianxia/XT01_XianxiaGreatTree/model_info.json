@@ -5,25 +5,25 @@
   "name_zh": "仙俠風格大型綠樹（另有金黃葉版本，共用模型與貼圖）",
   "minTier": "low",
   "use": "宗門庭院、山林、草原的地標大樹（多年古樹，不是世界樹）",
-  "height_m": 16.008,
+  "height_m": 16.508,
   "crown_width_m": [
-    27.813,
-    27.482
+    27.597,
+    27.505
   ],
   "dimensions_m": [
-    27.813,
-    27.482,
-    16.308
+    27.597,
+    27.505,
+    16.808
   ],
   "bounds_min_m": [
-    -12.106,
-    -14.167,
+    -12.021,
+    -14.073,
     -0.3
   ],
   "bounds_max_m": [
-    15.707,
-    13.315,
-    16.008
+    15.576,
+    13.432,
+    16.508
   ],
   "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
   "unit": "1 Blender unit = 1 m; front = -Y",
@@ -78,12 +78,12 @@
   ],
   "budget_per_lod": {
     "LOD0": {
-      "triangles": 30697,
+      "triangles": 30717,
       "cap": 32000,
       "objects": 1,
       "materials": 2,
       "wood_triangles": 10998,
-      "leaf_cards": 8868
+      "leaf_cards": 8878
     },
     "LOD1": {
       "triangles": 7191,

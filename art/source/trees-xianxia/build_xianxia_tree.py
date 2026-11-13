@@ -23,6 +23,8 @@ umbrella; the wood grows to points spread evenly through the outer shell of that
 twiglet with 8-11 clear drawn leaves each, xt_leaves atlas v003) on the last 3.6 m of every branch tip, denser at the tip; the light
 is crown-wide (warm light top -> cool teal underside), never per clump. Benchmark: the team's life tree (z1nnz/elder-tree-esg).
 LOD0 budget raised to 32k (landmark tree, more leaves asked for); thinner twigs (pipe 0.8).
+Second pass ("上面不要一坨": the top read as one pale lid in Unity sun): fewer cards on the upward-facing top (TOP_THIN), noise gaps
+in it (TOP_GAP), a lower light ceiling on top and a wider card-to-card light spread; cards may stand 1 m above the envelope.
 
 Method
 - wood: the tr_broad engine of the TR series (trunk with root lobes, ridges and burls; seeded limbs; space colonisation towards the
@@ -202,6 +204,8 @@ SQ = .66          # masses are flattened: a flat-bottomed umbrella
 SMIN_K = 4.5      # smooth-min sharpness of the envelope union (lower = smoother outline)
 SHELL = (.6, .95)  # target points between these envelope depths (0 = centre of a mass, 1 = surface): leaves live in the outer shell
 N_TARGETS = 6000
+TOP_THIN = .45     # share of twig cards taken off the upward-facing top of the crown
+TOP_GAP = -.35     # noise level under which the top of the crown is opened (lower = fewer gaps)
 TIP_TRIM = .6      # m of wood cut off every twig tip (the cards draw it)
 FOL = {0: dict(kind='S', size=(1.2, 1.6)), 1: dict(kind='B', size=(2.3, 2.9)), 2: dict(kind='B', size=(3.3, 3.9))}
 
@@ -246,7 +250,15 @@ def _light(p, nc):
     s, fn = env(p); s = float(s[0]); fn = fn[0]
     hc = min(1., max(0., (p[2] - zlo) / (zhi - zlo)))
     depth = min(1., max(0., (.98 - s) / .45))
-    return .2 + .46 * hc ** .9 + .2 * fn[2] - .3 * depth + .06 * abs(nc[2]), fn
+    return .16 + .32 * hc ** .9 + .12 * fn[2] - .3 * depth + .12 * abs(nc[2]), fn
+
+
+def _gap_noise(Q):
+    """Smooth 3D noise in [-1, 1] (sum of rotated sines, ~1.6 m features): where it is low the crown top is opened."""
+    Q = np.asarray(Q, float); r = np.zeros(len(Q))
+    for k, (a, b, c, ph) in enumerate(((1.9, .7, .4, .3), (-.8, 1.7, .5, 1.9), (.6, -1.1, 1.6, 4.1), (1.3, 1.2, -.9, 2.6))):
+        r += np.sin((Q @ np.array([a, b, c])) * (2 * math.pi / 3.4) / math.sqrt(a * a + b * b + c * c) * 1.0 + ph)
+    return r / 2.
 
 
 def foliage(buf, lod, rng, room):
@@ -258,6 +270,10 @@ def foliage(buf, lod, rng, room):
     if lod == 0:
         # more twigs towards each branch tip (1.6x at the tip, 0.6x 3.6 m back): the tips are dressed, no bare wood pokes out
         wt = np.array([1.6 - (nd['q'] - nd['tip']).length / 3.6 for nd in nodes]).clip(.6, 1.6)
+        # v004b ("上面不要一坨"): the upward-facing top of the crown gets up to 45 % fewer cards, so it is not one closed lid
+        Q = np.array([np.array(nd['q']) for nd in nodes]); _, on = env(Q); up = np.clip(on[:, 2], 0, 1)
+        wt = wt * (1 - TOP_THIN * up)
+        gap = _gap_noise(Q); wt = wt * np.where((gap < TOP_GAP) & (up > .35), .12, 1.)
         pers = wt * room / wt.sum()
         for nd, per in zip(nodes, pers):
             q = np.array(nd['q']); t = np.array(nd['t']); _, out = env(q); out = out[0]
@@ -292,14 +308,14 @@ def _card(buf, base, ax, nc, size, rect, zhi, nd, rng):
     ax = Vector(ax); nc = Vector(nc); side = ax.cross(nc).normalized(); hs = size * .5
     c = Vector(base) + ax * hs
     top = max((c + side * (x * hs) + ax * (y * hs)).z for x in (-1, 1) for y in (-1, 1))
-    if top > zhi + .5: c -= Vector((0, 0, top - zhi - .5))
+    if top > zhi + 1.: c -= Vector((0, 0, top - zhi - 1.))
     u0, v0, u1, v1 = rect; b0 = len(buf.v)
-    jit = rng.normal(0, .04); tint = (nd['phase'] * 7.31 + rng.normal(0, .08)) % 1.
+    jit = rng.normal(0, .1) + .1 * math.sin(nd['phase'] * 41.3) - (.22 if rng.random() < .3 else 0.); tint = (nd['phase'] * 7.31 + rng.normal(0, .08)) % 1.
     for (x, y) in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
         p = c + side * (x * hs) + ax * (y * hs)
         m, fn = _light(np.array(p), nc)
         f = Vector(fn); n2 = nc if nc.dot(f) >= 0 else -nc
-        sn = (f * .7 + n2 * .3 + Vector((0, 0, .08))).normalized()
+        sn = (f * .45 + n2 * .55 + Vector((0, 0, .05))).normalized()
         reach = min(1., math.hypot(p.x, p.y) / 11.); w = .55 + .45 * reach
         buf.v.append(p); buf.nrm.append(sn); buf.col.append((w, (nd['phase'] + .03 * rng.random()) % 1., min(1., max(0., m + jit)), tint))
     buf.f.append((b0, b0 + 1, b0 + 2, b0 + 3)); buf.fmat.append(1)

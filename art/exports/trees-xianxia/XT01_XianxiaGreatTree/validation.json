@@ -1,7 +1,7 @@
 {
   "asset": "XT01_XianxiaGreatTree",
   "version": "v004",
-  "built": "2026-11-13 17:47",
+  "built": "2026-11-13 17:56",
   "blender": "5.2.2 LTS",
   "checks": {
     "lod_caps": true,
@@ -20,8 +20,8 @@
       "materials": []
     },
     "XT01_XianxiaGreatTree_LOD0": {
-      "tris": 30697,
-      "max_z": 16.008,
+      "tris": 30717,
+      "max_z": 16.508,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -33,7 +33,7 @@
     },
     "XT01_XianxiaGreatTree_LOD1": {
       "tris": 7191,
-      "max_z": 16.008,
+      "max_z": 16.508,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -45,7 +45,7 @@
     },
     "XT01_XianxiaGreatTree_LOD2": {
       "tris": 2399,
-      "max_z": 16.008,
+      "max_z": 16.508,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -57,7 +57,7 @@
     },
     "XT01_XianxiaGreatTree_LOD3": {
       "tris": 4,
-      "max_z": 16.058,
+      "max_z": 16.558,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -74,7 +74,7 @@
     "XT01_XianxiaGreatTree_v002.glb": "de7e0964d1bef5de3d85a761c00a87d988ea0633927b2b918ee3a5b72b489cfc",
     "XT01_XianxiaGreatTree_v003.fbx": "80bdfac58bbec6fe554a46856f7716407721e47f55b5c3a1498ecbb10907841b",
     "XT01_XianxiaGreatTree_v003.glb": "3afd3ced234d16304fbc8c2ebbbf4393bfdf353f1c0d31bd7acab9fee87eac4e",
-    "XT01_XianxiaGreatTree_v004.fbx": "2a0a76ced65844a5e61f6b84c28485d53f8d653b40422efb01163c7fb18d60fa",
-    "XT01_XianxiaGreatTree_v004.glb": "8456c1818ae3ff55faf4c23e7e0f5a7193e7c7a8222e5ef33c56dffb483afeef"
+    "XT01_XianxiaGreatTree_v004.fbx": "3eed356d0d9ee52992d291ab0b93eb63430f2aa9e9ec9ca0e68f08f48ff7bbbc",
+    "XT01_XianxiaGreatTree_v004.glb": "7a9ac3170996e90468a8d919edfe51b120b9e3362abec4bfd30bd4169004cd80"
   }
 }
