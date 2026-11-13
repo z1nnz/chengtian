@@ -35,6 +35,22 @@ def height_at(points, x, z):
 
 def render(block_id):
     data = read_json(ROOT / "tools/qingxi-terrain/blocks" / f"{block_id}.json")
+    proposal = ROOT / "docs/execution/world-plan" / f"{block_id}-proposal.json"
+    if proposal.exists():
+        additions = read_json(proposal)
+        for field in ("heightPoints", "nodes", "edges", "pads", "placements"):
+            base = data.get(field, [])
+            incoming = additions.get(field, [])
+            if field == "heightPoints":
+                data[field] = base + incoming
+            else:
+                keys = {v["id"]: i for i, v in enumerate(base)}
+                for value in incoming:
+                    if value["id"] in keys:
+                        base[keys[value["id"]]] = value
+                    else:
+                        base.append(value)
+                data[field] = base
     world = read_json(ROOT / "tools/qingxi-terrain/world-blueprint.json")
     descriptor = next(b for b in world["blocks"] if b["id"] == block_id)
     area = data["bounds"]
@@ -132,7 +148,8 @@ def render(block_id):
         y = 128 + row * 34
         name = p["id"].removeprefix(block_id + "_")
         draw.text((x, y), f'{idx:02d} {name} ({p["x"]},{p["z"]})', font=SMALL, fill="#28392F")
-    draw.text((lx, 1015), f'模型件數：{len(placements)}（含無編號的稻株與田埂）；尺寸、朝向見 {block_id}.json', font=SMALL, fill="#28392F")
+    dense_note = "（含無編號的稻株與田埂）" if len(numbered) != len(placements) else ""
+    draw.text((lx, 1015), f'模型件數：{len(placements)}{dense_note}；尺寸、朝向見資料 JSON', font=SMALL, fill="#28392F")
 
     out = ROOT / "docs/execution/world-plan" / f"{block_id}-plan.png"
     img.save(out, optimize=True)
