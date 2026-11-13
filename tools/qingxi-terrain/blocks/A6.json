@@ -1,0 +1,6183 @@
+{
+  "version": 2,
+  "units": "m",
+  "block": "A6",
+  "note": "A6 稻田與大水車，cell [1,-1]。世界座標，+Z 北。10 塊田、32 段埂、300 株稻是確定性落位，不靠隨機重抽。RI 模型待匯入；水車動畫與稻作階段由程式處理。",
+  "bounds": {
+    "minX": 50,
+    "minZ": -150,
+    "sizeX": 100,
+    "sizeZ": 100
+  },
+  "noise": 0.12,
+  "relief": 0.5,
+  "terrace": 0,
+  "cliffs": 0,
+  "nodes": [
+    {
+      "id": "a6-west",
+      "x": 50.5,
+      "z": -90
+    },
+    {
+      "id": "a6-field-west",
+      "x": 55,
+      "z": -90
+    },
+    {
+      "id": "a6-upper-west",
+      "x": 55,
+      "z": -76
+    },
+    {
+      "id": "a6-field-mid",
+      "x": 55,
+      "z": -102
+    },
+    {
+      "id": "a6-field-south",
+      "x": 55,
+      "z": -126
+    },
+    {
+      "id": "a6-south",
+      "x": 60,
+      "z": -149.5
+    },
+    {
+      "id": "a6-wheel",
+      "x": 88,
+      "z": -70
+    },
+    {
+      "id": "a6-north",
+      "x": 95,
+      "z": -50.5
+    },
+    {
+      "id": "a6-field-east",
+      "x": 124,
+      "z": -102
+    },
+    {
+      "id": "a6-east",
+      "x": 149.5,
+      "z": -100
+    },
+    {
+      "id": "a6-shrine",
+      "x": 135,
+      "z": -105
+    }
+  ],
+  "edges": [
+    {
+      "id": "a6-entry",
+      "from": "a6-west",
+      "to": "a6-field-west",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-upper-path",
+      "from": "a6-field-west",
+      "to": "a6-upper-west",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-wheel-path",
+      "from": "a6-upper-west",
+      "to": "a6-wheel",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-north-path",
+      "from": "a6-wheel",
+      "to": "a6-north",
+      "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-field-path-1",
+      "from": "a6-field-west",
+      "to": "a6-field-mid",
+      "width": 1.8,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-field-path-2",
+      "from": "a6-field-mid",
+      "to": "a6-field-south",
+      "width": 1.8,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-south-path",
+      "from": "a6-field-south",
+      "to": "a6-south",
+      "width": 2.0,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-east-path",
+      "from": "a6-field-mid",
+      "to": "a6-field-east",
+      "width": 1.8,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-shrine-path",
+      "from": "a6-field-east",
+      "to": "a6-shrine",
+      "width": 1.8,
+      "surface": "dirt"
+    },
+    {
+      "id": "a6-border-east",
+      "from": "a6-shrine",
+      "to": "a6-east",
+      "width": 2.0,
+      "surface": "dirt"
+    }
+  ],
+  "pads": [
+    {
+      "id": "a6-wheel-pad",
+      "surface": "dirt",
+      "x": 95,
+      "z": -70,
+      "halfX": 6,
+      "halfZ": 5,
+      "height": 1.8
+    },
+    {
+      "id": "a6-shrine-pad",
+      "surface": "dirt",
+      "x": 135,
+      "z": -105,
+      "halfX": 4,
+      "halfZ": 4,
+      "height": 1.7
+    },
+    {
+      "id": "a6-field-01",
+      "surface": "forest",
+      "x": 65,
+      "z": -92,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.37
+    },
+    {
+      "id": "a6-field-02",
+      "surface": "forest",
+      "x": 77,
+      "z": -93,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.59
+    },
+    {
+      "id": "a6-field-03",
+      "surface": "forest",
+      "x": 89,
+      "z": -91,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.15
+    },
+    {
+      "id": "a6-field-04",
+      "surface": "forest",
+      "x": 101,
+      "z": -94,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.37
+    },
+    {
+      "id": "a6-field-05",
+      "surface": "forest",
+      "x": 113,
+      "z": -92,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.59
+    },
+    {
+      "id": "a6-field-06",
+      "surface": "forest",
+      "x": 65,
+      "z": -113,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.15
+    },
+    {
+      "id": "a6-field-07",
+      "surface": "forest",
+      "x": 77,
+      "z": -111,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.37
+    },
+    {
+      "id": "a6-field-08",
+      "surface": "forest",
+      "x": 89,
+      "z": -114,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.59
+    },
+    {
+      "id": "a6-field-09",
+      "surface": "forest",
+      "x": 101,
+      "z": -112,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.15
+    },
+    {
+      "id": "a6-field-10",
+      "surface": "forest",
+      "x": 113,
+      "z": -113,
+      "halfX": 4.6,
+      "halfZ": 4.1,
+      "height": 1.37
+    }
+  ],
+  "heightPoints": [
+    {
+      "x": 52,
+      "z": -90,
+      "height": 2.3
+    },
+    {
+      "x": 52,
+      "z": -130,
+      "height": 1.9
+    },
+    {
+      "x": 95,
+      "z": -52,
+      "height": 1.6
+    },
+    {
+      "x": 135,
+      "z": -52,
+      "height": 2.6
+    },
+    {
+      "x": 90,
+      "z": -105,
+      "height": 1.5
+    },
+    {
+      "x": 145,
+      "z": -100,
+      "height": 2.0
+    },
+    {
+      "x": 90,
+      "z": -145,
+      "height": 1.4
+    },
+    {
+      "x": 140,
+      "z": -145,
+      "height": 1.8
+    }
+  ],
+  "flats": [
+    {
+      "id": "a6-canal-bed",
+      "note": "北渠及水車底",
+      "x": 95,
+      "z": -69,
+      "halfX": 2.2,
+      "halfZ": 12,
+      "height": 1.2,
+      "blend": 2.0
+    }
+  ],
+  "creek": {
+    "note": "以河道欄位暫表北渠；A4 南界尚無供水段，須由程式接通並區分水渠材質。",
+    "width": 2.2,
+    "depth": 0.7,
+    "bank": 1.0,
+    "waterLevel": 0.35,
+    "points": [
+      95,
+      -50.5,
+      95,
+      -70,
+      112,
+      -79,
+      123,
+      -89,
+      125,
+      -124
+    ],
+    "sourceEnd": true
+  },
+  "placements": [
+    {
+      "id": "A6_GreatWheel",
+      "zone": "a6-wheel",
+      "role": "跨北渠的 9 m 大水車",
+      "model": "art/exports/tea-terraces-b/RI03_GreatWheel/RI03_GreatWheel_v001.fbx",
+      "x": 95,
+      "z": -70,
+      "yaw": 90,
+      "footprint": [
+        9,
+        3,
+        9
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_CanalPlank",
+      "zone": "a6-paddy",
+      "role": "田東側跨 2.2 m 水渠的踏板",
+      "model": "art/exports/qingxi-gathering-visual-kit-v1/QX_CreekSteppingPlank/v002/QX_CreekSteppingPlank.fbx",
+      "x": 125,
+      "z": -102,
+      "yaw": 90,
+      "footprint": [
+        3.5,
+        2.2,
+        0.3
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_01",
+      "zone": "a6-paddy",
+      "role": "第 1 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 65,
+      "z": -92,
+      "yaw": 3,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_02",
+      "zone": "a6-paddy",
+      "role": "第 2 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 77,
+      "z": -93,
+      "yaw": 6,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_03",
+      "zone": "a6-paddy",
+      "role": "第 3 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 89,
+      "z": -91,
+      "yaw": 0,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_04",
+      "zone": "a6-paddy",
+      "role": "第 4 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 101,
+      "z": -94,
+      "yaw": 3,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_05",
+      "zone": "a6-paddy",
+      "role": "第 5 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 113,
+      "z": -92,
+      "yaw": 6,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_06",
+      "zone": "a6-paddy",
+      "role": "第 6 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 65,
+      "z": -113,
+      "yaw": 0,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_07",
+      "zone": "a6-paddy",
+      "role": "第 7 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 77,
+      "z": -111,
+      "yaw": 3,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_08",
+      "zone": "a6-paddy",
+      "role": "第 8 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 89,
+      "z": -114,
+      "yaw": 6,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_09",
+      "zone": "a6-paddy",
+      "role": "第 9 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 101,
+      "z": -112,
+      "yaw": 0,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Paddy_10",
+      "zone": "a6-paddy",
+      "role": "第 10 塊水田，水面與稻株底座",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Paddy.fbx",
+      "x": 113,
+      "z": -113,
+      "yaw": 3,
+      "footprint": [
+        9,
+        8,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_01",
+      "zone": "a6-paddy",
+      "role": "第 1 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 65,
+      "z": -84,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_02",
+      "zone": "a6-paddy",
+      "role": "第 2 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 77,
+      "z": -84,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_03",
+      "zone": "a6-paddy",
+      "role": "第 3 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 89,
+      "z": -84,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_04",
+      "zone": "a6-paddy",
+      "role": "第 4 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 101,
+      "z": -84,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_05",
+      "zone": "a6-paddy",
+      "role": "第 5 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 113,
+      "z": -84,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_06",
+      "zone": "a6-paddy",
+      "role": "第 6 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 65,
+      "z": -121,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_07",
+      "zone": "a6-paddy",
+      "role": "第 7 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 77,
+      "z": -121,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_08",
+      "zone": "a6-paddy",
+      "role": "第 8 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 89,
+      "z": -121,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_09",
+      "zone": "a6-paddy",
+      "role": "第 9 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 101,
+      "z": -121,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_10",
+      "zone": "a6-paddy",
+      "role": "第 10 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 113,
+      "z": -121,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_11",
+      "zone": "a6-paddy",
+      "role": "第 11 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 59,
+      "z": -90,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_12",
+      "zone": "a6-paddy",
+      "role": "第 12 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 59,
+      "z": -100,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_13",
+      "zone": "a6-paddy",
+      "role": "第 13 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 59,
+      "z": -110,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_14",
+      "zone": "a6-paddy",
+      "role": "第 14 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 59,
+      "z": -119,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_15",
+      "zone": "a6-paddy",
+      "role": "第 15 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 119,
+      "z": -90,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_16",
+      "zone": "a6-paddy",
+      "role": "第 16 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 119,
+      "z": -100,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_17",
+      "zone": "a6-paddy",
+      "role": "第 17 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 119,
+      "z": -110,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_18",
+      "zone": "a6-paddy",
+      "role": "第 18 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 119,
+      "z": -119,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_19",
+      "zone": "a6-paddy",
+      "role": "第 19 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 65,
+      "z": -102,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_20",
+      "zone": "a6-paddy",
+      "role": "第 20 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 77,
+      "z": -102,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_21",
+      "zone": "a6-paddy",
+      "role": "第 21 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 89,
+      "z": -102,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_22",
+      "zone": "a6-paddy",
+      "role": "第 22 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 101,
+      "z": -102,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_23",
+      "zone": "a6-paddy",
+      "role": "第 23 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 113,
+      "z": -102,
+      "yaw": 90,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_24",
+      "zone": "a6-paddy",
+      "role": "第 24 段田埂，Corner",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Corner.fbx",
+      "x": 71,
+      "z": -93,
+      "yaw": 0,
+      "footprint": [
+        1.6,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_25",
+      "zone": "a6-paddy",
+      "role": "第 25 段田埂，Corner",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Corner.fbx",
+      "x": 71,
+      "z": -113,
+      "yaw": 0,
+      "footprint": [
+        1.6,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_26",
+      "zone": "a6-paddy",
+      "role": "第 26 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 83,
+      "z": -93,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_27",
+      "zone": "a6-paddy",
+      "role": "第 27 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 83,
+      "z": -113,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_28",
+      "zone": "a6-paddy",
+      "role": "第 28 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 95,
+      "z": -93,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_29",
+      "zone": "a6-paddy",
+      "role": "第 29 段田埂，Straight",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Straight.fbx",
+      "x": 95,
+      "z": -113,
+      "yaw": 0,
+      "footprint": [
+        7,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_30",
+      "zone": "a6-paddy",
+      "role": "第 30 段田埂，Corner",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Corner.fbx",
+      "x": 107,
+      "z": -93,
+      "yaw": 0,
+      "footprint": [
+        1.6,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_31",
+      "zone": "a6-paddy",
+      "role": "第 31 段田埂，Corner",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_Corner.fbx",
+      "x": 107,
+      "z": -113,
+      "yaw": 0,
+      "footprint": [
+        1.6,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Bund_32",
+      "zone": "a6-paddy",
+      "role": "第 32 段田埂，T",
+      "model": "art/exports/valley-and-home-v1/RI01/v014/RI01_Bund_T.fbx",
+      "x": 95,
+      "z": -102,
+      "yaw": 0,
+      "footprint": [
+        1.6,
+        0.8,
+        0.5
+      ],
+      "collider": "box",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_001",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.71,
+      "z": -95.1,
+      "yaw": 37,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_002",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.31,
+      "z": -95.1,
+      "yaw": 74,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_003",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 64.91,
+      "z": -95.1,
+      "yaw": 111,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_004",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.51,
+      "z": -95.1,
+      "yaw": 148,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_005",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.11,
+      "z": -95.1,
+      "yaw": 185,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_006",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.89,
+      "z": -93.86,
+      "yaw": 222,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_007",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.49,
+      "z": -93.86,
+      "yaw": 259,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_008",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 65.09,
+      "z": -93.86,
+      "yaw": 296,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_009",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.69,
+      "z": -93.86,
+      "yaw": 333,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_010",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.29,
+      "z": -93.86,
+      "yaw": 10,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_011",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.71,
+      "z": -92.62,
+      "yaw": 47,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_012",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.31,
+      "z": -92.62,
+      "yaw": 84,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_013",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 64.91,
+      "z": -92.62,
+      "yaw": 121,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_014",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.51,
+      "z": -92.62,
+      "yaw": 158,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_015",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.11,
+      "z": -92.62,
+      "yaw": 195,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_016",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.89,
+      "z": -91.38,
+      "yaw": 232,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_017",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.49,
+      "z": -91.38,
+      "yaw": 269,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_018",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 65.09,
+      "z": -91.38,
+      "yaw": 306,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_019",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.69,
+      "z": -91.38,
+      "yaw": 343,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_020",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.29,
+      "z": -91.38,
+      "yaw": 20,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_021",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.71,
+      "z": -90.14,
+      "yaw": 57,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_022",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.31,
+      "z": -90.14,
+      "yaw": 94,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_023",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 64.91,
+      "z": -90.14,
+      "yaw": 131,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_024",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.51,
+      "z": -90.14,
+      "yaw": 168,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_025",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.11,
+      "z": -90.14,
+      "yaw": 205,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_026",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.89,
+      "z": -88.9,
+      "yaw": 242,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_027",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.49,
+      "z": -88.9,
+      "yaw": 279,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_028",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 65.09,
+      "z": -88.9,
+      "yaw": 316,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_029",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.69,
+      "z": -88.9,
+      "yaw": 353,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_030",
+      "zone": "a6-paddy",
+      "role": "第 1 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.29,
+      "z": -88.9,
+      "yaw": 30,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_031",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.71,
+      "z": -96.1,
+      "yaw": 67,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_032",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.31,
+      "z": -96.1,
+      "yaw": 104,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_033",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 76.91,
+      "z": -96.1,
+      "yaw": 141,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_034",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.51,
+      "z": -96.1,
+      "yaw": 178,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_035",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.11,
+      "z": -96.1,
+      "yaw": 215,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_036",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.89,
+      "z": -94.86,
+      "yaw": 252,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_037",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.49,
+      "z": -94.86,
+      "yaw": 289,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_038",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 77.09,
+      "z": -94.86,
+      "yaw": 326,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_039",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.69,
+      "z": -94.86,
+      "yaw": 3,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_040",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.29,
+      "z": -94.86,
+      "yaw": 40,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_041",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.71,
+      "z": -93.62,
+      "yaw": 77,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_042",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.31,
+      "z": -93.62,
+      "yaw": 114,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_043",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 76.91,
+      "z": -93.62,
+      "yaw": 151,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_044",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.51,
+      "z": -93.62,
+      "yaw": 188,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_045",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.11,
+      "z": -93.62,
+      "yaw": 225,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_046",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.89,
+      "z": -92.38,
+      "yaw": 262,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_047",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.49,
+      "z": -92.38,
+      "yaw": 299,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_048",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 77.09,
+      "z": -92.38,
+      "yaw": 336,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_049",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.69,
+      "z": -92.38,
+      "yaw": 13,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_050",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.29,
+      "z": -92.38,
+      "yaw": 50,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_051",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.71,
+      "z": -91.14,
+      "yaw": 87,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_052",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.31,
+      "z": -91.14,
+      "yaw": 124,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_053",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 76.91,
+      "z": -91.14,
+      "yaw": 161,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_054",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.51,
+      "z": -91.14,
+      "yaw": 198,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_055",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.11,
+      "z": -91.14,
+      "yaw": 235,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_056",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.89,
+      "z": -89.9,
+      "yaw": 272,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_057",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.49,
+      "z": -89.9,
+      "yaw": 309,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_058",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 77.09,
+      "z": -89.9,
+      "yaw": 346,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_059",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.69,
+      "z": -89.9,
+      "yaw": 23,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_060",
+      "zone": "a6-paddy",
+      "role": "第 2 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.29,
+      "z": -89.9,
+      "yaw": 60,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_061",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.71,
+      "z": -94.1,
+      "yaw": 97,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_062",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.31,
+      "z": -94.1,
+      "yaw": 134,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_063",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 88.91,
+      "z": -94.1,
+      "yaw": 171,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_064",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.51,
+      "z": -94.1,
+      "yaw": 208,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_065",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.11,
+      "z": -94.1,
+      "yaw": 245,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_066",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.89,
+      "z": -92.86,
+      "yaw": 282,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_067",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.49,
+      "z": -92.86,
+      "yaw": 319,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_068",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 89.09,
+      "z": -92.86,
+      "yaw": 356,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_069",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.69,
+      "z": -92.86,
+      "yaw": 33,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_070",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.29,
+      "z": -92.86,
+      "yaw": 70,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_071",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.71,
+      "z": -91.62,
+      "yaw": 107,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_072",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.31,
+      "z": -91.62,
+      "yaw": 144,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_073",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 88.91,
+      "z": -91.62,
+      "yaw": 181,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_074",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.51,
+      "z": -91.62,
+      "yaw": 218,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_075",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.11,
+      "z": -91.62,
+      "yaw": 255,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_076",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.89,
+      "z": -90.38,
+      "yaw": 292,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_077",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.49,
+      "z": -90.38,
+      "yaw": 329,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_078",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 89.09,
+      "z": -90.38,
+      "yaw": 6,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_079",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.69,
+      "z": -90.38,
+      "yaw": 43,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_080",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.29,
+      "z": -90.38,
+      "yaw": 80,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_081",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.71,
+      "z": -89.14,
+      "yaw": 117,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_082",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.31,
+      "z": -89.14,
+      "yaw": 154,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_083",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 88.91,
+      "z": -89.14,
+      "yaw": 191,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_084",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.51,
+      "z": -89.14,
+      "yaw": 228,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_085",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.11,
+      "z": -89.14,
+      "yaw": 265,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_086",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.89,
+      "z": -87.9,
+      "yaw": 302,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_087",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.49,
+      "z": -87.9,
+      "yaw": 339,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_088",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 89.09,
+      "z": -87.9,
+      "yaw": 16,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_089",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.69,
+      "z": -87.9,
+      "yaw": 53,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_090",
+      "zone": "a6-paddy",
+      "role": "第 3 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.29,
+      "z": -87.9,
+      "yaw": 90,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_091",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.71,
+      "z": -97.1,
+      "yaw": 127,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_092",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.31,
+      "z": -97.1,
+      "yaw": 164,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_093",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 100.91,
+      "z": -97.1,
+      "yaw": 201,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_094",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.51,
+      "z": -97.1,
+      "yaw": 238,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_095",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.11,
+      "z": -97.1,
+      "yaw": 275,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_096",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.89,
+      "z": -95.86,
+      "yaw": 312,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_097",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.49,
+      "z": -95.86,
+      "yaw": 349,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_098",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 101.09,
+      "z": -95.86,
+      "yaw": 26,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_099",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.69,
+      "z": -95.86,
+      "yaw": 63,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_100",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.29,
+      "z": -95.86,
+      "yaw": 100,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_101",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.71,
+      "z": -94.62,
+      "yaw": 137,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_102",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.31,
+      "z": -94.62,
+      "yaw": 174,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_103",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 100.91,
+      "z": -94.62,
+      "yaw": 211,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_104",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.51,
+      "z": -94.62,
+      "yaw": 248,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_105",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.11,
+      "z": -94.62,
+      "yaw": 285,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_106",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.89,
+      "z": -93.38,
+      "yaw": 322,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_107",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.49,
+      "z": -93.38,
+      "yaw": 359,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_108",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 101.09,
+      "z": -93.38,
+      "yaw": 36,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_109",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.69,
+      "z": -93.38,
+      "yaw": 73,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_110",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.29,
+      "z": -93.38,
+      "yaw": 110,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_111",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.71,
+      "z": -92.14,
+      "yaw": 147,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_112",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.31,
+      "z": -92.14,
+      "yaw": 184,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_113",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 100.91,
+      "z": -92.14,
+      "yaw": 221,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_114",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.51,
+      "z": -92.14,
+      "yaw": 258,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_115",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.11,
+      "z": -92.14,
+      "yaw": 295,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_116",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.89,
+      "z": -90.9,
+      "yaw": 332,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_117",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.49,
+      "z": -90.9,
+      "yaw": 9,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_118",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 101.09,
+      "z": -90.9,
+      "yaw": 46,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_119",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.69,
+      "z": -90.9,
+      "yaw": 83,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_120",
+      "zone": "a6-paddy",
+      "role": "第 4 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.29,
+      "z": -90.9,
+      "yaw": 120,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_121",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.71,
+      "z": -95.1,
+      "yaw": 157,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_122",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.31,
+      "z": -95.1,
+      "yaw": 194,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_123",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 112.91,
+      "z": -95.1,
+      "yaw": 231,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_124",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.51,
+      "z": -95.1,
+      "yaw": 268,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_125",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.11,
+      "z": -95.1,
+      "yaw": 305,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_126",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.89,
+      "z": -93.86,
+      "yaw": 342,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_127",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.49,
+      "z": -93.86,
+      "yaw": 19,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_128",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 113.09,
+      "z": -93.86,
+      "yaw": 56,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_129",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.69,
+      "z": -93.86,
+      "yaw": 93,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_130",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.29,
+      "z": -93.86,
+      "yaw": 130,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_131",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.71,
+      "z": -92.62,
+      "yaw": 167,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_132",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.31,
+      "z": -92.62,
+      "yaw": 204,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_133",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 112.91,
+      "z": -92.62,
+      "yaw": 241,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_134",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.51,
+      "z": -92.62,
+      "yaw": 278,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_135",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.11,
+      "z": -92.62,
+      "yaw": 315,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_136",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.89,
+      "z": -91.38,
+      "yaw": 352,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_137",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.49,
+      "z": -91.38,
+      "yaw": 29,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_138",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 113.09,
+      "z": -91.38,
+      "yaw": 66,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_139",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.69,
+      "z": -91.38,
+      "yaw": 103,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_140",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.29,
+      "z": -91.38,
+      "yaw": 140,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_141",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.71,
+      "z": -90.14,
+      "yaw": 177,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_142",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.31,
+      "z": -90.14,
+      "yaw": 214,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_143",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 112.91,
+      "z": -90.14,
+      "yaw": 251,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_144",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.51,
+      "z": -90.14,
+      "yaw": 288,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_145",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.11,
+      "z": -90.14,
+      "yaw": 325,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_146",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.89,
+      "z": -88.9,
+      "yaw": 2,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_147",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.49,
+      "z": -88.9,
+      "yaw": 39,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_148",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 113.09,
+      "z": -88.9,
+      "yaw": 76,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_149",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.69,
+      "z": -88.9,
+      "yaw": 113,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_150",
+      "zone": "a6-paddy",
+      "role": "第 5 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.29,
+      "z": -88.9,
+      "yaw": 150,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_151",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.71,
+      "z": -116.1,
+      "yaw": 187,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_152",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.31,
+      "z": -116.1,
+      "yaw": 224,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_153",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 64.91,
+      "z": -116.1,
+      "yaw": 261,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_154",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.51,
+      "z": -116.1,
+      "yaw": 298,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_155",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.11,
+      "z": -116.1,
+      "yaw": 335,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_156",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.89,
+      "z": -114.86,
+      "yaw": 12,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_157",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.49,
+      "z": -114.86,
+      "yaw": 49,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_158",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 65.09,
+      "z": -114.86,
+      "yaw": 86,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_159",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.69,
+      "z": -114.86,
+      "yaw": 123,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_160",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.29,
+      "z": -114.86,
+      "yaw": 160,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_161",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.71,
+      "z": -113.62,
+      "yaw": 197,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_162",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.31,
+      "z": -113.62,
+      "yaw": 234,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_163",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 64.91,
+      "z": -113.62,
+      "yaw": 271,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_164",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.51,
+      "z": -113.62,
+      "yaw": 308,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_165",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.11,
+      "z": -113.62,
+      "yaw": 345,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_166",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.89,
+      "z": -112.38,
+      "yaw": 22,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_167",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.49,
+      "z": -112.38,
+      "yaw": 59,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_168",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 65.09,
+      "z": -112.38,
+      "yaw": 96,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_169",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.69,
+      "z": -112.38,
+      "yaw": 133,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_170",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.29,
+      "z": -112.38,
+      "yaw": 170,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_171",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.71,
+      "z": -111.14,
+      "yaw": 207,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_172",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.31,
+      "z": -111.14,
+      "yaw": 244,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_173",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 64.91,
+      "z": -111.14,
+      "yaw": 281,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_174",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.51,
+      "z": -111.14,
+      "yaw": 318,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_175",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.11,
+      "z": -111.14,
+      "yaw": 355,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_176",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 61.89,
+      "z": -109.9,
+      "yaw": 32,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_177",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 63.49,
+      "z": -109.9,
+      "yaw": 69,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_178",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 65.09,
+      "z": -109.9,
+      "yaw": 106,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_179",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 66.69,
+      "z": -109.9,
+      "yaw": 143,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_180",
+      "zone": "a6-paddy",
+      "role": "第 6 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 68.29,
+      "z": -109.9,
+      "yaw": 180,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_181",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.71,
+      "z": -114.1,
+      "yaw": 217,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_182",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.31,
+      "z": -114.1,
+      "yaw": 254,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_183",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 76.91,
+      "z": -114.1,
+      "yaw": 291,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_184",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.51,
+      "z": -114.1,
+      "yaw": 328,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_185",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.11,
+      "z": -114.1,
+      "yaw": 5,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_186",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.89,
+      "z": -112.86,
+      "yaw": 42,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_187",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.49,
+      "z": -112.86,
+      "yaw": 79,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_188",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 77.09,
+      "z": -112.86,
+      "yaw": 116,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_189",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.69,
+      "z": -112.86,
+      "yaw": 153,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_190",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.29,
+      "z": -112.86,
+      "yaw": 190,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_191",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.71,
+      "z": -111.62,
+      "yaw": 227,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_192",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.31,
+      "z": -111.62,
+      "yaw": 264,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_193",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 76.91,
+      "z": -111.62,
+      "yaw": 301,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_194",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.51,
+      "z": -111.62,
+      "yaw": 338,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_195",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.11,
+      "z": -111.62,
+      "yaw": 15,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_196",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.89,
+      "z": -110.38,
+      "yaw": 52,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_197",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.49,
+      "z": -110.38,
+      "yaw": 89,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_198",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 77.09,
+      "z": -110.38,
+      "yaw": 126,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_199",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.69,
+      "z": -110.38,
+      "yaw": 163,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_200",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.29,
+      "z": -110.38,
+      "yaw": 200,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_201",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.71,
+      "z": -109.14,
+      "yaw": 237,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_202",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.31,
+      "z": -109.14,
+      "yaw": 274,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_203",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 76.91,
+      "z": -109.14,
+      "yaw": 311,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_204",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.51,
+      "z": -109.14,
+      "yaw": 348,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_205",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.11,
+      "z": -109.14,
+      "yaw": 25,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_206",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 73.89,
+      "z": -107.9,
+      "yaw": 62,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_207",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 75.49,
+      "z": -107.9,
+      "yaw": 99,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_208",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 77.09,
+      "z": -107.9,
+      "yaw": 136,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_209",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 78.69,
+      "z": -107.9,
+      "yaw": 173,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_210",
+      "zone": "a6-paddy",
+      "role": "第 7 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 80.29,
+      "z": -107.9,
+      "yaw": 210,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_211",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.71,
+      "z": -117.1,
+      "yaw": 247,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_212",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.31,
+      "z": -117.1,
+      "yaw": 284,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_213",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 88.91,
+      "z": -117.1,
+      "yaw": 321,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_214",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.51,
+      "z": -117.1,
+      "yaw": 358,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_215",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.11,
+      "z": -117.1,
+      "yaw": 35,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_216",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.89,
+      "z": -115.86,
+      "yaw": 72,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_217",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.49,
+      "z": -115.86,
+      "yaw": 109,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_218",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 89.09,
+      "z": -115.86,
+      "yaw": 146,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_219",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.69,
+      "z": -115.86,
+      "yaw": 183,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_220",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.29,
+      "z": -115.86,
+      "yaw": 220,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_221",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.71,
+      "z": -114.62,
+      "yaw": 257,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_222",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.31,
+      "z": -114.62,
+      "yaw": 294,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_223",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 88.91,
+      "z": -114.62,
+      "yaw": 331,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_224",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.51,
+      "z": -114.62,
+      "yaw": 8,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_225",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.11,
+      "z": -114.62,
+      "yaw": 45,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_226",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.89,
+      "z": -113.38,
+      "yaw": 82,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_227",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.49,
+      "z": -113.38,
+      "yaw": 119,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_228",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 89.09,
+      "z": -113.38,
+      "yaw": 156,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_229",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.69,
+      "z": -113.38,
+      "yaw": 193,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_230",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.29,
+      "z": -113.38,
+      "yaw": 230,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_231",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.71,
+      "z": -112.14,
+      "yaw": 267,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_232",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.31,
+      "z": -112.14,
+      "yaw": 304,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_233",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 88.91,
+      "z": -112.14,
+      "yaw": 341,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_234",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.51,
+      "z": -112.14,
+      "yaw": 18,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_235",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.11,
+      "z": -112.14,
+      "yaw": 55,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_236",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 85.89,
+      "z": -110.9,
+      "yaw": 92,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_237",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 87.49,
+      "z": -110.9,
+      "yaw": 129,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_238",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 89.09,
+      "z": -110.9,
+      "yaw": 166,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_239",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 90.69,
+      "z": -110.9,
+      "yaw": 203,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_240",
+      "zone": "a6-paddy",
+      "role": "第 8 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 92.29,
+      "z": -110.9,
+      "yaw": 240,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_241",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.71,
+      "z": -115.1,
+      "yaw": 277,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_242",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.31,
+      "z": -115.1,
+      "yaw": 314,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_243",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 100.91,
+      "z": -115.1,
+      "yaw": 351,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_244",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.51,
+      "z": -115.1,
+      "yaw": 28,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_245",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.11,
+      "z": -115.1,
+      "yaw": 65,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_246",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.89,
+      "z": -113.86,
+      "yaw": 102,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_247",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.49,
+      "z": -113.86,
+      "yaw": 139,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_248",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 101.09,
+      "z": -113.86,
+      "yaw": 176,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_249",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.69,
+      "z": -113.86,
+      "yaw": 213,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_250",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.29,
+      "z": -113.86,
+      "yaw": 250,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_251",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.71,
+      "z": -112.62,
+      "yaw": 287,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_252",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.31,
+      "z": -112.62,
+      "yaw": 324,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_253",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 100.91,
+      "z": -112.62,
+      "yaw": 1,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_254",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.51,
+      "z": -112.62,
+      "yaw": 38,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_255",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.11,
+      "z": -112.62,
+      "yaw": 75,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_256",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.89,
+      "z": -111.38,
+      "yaw": 112,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_257",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.49,
+      "z": -111.38,
+      "yaw": 149,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_258",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 101.09,
+      "z": -111.38,
+      "yaw": 186,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_259",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.69,
+      "z": -111.38,
+      "yaw": 223,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_260",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.29,
+      "z": -111.38,
+      "yaw": 260,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_261",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.71,
+      "z": -110.14,
+      "yaw": 297,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_262",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.31,
+      "z": -110.14,
+      "yaw": 334,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_263",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 100.91,
+      "z": -110.14,
+      "yaw": 11,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_264",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.51,
+      "z": -110.14,
+      "yaw": 48,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_265",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.11,
+      "z": -110.14,
+      "yaw": 85,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_266",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 97.89,
+      "z": -108.9,
+      "yaw": 122,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_267",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 99.49,
+      "z": -108.9,
+      "yaw": 159,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_268",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 101.09,
+      "z": -108.9,
+      "yaw": 196,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_269",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 102.69,
+      "z": -108.9,
+      "yaw": 233,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_270",
+      "zone": "a6-paddy",
+      "role": "第 9 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 104.29,
+      "z": -108.9,
+      "yaw": 270,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_271",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 1 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.71,
+      "z": -116.1,
+      "yaw": 307,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_272",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 1 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.31,
+      "z": -116.1,
+      "yaw": 344,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_273",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 1 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 112.91,
+      "z": -116.1,
+      "yaw": 21,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_274",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 1 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.51,
+      "z": -116.1,
+      "yaw": 58,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_275",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 1 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.11,
+      "z": -116.1,
+      "yaw": 95,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_276",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 2 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.89,
+      "z": -114.86,
+      "yaw": 132,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_277",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 2 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.49,
+      "z": -114.86,
+      "yaw": 169,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_278",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 2 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 113.09,
+      "z": -114.86,
+      "yaw": 206,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_279",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 2 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.69,
+      "z": -114.86,
+      "yaw": 243,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_280",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 2 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.29,
+      "z": -114.86,
+      "yaw": 280,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_281",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 3 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.71,
+      "z": -113.62,
+      "yaw": 317,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_282",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 3 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.31,
+      "z": -113.62,
+      "yaw": 354,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_283",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 3 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 112.91,
+      "z": -113.62,
+      "yaw": 31,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_284",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 3 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.51,
+      "z": -113.62,
+      "yaw": 68,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_285",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 3 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.11,
+      "z": -113.62,
+      "yaw": 105,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_286",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 4 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.89,
+      "z": -112.38,
+      "yaw": 142,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_287",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 4 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.49,
+      "z": -112.38,
+      "yaw": 179,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_288",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 4 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 113.09,
+      "z": -112.38,
+      "yaw": 216,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_289",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 4 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.69,
+      "z": -112.38,
+      "yaw": 253,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_290",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 4 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.29,
+      "z": -112.38,
+      "yaw": 290,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_291",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 5 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.71,
+      "z": -111.14,
+      "yaw": 327,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_292",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 5 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.31,
+      "z": -111.14,
+      "yaw": 4,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_293",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 5 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 112.91,
+      "z": -111.14,
+      "yaw": 41,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_294",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 5 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.51,
+      "z": -111.14,
+      "yaw": 78,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_295",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 5 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.11,
+      "z": -111.14,
+      "yaw": 115,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_296",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 6 行第 1 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 109.89,
+      "z": -109.9,
+      "yaw": 152,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_297",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 6 行第 2 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 111.49,
+      "z": -109.9,
+      "yaw": 189,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_298",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 6 行第 3 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 113.09,
+      "z": -109.9,
+      "yaw": 226,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_299",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 6 行第 4 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 114.69,
+      "z": -109.9,
+      "yaw": 263,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "A6_Rice_300",
+      "zone": "a6-paddy",
+      "role": "第 10 塊田第 6 行第 5 株稻",
+      "model": "art/exports/valley-and-home-v1/RI02/v006/RI02_Rice.fbx",
+      "x": 116.29,
+      "z": -109.9,
+      "yaw": 300,
+      "footprint": [
+        0.45,
+        0.45,
+        1.2
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    }
+  ],
+  "herbs": [],
+  "fortunes": [],
+  "checkpoints": [],
+  "route": []
+}

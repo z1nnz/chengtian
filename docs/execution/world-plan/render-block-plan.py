@@ -94,11 +94,19 @@ def render(block_id):
         draw.ellipse((px - 4, py - 4, px + 4, py + 4), fill="#493624")
 
     placements = data.get("placements", [])
+    dense = lambda p: "_Rice_" in p["id"] or "_Bund_" in p["id"]
+    numbered = [p for p in placements if not dense(p)]
     for idx, p in enumerate(placements, 1):
         px, py = xy(p["x"], p["z"])
         color = "#A34C40" if p.get("status") == "needs-importer" else "#316E62"
-        draw.ellipse((px - 8, py - 8, px + 8, py + 8), fill=color, outline="white", width=2)
-        draw.text((px + 8, py - 15), str(idx), font=SMALL, fill="#1D2924")
+        if "_Rice_" in p["id"]:
+            draw.ellipse((px - 2, py - 2, px + 2, py + 2), fill="#C6A959")
+        elif "_Bund_" in p["id"]:
+            draw.ellipse((px - 3, py - 3, px + 3, py + 3), fill="#745C3D")
+        else:
+            number = numbered.index(p) + 1
+            draw.ellipse((px - 8, py - 8, px + 8, py + 8), fill=color, outline="white", width=2)
+            draw.text((px + 8, py - 15), str(number), font=SMALL, fill="#1D2924")
 
     for shot in descriptor.get("shots", []):
         if shot["x"] < min_x - 6 or shot["x"] > min_x + 106 or shot["z"] < min_z - 6 or shot["z"] > min_z + 106:
@@ -117,14 +125,14 @@ def render(block_id):
 
     lx = 1010
     draw.text((lx, 95), "擺放索引（世界座標 x,z；角度見 JSON）", font=FONT, fill="#22392D")
-    for idx, p in enumerate(placements, 1):
+    for idx, p in enumerate(numbered, 1):
         col = 0 if idx <= 24 else 1
         row = idx - 1 if col == 0 else idx - 25
         x = lx + col * 340
         y = 128 + row * 34
         name = p["id"].removeprefix(block_id + "_")
         draw.text((x, y), f'{idx:02d} {name} ({p["x"]},{p["z"]})', font=SMALL, fill="#28392F")
-    draw.text((lx, 1015), f'模型件數：{len(placements)}；完整尺寸、朝向、狀態見 {block_id}.json', font=SMALL, fill="#28392F")
+    draw.text((lx, 1015), f'模型件數：{len(placements)}（含無編號的稻株與田埂）；尺寸、朝向見 {block_id}.json', font=SMALL, fill="#28392F")
 
     out = ROOT / "docs/execution/world-plan" / f"{block_id}-plan.png"
     img.save(out, optimize=True)

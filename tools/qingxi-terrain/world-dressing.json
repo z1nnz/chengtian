@@ -249,6 +249,15 @@
         "大水車",
         "稻草人",
         "田間小廟"
+      ],
+      "species": [
+        {"kind": "ElderWillow", "weight": 1.0}
+      ],
+      "waterside": "ElderWillow",
+      "landmarks": [
+        {"kind": "ElderWillow", "x": 138, "z": -58, "yaw": 35, "height": 9, "sink": 0, "note": "北東最高小丘約 2.6 m 的單棵尋視樹；距北渠 43 m，不遮水車。"},
+        {"kind": "ElderWillow", "x": 68, "z": -137, "yaw": 190, "height": 8, "sink": 0, "note": "田西南邊界單棵，距 x=55 田邊路約 13 m。"},
+        {"kind": "ElderWillow", "x": 138, "z": -129, "yaw": 270, "height": 8, "sink": 0, "note": "田東南邊界單棵，距水渠末端 (125,-124) 約 14 m。"}
       ]
     },
     {
