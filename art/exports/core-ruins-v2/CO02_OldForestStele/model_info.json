@@ -1,0 +1,25 @@
+{
+  "asset": "CO02_OldForestStele",
+  "version": "v002",
+  "name_zh": "古林碑",
+  "slot": "D4",
+  "units": "meters",
+  "front": "-Y",
+  "dimensions_m": [
+    1.403,
+    0.936,
+    2.385
+  ],
+  "lod_triangles": {
+    "LOD0": 5888,
+    "LOD1": 2214,
+    "LOD2": 908
+  },
+  "status": {
+    "Exported": true,
+    "Imported": false,
+    "VisuallyVerified": true,
+    "InGameVerified": false
+  },
+  "note": "無文字；斜鑿槽使用 Boolean 真切割；AI 三視圖先於建模保存。"
+}
