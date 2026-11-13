@@ -1,29 +1,29 @@
 {
   "asset": "XT01_XianxiaGreatTree",
-  "version": "v002",
+  "version": "v003",
   "game": "承天",
   "name_zh": "仙俠風格大型綠樹（另有金黃葉版本，共用模型與貼圖）",
   "minTier": "low",
   "use": "宗門庭院、山林、草原的地標大樹（多年古樹，不是世界樹）",
-  "height_m": 15.394,
+  "height_m": 15.754,
   "crown_width_m": [
-    27.199,
-    26.072
+    26.394,
+    26.358
   ],
   "dimensions_m": [
-    27.199,
-    26.072,
-    15.694
+    26.394,
+    26.358,
+    16.054
   ],
   "bounds_min_m": [
-    -11.996,
-    -12.674,
+    -11.249,
+    -13.34,
     -0.3
   ],
   "bounds_max_m": [
-    15.203,
-    13.398,
-    15.394
+    15.145,
+    13.018,
+    15.754
   ],
   "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
   "unit": "1 Blender unit = 1 m; front = -Y",
@@ -78,28 +78,28 @@
   ],
   "budget_per_lod": {
     "LOD0": {
-      "triangles": 23771,
+      "triangles": 23985,
       "cap": 25000,
       "objects": 1,
       "materials": 2,
-      "wood_triangles": 11500,
-      "leaf_cards": 5141
+      "wood_triangles": 10798,
+      "leaf_cards": 5605
     },
     "LOD1": {
-      "triangles": 5514,
+      "triangles": 7383,
       "cap": 8000,
       "objects": 1,
       "materials": 2,
       "wood_triangles": 3000,
-      "leaf_cards": 964
+      "leaf_cards": 1899
     },
     "LOD2": {
-      "triangles": 2204,
+      "triangles": 2400,
       "cap": 2500,
       "objects": 1,
       "materials": 2,
       "wood_triangles": 820,
-      "leaf_cards": 692
+      "leaf_cards": 790
     },
     "LOD3": {
       "triangles": 4,

@@ -11,7 +11,7 @@ using UnityEngine.Rendering.Universal;
 namespace YunJing.Editor
 {
     // 承天 XT01 xianxia great tree (仙俠風格大型綠樹 + gold-leaf version, one mesh, one texture set). Installs the export from
-    // art/exports/trees-xianxia/XT01_XianxiaGreatTree into Assets/YunJing/Models/XianxiaGreatTreeV2 (FBX, textures, five materials on
+    // art/exports/trees-xianxia/XT01_XianxiaGreatTree into Assets/YunJing/Models/XianxiaGreatTreeV3 (FBX, textures, five materials on
     // YunJing/XianxiaTreeBark + YunJing/XianxiaTreeLeaves, two prefabs Green / Gold with LODGroup and trunk collider), then checks
     // LODs, triangles, materials, vertex colours, wind weights, height and the trunk collider (a 1.75 m CharacterController walking
     // at the trunk stops, one walking 1.5 m beside it goes on), and takes shots: views round the tree, under the crown, every LOD,
@@ -20,7 +20,7 @@ namespace YunJing.Editor
     public static class XianxiaTreeCheck
     {
         const string Id = "XT01_XianxiaGreatTree";
-        const string Dst = "Assets/YunJing/Models/XianxiaGreatTreeV2";
+        const string Dst = "Assets/YunJing/Models/XianxiaGreatTreeV3";
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
         static string Src => Path.Combine(Repo, "art", "exports", "trees-xianxia", Id);
         static string Out => Path.Combine(Repo, "artifacts", "xianxia-tree-unity");
