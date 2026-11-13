@@ -119,7 +119,7 @@ namespace YunJing
                 SetHour(22);
                 yield return Shot("22.0-入夜-坊市");
                 // The homes lane in the north-east (novice-village.json homes-ne), morning and late afternoon.
-                foreach (var (hour, x, z, yaw, name) in new[] { (10f, 12f, 4f, 45f, "10.0-民居巷"), (16.5f, 27f, 2f, 0f, "16.5-民居巷-南口"), (16.5f, 27f, 17.8f, 0f, "16.5-民居巷-後排"), (10f, -19.6f, 8.2f, -90f, "10.0-溪邊洗衣"), (10f, -19.6f, -2.9f, -90f, "10.0-溪邊釣具") })
+                foreach (var (hour, x, z, yaw, name) in new[] { (10f, 12f, 4f, 45f, "10.0-民居巷"), (16.5f, 27f, 2f, 0f, "16.5-民居巷-南口"), (16.5f, 27f, 17.8f, 0f, "16.5-民居巷-後排"), (10f, 30f, -14.5f, 80f, "10.0-東路新民居"), (10f, 0f, -36f, 0f, "10.0-村口石燈"), (10f, 24f, -14f, 20f, "10.0-鐵匠鋪"), (10f, -19.6f, 8.2f, -90f, "10.0-溪邊洗衣"), (10f, -19.6f, -2.9f, -90f, "10.0-溪邊釣具") })
                 {
                     body.enabled = false;
                     walker.transform.SetPositionAndRotation(new Vector3(x, walker.transform.position.y + 1.5f, z), Quaternion.Euler(0, yaw, 0));

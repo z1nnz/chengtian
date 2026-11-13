@@ -384,6 +384,33 @@
       "halfZ": 6,
       "height": 0.3,
       "surface": "plaza"
+    },
+    {
+      "id": "homes-east-n",
+      "x": 44.0,
+      "z": -6.5,
+      "halfX": 5.2,
+      "halfZ": 4.6,
+      "height": 1.7,
+      "surface": "dirt"
+    },
+    {
+      "id": "homes-east-s",
+      "x": 45.0,
+      "z": -23.5,
+      "halfX": 5.2,
+      "halfZ": 3.6,
+      "height": 1.5,
+      "surface": "dirt"
+    },
+    {
+      "id": "homes-east-c",
+      "x": 44.0,
+      "z": 19.5,
+      "halfX": 5.6,
+      "halfZ": 6.6,
+      "height": 2.3,
+      "surface": "dirt"
     }
   ],
   "heightPoints": [
@@ -707,40 +734,40 @@
       "block": "A1",
       "zone": "gate-square",
       "role": "村口石燈（左）",
-      "model": "Assets/YunJing/Models/Day12C/G01/G01.fbx",
+      "model": "Assets/YunJing/Models/VillageHousesB/LT01_VillageStoneLantern/LT01_VillageStoneLantern_v001.fbx",
       "x": -3.6,
       "z": -27,
       "yaw": 0,
       "footprint": [
-        0.6,
-        0.6,
-        2.2
+        0.7,
+        0.7,
+        1.8
       ],
-      "owner": "codex",
+      "owner": "joshsu54",
       "status": "placed",
       "phase": "P1",
       "collider": "box",
-      "author": "Eli-0731（qingxi-day12-c）"
+      "author": "joshsu54（#101 LT01 中式石燈，取代 G01）"
     },
     {
       "id": "Gate_Lantern_R",
       "block": "A1",
       "zone": "gate-square",
       "role": "村口石燈（右）",
-      "model": "Assets/YunJing/Models/Day12C/G01/G01.fbx",
+      "model": "Assets/YunJing/Models/VillageHousesB/LT01_VillageStoneLantern/LT01_VillageStoneLantern_v001.fbx",
       "x": 3.6,
       "z": -27,
       "yaw": 0,
       "footprint": [
-        0.6,
-        0.6,
-        2.2
+        0.7,
+        0.7,
+        1.8
       ],
-      "owner": "codex",
+      "owner": "joshsu54",
       "status": "placed",
       "phase": "P1",
       "collider": "box",
-      "author": "Eli-0731（qingxi-day12-c）"
+      "author": "joshsu54（#101 LT01 中式石燈，取代 G01）"
     },
     {
       "id": "Plaza_ElderTree",
@@ -933,7 +960,7 @@
       "block": "A1",
       "zone": "smithy",
       "role": "鐵匠鋪",
-      "model": "Assets/QingxiWorld/Models/Dondon/Blacksmith.fbx",
+      "model": "Assets/YunJing/Models/VillageReskinB/RS02_Blacksmith/RS02_Blacksmith_v001.fbx",
       "x": 34,
       "z": -8,
       "yaw": -90,
@@ -943,10 +970,10 @@
         5.0
       ],
       "owner": "joshsu54",
-      "status": "ready",
+      "status": "placed",
       "phase": "P1",
-      "collider": "box",
-      "author": "joshsu54"
+      "collider": "none",
+      "author": "joshsu54（#101 RS02 換材質）"
     },
     {
       "id": "Smithy_Smith",
@@ -974,7 +1001,7 @@
       "block": "A1",
       "zone": "shops-se",
       "role": "材料鋪",
-      "model": "Assets/QingxiWorld/Models/Dondon/MaterialShop.fbx",
+      "model": "Assets/YunJing/Models/VillageReskinB/RS02_MaterialShop/RS02_MaterialShop_v001.fbx",
       "x": 35.4,
       "z": -21,
       "yaw": -90,
@@ -984,10 +1011,10 @@
         5.6
       ],
       "owner": "joshsu54",
-      "status": "ready",
+      "status": "placed",
       "phase": "P1",
-      "collider": "box",
-      "author": "joshsu54"
+      "collider": "none",
+      "author": "joshsu54（#101 RS02 換材質）"
     },
     {
       "id": "Shops_Teahouse",
@@ -1649,6 +1676,66 @@
       "phase": "P1",
       "collider": "box",
       "sink": 0.01
+    },
+    {
+      "id": "Homes_East_TwoStorey",
+      "block": "A1",
+      "zone": "homes-east-n",
+      "role": "兩層民居（東路北側）",
+      "model": "Assets/YunJing/Models/VillageHousesB/VH01_TwoStoreyHouse/VH01_TwoStoreyHouse_v001.fbx",
+      "x": 44.0,
+      "z": -6.5,
+      "yaw": 90,
+      "footprint": [
+        8.0,
+        6.5,
+        7.5
+      ],
+      "owner": "joshsu54",
+      "author": "joshsu54（#101 VH 民居）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Homes_East_Narrow",
+      "block": "A1",
+      "zone": "homes-east-s",
+      "role": "窄長小屋（東路南側）",
+      "model": "Assets/YunJing/Models/VillageHousesB/VH03_NarrowCottage/VH03_NarrowCottage_v001.fbx",
+      "x": 45.0,
+      "z": -23.5,
+      "yaw": 90,
+      "footprint": [
+        5.0,
+        9.0,
+        5.0
+      ],
+      "owner": "joshsu54",
+      "author": "joshsu54（#101 VH 民居）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
+    },
+    {
+      "id": "Homes_North_Courtyard",
+      "block": "A1",
+      "zone": "homes-east-c",
+      "role": "曲尺形院落（民居巷東）",
+      "model": "Assets/YunJing/Models/VillageHousesB/VH02_LCourtyardHouse/VH02_LCourtyardHouse_v001.fbx",
+      "x": 44.0,
+      "z": 19.5,
+      "yaw": 90,
+      "footprint": [
+        12.0,
+        10.0,
+        5.5
+      ],
+      "owner": "joshsu54",
+      "author": "joshsu54（#101 VH 民居）",
+      "status": "placed",
+      "phase": "P1",
+      "collider": "none"
     }
   ],
   "herbs": [

@@ -12,18 +12,24 @@ namespace YunJing.Editor
     public static class QingxiVillageHouseKit
     {
         const string Root = "Assets/YunJing/Models/VillageHousesB";
-        static readonly string[] Slots = { "Main", "Stone", "Wood", "RoofTiles" };
+        // #101: the same pipeline also made the VH houses and LT01 (village-houses-b) and the re-skinned Dondon
+        // buildings RS01–RS03 (village-reskin-b, their roof slot is "Tile" with its own texture).
+        const string Reskin = "Assets/YunJing/Models/VillageReskinB";
+        static readonly string[] Slots = { "Main", "Stone", "Wood", "RoofTiles", "Tile" };
+        static string RootOf(string model) => model.StartsWith(Reskin + "/") ? Reskin : Root;
+        static string ExportsOf(string model) => model.StartsWith(Reskin + "/") ? "art/exports/village-reskin-b" : "art/exports/village-houses-b";
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
 
-        public static bool Owns(string model) => !string.IsNullOrEmpty(model) && model.StartsWith(Root + "/");
+        public static bool Owns(string model) => !string.IsNullOrEmpty(model) && (model.StartsWith(Root + "/") || model.StartsWith(Reskin + "/"));
 
         static string Id(string model) => Path.GetFileName(Path.GetDirectoryName(model));
 
         public static void Ensure(string model)
         {
             string id = Id(model);
-            string src = Path.Combine(Repo, "art/exports/village-houses-b", id);
-            string dst = Path.Combine(Repo, "apps/game", Root, id);
+            string src = Path.Combine(Repo, ExportsOf(model), id);
+            string root = RootOf(model);
+            string dst = Path.Combine(Repo, "apps/game", root, id);
             Directory.CreateDirectory(Path.Combine(dst, "Textures"));
             bool copied = false;
             foreach (var file in new[] { Path.Combine(src, Path.GetFileName(model)) }.Concat(Directory.GetFiles(Path.Combine(src, "Textures"), "*.png")))
@@ -48,7 +54,7 @@ namespace YunJing.Editor
                 importer.importNormals = ModelImporterNormals.Import;
                 importer.SaveAndReimport();
             }
-            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { $"{Root}/{id}/Textures" }))
+            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { $"{root}/{id}/Textures" }))
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 var ti = AssetImporter.GetAtPath(path) as TextureImporter; if (ti == null) continue;
@@ -61,35 +67,40 @@ namespace YunJing.Editor
             }
         }
 
-        static Material Mat(string id, string slot)
+        // null when the house has no texture set for that slot (LT01 is one material; VL has no "Tile").
+        static Material Mat(string root, string id, string slot)
         {
-            string path = $"{Root}/{id}/{id}_{slot}.mat";
+            string prefix = slot == "Main" ? id : slot == "RoofTiles" ? "VL_RoofTiles" : $"{id}_{slot}";
+            Texture2D Tex(string kind) => AssetDatabase.LoadAssetAtPath<Texture2D>($"{root}/{id}/Textures/{prefix}_{kind}.png");
+            var colour = Tex("BaseColor");
+            if (colour == null) return null;
+            string path = $"{root}/{id}/{id}_{slot}.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (mat == null) { mat = new Material(Shader.Find("Universal Render Pipeline/Lit")); AssetDatabase.CreateAsset(mat, path); }
-            string prefix = slot == "Main" ? id : slot == "RoofTiles" ? "VL_RoofTiles" : $"{id}_{slot}";
-            Texture2D Tex(string kind) => AssetDatabase.LoadAssetAtPath<Texture2D>($"{Root}/{id}/Textures/{prefix}_{kind}.png");
-            var colour = Tex("BaseColor");
-            if (colour == null) throw new FileNotFoundException("House colour texture missing", $"{Root}/{id}/Textures/{prefix}_BaseColor.png");
             mat.SetTexture("_BaseMap", colour); mat.SetColor("_BaseColor", Color.white);
             var normal = Tex("Normal");
             if (normal != null) { mat.SetTexture("_BumpMap", normal); mat.EnableKeyword("_NORMALMAP"); }
             var mask = Tex("MetallicSmoothness");
             if (mask != null) { mat.SetTexture("_MetallicGlossMap", mask); mat.EnableKeyword("_METALLICSPECGLOSSMAP"); mat.SetFloat("_Smoothness", 1); }
+            var glow = Tex("Emission");   // lantern flames, forge embers: lit at night by QingxiDayNight through nightGlows where wired
+            if (glow != null) { mat.SetTexture("_EmissionMap", glow); mat.SetColor("_EmissionColor", Color.white * .9f); mat.EnableKeyword("_EMISSION"); }
             EditorUtility.SetDirty(mat);
             return mat;
         }
 
         public static void Prepare(GameObject go, string model)
         {
-            string id = Id(model);
-            var mats = Slots.ToDictionary(s => s, s => Mat(id, s));
+            string id = Id(model), root = RootOf(model);
+            var mats = Slots.ToDictionary(s => s, s => Mat(root, id, s));
+            if (mats["Main"] == null) throw new FileNotFoundException("House colour texture missing", $"{root}/{id}/Textures/{id}_BaseColor.png");
             foreach (var r in go.GetComponentsInChildren<Renderer>(true))
             {
                 if (r.name.EndsWith("_Collision")) { r.enabled = false; continue; }
                 r.sharedMaterials = r.sharedMaterials.Select(m =>
                 {
                     string name = m != null ? m.name : "";
-                    return mats[Slots.FirstOrDefault(s => name.EndsWith("_" + s)) ?? "Main"];
+                    string slot = Slots.FirstOrDefault(s => name.EndsWith("_" + s));
+                    return (slot != null ? mats[slot] : null) ?? mats["Main"];
                 }).ToArray();
             }
             var cut = new[] { .1f, .035f, .006f };
