@@ -135,6 +135,7 @@ namespace YunJing.Editor
             var streamer = new GameObject("Qingxi Block Streamer (K5)").AddComponent<QingxiBlockStreamer>();
             streamer.gameObject.AddComponent<QingxiUpstreamShots>();   // --upstream-shots: review views of D3
             streamer.gameObject.AddComponent<QingxiTeaTerraceShots>();   // --tea-shots: review views of A4
+            streamer.gameObject.AddComponent<QingxiKeyArtShots>();   // --keyart-shots: the key art cameras, UI hidden, for same-camera comparison
             streamer.blocks = QingxiBlockBuilder.Blocks.Select(b =>
             {
                 var a = QingxiVillageTerrain.Load($"tools/qingxi-terrain/blocks/{b.id}.json").bounds;
