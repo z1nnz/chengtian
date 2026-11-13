@@ -29,8 +29,8 @@ Shader "YunJing/XianxiaTreeLeaves"
         _ShadowTint ("Shadow tint (ambient in shade)", Color) = (0.62, 0.74, 0.9, 1)
         _Ambient ("Ambient strength", Range(0, 2)) = 1
         _Translucency ("Back-light glow", Range(0, 1)) = 0.35
-        _GrazeMin ("Graze: clipped below", Range(0, 1)) = 0.24
-        _GrazeMax ("Graze: whole above", Range(0, 1)) = 0.6
+        _GrazeMin ("Graze: clipped below", Range(0, 1)) = 0.3
+        _GrazeMax ("Graze: whole above", Range(0, 1)) = 0.66
         _ShadowStrength ("Cast shadow strength", Range(0, 1)) = 0.55
         [Header(Wind)]
         _WindStrength ("Sway (m at weight 1)", Float) = 0.22

@@ -1,42 +1,42 @@
-INFO prefab Assets/YunJing/Models/XianxiaGreatTreeV1/XT01_XianxiaGreatTree_Green.prefab
-INFO prefab Assets/YunJing/Models/XianxiaGreatTreeV1/XT01_XianxiaGreatTree_Gold.prefab
-PASS Green: LODGroup LOD0-LOD3, one renderer each (size 24.7 m, transition heights 0.980 / 0.618 / 0.243 / 0.045 for 60 / 110 / 280 / 1500 m, LOD bias 2.00)
-PASS Green: LOD0 19099 triangles (model_info 19099, cap 25000)
+INFO prefab Assets/YunJing/Models/XianxiaGreatTreeV2/XT01_XianxiaGreatTree_Green.prefab
+INFO prefab Assets/YunJing/Models/XianxiaGreatTreeV2/XT01_XianxiaGreatTree_Gold.prefab
+PASS Green: LODGroup LOD0-LOD3, one renderer each (size 30.7 m, transition heights 0.980 / 0.767 / 0.301 / 0.056 for 60 / 110 / 280 / 1500 m, LOD bias 2.00)
+PASS Green: LOD0 23771 triangles (model_info 23771, cap 25000)
 PASS Green: LOD0 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Green (YunJing/XianxiaTreeLeaves)
-PASS Green: LOD0 vertex colour on every vertex (24536/24536)
-PASS Green: wind weights: bark below 2 m <= 0.00, leaf cards 0.56-1.00; light mask 0.05-1.00
-PASS Green: LOD0 normals all unit length (0 bad of 24536)
-PASS Green: LOD1 5379 triangles (model_info 5379, cap 8000)
+PASS Green: LOD0 vertex colour on every vertex (34597/34597)
+PASS Green: wind weights: bark below 2 m <= 0.00, leaf cards 0.56-1.00; light mask 0.00-1.00
+PASS Green: LOD0 normals all unit length (0 bad of 34597)
+PASS Green: LOD1 5514 triangles (model_info 5514, cap 8000)
 PASS Green: LOD1 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Green (YunJing/XianxiaTreeLeaves)
-PASS Green: LOD1 vertex colour on every vertex (6991/6991)
-PASS Green: LOD2 1384 triangles (model_info 1384, cap 2500)
+PASS Green: LOD1 vertex colour on every vertex (7647/7647)
+PASS Green: LOD2 2204 triangles (model_info 2204, cap 2500)
 PASS Green: LOD2 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Green (YunJing/XianxiaTreeLeaves)
-PASS Green: LOD2 vertex colour on every vertex (1775/1775)
+PASS Green: LOD2 vertex colour on every vertex (3349/3349)
 PASS Green: LOD3 4 triangles (model_info 4, cap 200)
 PASS Green: LOD3 materials M_XT01_Impostor_Green (YunJing/XianxiaTreeLeaves)
 PASS Green: LOD3 vertex colour on every vertex (8/8)
-PASS Green: height 16.68 m (model_info 16.68), crown 23.5 x 23.8 m, roots to -0.30 m
+PASS Green: height 15.39 m (model_info 15.39), crown 27.2 x 26.1 m, roots to -0.30 m
 PASS Green: trunk MeshCollider (convex) with its renderer hidden
 PASS Green: leaf atlas Preserve Coverage at 0.5, 1024 max
-PASS Gold: LODGroup LOD0-LOD3, one renderer each (size 24.7 m, transition heights 0.980 / 0.618 / 0.243 / 0.045 for 60 / 110 / 280 / 1500 m, LOD bias 2.00)
-PASS Gold: LOD0 19099 triangles (model_info 19099, cap 25000)
+PASS Gold: LODGroup LOD0-LOD3, one renderer each (size 30.7 m, transition heights 0.980 / 0.767 / 0.301 / 0.056 for 60 / 110 / 280 / 1500 m, LOD bias 2.00)
+PASS Gold: LOD0 23771 triangles (model_info 23771, cap 25000)
 PASS Gold: LOD0 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Gold (YunJing/XianxiaTreeLeaves)
-PASS Gold: LOD0 vertex colour on every vertex (24536/24536)
-PASS Gold: wind weights: bark below 2 m <= 0.00, leaf cards 0.56-1.00; light mask 0.05-1.00
-PASS Gold: LOD0 normals all unit length (0 bad of 24536)
-PASS Gold: LOD1 5379 triangles (model_info 5379, cap 8000)
+PASS Gold: LOD0 vertex colour on every vertex (34597/34597)
+PASS Gold: wind weights: bark below 2 m <= 0.00, leaf cards 0.56-1.00; light mask 0.00-1.00
+PASS Gold: LOD0 normals all unit length (0 bad of 34597)
+PASS Gold: LOD1 5514 triangles (model_info 5514, cap 8000)
 PASS Gold: LOD1 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Gold (YunJing/XianxiaTreeLeaves)
-PASS Gold: LOD1 vertex colour on every vertex (6991/6991)
-PASS Gold: LOD2 1384 triangles (model_info 1384, cap 2500)
+PASS Gold: LOD1 vertex colour on every vertex (7647/7647)
+PASS Gold: LOD2 2204 triangles (model_info 2204, cap 2500)
 PASS Gold: LOD2 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Gold (YunJing/XianxiaTreeLeaves)
-PASS Gold: LOD2 vertex colour on every vertex (1775/1775)
+PASS Gold: LOD2 vertex colour on every vertex (3349/3349)
 PASS Gold: LOD3 4 triangles (model_info 4, cap 200)
 PASS Gold: LOD3 materials M_XT01_Impostor_Gold (YunJing/XianxiaTreeLeaves)
 PASS Gold: LOD3 vertex colour on every vertex (8/8)
-PASS Gold: height 16.68 m (model_info 16.68), crown 23.5 x 23.8 m, roots to -0.30 m
+PASS Gold: height 15.39 m (model_info 15.39), crown 27.2 x 26.1 m, roots to -0.30 m
 PASS Gold: trunk MeshCollider (convex) with its renderer hidden
 PASS Gold: leaf atlas Preserve Coverage at 0.5, 1024 max
-PASS walker heading at the trunk stops 1.29 m from the axis (collider radius 1.07 m)
+PASS walker heading at the trunk stops 1.67 m from the axis (collider radius 1.47 m)
 PASS walker 1.5 m beside the trunk goes on under the crown (3.80 m past)
 SHOT XT01_XianxiaGreatTree_green_three_quarter
 SHOT XT01_XianxiaGreatTree_green_front

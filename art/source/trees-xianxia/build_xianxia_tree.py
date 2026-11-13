@@ -2,22 +2,28 @@
 
   blender --background --factory-startup --python art/source/trees-xianxia/build_xianxia_tree.py
 
-A big old broadleaf for sect courtyards, mountain woods and grassland: a short thick trunk on a wide root flare, a few heavy limbs
-reaching out, and a wide, soft crown built from about forty leaf clusters of different sizes with sky between them (stylised
-open-world look: between anime and natural, soft hand-painted feel). Original design; the reference shots only set the direction.
+A big old broadleaf for grassland, mountain woods and sect courtyards: a short thick leaning trunk on a soft root flare, a few heavy
+limbs reaching out under a WIDE, LOW UMBRELLA CROWN (about 25 m across, 15 m high) of soft overlapping foliage masses: a dome of five
+on top, a ring of eight, and an outer ring of eleven flattened masses that hangs out over the ground (stylised open-world look: bright,
+between anime and natural, soft hand-painted feel). Original design; the user's reference shots only set the direction.
+
+v002 (2026-11-13): the v001 look was rejected ("全部都不對"): big drawn leaves, a crown like a pile of balls each lit on its own, dark
+teal shade, busy bark. v002 changes all of it: small-leaf foliage clumps in the atlas (xt_leaves v002), a wide flat umbrella of
+masses, card normals from ONE smooth field over all masses (the crown lights as one soft volume with gentle lumps, the way stylised
+game trees are shaded), a brighter yellow-green / pure gold ramp with a light mid-green shade, calmer bark, shorter roots.
 
 Method
 - wood: the tr_broad engine of the TR series (trunk with root lobes, ridges and burls; seeded limbs; space colonisation towards the
-  clusters; pipe-model radii; one fused Skin mesh, decimated to the LOD budget) plus surface roots running out over the ground.
-- leaves: every cluster is an ellipsoid (lumpy, flattened underneath) covered with leaf-cluster cards from a grey hand-painted atlas.
-  Card normals are bent to the cluster's own shape blended with the whole crown, so each cluster shades like one soft lobe while its
-  rim stays toothy (the leaves in the texture). The vertex colour carries the wind and a light mask; the leaf shader turns the grey
-  texture into colour with a deep / mid / tip ramp along that mask, so the green and the gold tree are two materials, nothing else.
+  masses; pipe-model radii; one fused Skin mesh, decimated to the LOD budget) plus surface roots running out over the ground.
+- leaves: foliage-clump cards from a grey hand-painted atlas over every mass (lumpy flattened ellipsoids). The vertex colour carries the
+  wind and a light mask (top / height / how deep inside the crown); the leaf shader turns the grey texture into colour with a
+  deep / mid / tip ramp along that mask, so the green and the gold tree are two materials, nothing else.
 
 Output (art/exports/trees-xianxia/XT01_XianxiaGreatTree/):
-  XT01_XianxiaGreatTree_v001.fbx / .glb   root empty, children _LOD0.._LOD3 and _Collision
+  XT01_XianxiaGreatTree_v002.fbx / .glb   root empty, children _LOD0.._LOD3 and _Collision
   Textures/XT01_Bark_{BaseColor,Normal,MetallicSmoothness}.png (1024), XT01_Leaves_BaseColor.png (2048, RGBA)
-  model_info.json, validation.json; art/source/trees-xianxia/blend/XT01_XianxiaGreatTree_v001.blend
+  model_info.json, validation.json; art/source/trees-xianxia/blend/XT01_XianxiaGreatTree_v002.blend
+  (v001 is in git history, commit cd94d3bb)
 Vertex colour 'Wind' (linear float): R sway weight (trunk 0, limbs 0.02-0.25, twigs to 0.55, leaves 0.55-1), G phase,
 B light mask 0..1 (leaves: deep inside / underneath -> sunlit tops and rim; wood: height), A cluster tint variation 0..1.
 """
@@ -33,41 +39,70 @@ import tr_skin as TS
 from tr_broad import install
 import xt_leaves as XL
 
-AID = 'XT01_XianxiaGreatTree'; VER = 'v001'; SP = 'XT01'
+AID = 'XT01_XianxiaGreatTree'; VER = 'v002'; SP = 'XT01'
 ART = HERE.parents[1]
 EXP = ART / 'exports' / 'trees-xianxia' / AID
 TEX = EXP / 'Textures'
 CAPS = {0: 25000, 1: 8000, 2: 2500, 3: 200}
 LOD_SWITCH_M = [60, 110, 280, 1500]
-HEIGHT_RANGE = (15., 18.5)
+HEIGHT_RANGE = (14., 17.)
 
-# leaf colour ramps (sRGB, as set on the Unity material; the project renders in gamma space, Blender previews convert)
+# leaf colour ramps (sRGB, as set on the Unity material; the project renders in gamma space, Blender previews convert).
+# Green: sunlit yellow-green tops, a fresh mid green, a light teal-green shade (never near black). Gold: pure gold, amber-orange shade.
 LOOKS = {
-    'green': dict(deep='#2C5A52', mid='#5B9A45', tip='#B8D86A', var_a='#B9A35A', var_b='#6F9E86', var_amount=.45, midpoint=.5),
-    'gold':  dict(deep='#8A5222', mid='#D8952A', tip='#F2D35C', var_a='#C9B14E', var_b='#D9773A', var_amount=.45, midpoint=.5),
+    'green': dict(deep='#2F6A58', mid='#77B046', tip='#B7DA58', var_a='#C2C25A', var_b='#64A07E', var_amount=.35, midpoint=.48),
+    'gold':  dict(deep='#C47528', mid='#EDAE22', tip='#FFE35E', var_a='#CFC948', var_b='#E5843A', var_amount=.4, midpoint=.46),
 }
-DETAIL = .8            # how far the painted leaf value pushes the light mask (leaf-by-leaf light inside a cluster)
-GRAZE = (.24, .6)       # |card normal . view|: below the first value a card is clipped away, above the second it is whole
-VALUE = .45              # how much of the painted value multiplies the colour (leaf rims, shadows between leaves)
+DETAIL = .55           # how far the painted leaf value pushes the light mask (sprig-by-sprig light inside a clump)
+GRAZE = (.3, .66)      # |card normal . view|: below the first value a card is clipped away, above the second it is whole
+VALUE = .3               # how much of the painted value multiplies the colour (shaded hearts between the sprigs)
+
+
+def _masses(seed=7):
+    """The crown: (x, y, z, radius) of every foliage mass. A dome of five on top, a ring of eight, an outer ring of eleven, a low
+    inner ring of six round the top of the trunk (hides the bare limbs, gives the crown its depth) and five lower masses that hang
+    out under the outer ring (an uneven skirt); all flattened by SQ. The limbs grow towards these, the leaf cards cover them."""
+    rng = np.random.default_rng(seed); out = [(.3, .2, 12.3, 3.8)]
+    def ring(n, d, z, r, off=0., ja=.18):
+        for k in range(n):
+            a = 2 * math.pi * k / n + off + rng.uniform(-ja, ja); dd = rng.uniform(*d)
+            out.append((dd * math.cos(a), dd * math.sin(a), rng.uniform(*z), rng.uniform(*r)))
+    ring(4, (2.8, 3.6), (11.5, 12.1), (3.1, 3.5), .4, .25)
+    ring(8, (6.2, 7.0), (9.8, 10.5), (3.2, 3.6), .15)
+    ring(11, (9.2, 10.3), (7.9, 8.6), (2.7, 3.1), 0., .15)
+    ring(6, (3.4, 4.4), (7.9, 8.6), (2.6, 3.0), .3, .3)
+    ring(5, (9.6, 10.8), (6.8, 7.3), (1.9, 2.4), .9, .4)
+    # lopsided like a real old tree: the crown leans out over the side the trunk leans to (+x), bigger and a little higher there,
+    # and the lumps differ more in size, so the outline is a few big soft bulges, not an even ring
+    def lop(m):
+        x, y, z, r = m; f = math.cos(math.atan2(y, x) - .2) if (x or y) else 0.
+        return (x * (1 + .1 * f), y * (1 + .1 * f), z + .45 * f, r * (1 + .12 * f) * rng.uniform(.9, 1.1))
+    out = [out[0]] + [lop(m) for m in out[1:]]
+    return [tuple(round(float(x), 3) for x in m) for m in out]
+
+
+MASSES = _masses()
+# written to model_info.json; set after the Unity check and the review of the shots, never before
+STATUS = ('已驗：Unity 6000.3.28f1 匯入，自動檢查 38 項 PASS', '已驗：Blender 與 Unity 截圖已逐張目視', '部分：臨時放進 Qingxi.unity 截圖（場景未存檔），沒有正式擺進遊戲')
 
 # ------------------------------------------------------------------ tree shape (tr_broad species namespace)
 NS = dict(
     PALETTE=[(0, 0, 0)] * 8, CELL_RECTS={}, CELL_ASPECT={}, CLUSTER_TONES=(1, 3, 4, 6),
     GROW=dict(step=.42, d_inf=3.6, d_kill=.85, trop=(0., 0., .1), iters=90, r_tip=.022, pipe=.42, top_r=.9, smooth=5,
-              tip_back=1.0, squash=.78),
+              tip_back=2.2, squash=.78),
     SKIN_WOOD={0: ((0, 1, 2, 3), 3, 11500), 1: ((0, 1, 2), 1, 3000), 2: ((0, 1), 1, 820)},
     VARIANTS={'A': dict(
-        H=16., seed=411, r0=1.15, twist=.035, zmin=6.6,
+        H=16., seed=411, r0=1.6, twist=.035, zmin=6.6,
         trunk=[(0, 0, -.02, 1.), (0, 0, 0, .93), (.1, .04, .08, .74), (.3, .1, .17, .66), (.46, .12, .26, .62), (.52, .08, .33, .6)],
         burls=[(3.4, 3.4, .18), (5.1, 4.6, .15)],
-        crown=(.3, .1, 10.6, 9.6, 9.0, 4.0, .2), clumps=(21, (2.6, 3.4), 130, .55),
-        extra_clumps=[(-7.8, 2.6, 8.0, 2.8), (8.0, -2.2, 7.8, 2.9), (1.5, 7.9, 8.2, 2.7), (-2.4, -7.8, 8.0, 2.8)],
-        scaffolds=[(1., 15, 26, 6.0), (1., 100, 32, 5.4), (1., 195, 22, 6.4), (1., 285, 28, 5.8), (1., 50, 62, 4.0)],
+        crown=(.3, .1, 10.2, 12.5, 12.5, 4.8, .12), clumps=(0, (2.6, 3.4), 150, .55), squash=.66,
+        extra_clumps=[(x, y, z, r * .75) for (x, y, z, r) in MASSES],      # the wood grows to the inner three quarters of each mass: no twig reaches the leaf surface
+        scaffolds=[(1., 15, 34, 5.0), (1., 100, 38, 4.6), (1., 195, 32, 5.2), (1., 285, 36, 4.8), (1., 50, 62, 3.6), (1., 235, 58, 3.4)],
         stubs=[])},
 )
 install(NS)
 VAR = NS['VARIANTS']['A']
-ROOTS = [(15, .5, 3.0), (78, .3, 2.2), (140, .55, 3.3), (205, .35, 2.5), (262, .6, 3.4), (318, .3, 2.0)]      # (azimuth deg, buttress on the trunk x radius, surface root run m)
+ROOTS = [(15, .4, 1.9), (78, .25, 1.3), (140, .45, 2.1), (205, .3, 1.5), (262, .45, 2.2), (318, .25, 1.2)]      # (azimuth deg, buttress on the trunk x radius, surface root run m)
 
 
 def _section(seed, burls):
@@ -99,90 +134,92 @@ def skeleton():
 
 
 # ------------------------------------------------------------------ foliage
-FOL = {0: dict(kind='S', size=(1.5, 2.0), cover=2.7, inner=.14),
-       1: dict(kind='B', size=(2.3, 2.9), cover=1.9, inner=.08),
-       2: dict(kind='B', size=(3.4, 4.2), cover=1.45, inner=0.)}
-SQ = .8           # clusters are flatter than round
-
-
-_CL = {}
+FOL = {0: dict(kind='S', size=(1.4, 1.9), cover=5.0, inner=.24),
+       1: dict(kind='B', size=(2.4, 3.0), cover=2.6, inner=.12),
+       2: dict(kind='B', size=(3.2, 4.0), cover=3.4, inner=.1)}
+SQ = .66          # masses are flattened: tiers of foliage, flat underneath
+FIELD_K = .95     # width of the smooth field that blends the masses (bigger = softer, the crown lights more as one volume)
 
 
 def clusters():
-    """The grown clusters, each broken into a main lobe and one or two smaller side lobes (up / out from the crown centre), so the
-    crown reads as many soft lumps of different sizes, not a pile of balls. Cached: every LOD uses the same lobes."""
-    if 'v' in _CL: return _CL['v']
-    cs, rr = NS['_CLUMPS']['A']; cs = np.array(cs, float); rr = np.array(rr, float)
-    rng = np.random.default_rng(23); cc = NS['_CROWN']['A'].c; out_c = []; out_r = []
-    for c, r in zip(cs, rr):
-        out_c.append(c); out_r.append(r * .82)
-        o = c - np.array(cc); o[2] = 0; o /= np.linalg.norm(o) + 1e-6
-        for j in range(int(rng.integers(1, 3))):
-            a = rng.uniform(-1.6, 1.6); d = np.array([o[0] * math.cos(a) - o[1] * math.sin(a), o[0] * math.sin(a) + o[1] * math.cos(a), rng.uniform(.1, .7)])
-            d /= np.linalg.norm(d); out_c.append(c + d * r * rng.uniform(.55, .75)); out_r.append(r * rng.uniform(.48, .64))
-    _CL['v'] = (np.array(out_c), np.array(out_r)); return _CL['v']
+    """The crown masses (centres N x 3, radii N)."""
+    m = np.array(MASSES, float); return m[:, :3], m[:, 3]
 
 
-def _ell(p, c, r):
-    d = p - c; return np.array([d[0] / r, d[1] / r, d[2] / (r * SQ)])
+def field(p):
+    """Smooth field over all masses at p (3,): -> (value, outward normal). value ~0.5 on the surface of a lone mass, more inside
+    where masses overlap. The normal is the field's gradient: the crown shades as one soft volume with gentle lumps."""
+    cs, rr = clusters()
+    d = p[None, :] - cs; sc = np.stack([rr, rr, rr * SQ], 1)
+    e = d / sc; q2 = (e ** 2).sum(1) / FIELD_K ** 2
+    w = np.exp(-q2)
+    g = (w[:, None] * e / sc).sum(0)
+    n = g / (np.linalg.norm(g) + 1e-9)
+    return float(w.sum()), n
 
 
-def foliage(buf, lod, rng, room):
-    """Cards on every cluster. Returns the number of cards."""
-    cs, rr = clusters(); cr = NS['_CROWN']['A']; N = len(cs); cfg = FOL[lod]
+def foliage(buf, lod, rng, room, tips=()):
+    """Foliage-clump cards over every mass. Returns the number of cards."""
+    cs, rr = clusters(); N = len(cs); cfg = FOL[lod]
     zlo = float((cs[:, 2] - rr * SQ).min()); zhi = float((cs[:, 2] + rr * SQ).max())
     tint = np.random.default_rng(91).random(N); phase = np.random.default_rng(92).random(N)
     cand = []
     for k in range(N):
-        c = cs[k]; r = rr[k]; scale = (r / 2.4) ** .45
+        c = cs[k]; r = rr[k]; scale = (r / 3.) ** .4
         s_mean = np.mean(cfg['size']) * scale
         area = 4 * math.pi * r * r * (1 + 2 * SQ) / 3
         n = int(area * cfg['cover'] / (s_mean * s_mean * .8))
         ga = math.pi * (3 - math.sqrt(5))
         for i in range(n):
             zf = 1 - 2 * (i + .5) / n; rad = math.sqrt(max(0., 1 - zf * zf)); th = ga * i + k
-            u = np.array([math.cos(th) * rad, math.sin(th) * rad, zf]) + rng.normal(0, .12, 3); u /= np.linalg.norm(u)
-            lump = 1 + .26 * noise.noise(Vector(u * 1.3 + k * 3.3)) + .12 * noise.noise(Vector(u * 3.1 + k * 1.1))
+            u = np.array([math.cos(th) * rad, math.sin(th) * rad, zf]) + rng.normal(0, .1, 3); u /= np.linalg.norm(u)
+            lump = 1 + .16 * noise.noise(Vector(u * 1.7 + k * 3.3)) + .08 * noise.noise(Vector(u * 3.6 + k * 1.1))
             inner = rng.random() < cfg['inner']
-            spike = (not inner) and rng.random() < .22        # leaves poking out of the lobe: a toothy, uneven rim
-            dep = rng.uniform(.45, .72) if inner else (rng.uniform(.98, 1.08) if spike else rng.uniform(.84, 1.))
+            spike = (not inner) and rng.random() < .15        # clumps poking out of the mass: an uneven, lacy rim
+            dep = rng.uniform(.5, .75) if inner else (rng.uniform(.96, 1.02) if spike else rng.uniform(.85, .99))
             p = c + u * np.array([r, r, r * SQ]) * lump * dep
             if p[2] < VAR['zmin'] - .4: continue
-            # buried inside a neighbour: mostly dropped (never seen), a few kept so no cluster shows sky through a seam
+            # buried inside a neighbour: never seen
             e = np.sqrt((((p - cs) / np.stack([rr, rr, rr * SQ], 1)) ** 2).sum(1)); e[k] = 9
-            if e.min() < .74 and rng.random() < .85: continue
-            # deep inside the crown and facing its middle: nobody sees it
-            q = Vector(p); cn = cr.normal(q)
-            if cr.val(q) < .55 and Vector(u).dot(cn) < -.25 and rng.random() < .8: continue
+            if e.min() < .8 and rng.random() < .9: continue
             size = rng.uniform(*cfg['size']) * scale * (.85 if inner else 1.)
+            if lod:      # the bigger far cards sit deeper, so LOD1 / LOD2 keep the LOD0 outline (no taller crown popping in)
+                p = p - u * max(0., size - np.mean(FOL[0]['size']) * scale) * .65
             cand.append((k, p, u, size, inner))
+    # a card on every twig tip that reaches the outer part of the crown: the wood never pokes through the foliage as dark specks
+    trng = np.random.default_rng(93); sc3 = np.stack([rr, rr, rr * SQ], 1)
+    for t in tips:
+        p = np.array(t); e = np.sqrt((((p - cs) / sc3) ** 2).sum(1)); k = int(np.argmin(e))
+        if not (.6 < e[k] < 1.3) or p[2] < VAR['zmin'] - .4: continue
+        u = (p - cs[k]) / sc3[k]; u /= np.linalg.norm(u) + 1e-9
+        p = p + u * trng.uniform(.1, .3)
+        cand.append((k, p, u, trng.uniform(*cfg['size']) * (rr[k] / 3.) ** .4 * .9, False))
     if len(cand) > room:          # over budget: thin the inner cards first, then at random
         rng.shuffle(cand); cand.sort(key=lambda x: x[4]); cand = cand[:room]
     cells = [XL.cell_rect(cfg['kind'], i) for i in range(8 if cfg['kind'] == 'S' else 4)]
     for (k, p, u, size, inner) in cand:
-        c = cs[k]; r = rr[k]
-        n = Vector(u * .9 + rng.normal(0, .18, 3) + np.array([0, 0, .1])).normalized()
-        if n.dot(Vector(u)) < .7: n = (n + Vector(u)).normalized()
-        up = Vector(u * .8 + np.array([0, 0, .7]) + rng.normal(0, .35, 3))
+        _, fn = field(p); fn = Vector(fn)
+        # the card faces out of the crown (field normal), turned a little towards its own mass and at random
+        n = Vector(fn * .5 + Vector(u) * .3 + Vector(rng.normal(0, .3, 3)) + Vector((0, 0, -.45 * max(0., -fn[2])))).normalized()
+        up = Vector(np.array([0, 0, 1.]) + rng.normal(0, .3, 3))
         rect = cells[int(rng.integers(len(cells)))]
-        _card(buf, Vector(p), n, up, size, rect, k, c, r, cr, zlo, zhi, tint[k], phase[k], inner, rng)
+        _card(buf, Vector(p), n, up, size, rect, zlo, zhi, tint[k], phase[k], inner, rng)
     return len(cand)
 
 
-def _card(buf, c, n, up, size, rect, k, cc, r, cr, zlo, zhi, tint, phase, inner, rng):
+def _card(buf, c, n, up, size, rect, zlo, zhi, tint, phase, inner, rng):
     up = up - n * up.dot(n)
     if up.length < 1e-4: up = n.orthogonal()
     up.normalize(); side = up.cross(n).normalized(); hs = size * .5
     u0, v0, u1, v1 = rect; base = len(buf.v)
-    jit = rng.normal(0, .04)
+    jit = rng.normal(0, .035)
     for (x, y, uv) in ((-1, -1, (u0, v0)), (1, -1, (u1, v0)), (1, 1, (u1, v1)), (-1, 1, (u0, v1))):
         p = c + side * (x * hs) + up * (y * hs)
-        pa = np.array(p); e = _ell(pa, cc, r); el = np.linalg.norm(e)
-        nc = Vector((e[0] / r, e[1] / r, e[2] / (r * SQ))).normalized() if el > 1e-4 else Vector((0, 0, 1))
-        sn = (nc * .74 + cr.normal(p) * .2 + Vector((0, 0, .1))).normalized()
-        top = .5 + .5 * nc.z; hc = min(1., max(0., (p.z - zlo) / (zhi - zlo))); rim = min(1., cr.val(p))
-        m = .5 * top + .2 * hc + .14 * rim ** 1.5 + .2 * min(1., el) - .08 + jit - (.1 if inner else 0.)
-        reach = min(1., math.hypot(p.x, p.y) / 10.)
+        F, fn = field(np.array(p)); sn = Vector(fn * .88 + np.array([0, 0, .12])).normalized()
+        hc = min(1., max(0., (p.z - zlo) / (zhi - zlo)))
+        occl = min(1., max(0., (F - .45) / 1.1))            # how deep inside the crown (shade between and under the masses)
+        m = .5 + .34 * fn[2] + .2 * hc - .46 * occl + jit - (.08 if inner else 0.)
+        reach = min(1., math.hypot(p.x, p.y) / 11.)
         w = .55 + .45 * reach
         buf.v.append(p); buf.nrm.append(sn); buf.col.append((w, (phase + .03 * rng.random()) % 1., min(1., max(0., m)), tint))
     buf.f.append((base, base + 1, base + 2, base + 3)); buf.fmat.append(1)
@@ -238,6 +275,17 @@ def material_leaves(atlas, look):
     cv = N.new('ShaderNodeCombineColor'); [Lk(S(vl, 'Result', True), cv.inputs[i]) for i in range(3)]; Lk(cv.outputs[0], S(mul, 'B'))
     lin = N.new('ShaderNodeGamma'); lin.inputs[1].default_value = 2.2; Lk(S(mul, 'Result', True), lin.inputs[0])
     _leafy_out(nt, lin.outputs[0], im.outputs['Alpha'], bs, out)
+    # like the Unity shader: both faces of a card are lit with the card's own crown normal (Blender turns the normal of a
+    # back face towards the viewer, so neighbouring cards seen from front and back lit differently and the crown read as flakes)
+    for l in [l for l in nt.links if l.from_node.bl_idname == 'ShaderNodeNewGeometry' and l.from_socket.name == 'Backfacing'
+              and l.to_node.bl_idname == 'ShaderNodeMixShader']: nt.links.remove(l)
+    geo = next(n for n in N if n.bl_idname == 'ShaderNodeNewGeometry')
+    sg = N.new('ShaderNodeMath'); sg.operation = 'MULTIPLY_ADD'; sg.inputs[1].default_value = -2.; sg.inputs[2].default_value = 1.
+    Lk(geo.outputs['Backfacing'], sg.inputs[0])
+    un = N.new('ShaderNodeVectorMath'); un.operation = 'SCALE'; Lk(geo.outputs['Normal'], un.inputs[0]); Lk(sg.outputs[0], un.inputs['Scale'])
+    Lk(un.outputs[0], bs.inputs['Normal'])
+    for n in N:
+        if n.bl_idname == 'ShaderNodeMixShader' and not n.inputs[0].is_linked: n.inputs[0].default_value = 0.
     return m
 
 
@@ -307,7 +355,8 @@ def build_lod(lod, mats, branches, H, P, R):
             buf.v[i].z = max(buf.v[i].z, -.3); w, ph, z, a = buf.col[i]; buf.col[i] = (0., ph, z, 0.)
     rng = np.random.default_rng(500 + lod)
     room = int((CAPS[lod] * .96 - buf.tris()) // 2)
-    cards = foliage(buf, lod, rng, room)
+    tips = [b.pts[-1] for b in branches if b.level in levels and b.kind not in ("trunk", "stub") and b.level >= 1]
+    cards = foliage(buf, lod, rng, room, tips)
     o = buf.build(f'{AID}_LOD{lod}', mats)
     tris = sum(len(p.vertices) - 2 for p in o.data.polygons)
     return o, dict(tris=tris, wood=wood, cards=cards)
@@ -318,6 +367,11 @@ def impostor_render(objs, look, mats_by_look, tmp):
     scene = bpy.context.scene
     o0 = objs[0]; keep = list(o0.data.materials)
     o0.data.materials[1] = mats_by_look[look]
+    # Cycles renders a back face whose shading normal points away from the camera black: for this bake the cards use
+    # Blender's own (viewer-facing) normal, the white sky lights both faces alike anyway
+    nt = mats_by_look[look].node_tree; bs = nt.nodes['Principled BSDF']
+    unflip = [(l.from_socket, l.to_socket) for l in nt.links if l.to_socket == bs.inputs['Normal']]
+    for l in [l for l in nt.links if l.to_socket == bs.inputs['Normal']]: nt.links.remove(l)
     for o in scene.objects: o.hide_render = o not in objs
     ws = [o0.matrix_world @ Vector(c) for c in o0.bound_box]
     lo = Vector([min(v[i] for v in ws) for i in range(3)]); hi = Vector([max(v[i] for v in ws) for i in range(3)])
@@ -335,8 +389,17 @@ def impostor_render(objs, look, mats_by_look, tmp):
     im = bpy.data.images.load(str(fp)); c = np.array(im.pixels[:], np.float32).reshape(Hh, W, 4)[::-1].copy(); bpy.data.images.remove(im)
     c[..., :3] = np.clip(c[..., :3], 0, 1)          # the 8-bit PNG already holds sRGB values (Standard view): no second gamma
     c[..., 3] = (c[..., 3] > .5).astype(np.float32)
+    # the deep inside of the crown seen through the gaps renders near black under the white sky: lift every texel to at least
+    # 80 % of its neighbourhood (12 px box, opaque texels only), so the far tree reads as one soft lit crown, not a spotted one
+    a = c[..., 3:4]; k = 12
+    def box(x):
+        s = np.pad(x, ((k + 1, k), (k + 1, k), (0, 0)), mode='edge').cumsum(0).cumsum(1)
+        return s[2 * k + 1:, 2 * k + 1:] - s[:-2 * k - 1, 2 * k + 1:] - s[2 * k + 1:, :-2 * k - 1] + s[:-2 * k - 1, :-2 * k - 1]
+    nb = box(c[..., :3] * a) / np.maximum(box(a), 1e-6)
+    c[..., :3] = np.where(a > 0, np.maximum(c[..., :3], nb * .8), c[..., :3])
     scene.world = kw; bpy.data.objects.remove(cam)
     for o in scene.objects: o.hide_render = False
+    for a, b in unflip: nt.links.new(a, b)
     for i, m in enumerate(keep): o0.data.materials[i] = m
     return c, (-half, half, z0, z1)
 
@@ -368,8 +431,8 @@ def main():
     bpy.ops.wm.read_factory_settings(use_empty=True)
     TEX.mkdir(parents=True, exist_ok=True)
     tmp = Path(bpy.app.tempdir or '.') / 'xt01'; tmp.mkdir(parents=True, exist_ok=True)
-    bark = TX.painted_bark(TEX, SP, HERE.parent / 'trees-b' / 'bark_src' / 'elder_tree_bark_v1.png', sat=.62, gain=1.18,
-                           tint=(1.0, .94, .88), contrast=1.0, crack=.25, normal=9., smooth_val=.08, blur_n=(1, 3))
+    bark = TX.painted_bark(TEX, SP, HERE.parent / 'trees-b' / 'bark_src' / 'elder_tree_bark_v1.png', sat=.55, gain=1.24,
+                           tint=(1.0, .93, .86), contrast=.9, crack=.12, normal=5., smooth_val=.1, blur_n=(1, 3))
     atlas, cells, mean = XL.paint_atlas(); MEAN[0] = mean
     atlas_path = TEX / f'{SP}_Leaves_BaseColor.png'; save_atlas(atlas, atlas_path)
     mats_leaf = {lk: material_leaves(atlas_path, lk) for lk in LOOKS}
@@ -436,7 +499,7 @@ def main():
                 materials_per_look=[f'M_{SP}_Bark', f'M_{SP}_Leaves_<Look>', f'M_{SP}_Impostor_<Look>'],
                 wind_vertex_colour='Wind (linear): R sway weight, G phase, B light mask (leaves), A tint variation (leaves)',
                 lod_switch_distance_m=LOD_SWITCH_M, budget_per_lod=budget, texture_resolution_px=texres,
-                status=dict(Exported=True, Imported='Unity 6000.3.28f1 編輯器批次檢查通過（XianxiaTreeCheck，2026-11-13）', Visually_Verified='Blender 與 Unity 審圖（2026-11-13）', In_game_Verified='未驗：只在 Qingxi 灰模裡擺拍（不存檔），沒有放進正式場景'))
+                status=dict(Exported=True, Imported=STATUS[0], Visually_Verified=STATUS[1], In_game_Verified=STATUS[2]))
     (EXP / 'model_info.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
     checks = dict(lod_caps=all(budget[f'LOD{l}']['triangles'] <= CAPS[l] for l in range(4)), height_in_range=HEIGHT_RANGE[0] <= hi.z <= HEIGHT_RANGE[1],
                   roots_to_minus_0p3=abs(lo.z + .3) < .05, fbx_objects=sorted(rt) == sorted(o.name for o in kids),

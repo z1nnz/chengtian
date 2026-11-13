@@ -1,6 +1,6 @@
 """Previews for XT01 (Blender EEVEE; Unity is the colour authority, see the Unity shots).
 
-  blender --background art/source/trees-xianxia/blend/XT01_XianxiaGreatTree_v001.blend --python art/source/trees-xianxia/preview_xianxia_tree.py -- <mode> <outdir>
+  blender --background art/source/trees-xianxia/blend/XT01_XianxiaGreatTree_v002.blend --python art/source/trees-xianxia/preview_xianxia_tree.py -- <mode> <outdir>
 
 modes: hero (green + gold three-quarter), ten (ten views, green), tengold, clay (grey), wire, lods, ruler (with a 1.75 m figure),
 far (50 m and 100 m, LOD the distance would pick), quick (one green three-quarter, small).

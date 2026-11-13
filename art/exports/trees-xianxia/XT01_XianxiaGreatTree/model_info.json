@@ -1,34 +1,34 @@
 {
   "asset": "XT01_XianxiaGreatTree",
-  "version": "v001",
+  "version": "v002",
   "game": "承天",
   "name_zh": "仙俠風格大型綠樹（另有金黃葉版本，共用模型與貼圖）",
   "minTier": "low",
   "use": "宗門庭院、山林、草原的地標大樹（多年古樹，不是世界樹）",
-  "height_m": 16.683,
+  "height_m": 15.394,
   "crown_width_m": [
-    23.49,
-    23.846
+    27.199,
+    26.072
   ],
   "dimensions_m": [
-    23.49,
-    23.846,
-    16.983
+    27.199,
+    26.072,
+    15.694
   ],
   "bounds_min_m": [
-    -11.489,
-    -11.609,
+    -11.996,
+    -12.674,
     -0.3
   ],
   "bounds_max_m": [
-    12.0,
-    12.238,
-    16.683
+    15.203,
+    13.398,
+    15.394
   ],
   "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
   "unit": "1 Blender unit = 1 m; front = -Y",
   "collision_capsule": {
-    "radius": 1.074,
+    "radius": 1.47,
     "height": 3.5,
     "centre": [
       0.016,
@@ -36,33 +36,33 @@
       1.75
     ]
   },
-  "collision_note": "XT01_XianxiaGreatTree_Collision: 10-sided prism round the trunk (radius 1.07 m, 0-3.5 m). Hide its renderer, use it as a MeshCollider. The crown and roots do not block.",
+  "collision_note": "XT01_XianxiaGreatTree_Collision: 10-sided prism round the trunk (radius 1.47 m, 0-3.5 m). Hide its renderer, use it as a MeshCollider. The crown and roots do not block.",
   "looks": {
     "green": {
-      "deep": "#2C5A52",
-      "mid": "#5B9A45",
-      "tip": "#B8D86A",
-      "var_a": "#B9A35A",
-      "var_b": "#6F9E86",
-      "var_amount": 0.45,
-      "midpoint": 0.5
+      "deep": "#2F6A58",
+      "mid": "#77B046",
+      "tip": "#B7DA58",
+      "var_a": "#C2C25A",
+      "var_b": "#64A07E",
+      "var_amount": 0.35,
+      "midpoint": 0.48
     },
     "gold": {
-      "deep": "#8A5222",
-      "mid": "#D8952A",
-      "tip": "#F2D35C",
-      "var_a": "#C9B14E",
-      "var_b": "#D9773A",
-      "var_amount": 0.45,
-      "midpoint": 0.5
+      "deep": "#C47528",
+      "mid": "#EDAE22",
+      "tip": "#FFE35E",
+      "var_a": "#CFC948",
+      "var_b": "#E5843A",
+      "var_amount": 0.4,
+      "midpoint": 0.46
     }
   },
   "leaf_shader": {
-    "detail": 0.8,
-    "value": 0.45,
-    "mean_value": 0.6578,
-    "graze_min": 0.24,
-    "graze_max": 0.6
+    "detail": 0.55,
+    "value": 0.3,
+    "mean_value": 0.646,
+    "graze_min": 0.3,
+    "graze_max": 0.66
   },
   "materials_per_look": [
     "M_XT01_Bark",
@@ -78,28 +78,28 @@
   ],
   "budget_per_lod": {
     "LOD0": {
-      "triangles": 19099,
+      "triangles": 23771,
       "cap": 25000,
       "objects": 1,
       "materials": 2,
       "wood_triangles": 11500,
-      "leaf_cards": 2591
+      "leaf_cards": 5141
     },
     "LOD1": {
-      "triangles": 5379,
+      "triangles": 5514,
       "cap": 8000,
       "objects": 1,
       "materials": 2,
       "wood_triangles": 3000,
-      "leaf_cards": 827
+      "leaf_cards": 964
     },
     "LOD2": {
-      "triangles": 1384,
+      "triangles": 2204,
       "cap": 2500,
       "objects": 1,
       "materials": 2,
       "wood_triangles": 820,
-      "leaf_cards": 282
+      "leaf_cards": 692
     },
     "LOD3": {
       "triangles": 4,
@@ -130,8 +130,8 @@
   },
   "status": {
     "Exported": true,
-    "Imported": "Unity 6000.3.28f1 編輯器批次檢查通過（XianxiaTreeCheck，2026-11-13）",
-    "Visually_Verified": "Blender 與 Unity 審圖（2026-11-13）",
-    "In_game_Verified": "未驗：只在 Qingxi 灰模裡擺拍（不存檔），沒有放進正式場景"
+    "Imported": "已驗：Unity 6000.3.28f1 匯入，自動檢查 38 項 PASS",
+    "Visually_Verified": "已驗：Blender 與 Unity 截圖已逐張目視",
+    "In_game_Verified": "部分：臨時放進 Qingxi.unity 截圖（場景未存檔），沒有正式擺進遊戲"
   }
 }

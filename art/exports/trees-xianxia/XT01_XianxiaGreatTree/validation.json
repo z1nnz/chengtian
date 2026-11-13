@@ -1,14 +1,14 @@
 {
   "asset": "XT01_XianxiaGreatTree",
-  "version": "v001",
-  "built": "2026-11-13 14:12",
+  "version": "v002",
+  "built": "2026-11-13 15:26",
   "blender": "5.2.2 LTS",
   "checks": {
     "lod_caps": true,
     "height_in_range": true,
     "roots_to_minus_0p3": true,
     "fbx_objects": true,
-    "fbx_height_err_m": 0.0004,
+    "fbx_height_err_m": 0.0002,
     "fbx_wind_colour": true
   },
   "fbx_roundtrip": {
@@ -20,8 +20,8 @@
       "materials": []
     },
     "XT01_XianxiaGreatTree_LOD0": {
-      "tris": 19099,
-      "max_z": 16.683,
+      "tris": 23771,
+      "max_z": 15.394,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -32,8 +32,8 @@
       ]
     },
     "XT01_XianxiaGreatTree_LOD1": {
-      "tris": 5379,
-      "max_z": 16.957,
+      "tris": 5514,
+      "max_z": 15.891,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -44,8 +44,8 @@
       ]
     },
     "XT01_XianxiaGreatTree_LOD2": {
-      "tris": 1384,
-      "max_z": 17.356,
+      "tris": 2204,
+      "max_z": 15.404,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -57,7 +57,7 @@
     },
     "XT01_XianxiaGreatTree_LOD3": {
       "tris": 4,
-      "max_z": 16.733,
+      "max_z": 15.444,
       "min_z": -0.3,
       "colour_layers": [
         "Wind"
@@ -69,6 +69,8 @@
   },
   "files": {
     "XT01_XianxiaGreatTree_v001.fbx": "be66bb43eb03a32b7b05eb7518f238ac7eaa45bab0b1707ce5f24538ac449671",
-    "XT01_XianxiaGreatTree_v001.glb": "15163da4d653e96500d355b03acba432ea3c87385b86f8add4f4e8ab9a0edf7c"
+    "XT01_XianxiaGreatTree_v001.glb": "15163da4d653e96500d355b03acba432ea3c87385b86f8add4f4e8ab9a0edf7c",
+    "XT01_XianxiaGreatTree_v002.fbx": "dcd505cf533f187cdebd0d52da591636103565763745057811baeba0012b8646",
+    "XT01_XianxiaGreatTree_v002.glb": "de7e0964d1bef5de3d85a761c00a87d988ea0633927b2b918ee3a5b72b489cfc"
   }
 }
