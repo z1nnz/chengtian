@@ -81,7 +81,7 @@ def _frame(ax):
     return e1, e2
 
 
-def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_share=.4):
+def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_share=.4, trunk_below=None, seal=False, face_uv=False):
     """Append fused wood (material 0) for the branches whose level is in `levels` to buf; returns (triangles, first vertex, last vertex)."""
     V, Rr, E, owner, S = _graph(branches, levels)
     me = _skin(V, Rr, E, subdiv)
@@ -113,6 +113,12 @@ def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_sha
         o = bpy.data.objects.new('wood_tmp', mesh); bpy.context.scene.collection.objects.link(o)
         if tri > target > 0:
             d = o.modifiers.new('Dec', 'DECIMATE'); d.ratio = target / tri; d.use_collapse_triangulate = True
+            if seal:       # optional (XT01): keep the cut between the trunk part and the branch part exactly where it is, so the two
+                           # halves still meet after each is decimated on its own (otherwise a hairline crack opens round the split)
+                bm_ = bmesh.new(); bm_.from_mesh(mesh)
+                edge_v = {v.index for e in bm_.edges if e.is_boundary for v in e.verts}; bm_.free()
+                vg = o.vertex_groups.new(name='seal'); vg.add(sorted(edge_v), 1., 'REPLACE')
+                d.vertex_group = 'seal'; d.invert_vertex_group = True; d.vertex_group_factor = 1.      # inverted group = protected (tested)
             dg = bpy.context.evaluated_depsgraph_get(); out = bpy.data.meshes.new_from_object(o.evaluated_get(dg))
         else:
             out = mesh.copy()
@@ -156,10 +162,14 @@ def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_sha
     if fix.any():
         nt_e = np.nonzero(~is_trunk_b[ob_])[0]
         s2, t2 = _nearest(co[fix], A[nt_e], B[nt_e], rA[nt_e], rB[nt_e]); seg[fix] = nt_e[s2]; tt[fix] = t2
-    ax = (B - A)[seg]; ax /= np.linalg.norm(ax, axis=1)[:, None] + 1e-9; C = A[seg] + (B - A)[seg] * tt[:, None]
-    rel = co - C; rel -= ax * (rel * ax).sum(1)[:, None]; e1, e2 = _frame(ax)
-    ang = np.arctan2((rel * e2).sum(1), (rel * e1).sum(1))
-    bi = ob_[seg]; s = sA[seg] + (sB - sA)[seg] * tt
+    if trunk_below is not None:
+        # optional (XT01, 2026-11-13): below the split every vertex of the trunk's own island is trunk bark. A thick limb root inside
+        # the trunk can be the nearest segment (distance over radius) for trunk-surface vertices; mapped with the limb they mixed
+        # two mappings in one face (zig-zag bark on the trunk).
+        fix2 = comp_trunk & ~is_trunk_b[ob_[seg]] & (co[:, 2] < trunk_below)
+        if fix2.any():
+            tr_e = np.nonzero(is_trunk_b[ob_])[0]
+            s3, t3 = _nearest(co[fix2], A[tr_e], B[tr_e], rA[tr_e], rB[tr_e]); seg[fix2] = tr_e[s3]; tt[fix2] = t3
     Lb = np.array([sum((br.pts[k + 1] - br.pts[k]).length for k in range(len(br.pts) - 1)) * 1.03 for br in branches])
     kk = np.array([max(1, round(2 * math.pi * float(np.mean(br.rads)) / TILE_M)) for br in branches])
     tw = np.array([getattr(br, 'twist', 0.) for br in branches])
@@ -167,21 +177,30 @@ def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_sha
     # One tile round a thick pine base stretched the bark 3x sideways into soft horizontal waves.
     for j, br in enumerate(branches):
         if getattr(br, 'uv_k', None): kk[j] = br.uv_k
-    arc = s * Lb[bi]
-    u = (ang / (2 * math.pi) + .5) * kk[bi] + kk[bi] * tw[bi] * arc; v = arc / TILE_M
-    # root flare: the surface there runs outward more than up, so v (height along the axis) alone smears the bark into stripes;
-    # take the outward run as distance too (v goes down as the flare spreads out)
-    # trunk: map by world height and the angle round the trunk axis at that height (projection onto the nearest skeleton segment
-    # collapses at the flare and the end cap: measured stretch up to 130x there). The outward run of the flare counts as length.
-    for tb in np.nonzero(is_trunk_b)[0]:
-        m = bi == tb
-        if not m.any(): continue
-        br = branches[int(tb)]; tz = np.array([p.z for p in br.pts]); tx = np.array([p.x for p in br.pts]); ty = np.array([p.y for p in br.pts])
-        z = co[m, 2]; dx = co[m, 0] - np.interp(z, tz, tx); dy = co[m, 1] - np.interp(z, tz, ty)
-        rr = np.interp(z, tz, np.array(br.rads)); hd = np.hypot(dx, dy); a = np.arctan2(dy, dx)
-        k = kk[int(tb)]; zz = z - tz[0]; T = getattr(br, 'uv_tile', TILE_M)
-        u[m] = (a / (2 * math.pi) + .5) * k + k * tw[int(tb)] * zz
-        v[m] = (zz - np.maximum(0., hd - 1.12 * rr)) / T
+
+    def _uv(P, seg, tt):
+        ax = (B - A)[seg]; ax /= np.linalg.norm(ax, axis=1)[:, None] + 1e-9; C = A[seg] + (B - A)[seg] * tt[:, None]
+        rel = P - C; rel -= ax * (rel * ax).sum(1)[:, None]; e1, e2 = _frame(ax)
+        ang = np.arctan2((rel * e2).sum(1), (rel * e1).sum(1))
+        bi = ob_[seg]; s = sA[seg] + (sB - sA)[seg] * tt
+        arc = s * Lb[bi]
+        u = (ang / (2 * math.pi) + .5) * kk[bi] + kk[bi] * tw[bi] * arc; v = arc / TILE_M
+        # root flare: the surface there runs outward more than up, so v (height along the axis) alone smears the bark into stripes;
+        # take the outward run as distance too (v goes down as the flare spreads out)
+        # trunk: map by world height and the angle round the trunk axis at that height (projection onto the nearest skeleton segment
+        # collapses at the flare and the end cap: measured stretch up to 130x there). The outward run of the flare counts as length.
+        for tb in np.nonzero(is_trunk_b)[0]:
+            m = bi == tb
+            if not m.any(): continue
+            br = branches[int(tb)]; tz = np.array([p.z for p in br.pts]); tx = np.array([p.x for p in br.pts]); ty = np.array([p.y for p in br.pts])
+            z = P[m, 2]; dx = P[m, 0] - np.interp(z, tz, tx); dy = P[m, 1] - np.interp(z, tz, ty)
+            rr = np.interp(z, tz, np.array(br.rads)); hd = np.hypot(dx, dy); a = np.arctan2(dy, dx)
+            k = kk[int(tb)]; zz = z - tz[0]; T = getattr(br, 'uv_tile', TILE_M)
+            u[m] = (a / (2 * math.pi) + .5) * k + k * tw[int(tb)] * zz
+            v[m] = (zz - np.maximum(0., hd - 1.12 * rr)) / T
+        return u, v, bi, s
+
+    u, v, bi, s = _uv(co, seg, tt)
     w0 = np.array([br.w0 for br in branches]); w1 = np.array([br.w1 for br in branches]); ph = np.array([br.phase for br in branches])
     wind = w0[bi] + (w1 - w0)[bi] * s
     base = len(buf.v)
@@ -190,10 +209,19 @@ def skin_wood(buf, branches, levels, subdiv, target_tris, z_floor=-.3, trunk_sha
     nl = len(me2.loops); li = np.zeros(nl, np.int32); me2.loops.foreach_get('vertex_index', li)
     for poly in me2.polygons:
         vids = [li[l] for l in range(poly.loop_start, poly.loop_start + poly.loop_total)]
-        uu = np.array([u[i] for i in vids]); k = kk[bi[vids[0]]]
+        uu = np.array([u[i] for i in vids]); vv = np.array([v[i] for i in vids]); k = kk[bi[vids[0]]]
+        fb = bi[vids]
+        if face_uv and (fb != fb[0]).any():
+            # optional (XT01, 2026-11-13): a face whose corners took different branches mixed two mappings (bark smeared into
+            # diagonal stripes at the trunk crotch). The whole face is mapped from one branch: the one most of its corners took
+            # (ties: the thicker), each corner projected onto that branch's own nearest segment.
+            vals, cnt = np.unique(fb, return_counts=True); best = vals[cnt == cnt.max()]
+            b0 = int(best[np.argmax([np.mean(branches[int(x)].rads) for x in best])])
+            sg_b = np.nonzero(ob_ == b0)[0]; s4, t4 = _nearest(co[vids], A[sg_b], B[sg_b], rA[sg_b], rB[sg_b])
+            uu, vv, _, _ = _uv(co[vids], sg_b[s4], t4); k = kk[b0]
         if uu.max() - uu.min() > k * .5: uu = np.where(uu < uu.max() - k * .5, uu + k, uu)
         buf.f.append(tuple(base + int(i) for i in vids)); buf.fmat.append(0)
-        buf.fuv.append(tuple((float(a), float(v[i])) for a, i in zip(uu, vids)))
+        buf.fuv.append(tuple((float(a), float(b_)) for a, b_ in zip(uu, vv)))
     t = sum(len(p.vertices) - 2 for p in me2.polygons); bpy.data.meshes.remove(me2)
     return t, base, len(buf.v)
 

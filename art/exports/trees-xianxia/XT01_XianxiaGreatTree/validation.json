@@ -1,0 +1,74 @@
+{
+  "asset": "XT01_XianxiaGreatTree",
+  "version": "v001",
+  "built": "2026-11-13 14:12",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "roots_to_minus_0p3": true,
+    "fbx_objects": true,
+    "fbx_height_err_m": 0.0004,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "XT01_XianxiaGreatTree_Collision": {
+      "tris": 36,
+      "max_z": 3.5,
+      "min_z": -0.0,
+      "colour_layers": [],
+      "materials": []
+    },
+    "XT01_XianxiaGreatTree_LOD0": {
+      "tris": 19099,
+      "max_z": 16.683,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Bark",
+        "M_XT01_Leaves_Green"
+      ]
+    },
+    "XT01_XianxiaGreatTree_LOD1": {
+      "tris": 5379,
+      "max_z": 16.957,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Bark",
+        "M_XT01_Leaves_Green"
+      ]
+    },
+    "XT01_XianxiaGreatTree_LOD2": {
+      "tris": 1384,
+      "max_z": 17.356,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Bark",
+        "M_XT01_Leaves_Green"
+      ]
+    },
+    "XT01_XianxiaGreatTree_LOD3": {
+      "tris": 4,
+      "max_z": 16.733,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Impostor_Green"
+      ]
+    }
+  },
+  "files": {
+    "XT01_XianxiaGreatTree_v001.fbx": "be66bb43eb03a32b7b05eb7518f238ac7eaa45bab0b1707ce5f24538ac449671",
+    "XT01_XianxiaGreatTree_v001.glb": "15163da4d653e96500d355b03acba432ea3c87385b86f8add4f4e8ab9a0edf7c"
+  }
+}
