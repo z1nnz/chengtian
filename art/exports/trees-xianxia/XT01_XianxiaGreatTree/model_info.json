@@ -1,34 +1,34 @@
 {
   "asset": "XT01_XianxiaGreatTree",
-  "version": "v003",
+  "version": "v004",
   "game": "承天",
   "name_zh": "仙俠風格大型綠樹（另有金黃葉版本，共用模型與貼圖）",
   "minTier": "low",
   "use": "宗門庭院、山林、草原的地標大樹（多年古樹，不是世界樹）",
-  "height_m": 15.754,
+  "height_m": 16.008,
   "crown_width_m": [
-    26.394,
-    26.358
+    27.813,
+    27.482
   ],
   "dimensions_m": [
-    26.394,
-    26.358,
-    16.054
+    27.813,
+    27.482,
+    16.308
   ],
   "bounds_min_m": [
-    -11.249,
-    -13.34,
+    -12.106,
+    -14.167,
     -0.3
   ],
   "bounds_max_m": [
-    15.145,
-    13.018,
-    15.754
+    15.707,
+    13.315,
+    16.008
   ],
   "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
   "unit": "1 Blender unit = 1 m; front = -Y",
   "collision_capsule": {
-    "radius": 1.47,
+    "radius": 1.472,
     "height": 3.5,
     "centre": [
       0.016,
@@ -39,13 +39,13 @@
   "collision_note": "XT01_XianxiaGreatTree_Collision: 10-sided prism round the trunk (radius 1.47 m, 0-3.5 m). Hide its renderer, use it as a MeshCollider. The crown and roots do not block.",
   "looks": {
     "green": {
-      "deep": "#2F6A58",
-      "mid": "#77B046",
-      "tip": "#B7DA58",
-      "var_a": "#C2C25A",
-      "var_b": "#64A07E",
-      "var_amount": 0.35,
-      "midpoint": 0.48
+      "deep": "#2D665F",
+      "mid": "#679A49",
+      "tip": "#9DBE5A",
+      "var_a": "#9FB45A",
+      "var_b": "#5E9A82",
+      "var_amount": 0.3,
+      "midpoint": 0.5
     },
     "gold": {
       "deep": "#C47528",
@@ -60,7 +60,7 @@
   "leaf_shader": {
     "detail": 0.55,
     "value": 0.3,
-    "mean_value": 0.646,
+    "mean_value": 0.6265,
     "graze_min": 0.3,
     "graze_max": 0.66
   },
@@ -78,27 +78,27 @@
   ],
   "budget_per_lod": {
     "LOD0": {
-      "triangles": 23985,
-      "cap": 25000,
+      "triangles": 30697,
+      "cap": 32000,
       "objects": 1,
       "materials": 2,
-      "wood_triangles": 10798,
-      "leaf_cards": 5605
+      "wood_triangles": 10998,
+      "leaf_cards": 8868
     },
     "LOD1": {
-      "triangles": 7383,
+      "triangles": 7191,
       "cap": 8000,
       "objects": 1,
       "materials": 2,
-      "wood_triangles": 3000,
-      "leaf_cards": 1899
+      "wood_triangles": 2998,
+      "leaf_cards": 1803
     },
     "LOD2": {
-      "triangles": 2400,
+      "triangles": 2399,
       "cap": 2500,
       "objects": 1,
       "materials": 2,
-      "wood_triangles": 820,
+      "wood_triangles": 819,
       "leaf_cards": 790
     },
     "LOD3": {
