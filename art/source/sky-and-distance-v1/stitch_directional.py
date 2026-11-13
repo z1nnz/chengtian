@@ -39,6 +39,13 @@ canvas[:, 2304:] = b[:, 512:]
 sky = np.array([211, 226, 237], dtype=np.float32)[None, None, :]
 fade = np.clip((np.arange(1024, dtype=np.float32)[:, None, None] - 35) / 165, 0, 1)
 canvas = sky * (1 - fade) + canvas * fade
+if ID == "SK06":
+    # SK06 wraps a full circle: blend both outer edges to the same column.
+    shared = (canvas[:, 0, :] + canvas[:, -1, :]) * 0.5
+    edge = np.linspace(0, 1, 256, dtype=np.float32)[None, :, None]
+    edge = edge * edge * (3 - 2 * edge)
+    canvas[:, :256] = shared[:, None, :] * (1 - edge) + canvas[:, :256] * edge
+    canvas[:, -256:] = canvas[:, -256:] * (1 - edge) + shared[:, None, :] * edge
 im = Image.fromarray(np.uint8(np.clip(canvas, 0, 255)), "RGB")
 im.save(OUT / f"{ID}_panorama_4096x1024.png", optimize=True)
 im.crop((0, 0, 2048, 1024)).save(OUT / f"{ID}_left_2048x1024.png", optimize=True)
