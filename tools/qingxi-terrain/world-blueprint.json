@@ -1374,6 +1374,11 @@
               "models": "R04_StoneLanternBroken",
               "count": 2,
               "how": "倒在路旁"
+            },
+            {
+              "models": "CO02_OldForestStele,CO03_ShrineRemnants",
+              "count": 2,
+              "how": "古碑在 (-100,202)，祠內殘件在 (-101,198)，來源檔已有、待匯入"
             }
           ]
         }
@@ -1398,8 +1403,8 @@
         }
       ],
       "missing": [
-        "古林碑（鑿痕、缺月記號）",
-        "祠內殘件"
+        "CO02 古林碑與 CO03 祠內殘件已有 FBX，待匯入與材質驗證",
+        "隱藏洞府入口尚未定模型與玩法"
       ]
     },
     {

@@ -415,7 +415,15 @@
         "苔石與古碑",
         "隱藏洞府入口",
         "陰涼的蕨類地"
-      ]
+      ],
+      "species": [
+        {"kind": "ElderCypress", "weight": 1.0}
+      ],
+      "waterside": "",
+      "landmarks": [
+        {"kind": "ElderCypress", "x": -138, "z": 162, "yaw": 40, "height": 10, "sink": 0, "note": "西南高丘單棵尋視樹，地面約 14 m；距祠心 (-100,200) 約 54 m。"}
+      ],
+      "noBamboo": true
     },
     {
       "id": "D5",

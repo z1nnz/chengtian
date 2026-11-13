@@ -1,0 +1,708 @@
+{
+  "version": 2,
+  "units": "m",
+  "block": "D4",
+  "note": "D4 苔石古祠，cell [-1,2]。世界座標，+Z 北。東路接 D2 (-50.5,214)，塌牆只留北、西兩面供玩家從東進來。CO02/CO03 模型存在但待匯入；隱藏洞府入口尚無資料與模型，不預放。",
+  "bounds": {
+    "minX": -150,
+    "minZ": 150,
+    "sizeX": 100,
+    "sizeZ": 100
+  },
+  "noise": 0.22,
+  "relief": 1.2,
+  "terrace": 0,
+  "cliffs": 2.6,
+  "nodes": [
+    {
+      "id": "d4-east",
+      "x": -50.5,
+      "z": 214
+    },
+    {
+      "id": "d4-path-1",
+      "x": -72,
+      "z": 211
+    },
+    {
+      "id": "d4-path-2",
+      "x": -88,
+      "z": 205
+    },
+    {
+      "id": "d4-shrine",
+      "x": -100,
+      "z": 200
+    },
+    {
+      "id": "d4-stele",
+      "x": -100,
+      "z": 195
+    }
+  ],
+  "edges": [
+    {
+      "id": "d4-old-road-1",
+      "from": "d4-east",
+      "to": "d4-path-1",
+      "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "d4-old-road-2",
+      "from": "d4-path-1",
+      "to": "d4-path-2",
+      "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "d4-old-road-3",
+      "from": "d4-path-2",
+      "to": "d4-shrine",
+      "width": 2.2,
+      "surface": "dirt"
+    },
+    {
+      "id": "d4-courtyard",
+      "from": "d4-shrine",
+      "to": "d4-stele",
+      "width": 2.0,
+      "surface": "dirt"
+    }
+  ],
+  "pads": [
+    {
+      "id": "d4-shrine-pad",
+      "surface": "plaza",
+      "x": -100,
+      "z": 200,
+      "halfX": 8,
+      "halfZ": 7,
+      "height": 13.5
+    },
+    {
+      "id": "d4-stele-pad",
+      "surface": "plaza",
+      "x": -100,
+      "z": 195,
+      "halfX": 2,
+      "halfZ": 2,
+      "height": 13.5
+    }
+  ],
+  "heightPoints": [
+    {
+      "x": -140,
+      "z": 152,
+      "height": 14.5
+    },
+    {
+      "x": -60,
+      "z": 152,
+      "height": 12.0
+    },
+    {
+      "x": -145,
+      "z": 200,
+      "height": 11.5
+    },
+    {
+      "x": -125,
+      "z": 200,
+      "height": 10.8
+    },
+    {
+      "x": -100,
+      "z": 200,
+      "height": 13.5
+    },
+    {
+      "x": -75,
+      "z": 200,
+      "height": 10.8
+    },
+    {
+      "x": -52,
+      "z": 214,
+      "height": 9.5
+    },
+    {
+      "x": -140,
+      "z": 245,
+      "height": 11.8
+    },
+    {
+      "x": -100,
+      "z": 245,
+      "height": 12.2
+    },
+    {
+      "x": -55,
+      "z": 245,
+      "height": 10.2
+    }
+  ],
+  "flats": [
+    {
+      "id": "d4-old-road-flat",
+      "note": "舊石路祠前 2.2 m 通行底",
+      "x": -90,
+      "z": 204,
+      "halfX": 9,
+      "halfZ": 2.1,
+      "height": 12.3,
+      "blend": 3
+    }
+  ],
+  "placements": [
+    {
+      "id": "D4_Wall_01",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 1 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Collapsed/R01_DryStoneWall_Collapsed_v001.fbx",
+      "x": -107,
+      "z": 204,
+      "yaw": 0,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_02",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 2 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Straight/R01_DryStoneWall_Straight_v001.fbx",
+      "x": -104,
+      "z": 204,
+      "yaw": 0,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_03",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 3 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Straight/R01_DryStoneWall_Straight_v001.fbx",
+      "x": -101,
+      "z": 204,
+      "yaw": 0,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_04",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 4 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Collapsed/R01_DryStoneWall_Collapsed_v001.fbx",
+      "x": -98,
+      "z": 204,
+      "yaw": 0,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_05",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 5 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Collapsed/R01_DryStoneWall_Collapsed_v001.fbx",
+      "x": -107,
+      "z": 193,
+      "yaw": 90,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_06",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 6 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Straight/R01_DryStoneWall_Straight_v001.fbx",
+      "x": -107,
+      "z": 196,
+      "yaw": 90,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_07",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 7 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Straight/R01_DryStoneWall_Straight_v001.fbx",
+      "x": -107,
+      "z": 199,
+      "yaw": 90,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Wall_08",
+      "zone": "d4-shrine",
+      "role": "古祠兩面殘牆第 8 段",
+      "model": "Assets/YunJing/Models/RuinsB/R01_DryStoneWall_Collapsed/R01_DryStoneWall_Collapsed_v001.fbx",
+      "x": -107,
+      "z": 202,
+      "yaw": 90,
+      "footprint": [
+        3,
+        0.8,
+        1.8
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Lantern_1",
+      "zone": "d4-shrine",
+      "role": "倒在東側舊石路旁的破燈",
+      "model": "Assets/YunJing/Models/RuinsB/R04_StoneLanternBroken/R04_StoneLanternBroken_v001.fbx",
+      "x": -87,
+      "z": 201,
+      "yaw": 45,
+      "footprint": [
+        0.8,
+        0.8,
+        1.6
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Lantern_2",
+      "zone": "d4-shrine",
+      "role": "倒在祠前的破燈",
+      "model": "Assets/YunJing/Models/RuinsB/R04_StoneLanternBroken/R04_StoneLanternBroken_v001.fbx",
+      "x": -95,
+      "z": 196,
+      "yaw": 240,
+      "footprint": [
+        0.8,
+        0.8,
+        1.6
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Stele",
+      "zone": "d4-shrine",
+      "role": "面向東路的古林碑，缺月記號",
+      "model": "art/exports/core-ruins-v1/CO02_OldForestStele/CO02_OldForestStele_v001.fbx",
+      "x": -100,
+      "z": 202,
+      "yaw": 90,
+      "footprint": [
+        1.5,
+        0.8,
+        3.2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Remnants",
+      "zone": "d4-shrine",
+      "role": "祠內香爐、斷供桌與碎瓦",
+      "model": "art/exports/core-ruins-v1/CO03_ShrineRemnants/CO03_ShrineRemnants_v001.fbx",
+      "x": -101,
+      "z": 198,
+      "yaw": 90,
+      "footprint": [
+        3,
+        2.4,
+        1.6
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_01",
+      "zone": "d4-forest",
+      "role": "苔石第 1 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -118,
+      "z": 192,
+      "yaw": 31,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_02",
+      "zone": "d4-forest",
+      "role": "苔石第 2 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -115,
+      "z": 211,
+      "yaw": 62,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_03",
+      "zone": "d4-forest",
+      "role": "苔石第 3 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -109,
+      "z": 216,
+      "yaw": 93,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_04",
+      "zone": "d4-forest",
+      "role": "苔石第 4 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -125,
+      "z": 205,
+      "yaw": 124,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_05",
+      "zone": "d4-forest",
+      "role": "苔石第 5 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -131,
+      "z": 184,
+      "yaw": 155,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_06",
+      "zone": "d4-forest",
+      "role": "苔石第 6 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -112,
+      "z": 177,
+      "yaw": 186,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_07",
+      "zone": "d4-forest",
+      "role": "苔石第 7 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -88,
+      "z": 219,
+      "yaw": 217,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_08",
+      "zone": "d4-forest",
+      "role": "苔石第 8 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -82,
+      "z": 224,
+      "yaw": 248,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_09",
+      "zone": "d4-forest",
+      "role": "苔石第 9 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -76,
+      "z": 184,
+      "yaw": 279,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_10",
+      "zone": "d4-forest",
+      "role": "苔石第 10 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -64,
+      "z": 235,
+      "yaw": 310,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_11",
+      "zone": "d4-forest",
+      "role": "苔石第 11 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -135,
+      "z": 229,
+      "yaw": 341,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_MossRock_12",
+      "zone": "d4-forest",
+      "role": "苔石第 12 群",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -121,
+      "z": 236,
+      "yaw": 12,
+      "footprint": [
+        2.2,
+        2,
+        1.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Fern_01",
+      "zone": "d4-forest",
+      "role": "苔石坡蕨第 1 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": -111,
+      "z": 194,
+      "yaw": 53,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Fern_02",
+      "zone": "d4-forest",
+      "role": "苔石坡蕨第 2 叢",
+      "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+      "x": -107,
+      "z": 190,
+      "yaw": 106,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Fern_03",
+      "zone": "d4-forest",
+      "role": "苔石坡蕨第 3 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": -92,
+      "z": 207,
+      "yaw": 159,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Fern_04",
+      "zone": "d4-forest",
+      "role": "苔石坡蕨第 4 叢",
+      "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+      "x": -89,
+      "z": 213,
+      "yaw": 212,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Fern_05",
+      "zone": "d4-forest",
+      "role": "苔石坡蕨第 5 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": -118,
+      "z": 217,
+      "yaw": 265,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_Fern_06",
+      "zone": "d4-forest",
+      "role": "苔石坡蕨第 6 叢",
+      "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+      "x": -81,
+      "z": 192,
+      "yaw": 318,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_OldPath_1",
+      "zone": "d4-path",
+      "role": "舊石路東段底",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": -74,
+      "z": 210,
+      "yaw": 270,
+      "footprint": [
+        2.2,
+        6,
+        0.3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D4_OldPath_2",
+      "zone": "d4-path",
+      "role": "舊石路祠前底",
+      "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
+      "x": -89,
+      "z": 204,
+      "yaw": 280,
+      "footprint": [
+        2.2,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    }
+  ],
+  "creek": null,
+  "herbs": [],
+  "fortunes": [],
+  "checkpoints": [],
+  "route": []
+}
