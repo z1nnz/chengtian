@@ -1,0 +1,122 @@
+{
+  "asset": "TR07_B_OldPlum",
+  "version": "v001",
+  "built": "2026-11-13 04:52",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0002,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR07_B_OldPlum",
+      "TR07_B_OldPlum_Collision",
+      "TR07_B_OldPlum_LOD0",
+      "TR07_B_OldPlum_LOD1",
+      "TR07_B_OldPlum_LOD2",
+      "TR07_B_OldPlum_LOD3"
+    ],
+    "TR07_B_OldPlum_Collision": {
+      "tris": 28,
+      "min": [
+        -0.262,
+        -0.27,
+        -0.0
+      ],
+      "max": [
+        0.277,
+        0.27,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR07_B_OldPlum_LOD0": {
+      "tris": 10210,
+      "min": [
+        -1.776,
+        -3.703,
+        -0.281
+      ],
+      "max": [
+        5.885,
+        3.835,
+        7.092
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Bark.002",
+        "M_TR07_Leaves.002"
+      ]
+    },
+    "TR07_B_OldPlum_LOD1": {
+      "tris": 2874,
+      "min": [
+        -1.854,
+        -3.707,
+        -0.281
+      ],
+      "max": [
+        6.078,
+        3.991,
+        7.166
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Bark.002",
+        "M_TR07_Leaves.002"
+      ]
+    },
+    "TR07_B_OldPlum_LOD2": {
+      "tris": 1100,
+      "min": [
+        -2.332,
+        -4.039,
+        -0.281
+      ],
+      "max": [
+        6.215,
+        4.35,
+        7.274
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Bark.002",
+        "M_TR07_Leaves.002"
+      ]
+    },
+    "TR07_B_OldPlum_LOD3": {
+      "tris": 4,
+      "min": [
+        -6.003,
+        -6.003,
+        -0.3
+      ],
+      "max": [
+        6.003,
+        6.003,
+        17.727
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Leaves.002"
+      ]
+    }
+  },
+  "files": {
+    "TR07_B_OldPlum_v001.fbx": "d8750af1431574104b83212ab8e04d039c280d6290fd4b80a834747f2f69bd5f",
+    "TR07_B_OldPlum_v001.glb": "9c146e55edc52a0ae48d5bd34f409ab1fa155f80a18399f247b4c15a70b069e9"
+  }
+}

@@ -1,0 +1,95 @@
+INFO species TR04; variants TR04_A_Maple, TR04_B_Maple, TR04_C_Maple
+PASS TR04_A_Maple: LODGroup with LOD0-LOD3, one renderer each (size 12.4 m, transition heights 0.566 / 0.340 / 0.131 / 0.023 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR04_A_Maple: LOD0 19015 triangles (model_info 19015, cap 25000)
+PASS TR04_A_Maple: LOD0 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_A_Maple: LOD0 has the Wind vertex colour on every vertex (28652/28652)
+PASS TR04_A_Maple: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR04_A_Maple: LOD1 3338 triangles (model_info 3338, cap 8000)
+PASS TR04_A_Maple: LOD1 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_A_Maple: LOD1 has the Wind vertex colour on every vertex (4078/4078)
+PASS TR04_A_Maple: LOD2 1487 triangles (model_info 1487, cap 2500)
+PASS TR04_A_Maple: LOD2 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_A_Maple: LOD2 has the Wind vertex colour on every vertex (2022/2022)
+PASS TR04_A_Maple: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR04_A_Maple: LOD3 1 material(s), want 1 (M_TR04_Leaves 4)
+PASS TR04_A_Maple: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR04_A_Maple: height 8.71 m (model_info 8.71 m), roots down to -0.28 m
+PASS TR04_A_Maple: TR04_A_Maple_Collision is a MeshCollider with its renderer hidden
+PASS TR04_A_Maple: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR04_B_Maple: LODGroup with LOD0-LOD3, one renderer each (size 15.0 m, transition heights 0.686 / 0.412 / 0.158 / 0.027 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR04_B_Maple: LOD0 19020 triangles (model_info 19020, cap 25000)
+PASS TR04_B_Maple: LOD0 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_B_Maple: LOD0 has the Wind vertex colour on every vertex (28573/28573)
+PASS TR04_B_Maple: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR04_B_Maple: LOD1 3358 triangles (model_info 3358, cap 8000)
+PASS TR04_B_Maple: LOD1 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_B_Maple: LOD1 has the Wind vertex colour on every vertex (4215/4215)
+PASS TR04_B_Maple: LOD2 1508 triangles (model_info 1508, cap 2500)
+PASS TR04_B_Maple: LOD2 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_B_Maple: LOD2 has the Wind vertex colour on every vertex (2120/2120)
+PASS TR04_B_Maple: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR04_B_Maple: LOD3 1 material(s), want 1 (M_TR04_Leaves 4)
+PASS TR04_B_Maple: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR04_B_Maple: height 8.10 m (model_info 8.10 m), roots down to -0.29 m
+PASS TR04_B_Maple: TR04_B_Maple_Collision is a MeshCollider with its renderer hidden
+PASS TR04_B_Maple: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR04_C_Maple: LODGroup with LOD0-LOD3, one renderer each (size 11.4 m, transition heights 0.520 / 0.312 / 0.120 / 0.021 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR04_C_Maple: LOD0 19023 triangles (model_info 19023, cap 25000)
+PASS TR04_C_Maple: LOD0 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_C_Maple: LOD0 has the Wind vertex colour on every vertex (28251/28251)
+PASS TR04_C_Maple: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR04_C_Maple: LOD1 3206 triangles (model_info 3206, cap 8000)
+PASS TR04_C_Maple: LOD1 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_C_Maple: LOD1 has the Wind vertex colour on every vertex (3589/3589)
+PASS TR04_C_Maple: LOD2 1357 triangles (model_info 1357, cap 2500)
+PASS TR04_C_Maple: LOD2 2 material(s), want 2 (M_TR04_Bark 4, M_TR04_Leaves 4)
+PASS TR04_C_Maple: LOD2 has the Wind vertex colour on every vertex (1779/1779)
+PASS TR04_C_Maple: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR04_C_Maple: LOD3 1 material(s), want 1 (M_TR04_Leaves 4)
+PASS TR04_C_Maple: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR04_C_Maple: height 8.86 m (model_info 8.86 m), roots down to -0.28 m
+PASS TR04_C_Maple: TR04_C_Maple_Collision is a MeshCollider with its renderer hidden
+PASS TR04_C_Maple: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR04_A_Maple: a walker heading at the trunk stops at it (0.50 m from the trunk axis, trunk collider radius 0.23 m)
+PASS TR04_A_Maple: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR04_B_Maple: a walker heading at the trunk stops at it (0.52 m from the trunk axis, trunk collider radius 0.25 m)
+PASS TR04_B_Maple: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR04_C_Maple: a walker heading at the trunk stops at it (0.49 m from the trunk axis, trunk collider radius 0.22 m)
+PASS TR04_C_Maple: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR04_A_Maple_three_quarter
+SHOT TR04_A_Maple_under_crown_eye_1p7
+SHOT TR04_A_Maple_front
+SHOT TR04_A_Maple_LOD0
+SHOT TR04_A_Maple_LOD1
+SHOT TR04_A_Maple_LOD2
+SHOT TR04_A_Maple_LOD3
+SHOT TR04_A_Maple_far_50m
+INFO TR04_A_Maple: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR04_A_Maple_far_100m
+INFO TR04_A_Maple: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR04_B_Maple_three_quarter
+SHOT TR04_B_Maple_under_crown_eye_1p7
+SHOT TR04_B_Maple_front
+SHOT TR04_B_Maple_LOD0
+SHOT TR04_B_Maple_LOD1
+SHOT TR04_B_Maple_LOD2
+SHOT TR04_B_Maple_LOD3
+SHOT TR04_B_Maple_far_50m
+INFO TR04_B_Maple: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR04_B_Maple_far_100m
+INFO TR04_B_Maple: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR04_C_Maple_three_quarter
+SHOT TR04_C_Maple_under_crown_eye_1p7
+SHOT TR04_C_Maple_front
+SHOT TR04_C_Maple_LOD0
+SHOT TR04_C_Maple_LOD1
+SHOT TR04_C_Maple_LOD2
+SHOT TR04_C_Maple_LOD3
+SHOT TR04_C_Maple_far_50m
+INFO TR04_C_Maple: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR04_C_Maple_far_100m
+INFO TR04_C_Maple: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR04_lineup_with_VL02_and_1p75m
+SHOT TR04_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

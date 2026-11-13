@@ -1,0 +1,122 @@
+{
+  "asset": "TR01_B_Pine",
+  "version": "v001",
+  "built": "2026-11-13 00:17",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0002,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR01_B_Pine",
+      "TR01_B_Pine_Collision",
+      "TR01_B_Pine_LOD0",
+      "TR01_B_Pine_LOD1",
+      "TR01_B_Pine_LOD2",
+      "TR01_B_Pine_LOD3"
+    ],
+    "TR01_B_Pine_Collision": {
+      "tris": 28,
+      "min": [
+        -0.652,
+        -0.335,
+        -0.0
+      ],
+      "max": [
+        0.141,
+        0.458,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR01_B_Pine_LOD0": {
+      "tris": 21431,
+      "min": [
+        -6.439,
+        -5.043,
+        -0.285
+      ],
+      "max": [
+        6.057,
+        4.424,
+        13.593
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Bark.002",
+        "M_TR01_Leaves.002"
+      ]
+    },
+    "TR01_B_Pine_LOD1": {
+      "tris": 3788,
+      "min": [
+        -6.71,
+        -5.454,
+        -0.277
+      ],
+      "max": [
+        6.161,
+        4.673,
+        13.718
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Bark.002",
+        "M_TR01_Leaves.002"
+      ]
+    },
+    "TR01_B_Pine_LOD2": {
+      "tris": 1937,
+      "min": [
+        -6.907,
+        -5.699,
+        -0.285
+      ],
+      "max": [
+        6.368,
+        4.96,
+        14.001
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Bark.002",
+        "M_TR01_Leaves.002"
+      ]
+    },
+    "TR01_B_Pine_LOD3": {
+      "tris": 4,
+      "min": [
+        -6.568,
+        -6.568,
+        -0.3
+      ],
+      "max": [
+        6.568,
+        6.568,
+        19.423
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Leaves.002"
+      ]
+    }
+  },
+  "files": {
+    "TR01_B_Pine_v001.fbx": "5ec0dd99863646cf2fa2ab8f3b472435ed6986e7c63f72ca56bf7c3f8ea090e6",
+    "TR01_B_Pine_v001.glb": "5af9803552be116a5c0ac8c63b591182845b7016949651cf31f8df4059387689"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "asset": "XT01_XianxiaGreatTree",
+  "version": "v004",
+  "game": "承天",
+  "name_zh": "仙俠風格大型綠樹（另有金黃葉版本，共用模型與貼圖）",
+  "minTier": "low",
+  "use": "宗門庭院、山林、草原的地標大樹（多年古樹，不是世界樹）",
+  "height_m": 16.508,
+  "crown_width_m": [
+    27.597,
+    27.505
+  ],
+  "dimensions_m": [
+    27.597,
+    27.505,
+    16.808
+  ],
+  "bounds_min_m": [
+    -12.021,
+    -14.073,
+    -0.3
+  ],
+  "bounds_max_m": [
+    15.576,
+    13.432,
+    16.508
+  ],
+  "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
+  "unit": "1 Blender unit = 1 m; front = -Y",
+  "collision_capsule": {
+    "radius": 1.472,
+    "height": 3.5,
+    "centre": [
+      0.016,
+      0.007,
+      1.75
+    ]
+  },
+  "collision_note": "XT01_XianxiaGreatTree_Collision: 10-sided prism round the trunk (radius 1.47 m, 0-3.5 m). Hide its renderer, use it as a MeshCollider. The crown and roots do not block.",
+  "looks": {
+    "green": {
+      "deep": "#2D665F",
+      "mid": "#679A49",
+      "tip": "#9DBE5A",
+      "var_a": "#9FB45A",
+      "var_b": "#5E9A82",
+      "var_amount": 0.3,
+      "midpoint": 0.5
+    },
+    "gold": {
+      "deep": "#C47528",
+      "mid": "#EDAE22",
+      "tip": "#FFE35E",
+      "var_a": "#CFC948",
+      "var_b": "#E5843A",
+      "var_amount": 0.4,
+      "midpoint": 0.46
+    }
+  },
+  "leaf_shader": {
+    "detail": 0.55,
+    "value": 0.3,
+    "mean_value": 0.6265,
+    "graze_min": 0.3,
+    "graze_max": 0.66
+  },
+  "materials_per_look": [
+    "M_XT01_Bark",
+    "M_XT01_Leaves_<Look>",
+    "M_XT01_Impostor_<Look>"
+  ],
+  "wind_vertex_colour": "Wind (linear): R sway weight, G phase, B light mask (leaves), A tint variation (leaves)",
+  "lod_switch_distance_m": [
+    60,
+    110,
+    280,
+    1500
+  ],
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 30717,
+      "cap": 32000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 10998,
+      "leaf_cards": 8878
+    },
+    "LOD1": {
+      "triangles": 7191,
+      "cap": 8000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 2998,
+      "leaf_cards": 1803
+    },
+    "LOD2": {
+      "triangles": 2399,
+      "cap": 2500,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 819,
+      "leaf_cards": 790
+    },
+    "LOD3": {
+      "triangles": 4,
+      "cap": 200,
+      "objects": 1,
+      "materials": 1,
+      "wood_triangles": 0,
+      "leaf_cards": 2
+    }
+  },
+  "texture_resolution_px": {
+    "XT01_Bark_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "XT01_Bark_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "XT01_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "XT01_Leaves_BaseColor.png": [
+      2048,
+      2048
+    ]
+  },
+  "status": {
+    "Exported": true,
+    "Imported": "已驗：Unity 6000.3.28f1 匯入，自動檢查 38 項 PASS",
+    "Visually_Verified": "已驗：Blender 與 Unity 截圖已逐張目視",
+    "In_game_Verified": "部分：臨時放進 Qingxi.unity 截圖（場景未存檔），沒有正式擺進遊戲"
+  }
+}

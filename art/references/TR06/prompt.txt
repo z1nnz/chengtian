@@ -1,0 +1,24 @@
+TR06 垂柳：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），B 批 TR06。
+
+選用：TR06-cand-3.png。備選：TR06-cand-1.png。
+選用理由：
+- 樹幹斜向一側，幾根大枝往上往外拱成圓頂，正是「樹幹斜向水面」。
+- 每根枝梢垂下一束束細長枝條，幾乎垂到地面，束與束之間有空隙，正是「一束束長條葉片卡」。
+- 灰綠、受光處偏暖，三個方向的輪廓不同。
+沒選的原因：
+- cand-1：可用，留作備選；但樹幹同樣綁著布條，大枝在正面被垂枝遮住，骨架讀得不如 cand-3 清楚。
+- cand-2：主幹整根纏成麻花、還纏著木條，童話比例。
+- cand-4：樹幹彎成拱門形，又綁木板夾，像故事道具；背面輪廓幾乎是正面左右翻轉。
+四張共同的問題（建模時不照做）：
+- 樹幹上的布條、繩子、木板夾不建（不建道具）。
+- 根部的石頭、水面、草不建（地面與水歸地形）。
+- 受光面偏黃綠；工作包要灰綠，建模時受光面改成暖灰綠，內側偏藍灰。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen。
+- 共 4 張（TR06-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-13。
+- 提示詞組法和 TR01–TR05 相同：物件句＋單件 Layout 段＋5.2 美術方向＋「Avoid:」接 5.3 與本包那句。全部用原文，完整內容在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of a weeping willow about 12.5 m tall leaning over water, a gnarled trunk tilted to one side, long thin hanging branch strands in bundles almost reaching the ground, soft muted grey-green leaves, a hand-painted stylized game tree.

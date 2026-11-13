@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_XT01_Leaves_Gold
+  m_Shader: {fileID: 4800000, guid: ae86b2f854c37524b9a35b974c8352c3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 1
+  m_CustomRenderQueue: 2450
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 6cd3dbdf0da1a6242af454c1a9adda03, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Ambient: 1
+    - _Baked: 0
+    - _Cutoff: 0.5
+    - _Detail: 0.8
+    - _DetailMid: 0.6578
+    - _Flutter: 0.035
+    - _GrazeMax: 0.6
+    - _GrazeMin: 0.24
+    - _MaskOffset: 0
+    - _MidPoint: 0.5
+    - _ShadowStrength: 0.55
+    - _Translucency: 0.35
+    - _ValueStrength: 0.45
+    - _VariationAmount: 0.45
+    - _WindSpeed: 1
+    - _WindStrength: 0.22
+    - _Wrap: 0.5
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DeepColor: {r: 0.5411765, g: 0.32156864, b: 0.13333334, a: 1}
+    - _MidColor: {r: 0.84705883, g: 0.58431375, b: 0.16470589, a: 1}
+    - _ShadowTint: {r: 0.62, g: 0.74, b: 0.9, a: 1}
+    - _TipColor: {r: 0.9490196, g: 0.827451, b: 0.36078432, a: 1}
+    - _VariationA: {r: 0.7882353, g: 0.69411767, b: 0.30588236, a: 1}
+    - _VariationB: {r: 0.8509804, g: 0.46666667, b: 0.22745098, a: 1}
+    - _WindDir: {r: 1, g: 0, b: 0.35, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
