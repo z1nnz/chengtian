@@ -445,7 +445,16 @@
         "第一段石階",
         "山腳的界碑",
         "往上看得到山城"
-      ]
+      ],
+      "species": [
+        {"kind": "ElderCypress", "weight": 0.55},
+        {"kind": "pine", "weight": 0.45}
+      ],
+      "waterside": "",
+      "landmarks": [
+        {"kind": "ElderCypress", "x": 135, "z": 238, "yaw": 25, "height": 12, "sink": 0, "note": "東北高丘單棵尋視樹，地面約 27 m；距主石階 (140,198) 約 40 m。"}
+      ],
+      "noBamboo": true
     },
     {
       "id": "B1",

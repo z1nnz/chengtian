@@ -1,0 +1,705 @@
+{
+  "version": 2,
+  "units": "m",
+  "block": "D6",
+  "note": "D6 古林深處往山腳，cell [1,2]。世界座標，+Z 北。D2 東口 (49.5,221) 接 D6 西口 (50.5,221)；東緣 (149.5,200) 接 B1。BS01 尚無 FBX，以 R05 里程石暫代。",
+  "bounds": {
+    "minX": 50,
+    "minZ": 150,
+    "sizeX": 100,
+    "sizeZ": 100
+  },
+  "noise": 0.2,
+  "relief": 1.1,
+  "terrace": 0,
+  "cliffs": 4.2,
+  "nodes": [
+    {
+      "id": "d6-west",
+      "x": 50.5,
+      "z": 221
+    },
+    {
+      "id": "d6-forest",
+      "x": 72,
+      "z": 219
+    },
+    {
+      "id": "d6-turn",
+      "x": 100,
+      "z": 213
+    },
+    {
+      "id": "d6-stair-foot",
+      "x": 122,
+      "z": 202
+    },
+    {
+      "id": "d6-marker",
+      "x": 140,
+      "z": 198
+    },
+    {
+      "id": "d6-east",
+      "x": 149.5,
+      "z": 200
+    }
+  ],
+  "edges": [
+    {
+      "id": "d6-trail-1",
+      "from": "d6-west",
+      "to": "d6-forest",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "d6-trail-2",
+      "from": "d6-forest",
+      "to": "d6-turn",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "d6-trail-3",
+      "from": "d6-turn",
+      "to": "d6-stair-foot",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "d6-stairs",
+      "from": "d6-stair-foot",
+      "to": "d6-marker",
+      "width": 2.4,
+      "surface": "plaza"
+    },
+    {
+      "id": "d6-to-b1",
+      "from": "d6-marker",
+      "to": "d6-east",
+      "width": 2.4,
+      "surface": "plaza"
+    }
+  ],
+  "pads": [
+    {
+      "id": "d6-marker-pad",
+      "surface": "plaza",
+      "x": 140,
+      "z": 198,
+      "halfX": 5,
+      "halfZ": 5,
+      "height": 27.5
+    },
+    {
+      "id": "d6-stair-foot-pad",
+      "surface": "dirt",
+      "x": 122,
+      "z": 202,
+      "halfX": 3,
+      "halfZ": 3,
+      "height": 22.5
+    }
+  ],
+  "heightPoints": [
+    {
+      "x": 52,
+      "z": 221,
+      "height": 9.7
+    },
+    {
+      "x": 52,
+      "z": 155,
+      "height": 10.2
+    },
+    {
+      "x": 72,
+      "z": 219,
+      "height": 13.1
+    },
+    {
+      "x": 100,
+      "z": 213,
+      "height": 18.2
+    },
+    {
+      "x": 122,
+      "z": 202,
+      "height": 22.5
+    },
+    {
+      "x": 140,
+      "z": 198,
+      "height": 27.5
+    },
+    {
+      "x": 148,
+      "z": 200,
+      "height": 29.5
+    },
+    {
+      "x": 148,
+      "z": 155,
+      "height": 21.0
+    },
+    {
+      "x": 145,
+      "z": 245,
+      "height": 28.0
+    },
+    {
+      "x": 55,
+      "z": 245,
+      "height": 11.0
+    }
+  ],
+  "flats": [
+    {
+      "id": "d6-step-flat-01",
+      "note": "TE03 第 1 件底座",
+      "x": 124.0,
+      "z": 201.0,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 22.8,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-02",
+      "note": "TE03 第 2 件底座",
+      "x": 127.4,
+      "z": 200.6,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 23.6,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-03",
+      "note": "TE03 第 3 件底座",
+      "x": 130.8,
+      "z": 200.2,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 24.4,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-04",
+      "note": "TE03 第 4 件底座",
+      "x": 134.2,
+      "z": 199.8,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 25.2,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-05",
+      "note": "TE03 第 5 件底座",
+      "x": 137.6,
+      "z": 199.4,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 26.0,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-06",
+      "note": "TE03 第 6 件底座",
+      "x": 141.0,
+      "z": 199.0,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 26.8,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-07",
+      "note": "TE03 第 7 件底座",
+      "x": 144.4,
+      "z": 198.6,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 27.6,
+      "blend": 1.4
+    },
+    {
+      "id": "d6-step-flat-08",
+      "note": "TE03 第 8 件底座",
+      "x": 147.8,
+      "z": 198.2,
+      "halfX": 1.4,
+      "halfZ": 1.4,
+      "height": 28.4,
+      "blend": 1.4
+    }
+  ],
+  "placements": [
+    {
+      "id": "D6_Marker",
+      "zone": "d6-marker",
+      "role": "山腳界碑暫以 R05 里程石代替",
+      "model": "Assets/YunJing/Models/RuinsB/R05_Milestone/R05_Milestone_v001.fbx",
+      "x": 140,
+      "z": 198,
+      "yaw": 90,
+      "footprint": [
+        0.9,
+        0.6,
+        1.6
+      ],
+      "collider": "box",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_01",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 1 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 124.0,
+      "z": 201.0,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_02",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 2 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 127.4,
+      "z": 200.6,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_03",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 3 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 130.8,
+      "z": 200.2,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_04",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 4 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 134.2,
+      "z": 199.8,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_05",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 5 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 137.6,
+      "z": 199.4,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_06",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 6 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 141.0,
+      "z": 199.0,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_07",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 7 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 144.4,
+      "z": 198.6,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Stair_08",
+      "zone": "d6-marker",
+      "role": "上山第一段石階第 8 件",
+      "model": "Assets/YunJing/Models/TeaTerracesB/TE03_Stair/TE03_Stair_v001.fbx",
+      "x": 147.8,
+      "z": 198.2,
+      "yaw": 88,
+      "footprint": [
+        2.4,
+        3.2,
+        0.65
+      ],
+      "collider": "mesh",
+      "status": "ready",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Path_1",
+      "zone": "d6-slope",
+      "role": "林道前段",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": 67,
+      "z": 219,
+      "yaw": 85,
+      "footprint": [
+        2.4,
+        6,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Path_2",
+      "zone": "d6-slope",
+      "role": "林道彎段",
+      "model": "art/exports/forest-paths-b/FP02_PathCurve30_R/FP02_PathCurve30_R_v001.fbx",
+      "x": 87,
+      "z": 215,
+      "yaw": 95,
+      "footprint": [
+        2.4,
+        6,
+        0.25
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Path_3",
+      "zone": "d6-slope",
+      "role": "林道坡段",
+      "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
+      "x": 110,
+      "z": 209,
+      "yaw": 110,
+      "footprint": [
+        2.4,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_RootWall",
+      "zone": "d6-slope",
+      "role": "西側最後一片巨根",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Wave/FR01_RootWall_Wave_v001.fbx",
+      "x": 72,
+      "z": 226,
+      "yaw": 30,
+      "footprint": [
+        7,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_01",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 1 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 76,
+      "z": 185,
+      "yaw": 31,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_02",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 2 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 88,
+      "z": 196,
+      "yaw": 62,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_03",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 3 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 102,
+      "z": 186,
+      "yaw": 93,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_04",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 4 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 110,
+      "z": 232,
+      "yaw": 124,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_05",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 5 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 119,
+      "z": 222,
+      "yaw": 155,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_06",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 6 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 130,
+      "z": 231,
+      "yaw": 186,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_07",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 7 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 134,
+      "z": 180,
+      "yaw": 217,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_08",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 8 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 143,
+      "z": 217,
+      "yaw": 248,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_09",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 9 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 96,
+      "z": 239,
+      "yaw": 279,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Rock_10",
+      "zone": "d6-slope",
+      "role": "山腳岩石第 10 群",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 59,
+      "z": 190,
+      "yaw": 310,
+      "footprint": [
+        2.5,
+        2.5,
+        1.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Fern_01",
+      "zone": "d6-slope",
+      "role": "林石交界蕨第 1 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": 65,
+      "z": 207,
+      "yaw": 53,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Fern_02",
+      "zone": "d6-slope",
+      "role": "林石交界蕨第 2 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": 79,
+      "z": 229,
+      "yaw": 106,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Fern_03",
+      "zone": "d6-slope",
+      "role": "林石交界蕨第 3 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": 95,
+      "z": 226,
+      "yaw": 159,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    },
+    {
+      "id": "D6_Fern_04",
+      "zone": "d6-slope",
+      "role": "林石交界蕨第 4 叢",
+      "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+      "x": 115,
+      "z": 187,
+      "yaw": 212,
+      "footprint": [
+        1.3,
+        1.3,
+        0.8
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有美術包"
+    }
+  ],
+  "creek": null,
+  "herbs": [],
+  "fortunes": [],
+  "checkpoints": [],
+  "route": []
+}
