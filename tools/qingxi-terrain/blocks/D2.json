@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "units": "m",
+  "block": "D2",
+  "note": "D2 古樹神木，cell [0,2]。世界座標，+Z 北。樹心凹地高 4.8 m，南、西、東外圈約 8–10 m；南端接 D1，西端預留 D4，東端預留 D6，北端預留 D7。神木原始 GLB 約 10 m 高；scale 9 為目標 90 m 的暫定倍率，匯入器須核對 Y/Z 軸、冠幅、LOD 和碰撞。",
+  "bounds": {"minX": -50, "minZ": 150, "sizeX": 100, "sizeZ": 100},
+  "noise": 0.22,
+  "relief": 1.1,
+  "terrace": 0,
+  "cliffs": 2.4,
+  "nodes": [
+    {"id": "d2-south", "x": 10, "z": 150.5},
+    {"id": "d2-gate", "x": 10, "z": 165},
+    {"id": "d2-view", "x": 9, "z": 178},
+    {"id": "d2-root-east", "x": 11, "z": 194},
+    {"id": "d2-altar", "x": 4, "z": 205},
+    {"id": "d2-pit", "x": 14, "z": 182},
+    {"id": "d2-west", "x": -49.5, "z": 214},
+    {"id": "d2-east", "x": 49.5, "z": 221},
+    {"id": "d2-north", "x": 4, "z": 249.5}
+  ],
+  "edges": [
+    {"id": "d2-entry-1", "from": "d2-south", "to": "d2-gate", "width": 2.2, "surface": "dirt"},
+    {"id": "d2-entry-2", "from": "d2-gate", "to": "d2-view", "width": 2.2, "surface": "dirt"},
+    {"id": "d2-root-path", "from": "d2-view", "to": "d2-root-east", "width": 2.2, "surface": "dirt"},
+    {"id": "d2-altar-path", "from": "d2-root-east", "to": "d2-altar", "width": 2.2, "surface": "dirt"},
+    {"id": "d2-pit-path", "from": "d2-view", "to": "d2-pit", "width": 1.8, "surface": "dirt"},
+    {"id": "d2-west-path", "from": "d2-altar", "to": "d2-west", "width": 2.2, "surface": "dirt"},
+    {"id": "d2-east-path", "from": "d2-altar", "to": "d2-east", "width": 2.2, "surface": "dirt"},
+    {"id": "d2-north-path", "from": "d2-altar", "to": "d2-north", "width": 2.0, "surface": "dirt"}
+  ],
+  "pads": [
+    {"id": "d2-tree-pad", "surface": "forest", "x": 0, "z": 200, "halfX": 7, "halfZ": 7, "height": 4.8},
+    {"id": "d2-altar-pad", "surface": "forest", "x": 7, "z": 207, "halfX": 3, "halfZ": 3, "height": 4.9},
+    {"id": "d2-pit-pad", "surface": "forest", "x": 14, "z": 182, "halfX": 5, "halfZ": 5, "height": 5.4},
+    {"id": "d2-view-pad", "surface": "forest", "x": 9, "z": 178, "halfX": 2.2, "halfZ": 2.2, "height": 5.9}
+  ],
+  "heightPoints": [
+    {"x": -40, "z": 152, "height": 8.0},
+    {"x": 10, "z": 152, "height": 7.9},
+    {"x": 40, "z": 152, "height": 8.2},
+    {"x": -42, "z": 200, "height": 9.5},
+    {"x": -23, "z": 200, "height": 7.0},
+    {"x": 0, "z": 200, "height": 4.8},
+    {"x": 22, "z": 200, "height": 7.2},
+    {"x": 42, "z": 200, "height": 9.7},
+    {"x": -40, "z": 248, "height": 9.3},
+    {"x": 4, "z": 248, "height": 8.2},
+    {"x": 40, "z": 248, "height": 9.5},
+    {"x": 14, "z": 182, "height": 5.4},
+    {"x": 9, "z": 178, "height": 5.9}
+  ],
+  "flats": [
+    {"id": "d2-entry-flat", "note": "南入口根間步道底", "x": 10, "z": 168, "halfX": 2.2, "halfZ": 8, "height": 6.8, "blend": 3},
+    {"id": "d2-root-flat", "note": "根弓下保留 2.2 m 路面", "x": 11, "z": 194, "halfX": 2.2, "halfZ": 6, "height": 5.1, "blend": 2.5}
+  ],
+  "placements": [
+    {"id": "D2_WorldTree", "zone": "d2-tree", "role": "世界古樹，目標高 90 m、樹幹局部碰撞", "model": "art/exports/elder-world-tree-hero-v1/elder-world-tree-hero-v1.glb", "x": 0, "z": 200, "yaw": 20, "scale": 9, "footprint": [93, 64, 90], "collider": "trunk-compound", "status": "needs-importer", "author": "核心組（既有母稿）"},
+    {"id": "D2_DugPit", "zone": "d2-pit", "role": "神木旁被挖的坑，鑿痕朝南側路", "model": "art/exports/core-ruins-v1/CO01_DugPit/CO01_DugPit_v001.fbx", "x": 14, "z": 182, "yaw": 150, "footprint": [4.5, 4, 0.8], "collider": "rim-only", "status": "needs-importer", "author": "核心組"},
+    {"id": "D2_RootArch", "zone": "d2-tree", "role": "入口巨根弓，路從中間穿過", "model": "art/exports/forest-roots-b/FR02_RootArch/FR02_RootArch_v001.fbx", "x": 10, "z": 167, "yaw": 0, "footprint": [7, 3, 5], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
+    {"id": "D2_RootWall_W", "zone": "d2-tree", "role": "西側盤根框景", "model": "art/exports/forest-roots-b/FR01_RootWall_Braided/FR01_RootWall_Braided_v001.fbx", "x": -15, "z": 191, "yaw": 45, "footprint": [8, 2, 4], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
+    {"id": "D2_RootWall_E", "zone": "d2-tree", "role": "東側盤根框景", "model": "art/exports/forest-roots-b/FR01_RootWall_Wave/FR01_RootWall_Wave_v001.fbx", "x": 19, "z": 198, "yaw": 300, "footprint": [8, 2, 4], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
+    {"id": "D2_FallenLog_W", "zone": "d2-tree", "role": "西外圈倒木", "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx", "x": -29, "z": 177, "yaw": 50, "footprint": [6, 1.4, 1.2], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
+    {"id": "D2_FallenLog_E", "zone": "d2-tree", "role": "東外圈倒木", "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx", "x": 33, "z": 216, "yaw": 115, "footprint": [6, 1.4, 1.2], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
+    {"id": "D2_RootStump_W", "zone": "d2-tree", "role": "西側樹樁", "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx", "x": -22, "z": 222, "yaw": 65, "footprint": [2, 2, 1.6], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
+    {"id": "D2_RootStump_E", "zone": "d2-tree", "role": "東側樹樁", "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx", "x": 28, "z": 171, "yaw": 210, "footprint": [2, 2, 1.6], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
+    {"id": "D2_Fern_SW", "zone": "d2-tree", "role": "入口左側蕨叢", "model": "art/exports/modelling-basics-c/BM09_01.fbx", "x": 5, "z": 174, "yaw": 30, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
+    {"id": "D2_Fern_SE", "zone": "d2-tree", "role": "入口右側蕨叢", "model": "art/exports/modelling-basics-c/BM09_02.fbx", "x": 17, "z": 173, "yaw": 110, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
+    {"id": "D2_Fern_Pit", "zone": "d2-pit", "role": "坑緣蕨叢", "model": "art/exports/modelling-basics-c/BM09_01.fbx", "x": 18, "z": 185, "yaw": 250, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
+    {"id": "D2_Fern_W", "zone": "d2-tree", "role": "西根下蕨叢", "model": "art/exports/modelling-basics-c/BM09_02.fbx", "x": -13, "z": 204, "yaw": 330, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
+    {"id": "D2_PathEntry", "zone": "d2-tree", "role": "南入口根間步道", "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx", "x": 10, "z": 158, "yaw": 0, "footprint": [2.2, 6, 0.25], "collider": "none", "status": "needs-importer", "author": "Josh"},
+    {"id": "D2_PathCurve", "zone": "d2-tree", "role": "神木前彎曲步道", "model": "art/exports/forest-paths-b/FP02_PathCurve30_L/FP02_PathCurve30_L_v001.fbx", "x": 9, "z": 178, "yaw": 345, "footprint": [2.2, 6, 0.25], "collider": "none", "status": "needs-importer", "author": "Josh"},
+    {"id": "D2_PathRoot", "zone": "d2-tree", "role": "跨根步道", "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx", "x": 11, "z": 194, "yaw": 0, "footprint": [2.2, 5, 0.45], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
+    {"id": "D2_PathEast", "zone": "d2-tree", "role": "往 D6 的根間步道", "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx", "x": 32, "z": 216, "yaw": 75, "footprint": [2.2, 6, 0.25], "collider": "none", "status": "needs-importer", "author": "Josh"}
+  ],
+  "herbs": [],
+  "fortunes": [],
+  "checkpoints": [],
+  "route": [],
+  "creek": null
+}

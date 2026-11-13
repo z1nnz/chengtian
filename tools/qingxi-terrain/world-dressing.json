@@ -355,7 +355,15 @@
         "樹根下的祭壇",
         "地面落葉與蕨",
         "光束穿林"
-      ]
+      ],
+      "species": [
+        {"kind": "ElderCypress", "weight": 1.0}
+      ],
+      "waterside": "",
+      "landmarks": [
+        {"kind": "ElderCypress", "x": -35, "z": 232, "yaw": 35, "height": 11, "sink": 0, "note": "西北高丘單棵尋視樹；地面約 9.3 m，距 D4 西界 15 m，周圍半徑 5 m 不再種同高樹。"}
+      ],
+      "noBamboo": true
     },
     {
       "id": "D3",
