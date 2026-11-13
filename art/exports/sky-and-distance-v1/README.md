@@ -2,9 +2,9 @@
 |---|---|
 | 誰做的 | z1nnz |
 | 工作包 | `docs/execution/2026-11-08/codex-v4-score-and-next.md`，C |
-| ID | SK01、CL01、CL02（其餘待製作） |
+| ID | SK01、CL01–03（其餘待製作） |
 | 分支／PR | `art/codex-1108-sky-layers` ／ PR 待核心組建立 |
-| 版本 | SK01 v002 候選；CL01 v001 候選；CL02 v001 候選 |
+| 版本 | SK01 v002 候選；CL01–03 v001 候選 |
 | 狀態 | 4K、切片、手機版尺寸與切片一致性已檢查；人工看圖後未通過美術定稿；Unity 未驗 |
 | 素材來源 | 原創程序繪製；`art/source/sky-and-distance-v1/generate_sk01.py` |
 
@@ -31,3 +31,9 @@
 - 六張 2048×512 RGBA 橫向雲帶，由 `art/source/sky-and-distance-v1/generate_cl02.py` 生成；U 軸首末像素逐列相同，適合緩慢橫移並重複。
 - 第 1 張已在藍色天空底上實際檢視，預覽 `CL02/CL02_preview_blue_sky.png`。六張尺寸、格式、U 軸像素接縫檢查通過。
 - 自評 60/100，候選問題：雲帶層次偏淡，貼在淺色石峰前可能不夠顯眼；尚未在山體同場檢視。透明混合，不用 Alpha Clip；暫建議同畫面最多 10 片，Unity 與手機效能未驗。
+
+## CL03 低空薄霧
+
+- 兩張 2048×512 RGBA 薄霧，原始碼 `art/source/sky-and-distance-v1/generate_cl03.py`，alpha 最大 52/255，側邊柔和歸零。
+- 第 1 張分別在藍天和深綠背景上實際檢視，預覽 `CL03/CL03_preview_blue_sky.png`、`CL03/CL03_preview_dark_ground.png`。兩張尺寸與格式通過。
+- 自評 56/100，候選問題：淺色背景上幾乎不可辨，需在實際森林和地形上決定尺寸及數量。透明混合；暫建議同畫面最多 12 片，Unity 與手機效能未驗。
