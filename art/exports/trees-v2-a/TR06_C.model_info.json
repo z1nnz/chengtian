@@ -8,25 +8,25 @@
  "species": "垂柳",
  "waterSide": "+X（樹幹和長枝斜向 +X，擺放時 +X 朝水面）",
  "dimensions_m": [
-  10.44,
-  9.499,
-  9.264
+  10.982,
+  9.547,
+  9.457
  ],
  "bounds_min_m": [
-  -2.624,
-  -5.052,
+  -2.835,
+  -5.253,
   -0.343
  ],
  "bounds_max_m": [
-  7.816,
-  4.447,
-  8.921
+  8.148,
+  4.294,
+  9.114
  ],
  "origin": "樹幹底部中心，z = 0 是地面；根往下埋 0.3 m",
  "lods": [
   {
    "lod": 0,
-   "triangles": 54949,
+   "triangles": 58646,
    "materials": [
     "M_TreeV2_Bark",
     "M_TreeV2_Leaf"
@@ -57,12 +57,12 @@
   }
  ],
  "structure": {
-  "mainLimbs": 6,
-  "canopyAnchors": 15,
-  "anchorsFrontWaterSide": 7,
-  "anchorsBack": 8,
-  "twigStreams": 163,
-  "leavesLOD0": 10858,
+  "mainLimbs": 9,
+  "canopyAnchors": 18,
+  "anchorsFrontWaterSide": 8,
+  "anchorsBack": 10,
+  "twigStreams": 204,
+  "leavesLOD0": 11714,
   "leafVertices": 5
  },
  "vertexData": {

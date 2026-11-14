@@ -183,21 +183,24 @@ VARIANTS = {
         trunk=[(0, 0, -.30), (.02, -.04, .55), (.10, -.40, 1.55), (.04, -.95, 2.55), (-.18, -1.30, 3.35), (-.14, -1.42, 4.05), (.05, -1.40, 4.6)],
         tr=[.40, .355, .32, .29, .26, .22, .17],
         limbs=[(.93, -95, 38, 5.6, .15, 1.0), (.70, 10, 50, 4.4, .13, .6), (1.0, -170, 76, 5.0, .13, .3),
-               (.58, 140, 52, 3.6, .10, .5), (.84, 70, 62, 4.0, .10, .4), (.64, -45, 55, 3.6, .095, .55), (.96, -135, 50, 4.2, .10, .7)],
-        roots=7, burl=(1.9, 2.4)),
+               (.58, 140, 52, 3.6, .10, .5), (.84, 70, 62, 3.8, .10, .4), (.64, -45, 55, 3.6, .095, .55), (.96, -135, 50, 3.8, .10, .7),
+               (.45, 180, 30, 2.6, .085, 1.0), (.50, 70, 25, 2.4, .08, 1.0), (.42, -75, 28, 2.5, .08, 1.0)],   # low limbs: curtains in front of the trunk
+        roots=7, burl=(1.9, 2.4), leaves=12000),
     'TR06_B': dict(
         height=11.5,
         trunk=[(0, 0, -.30), (-.03, .02, .6), (.05, -.22, 1.7), (.20, -.55, 2.9), (.12, -.75, 4.0), (-.10, -.80, 4.9), (-.06, -.78, 5.5)],
         tr=[.37, .33, .30, .27, .245, .21, .16],
         limbs=[(1.0, -85, 66, 5.0, .14, .4), (.74, 30, 58, 4.4, .12, .5), (.95, 160, 72, 4.8, .12, .35),
-               (.58, -150, 52, 3.6, .10, .6), (.66, 100, 48, 3.9, .10, .6), (.88, -30, 74, 4.2, .095, .3)],
+               (.58, -150, 52, 3.6, .10, .6), (.66, 100, 48, 3.9, .10, .6), (.88, -30, 74, 4.2, .095, .3),
+               (.45, 180, 30, 2.6, .085, 1.0), (.50, 70, 25, 2.4, .08, 1.0), (.42, -75, 28, 2.5, .08, 1.0)],
         roots=6, burl=(3.1, -.8)),
     'TR06_C': dict(
         height=8.5,
         trunk=[(0, 0, -.30), (.04, -.06, .45), (.18, -.55, 1.2), (.15, -1.20, 1.9), (-.05, -1.70, 2.55), (-.25, -1.95, 3.2), (-.22, -2.05, 3.75)],
         tr=[.43, .39, .35, .32, .29, .25, .19],
         limbs=[(.98, -95, 28, 5.0, .16, 1.0), (.70, 20, 46, 4.0, .13, .7), (1.0, 170, 76, 5.2, .125, .3),
-               (.52, 120, 42, 3.2, .11, .7), (.86, 60, 60, 3.6, .10, .5), (.64, -50, 40, 3.4, .10, .8)],
+               (.52, 120, 42, 3.2, .11, .7), (.86, 60, 60, 3.6, .10, .5), (.64, -50, 40, 3.4, .10, .8),
+               (.40, 180, 30, 2.6, .085, 1.0), (.50, 70, 25, 2.4, .08, 1.0), (.36, -75, 28, 2.5, .08, 1.0)],
         roots=8, burl=(1.3, 1.1), broken=True),
 }
 
@@ -244,7 +247,7 @@ def build_tree(vid, cfg):
         lr = [r * (1 + .25 * math.exp(-i / 2.0)) for i, r in enumerate(lr)]   # swelling at the fork
         tube(wood, lp, lr, 10, (.05, .3), phase=li / 8)
         anchors.append((lp[-1], (lp[-1] - lp[-4]).normalized(), lr[-1], li, lp))
-        nsec = 2 if L > 3.8 else 1
+        nsec = 2 if L > 3.8 else 1 if L > 2.8 else 0   # low skirt limbs (<= 2.8 m) only carry their tip anchor
         for si in range(nsec):
             ts = .42 + .5 * (si + rg.uniform(-.15, .15)) / nsec; k = int(ts * 15); sp = lp[k]; sd = (lp[k + 1] - lp[k]).normalized()
             side = sd.cross(UP).normalized() * (1 if (si + li) % 2 else -1)
@@ -268,13 +271,13 @@ def build_tree(vid, cfg):
     # 5-6. twig streams and leaves
     nleaf = 0; streams = []
     for ai, (ap, ad, ar, li, bp) in enumerate(anchors):
-        layer = 'Front' if ap.y < cy else 'Back'; ns = int(rg.integers(7, 14)); twist = ai * .83 + (.4 if layer == 'Front' else 0)
+        layer = 'Front' if ap.y < cy else 'Back'; ns = int(rg.integers(10, 14)); twist = ai * .83 + (.4 if layer == 'Front' else 0)
         for si in range(ns):
             nb = 3; heading = (si % nb) * 2.0944 + twist + rg.normal(0, .22); side = Vector((math.cos(heading), math.sin(heading), 0))   # 3 bundles per anchor: curtains with gaps
             d = (ad * .55 + side * .55 + UP * rg.uniform(.35, .8)).normalized()
-            u = 1 - .45 * (si / max(ns - 1, 1)) ** .8 * rg.uniform(.7, 1.0); k = min(int(u * (len(bp) - 1)), len(bp) - 1)   # along the last 45 % of the branch, the tip included
+            u = 1 - .72 * (si / max(ns - 1, 1)) ** .8 * rg.uniform(.7, 1.0); k = min(int(u * (len(bp) - 1)), len(bp) - 1)   # along the outer 72 % of the branch: inner curtains hide the trunk
             p = bp[k] + side * rg.uniform(.02, .12); path = [p.copy()]
-            hem = max(rg.uniform(.35, 2.6) + (.0 if layer == 'Front' else .4), .3)   # where the curtain ends above the ground
+            hem = max(rg.uniform(.3, 1.9) + (.0 if layer == 'Front' else .3), .3)   # where the curtain ends above the ground
             ds = .16; g = rg.uniform(1.2, 2.0); sway = Vector((rg.normal(0, .02), rg.normal(0, .02), 0))
             Lmax = rg.uniform(2.2, 5.0)
             while len(path) * ds < Lmax and p.z > hem:
@@ -282,9 +285,9 @@ def build_tree(vid, cfg):
             if len(path) < 4: continue
             streams.append((path, ai, layer))
     total_len = sum(len(s[0]) for s in streams) * .16
-    budget = cfg.get('leaves', 11500); per_m = budget / total_len
+    budget = cfg.get('leaves', 12400); per_m = budget / total_len
     for path, ai, layer in streams:
-        n = len(path); gp = path[::4] + ([path[-1]] if (n - 1) % 4 else [])   # twig geometry every 0.64 m; the leaves sit on this polyline
+        n = len(path); gp = path[::6] + ([path[-1]] if (n - 1) % 6 else [])   # twig geometry every 0.96 m; the leaves sit on this polyline
         cum = np.concatenate([[0], np.cumsum([(gp[j + 1] - gp[j]).length for j in range(len(gp) - 1)])])
         tube(twigs, gp, list(np.linspace(.008, .003, len(gp))), 3, (.55, .9), phase=ai / 20)
         L = (n - 1) * .16; k = int(per_m * L * rg.uniform(.85, 1.15))
@@ -295,7 +298,7 @@ def build_tree(vid, cfg):
             around = Quaternion(tg, ph) @ around
             aa = math.radians(rg.uniform(28, 55)); ld = (tg * math.cos(aa) + around * math.sin(aa)).normalized()
             ld = (ld + Vector((0, 0, -.25))).normalized()
-            Ll = rg.uniform(.20, .30); Wl = Ll * rg.uniform(.17, .23)   # enlarged so ~10k leaves read as full curtains at game distance
+            Ll = rg.uniform(.24, .34); Wl = Ll * rg.uniform(.19, .25)   # enlarged so ~10k leaves read as full curtains at game distance
             h = (at.z - zmin_c) / (zmax_c - zmin_c); o = min(1, Vector((at.x - cx, at.y - cy, 0)).length / rmax)
             expo = max(0, min(1, .5 * h + .38 * o + .12 * t + rg.uniform(-.06, .06)))
             occl = .45 + .55 * max(expo, o * .9)
@@ -318,7 +321,7 @@ def lod_leaves(vid, streams, anchors, frac, scale, budget):
             at = path[i].lerp(path[i + 1], f); tg = (path[i + 1] - path[i]).normalized()
             around = Quaternion(tg, q * 2.39996 + ai) @ tg.cross(UP if abs(tg.z) < .9 else Vector((1, 0, 0))).normalized()
             ld = ((tg * .8 + around * .5).normalized() + Vector((0, 0, -.25))).normalized()
-            Ll = rg.uniform(.20, .30) * scale ** .75; Wl = Ll * rg.uniform(.18, .26) * scale ** .25
+            Ll = rg.uniform(.24, .34) * scale ** .75; Wl = Ll * rg.uniform(.18, .26) * scale ** .25
             h = (at.z - zmin_c) / (zmax_c - zmin_c); o = min(1, Vector((at.x - cx, at.y - cy, 0)).length / rmax)
             expo = max(0, min(1, .5 * h + .38 * o + .12 * t)); occl = .45 + .55 * max(expo, o * .9)
             leaf(acc, at, ld, around.cross(ld), Ll, Wl, leaf_colour(expo, occl), .9 + .1 * t, ai / 20)
@@ -387,7 +390,7 @@ def tris(o):
 def build(vid):
     bpy.ops.wm.read_factory_settings(use_empty=True); bark, lfm = materials(); cfg = VARIANTS[vid]
     wood, twigs, leaves, collide, anchors, streams, nleaf = build_tree(vid, cfg)
-    l1 = lod_leaves(vid, streams, anchors, .25, 1.9, cfg.get('leaves', 11500)); l2 = lod_leaves(vid, streams, anchors, .0625, 3.6, cfg.get('leaves', 11500))
+    l1 = lod_leaves(vid, streams, anchors, .25, 1.9, cfg.get('leaves', 12400)); l2 = lod_leaves(vid, streams, anchors, .0625, 3.6, cfg.get('leaves', 12400))
     col = Acc()
     for _, path, radii in collide: tube(col, path, list(np.asarray(radii) * 1.05), 8, (0, 0), tip=False)
     for a in (wood, twigs, leaves, l1, l2, col): place(a)

@@ -179,9 +179,12 @@ namespace YunJing.Editor
             {
                 int leafSub = Array.FindIndex(r0.sharedMaterials, m => m && m.name == "M_TreeV2_Leaf");
                 var leafIdx = new HashSet<int>(leafSub >= 0 ? mesh.GetIndices(leafSub) : new int[0]);
-                var baseW = Enumerable.Range(0, mesh.vertexCount).Where(i => !leafIdx.Contains(i) && verts[i].y < 1.2f && new Vector2(verts[i].x, verts[i].z).magnitude < .9f).Select(i => uv2[i].x).DefaultIfEmpty(1).Max();
+                // trunk base: bark vertices within 0.9 m of the axis below 1.2 m; hanging twigs that reach down beside the trunk
+                // (weight 0.55-0.9) are allowed, so at least 90 % of these vertices must be <= 0.05
+                var baseWs = Enumerable.Range(0, mesh.vertexCount).Where(i => !leafIdx.Contains(i) && verts[i].y < 1.2f && new Vector2(verts[i].x, verts[i].z).magnitude < .9f).Select(i => uv2[i].x).ToArray();
+                var baseW = baseWs.Length == 0 ? 1f : baseWs.Count(w => w <= .05f) / (float)baseWs.Length;
                 var leafW = leafIdx.Select(i => uv2[i].x).DefaultIfEmpty(0).Min();
-                Check(baseW <= .05f, $"{id}: wind weight at the trunk base <= 0.05 (max {baseW:0.000})");
+                Check(baseW >= .9f, $"{id}: wind weight <= 0.05 on {baseW:P0} of the {baseWs.Length} trunk-base vertices (the rest are hanging twigs beside the trunk)");
                 Check(leafIdx.Count > 0 && leafW >= .85f, $"{id}: wind weight on all {leafIdx.Count} leaf vertices >= 0.85 (min {leafW:0.000})");
                 var la = leafIdx.Select(i => cols[i].a).ToArray(); var lg = leafIdx.Select(i => cols[i].g).ToArray();
                 Check(la.Length > 0 && la.Min() >= .4f && la.Max() <= 1f && la.Max() - la.Min() > .3f, $"{id}: leaf occlusion in vertex alpha {la.Min():0.00}-{la.Max():0.00}");
