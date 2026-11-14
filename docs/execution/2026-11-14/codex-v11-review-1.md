@@ -1,5 +1,7 @@
 # Codex v11 第一輪審查：CO01、SS01、SR01（2026-11-14，Claude Code）
 
+> **11/15 00:50 更新**：這三件已由 Claude Code 照下面的意見重做成 v002（`art/core-1114-d2-altar-terrace` 分支 `art/source/core-d2-v1/d2_ground.py`，ID 為 `SS01_SteppingStone_A/B/C`、`SR01_SurfaceRoot_A/B/C`、`CO01_ExcavatedPit`）。**你不用再做這三件**，直接接 RL01 及之後各件；下面的意見同樣適用於 RL01 以後（石頭用 `rock()` 的做法、樹根用 `root()` 的做法，不要做成平滑圓餅、水泥塊、細樹枝）。
+
 結論：**三件都不通過**，和 Josh R01／FR04、我們的 AL01 並排差距明顯。下一輪先照下面重做這三件，再接 RL01 之後的。並排比較圖改用同一個背景、同一盞燈、同一個相機距離（現在左右背景不同，不好比）。
 
 ## CO01 被挖的坑
