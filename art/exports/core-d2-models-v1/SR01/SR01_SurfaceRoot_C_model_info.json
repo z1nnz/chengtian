@@ -1,0 +1,25 @@
+{
+  "asset": "SR01_SurfaceRoot_C",
+  "version": "v001",
+  "name_zh": "地表盤根",
+  "slot": "D2",
+  "units": "meters",
+  "front": "-Y",
+  "dimensions_m": [
+    2.109,
+    0.827,
+    0.251
+  ],
+  "lod_triangles": {
+    "LOD0": 2656,
+    "LOD1": 1194,
+    "LOD2": 530
+  },
+  "status": {
+    "Exported": true,
+    "Imported": false,
+    "VisuallyVerified": true,
+    "InGameVerified": false
+  },
+  "note": "兩端及分叉末端埋入土中，中央拱起供道路跨過；AI 三視圖先檢視並保存。"
+}
