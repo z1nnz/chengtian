@@ -692,7 +692,8 @@ namespace YunJing.Editor
                 var renderers = model.GetComponentsInChildren<Renderer>();
                 if (renderers.Length == 0) throw new InvalidDataException("No renderer in " + p.model);
                 var b = renderers[0].bounds; foreach (var r in renderers) b.Encapsulate(r.bounds);
-                model.transform.position += Vector3.up * (At(p.x, p.z).y - b.min.y);
+                if (!QingxiD2Kit.HasGroundOrigin(p.model))
+                    model.transform.position += Vector3.up * (At(p.x, p.z).y - b.min.y);
                 model.transform.position -= Vector3.up * p.sink;   // pieces built to sit partly underground (a well shaft)
                 if (p.collider == "box")
                 {

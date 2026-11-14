@@ -28,6 +28,7 @@ namespace YunJing
         float? fixedHour; float speed = 1; double startedAt; DateTime startClock;
         float[] lightBase;
         Material moonMaterial;
+        bool d2Fog;
 
         struct Key
         {
@@ -136,7 +137,15 @@ namespace YunJing
         void Update()
         {
             float h = CurrentHour();
-            if (Mathf.Abs(Mathf.DeltaAngle(h * 15, Hour * 15)) > .01f) Apply(h);
+            var walker = QingxiWorld.QingxiFirstPerson.Current;
+            bool inD2 = walker != null && walker.transform.position.x >= -50f && walker.transform.position.x <= 50f
+                && walker.transform.position.z >= 150f && walker.transform.position.z <= 250f
+                && QingxiBlockStreamer.Current != null && QingxiBlockStreamer.Current.IsLoaded("D2");
+            if (Mathf.Abs(Mathf.DeltaAngle(h * 15, Hour * 15)) > .01f || inD2 != d2Fog)
+            {
+                d2Fog = inD2;
+                Apply(h);
+            }
         }
 
         void LateUpdate()
@@ -169,6 +178,12 @@ namespace YunJing
             RenderSettings.fogColor = Color.Lerp(a.fog, b.fog, t);
             RenderSettings.fogEndDistance = Mathf.Lerp(a.fogEnd, b.fogEnd, t) * fogScale;
             RenderSettings.fogStartDistance = RenderSettings.fogEndDistance * .38f;
+            if (d2Fog)
+            {
+                RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, new Color(.38f, .43f, .40f), .55f);
+                RenderSettings.fogStartDistance = 18f;
+                RenderSettings.fogEndDistance = 95f;
+            }
             if (sky != null)
             {
                 sky.SetFloat("_Exposure", Mathf.Lerp(a.exposure, b.exposure, t));

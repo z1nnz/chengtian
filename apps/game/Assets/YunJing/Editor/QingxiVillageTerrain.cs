@@ -355,6 +355,19 @@ namespace YunJing.Editor
                 heights[z, x] = Mathf.Clamp01((Height(layout, wx, wz) - BaseY) / HeightRange);
             }
             data.SetHeights(0, 0, heights);
+            if (layout.block == "D2")
+            {
+                int resolution = data.holesResolution;
+                var holes = new bool[resolution, resolution];
+                for (int z = 0; z < resolution; z++)
+                for (int x = 0; x < resolution; x++)
+                {
+                    float wx = area.minX + (x + .5f) * area.sizeX / resolution;
+                    float wz = area.minZ + (z + .5f) * area.sizeZ / resolution;
+                    holes[z, x] = (wx - 14f) * (wx - 14f) + (wz - 182f) * (wz - 182f) >= 1.75f * 1.75f;
+                }
+                data.SetHoles(0, 0, holes);
+            }
             // Relief on a coarse grid (every 8 samples, ~1.6 m on a 100 m block): height above the mean of the ground
             // about 10 m round, in metres; read back bilinearly for the paint.
             const int C = (HeightResolution - 1) / 8 + 1;
@@ -382,7 +395,13 @@ namespace YunJing.Editor
                 return Mathf.Lerp(Mathf.Lerp(reliefGrid[z0, x0], reliefGrid[z0, x0 + 1], tx), Mathf.Lerp(reliefGrid[z0 + 1, x0], reliefGrid[z0 + 1, x0 + 1], tx), tz);
             }
 
-            data.terrainLayers = Layers();
+            var terrainLayers = Layers();
+            if (layout.block == "D2")
+            {
+                terrainLayers[1] = D2GroundLayer("WetMud", "ground-path", new Vector4(.48f, .38f, .34f, 1));
+                terrainLayers[3] = D2GroundLayer("LeafLitter", "ground-forest", new Vector4(.48f, .37f, .30f, 1));
+            }
+            data.terrainLayers = terrainLayers;
             data.alphamapResolution = PaintResolution;
             var paint = new float[PaintResolution, PaintResolution, LayerNames.Length];
             var detail = new int[PaintResolution, PaintResolution];
@@ -539,6 +558,23 @@ namespace YunJing.Editor
                 result[i] = layer;
             }
             return result;
+        }
+
+        static TerrainLayer D2GroundLayer(string name, string painting, Vector4 tint)
+        {
+            string path = Generated + "/TerrainLayer-D2-" + name + ".asset";
+            var layer = AssetDatabase.LoadAssetAtPath<TerrainLayer>(path);
+            if (layer == null) { layer = new TerrainLayer(); AssetDatabase.CreateAsset(layer, path); }
+            layer.diffuseTexture = PaintedTexture(painting, out var relief);
+            if (layer.diffuseTexture == null) throw new FileNotFoundException("D2 地表貼圖缺少", painting);
+            layer.normalMapTexture = NormalMap("D2-" + name, relief, 1.6f);
+            layer.tileSize = new Vector2(2.5f, 2.5f);
+            layer.diffuseRemapMin = Vector4.zero;
+            layer.diffuseRemapMax = tint;
+            layer.smoothness = .08f;
+            layer.metallic = 0;
+            EditorUtility.SetDirty(layer);
+            return layer;
         }
 
         // Soil under the trees (z1nnz 2026-10-31: 地面也要按照樹種有不同的土壤): every species drops its own litter and

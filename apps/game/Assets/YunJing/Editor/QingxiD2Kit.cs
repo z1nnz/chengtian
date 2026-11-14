@@ -17,6 +17,9 @@ namespace YunJing.Editor
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
 
         public static bool Owns(string source) => !string.IsNullOrEmpty(source) && source.StartsWith("art/exports/", StringComparison.Ordinal);
+        public static bool HasGroundOrigin(string source) => !string.IsNullOrEmpty(source)
+            && source.StartsWith("art/exports/core-d2-v1/", StringComparison.Ordinal)
+            && source.EndsWith("_v002.fbx", StringComparison.Ordinal);
 
         public static string Resolve(string source)
         {

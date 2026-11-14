@@ -28,7 +28,13 @@ def asset(code: str) -> str:
     if code == "AL01":
         return "art/exports/core-d2-v1/AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.fbx"
     if code == "CO01":
-        return "art/exports/core-ruins-v1/CO01_DugPit/CO01_DugPit_v001.fbx"
+        return "art/exports/core-d2-v1/CO01_ExcavatedPit/CO01_ExcavatedPit_v002.fbx"
+    if code.startswith("SURFACE_ROOT_"):
+        variant = code.removeprefix("SURFACE_ROOT_")
+        return f"art/exports/core-d2-v1/SR01_SurfaceRoot_{variant}/SR01_SurfaceRoot_{variant}_v002.fbx"
+    if code.startswith("STEP_STONE_"):
+        variant = code.removeprefix("STEP_STONE_")
+        return f"art/exports/core-d2-v1/SS01_SteppingStone_{variant}/SS01_SteppingStone_{variant}_v002.fbx"
     if code.startswith("FR") or code.startswith("FO02"):
         folder = {
             "FR01_Braided": "FR01_RootWall_Braided",
@@ -132,7 +138,7 @@ layout["shots"] = [
     {"id": "D2-V3", "x": 8, "y": 7.5, "z": 178, "yaw": 350, "pitch": -8, "time": "上午", "lookAtX": 1, "lookAtY": 16, "lookAtZ": 203},
     {"id": "D2-V4", "x": 7, "y": 7.0, "z": 205, "yaw": 180, "pitch": 0, "time": "上午", "lookAtX": 10, "lookAtY": 7, "lookAtZ": 167},
     {"id": "D2-V5", "x": 25, "y": 8.6, "z": 210, "yaw": 55, "pitch": 0, "time": "上午", "lookAtX": 49.5, "lookAtY": 10, "lookAtZ": 221},
-    {"id": "D2-V6", "x": 14, "y": 6.3, "z": 184, "yaw": 315, "pitch": 5, "time": "上午", "lookAtX": 12, "lookAtY": 5.5, "lookAtZ": 183},
+    {"id": "D2-V6", "x": 17, "y": 7.5, "z": 186, "yaw": 220, "pitch": 12, "time": "上午", "lookAtX": 14, "lookAtY": 5.5, "lookAtZ": 182},
 ]
 
 placements: list[dict] = []
@@ -167,7 +173,7 @@ def cluster(cid: str, x: float, z: float, radius: float, items: list[tuple[str, 
 # 地標與大型物件；神木本體連板根必須由新交付件實現。
 place("WORLD_TREE", 0, 200, 0, "神木本體與整組放射板根；舊 GLB 未通過 QA", footprint=(40, 40, 90), collider="trunk-compound")
 place("AL01", 7, 205, 0, "祭壇台階朝南；可走面高 0.98 m", footprint=(10, 10, 2.2), collider="mesh")
-place("CO01", 14, 182, 150, "直徑約 4 m 的被挖坑", footprint=(4, 4, .8), collider="rim-only")
+place("CO01", 14, 182, 150, "直徑約 4 m 的被挖坑；外緣含翻土約 6.6 m，原點貼地", footprint=(6.6, 6.6, 1.7), collider="rim-only")
 place("ENTRY_ROOT_ARCH", 10, 167, 0, "南入口大根拱；現有 FR02 寬約 4.9 m、高約 3.5 m，需新做", footprint=(8, 3, 5), collider="mesh")
 for x, z, yaw in [(-17, 184, 235), (-23, 195, 255), (-18, 215, 295), (-7, 226, 350),
                    (12, 226, 25), (22, 215, 55), (22, 191, 115), (-3, 178, 165)]:
@@ -250,7 +256,7 @@ for i in range(45):
         z = 207 + (j // 3) * 1.7 + (-1.1, 0, 1.1)[lane]
         yaw = 65
     place(["STEP_STONE_A", "STEP_STONE_B", "STEP_STONE_C"][i % 3], x, z, yaw,
-          "泥路半埋踏石", footprint=(.7, .5, .15), sink=.08)
+          "泥路半埋踏石", footprint=(.7, .5, .15))
 for i, (x, z) in enumerate([(32, 213), (36, 216), (40, 218), (44, 219)]):
     place("UPHILL_STAIR", x, z, 65, "通 D6 的不規則嵌土石階；需核對 SG 尺寸", footprint=(2, 3, .5), collider="mesh")
 for x, z in [(-6, 207), (18, 215)]:
@@ -299,11 +305,18 @@ for i, (x, z, r) in enumerate([(-38, 168, 11), (-43, 194, 10), (-38, 227, 11),
                                (-18, 243, 10), (13, 242, 10), (39, 231, 10),
                                (43, 196, 10), (35, 169, 11)]):
     cluster(f"d2-forest-{i+1:02}", x, z, r, [
-        ("ElderPine_B" if i % 2 else "ElderPine_C", 6, .8, 1.15),
-        ("ElderCypress_B" if i % 2 else "ElderCypress_C", 5, .8, 1.2),
+        ("ElderPine_B" if i % 2 else "ElderPine_C", 16, .8, 1.15),
+        ("ElderCypress_B" if i % 2 else "ElderCypress_C", 10, .8, 1.2),
         ("ElderCamphor_B", 3, .8, 1.1),
         ("SHRUB_A", 4, .75, 1.25), ("SHRUB_B", 4, .75, 1.25),
     ], "外圈松為主、黃綠闊葉穿插，中心視線與道路留空")
+
+for i, (x, z) in enumerate([(-22, 171), (25, 173), (-22, 229), (20, 230)]):
+    cluster(f"d2-forest-inner-{i+1:02}", x, z, 9, [
+        ("ElderPine_B" if i % 2 else "ElderPine_C", 10, .8, 1.1),
+        ("ElderCypress_B" if i % 2 else "ElderCypress_C", 6, .8, 1.15),
+        ("ElderCamphor_B", 2, .8, 1.05),
+    ], "內圈接續外圈古林，避開祭壇視線與道路")
 
 for name, x, z in [("root-west", -16, 194), ("root-east", 20, 201),
                     ("root-north", 3, 219), ("root-south", 1, 183)]:

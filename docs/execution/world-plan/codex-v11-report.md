@@ -1,17 +1,23 @@
 # Codex v11｜D2 佈局與整合紀錄
 
-2026-11-14，分支 `game/codex-1113-world-plan`。本輪接續工作區已有的 B 整合改動；A 佈局已在 `08bdad63` 提交。本輪未執行 `git merge`，亦未生圖。
+2026-11-15，分支 `game/codex-1113-world-plan`。A 佈局已在 `08bdad63` 提交；本輪接續上一輪尚未提交的 B 整合，先檢查並提交為 `1925e507`、推送，再抓取並合併 `origin/game/core-1110-hud-redesign` 與 `origin/art/core-1114-d2-altar-terrace`。未使用生圖工具。
 
-## 已做
+## 本輪完成
 
-- 核對 `D2.json`：212 件逐件定位、34 組聚落展開 694 件，合計 906 件；其中 545 件缺交付模型，361 件有交付來源。JSON 格式檢查通過。
-- 接續 `QingxiD2Clusters`、`QingxiD2Kit`、D2 區塊登記及六個相機鏡位。Unity 生成紀錄顯示 `QINGXI_D2_CLUSTERS 694` 與 `QINGXI_BLOCK_GENERATED D2: 4 pads, 11 roads, 906 slots`。
-- 發現上一輪 `--keyart-shots` 的 D2-V1～V6 全黑，玩家紀錄顯示 `ReadPixels was called ... not inside drawing frame`。改用 `AsyncGPUReadback`，並讓並排腳本拒絕全黑截圖。重拍後六張皆有有效畫面，已輸出第一輪並排圖。
-- 第一輪對圖發現 V2 鏡位落地、FP01–04 橫跨而非沿路、FO02 發光蕈偏大、林地仍像草地。第二輪改用 D2 固定相機高度，校正 FP 的 X 軸方向與下沉、縮小 FO02，並將 D2 地表改為林地層且移除草地細節。第二輪截圖證實這些項目改善，但 V4 相機落進祭壇前景、12 件 FR03 藤簾因缺板根掛點而像孤立直板，FP03／FP05 在斜坡露出大面直壁。最後一輪改回 V4 實際站立面眼高，暫緩 FR03、FP03、FP05 共 16 件顯示並保留定位。
-- `NoviceVillageWindows` 建置及 `--abc-smoke` 已通過；煙霧測試紀錄在 `artifacts/abc-d2.log`。建立 `D2-built.md`，列六項驗收狀態與缺件工作單。
+- 將 CO01 坑、SS01 踏石 A／B／C、SR01 地表盤根 A／B／C 改為 `core-d2-v1` 的 v002 FBX。依交付資料讓模型原點貼地：坑口直徑約 4 m，含外緣翻土約 6.6 m；D2 Terrain 於坑口開半徑 1.75 m 的洞，避免地形填住坑底。
+- 外圈以現有 ElderPine、ElderCypress 與少量 ElderCamphor 加密，並補四組內圈樹。D2 現有 212 件逐件定位、38 組聚落展開 886 件，合計 1,098 件；其中 602 件有交付來源、480 件缺件、16 件暫緩顯示。
+- D2 地形使用專用深褐濕泥與落葉材質，取消草地細節；玩家走近 D2 時縮短距離霧。這是距離霧，貼地薄霧仍未製作。
+- 重新對準 V6 坑口鏡位，保留並排圖於 `compare/D2-V1.jpg` 至 `compare/D2-V6.jpg`。V1 外圈樹冠明顯變密；V4／V5 的遮擋已消失；V6 可看見新坑口與翻土。
 
-## 進行中與限制
+## 驗證
 
-- 最後一輪 `NoviceVillageWindows` 建置待執行；完成後須重跑 `--abc-smoke` 與 `--keyart-shots`，檢視六張更新畫面並覆寫並排圖。
-- 神木本體、板根、入口大根拱和大量林下物件缺模型。未完成的缺件不以既有模型冒充；因此目前不能宣稱六視圖構圖已符合設定圖。
-- `ProjectSettings` 與 `UniversalRenderPipelineGlobalSettings.asset` 為工作區既有 Unity 改動，不納入提交。
+- `python tools/qingxi-terrain/build_d2_layout.py`：212 件、38 組、合計 1,098 件、480 件缺件。
+- `NoviceVillageWindows`：Unity 場景生成顯示 `QINGXI_D2_CLUSTERS 886` 與 `QINGXI_BLOCK_GENERATED D2: 4 pads, 11 roads, 1098 slots`；Windows 玩家建置成功。V6 相機調整後另以相同 `QingxiNoviceVillageBuilder.BuildWindows` 方法重建，記錄於 `artifacts/unity-NoviceVillageWindows-v6.log`。
+- 最終玩家程式 `--abc-smoke`：退出碼 0，`QINGXI_ABC_SMOKE PASS`，記錄於 `artifacts/abc-d2-final-v6.log`。
+- 最終玩家程式 `--keyart-shots`：退出碼 0，D2-V1～V6 均有有效畫面，記錄於 `artifacts/keyart-d2-final-v6.log`；六張並排圖已更新並逐張檢視。
+
+## 尚未通過
+
+神木本體、放射板根、入口大根拱及多數林下小物仍缺，六視圖構圖尚未達設定圖。D1／D4／D6 邊界、坑口碰撞、全場景粉紅材質與效能尚未完整走查；D7 尚未建成。缺件定位未用替代模型冒充，完整清單見 [`D2-built.md`](D2-built.md)。
+
+`ProjectSettings` 與 `UniversalRenderPipelineGlobalSettings.asset` 的本機改動未納入提交。

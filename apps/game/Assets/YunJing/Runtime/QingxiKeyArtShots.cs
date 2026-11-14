@@ -29,12 +29,12 @@ namespace YunJing
             ("D2-V3", "D2", 8, 178, 350, 10f),
             ("D2-V4", "D2", 7, 205, 180, 10f),
             ("D2-V5", "D2", 25, 210, 55, 10f),
-            ("D2-V6", "D2", 14, 184, 315, 10f),
+            ("D2-V6", "D2", 17, 186, 220, 10f),
         };
         static readonly Dictionary<string, (float eye, float pitch, bool absolute)> D2Camera = new Dictionary<string, (float, float, bool)> {
             ["D2-V1"] = (72f, 45f, true), ["D2-V2"] = (9.5f, 0f, true),
             ["D2-V3"] = (7.5f, -8f, true), ["D2-V4"] = (1.6f, 0f, false),
-            ["D2-V5"] = (8.6f, 0f, true), ["D2-V6"] = (6.3f, 5f, true)
+            ["D2-V5"] = (8.6f, 0f, true), ["D2-V6"] = (1.6f, 12f, false)
         };
 
         IEnumerator Start()
