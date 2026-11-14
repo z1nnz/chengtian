@@ -5,8 +5,8 @@ from PIL import Image, ImageDraw
 
 aid, peer, label=sys.argv[1:4]
 root=Path(__file__).resolve().parents[3]
-out=root/'art/previews/core-d2-models-v1'/aid
-hero=next(out.glob('*_hero.png'))
+out=root/'art/previews/core-d2-models-v1'/aid.split('_')[0]
+hero=next(out.glob(f'{aid}_hero.png'))
 peer_path=root/peer
 canvas=Image.new('RGB',(1600,850),(54,55,55))
 draw=ImageDraw.Draw(canvas)

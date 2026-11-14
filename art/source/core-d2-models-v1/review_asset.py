@@ -5,7 +5,7 @@ from mathutils import Matrix
 
 aid=sys.argv[sys.argv.index('--')+1]
 root=Path(__file__).resolve().parents[3]
-out=root/'art/previews/core-d2-models-v1'/aid
+out=root/'art/previews/core-d2-models-v1'/aid.split('_')[0]
 out.mkdir(parents=True,exist_ok=True)
 sys.path.insert(0,'C:/Users/User/.agents/skills/blender-asset-qa/scripts')
 import review_shots

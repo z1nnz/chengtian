@@ -1,0 +1,25 @@
+{
+  "asset": "SS01_SteppingStone_A",
+  "version": "v001",
+  "name_zh": "半埋踏石",
+  "slot": "D2",
+  "units": "meters",
+  "front": "-Y",
+  "dimensions_m": [
+    0.91,
+    0.649,
+    0.333
+  ],
+  "lod_triangles": {
+    "LOD0": 2752,
+    "LOD1": 144,
+    "LOD2": 64
+  },
+  "status": {
+    "Exported": true,
+    "Imported": false,
+    "VisuallyVerified": true,
+    "InGameVerified": false
+  },
+  "note": "磨平頂面及帶苔不規則邊緣；安放時將底部埋入泥路約 0.06 m；AI 三視圖先檢視並保存。"
+}
