@@ -4,7 +4,7 @@
 | 工作包 | docs/execution/2026-11-14/A-120h-roads-yard-and-mountain-street.md（A 批，TG01 先交樣品） |
 | ID | TG01 木人樁（TG02–TG06 之後在同一張 PR 補上） |
 | 擺哪 | A1 青溪村，廣場東側的演武場（設定圖 `art/references/blocks/A1/` 的 V1、V3） |
-| 分支／PR | art/a-1114-tg-rd-ts-yard-and-road ／ PR 待開 |
+| 分支／PR | art/a-1114-tg-rd-ts-yard-and-road ／ #119 |
 | 版本 | v001 |
 | 狀態 | Exported；Imported：見「驗收紀錄」的 Unity 6000.3.28f1 檢查；Visually Verified：預覽圖；In-game Verified：未驗 |
 | 素材來源 | 原創。建模腳本 `art/source/training-yard-a/build_tg.py`，沿用 MC01（#80）的建模函式；三視圖用 Codex CLI 生成，存 `art/references/TG01/` |
