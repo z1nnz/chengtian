@@ -1,0 +1,218 @@
+{
+  "asset": "GN01_RaisedGranary",
+  "checks": [
+    {
+      "check": "footprint_within_limit",
+      "pass": true,
+      "detail": {
+        "min": [
+          -1.966,
+          -1.95,
+          0.0
+        ],
+        "max": [
+          1.966,
+          1.805,
+          4.7586
+        ],
+        "box_m": [
+          [
+            -2.0,
+            -2.0,
+            0.0
+          ],
+          [
+            2.0,
+            2.0,
+            5.0
+          ]
+        ]
+      }
+    },
+    {
+      "check": "base_at_z0",
+      "pass": true,
+      "detail": {
+        "min_z": 0.0,
+        "design_min_z": 0.0,
+        "largest_clamp_m": 0.01062
+      }
+    },
+    {
+      "check": "floor_raised_about_0.6m",
+      "pass": true,
+      "detail": {
+        "underside_z_m": [
+          0.61,
+          0.599,
+          0.602,
+          0.6
+        ]
+      }
+    },
+    {
+      "check": "open_under_the_floor",
+      "pass": true,
+      "detail": {
+        "first_hit_x_m": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "check": "ridge_along_y_and_under_5m",
+      "pass": true,
+      "detail": {
+        "ridge_top_m": [
+          4.744,
+          4.744,
+          4.744
+        ]
+      }
+    },
+    {
+      "check": "deep_eaves_on_both_sides",
+      "pass": true,
+      "detail": {
+        "eave_z_m": [
+          3.056,
+          3.056
+        ]
+      }
+    },
+    {
+      "check": "door_in_the_front_gable",
+      "pass": true,
+      "detail": {
+        "first_hit_y_m": -1.139
+      }
+    },
+    {
+      "check": "ladder_stands_in_front",
+      "pass": true,
+      "detail": {
+        "first_hit_y_m": [
+          -1.76,
+          -1.76
+        ]
+      }
+    },
+    {
+      "check": "lod_ratios_50_15",
+      "pass": true,
+      "detail": {
+        "triangles": {
+          "LOD0": 88202,
+          "LOD1": 44100,
+          "LOD2": 13225
+        },
+        "LOD1": 0.5,
+        "LOD2": 0.15,
+        "per_group": {
+          "Stone": {
+            "LOD0": 8724,
+            "LOD1": 4362,
+            "LOD2": 1308
+          },
+          "Wood": {
+            "LOD0": 39292,
+            "LOD1": 19646,
+            "LOD2": 5892
+          },
+          "Main": {
+            "LOD0": 1344,
+            "LOD1": 672,
+            "LOD2": 200
+          },
+          "Tiles": {
+            "LOD0": 27780,
+            "LOD1": 13890,
+            "LOD2": 4166
+          },
+          "Detail_Small": {
+            "LOD0": 11062,
+            "LOD1": 5530,
+            "LOD2": 1659
+          }
+        }
+      }
+    },
+    {
+      "check": "fbx_reimport_dimensions",
+      "pass": true,
+      "detail": {
+        "fbx_lod0_dims_m": [
+          3.932,
+          3.755,
+          4.7586
+        ],
+        "blend_dims_m": [
+          3.932,
+          3.755,
+          4.7586
+        ],
+        "tolerance_m": 0.02,
+        "max_error_m": 3e-05
+      }
+    },
+    {
+      "check": "fbx_has_lod0_1_2",
+      "pass": true,
+      "detail": [
+        "GN01_RaisedGranary.001",
+        "GN01_RaisedGranary_Collision.001",
+        "GN01_RaisedGranary_Detail_Small_LOD0.001",
+        "GN01_RaisedGranary_Detail_Small_LOD1.001",
+        "GN01_RaisedGranary_Detail_Small_LOD2.001",
+        "GN01_RaisedGranary_LOD0.001",
+        "GN01_RaisedGranary_LOD1.001",
+        "GN01_RaisedGranary_LOD2.001",
+        "GN01_RaisedGranary_Tiles_LOD0.001",
+        "GN01_RaisedGranary_Tiles_LOD1.001",
+        "GN01_RaisedGranary_Tiles_LOD2.001",
+        "Socket_Door.001",
+        "Socket_LadderFoot.001"
+      ]
+    },
+    {
+      "check": "fbx_sockets",
+      "pass": true,
+      "detail": {
+        "Socket_Door.001": [
+          0.0,
+          -1.36,
+          0.98
+        ],
+        "Socket_LadderFoot.001": [
+          0.0,
+          -1.9,
+          0.0
+        ]
+      }
+    },
+    {
+      "check": "fbx_collision",
+      "pass": true,
+      "detail": "collision mesh present"
+    },
+    {
+      "check": "glb_written",
+      "pass": true,
+      "detail": {
+        "bytes": 11948240
+      }
+    },
+    {
+      "check": "ten_views_rendered",
+      "pass": true,
+      "detail": "orthographic, framing asserted per view"
+    }
+  ],
+  "all_pass": true,
+  "seconds": 741,
+  "not_checked": [
+    "in-engine lighting and walking (see the Unity report)",
+    "mobile frame rate (not measured)"
+  ]
+}

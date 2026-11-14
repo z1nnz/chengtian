@@ -1,0 +1,292 @@
+{
+ "out": "C:/Users/joshs/AppData/Local/Temp/claude/bc686f892c0d5f43/06bd7bf3-9bb5-47b1-808e-eee93a9a165b/scratchpad/pack_yard",
+ "pieces": [
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-houses-b/blend/VL04_DiligentFamilyHouse_v001.blend",
+   "id": "VL04_DiligentFamilyHouse",
+   "tex": "D:/yun-jing-yards/art/exports/village-houses-b/VL04_DiligentFamilyHouse/Textures",
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/WE01_VillageWell_v001.blend",
+   "id": "WE01_VillageWell",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/WE01_VillageWell/Textures",
+   "offset": [
+    4.0,
+    -9.6,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_B_CornerWall_v001.blend",
+   "id": "CW01_B_CornerWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_B_CornerWall/Textures",
+   "offset": [
+    7.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_B_CornerWall_v001.blend",
+   "id": "CW01_B_CornerWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_B_CornerWall/Textures",
+   "offset": [
+    -7.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_B_CornerWall_v001.blend",
+   "id": "CW01_B_CornerWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_B_CornerWall/Textures",
+   "offset": [
+    7.2,
+    6.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_B_CornerWall_v001.blend",
+   "id": "CW01_B_CornerWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_B_CornerWall/Textures",
+   "offset": [
+    -7.2,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW02_A_GateOpen_v001.blend",
+   "id": "CW02_A_GateOpen",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW02_A_GateOpen/Textures",
+   "offset": [
+    0,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    3.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    -3.2,
+    -14.0,
+    0
+   ],
+   "rot_z": 0
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW02_B_GateClosed_v001.blend",
+   "id": "CW02_B_GateClosed",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW02_B_GateClosed/Textures",
+   "offset": [
+    0,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    3.2,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    -3.2,
+    6.0,
+    0
+   ],
+   "rot_z": 180
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    7.2,
+    -10.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    -7.2,
+    -10.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    7.2,
+    -6.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    -7.2,
+    -6.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    7.2,
+    -2.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    -7.2,
+    -2.0,
+    0
+   ],
+   "rot_z": 270
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_A_StraightWall_v001.blend",
+   "id": "CW01_A_StraightWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_A_StraightWall/Textures",
+   "offset": [
+    7.2,
+    2.0,
+    0
+   ],
+   "rot_z": 90
+  },
+  {
+   "blend": "D:/yun-jing-yards/art/source/village-yards-b/blend/CW01_D_BreachWall_v001.blend",
+   "id": "CW01_D_BreachWall",
+   "tex": "D:/yun-jing-yards/art/exports/village-yards-b/CW01_D_BreachWall/Textures",
+   "offset": [
+    -7.2,
+    2.0,
+    0
+   ],
+   "rot_z": 270
+  }
+ ],
+ "figures": [
+  [
+   0.4,
+   -15.6,
+   0,
+   0
+  ],
+  [
+   2.9,
+   -9.6,
+   0,
+   -90
+  ],
+  [
+   -1.2,
+   -6.2,
+   0,
+   180
+  ]
+ ],
+ "views": [
+  {
+   "name": "pack_yard_ruler_1p75",
+   "eye": [
+    17.0,
+    -30.0,
+    13.0
+   ],
+   "target": [
+    0.0,
+    -4.5,
+    1.2
+   ],
+   "lens": 30,
+   "label": "1.75 m figures at the gate, the well and the house"
+  },
+  {
+   "name": "pack_yard_eye_1p7_gate",
+   "eye": [
+    -0.9,
+    -19.5,
+    1.7
+   ],
+   "target": [
+    0.6,
+    -6.0,
+    1.7
+   ],
+   "lens": 24,
+   "label": "1.7 m eye, on the street before the open gate"
+  },
+  {
+   "name": "pack_yard_eye_1p7_yard",
+   "eye": [
+    -4.6,
+    -12.2,
+    1.7
+   ],
+   "target": [
+    3.0,
+    -5.5,
+    1.6
+   ],
+   "lens": 24,
+   "label": "1.7 m eye, inside the yard by the front wall, towards the well and the house"
+  }
+ ]
+}
