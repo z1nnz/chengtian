@@ -1,0 +1,25 @@
+{
+  "asset": "RL01_RottenLog_B",
+  "version": "v001",
+  "name_zh": "苔蕈朽木",
+  "slot": "D2",
+  "units": "meters",
+  "front": "-Y",
+  "dimensions_m": [
+    3.888,
+    0.767,
+    0.684
+  ],
+  "lod_triangles": {
+    "LOD0": 6640,
+    "LOD1": 2988,
+    "LOD2": 793
+  },
+  "status": {
+    "Exported": true,
+    "Imported": true,
+    "VisuallyVerified": true,
+    "InGameVerified": false
+  },
+  "note": "朽木有破裂木片、苔團及褐蕈；未在 Unity 地形上擺放；AI 三視圖先檢視並保存。"
+}
