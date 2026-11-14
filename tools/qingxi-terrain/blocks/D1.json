@@ -33,6 +33,16 @@
       "id": "d1-watch",
       "x": 18,
       "z": 96
+    },
+    {
+      "id": "d1-north-bend",
+      "x": 15,
+      "z": 126
+    },
+    {
+      "id": "d1-north",
+      "x": 10,
+      "z": 149.5
     }
   ],
   "edges": [
@@ -55,6 +65,20 @@
       "from": "d1-fork",
       "to": "d1-watch",
       "width": 2.0,
+      "surface": "dirt"
+    },
+    {
+      "id": "d1-to-d2-1",
+      "from": "d1-watch",
+      "to": "d1-north-bend",
+      "width": 2.5,
+      "surface": "dirt"
+    },
+    {
+      "id": "d1-to-d2-2",
+      "from": "d1-north-bend",
+      "to": "d1-north",
+      "width": 2.5,
       "surface": "dirt"
     }
   ],
@@ -108,6 +132,16 @@
       "x": 0,
       "z": 100,
       "height": 5.0
+    },
+    {
+      "x": 15,
+      "z": 126,
+      "height": 7.4
+    },
+    {
+      "x": 10,
+      "z": 149.5,
+      "height": 7.9
     }
   ],
   "creek": {

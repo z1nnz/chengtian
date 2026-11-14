@@ -14,7 +14,7 @@ namespace YunJing.Editor
     {
         const string Generated = "Assets/YunJing/Generated";
         const int HeightResolution = 513, PaintResolution = 512;   // 0.2 m per sample on a 100 m block: no stair-stepped banks
-        const float BaseY = -1f, HeightRange = 24f;   // D3 climbs to 15 m; 16-bit heights keep sub-millimetre steps
+        const float BaseY = -1f, HeightRange = 36f;   // D6 reaches 29.5 m; 16-bit heights still keep sub-millimetre steps
         const float RoadBlend = 2.5f, PadBlend = 3f;
 
         [Serializable] public class Area { public float minX, minZ, sizeX, sizeZ; }
@@ -32,6 +32,24 @@ namespace YunJing.Editor
             public float x, z, yaw, scale, sink;
             public float[] footprint;
             public bool Needed => status == "needed" || string.IsNullOrEmpty(model);
+        }
+        [Serializable] public class ClusterItem
+        {
+            public string model, modelCode, status;
+            public int count;
+            public float scaleMin = 1, scaleMax = 1;
+        }
+        [Serializable] public class Cluster
+        {
+            public string id, yaw, note;
+            public float x, z, radius;
+            public bool avoidPath;
+            public ClusterItem[] items;
+        }
+        [Serializable] public class Shot
+        {
+            public string id, time;
+            public float x, y, z, yaw, pitch, lookAtX, lookAtY, lookAtZ;
         }
         [Serializable] public class Herb { public string id, kind; public float x, z; }
         [Serializable] public class FortuneSpot { public string id, title, passage, reward, condition; public float x, z; }
@@ -59,6 +77,9 @@ namespace YunJing.Editor
             public Checkpoint[] checkpoints;
             public string[] route;
             public Placement[] placements;
+            public Cluster[] clusters;
+            public int clusterSeed;
+            public Shot[] shots;
             public Placement[] crossingSlots;   // slots off the pads: on or beside the creek (bridges, the D3 weir, bank stones)
             public Herb[] herbs;
             public FortuneSpot[] fortunes;   // 機緣 (K4): hidden finds, never on the map
@@ -389,6 +410,7 @@ namespace YunJing.Editor
                 float slabs = village ? dirt * slabRun * (1f - Smooth(-.9f, .2f, worn + .4f)) : 0;
                 float plaza = Mathf.Max(nearest?.surface == "plaza" ? inPad * .85f : 0, slabs);
                 float forest = nearest?.surface == "forest" ? (1f - Smooth(-1f, 3f, pad)) * (1f - dirt) : 0;
+                if (layout.block == "D2") forest = Mathf.Max(forest, (1f - dirt - plaza) * .88f);
                 // Creek banks: gravel at the water's edge, darker leaf-litter and moss further up the bank.
                 float creek = CreekDistance(layout, wx, wz, out _);
                 float gravel = 0;
@@ -428,6 +450,7 @@ namespace YunJing.Editor
                 // Grass: none on roads or pads, thinning toward their edges.
                 float density = Smooth(.1f, 1.8f, worn) * Smooth(.5f, 2.5f, pad) * (1f - rock) * (1f - gravel)
                     * (layout.creek != null ? Smooth(layout.creek.width * .5f + .5f, layout.creek.width * .5f + 2.5f, creek) : 1f);
+                if (layout.block == "D2") density = 0;   // ancient forest floor: authored ferns, roots and litter replace meadow grass
                 float scatter = Mathf.PerlinNoise(wx * .71f + 31f, wz * .71f + 41f);
                 detail[z, x] = density > .7f && scatter > .42f ? (scatter > .66f ? 4 : scatter > .54f ? 2 : 1) : 0;
                 cover[z, x] = density;

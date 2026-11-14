@@ -349,9 +349,9 @@
       "scale": 1,
       "sink": 0,
       "footprint": [
-        6,
-        6,
-        1
+        10,
+        10,
+        2.2
       ],
       "collider": "mesh",
       "status": "needs-importer",
@@ -378,11 +378,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_FR02_001",
+      "id": "D2_ENTRY_ROOT_ARCH_001",
       "zone": "d2-tree",
-      "role": "南入口根拱；須在 Unity 核對 8 m 淨跨與 5 m 淨高",
-      "modelCode": "FR02",
-      "model": "art/exports/forest-roots-b/FR02_RootArch/FR02_RootArch_v001.fbx",
+      "role": "南入口大根拱；現有 FR02 寬約 4.9 m、高約 3.5 m，需新做",
+      "modelCode": "ENTRY_ROOT_ARCH",
+      "model": "missing/D2/ENTRY_ROOT_ARCH.fbx",
       "x": 10,
       "z": 167,
       "yaw": 0,
@@ -394,7 +394,7 @@
         5
       ],
       "collider": "mesh",
-      "status": "needs-importer",
+      "status": "missing",
       "author": "既有交付或待製作"
     },
     {
@@ -1285,13 +1285,13 @@
       "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
       "x": 10,
       "z": 157,
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1305,13 +1305,13 @@
       "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
       "x": 10,
       "z": 162,
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1325,13 +1325,13 @@
       "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx",
       "x": 10,
       "z": 173,
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "mesh",
       "status": "needs-importer",
@@ -1345,13 +1345,13 @@
       "model": "art/exports/forest-paths-b/FP02_PathCurve30_L/FP02_PathCurve30_L_v001.fbx",
       "x": 9,
       "z": 180,
-      "yaw": 350,
+      "yaw": 80,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1365,13 +1365,13 @@
       "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
       "x": 10,
       "z": 187,
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1385,13 +1385,13 @@
       "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx",
       "x": 10,
       "z": 194,
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "mesh",
       "status": "needs-importer",
@@ -1400,21 +1400,21 @@
     {
       "id": "D2_FP05_001",
       "zone": "d2-tree",
-      "role": "土路局部補強，不鋪成連續人工棧道",
+      "role": "土路局部補強；坡段與木階待貼合地形",
       "modelCode": "FP05",
       "model": "art/exports/forest-paths-b/FP05_PathLogSteps/FP05_PathLogSteps_v001.fbx",
       "x": 8,
       "z": 199,
       "yaw": 345,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
-        6,
-        0.4
+        2,
+        3,
+        1.8
       ],
       "collider": "mesh",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
@@ -1425,13 +1425,13 @@
       "model": "art/exports/forest-paths-b/FP02_PathCurve30_R/FP02_PathCurve30_R_v001.fbx",
       "x": 2,
       "z": 207,
-      "yaw": 270,
+      "yaw": 0,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1445,13 +1445,13 @@
       "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
       "x": -7,
       "z": 210,
-      "yaw": 270,
+      "yaw": 0,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1460,21 +1460,21 @@
     {
       "id": "D2_FP03_001",
       "zone": "d2-tree",
-      "role": "土路局部補強，不鋪成連續人工棧道",
+      "role": "土路局部補強；坡段與木階待貼合地形",
       "modelCode": "FP03",
       "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
       "x": -23,
       "z": 212,
-      "yaw": 270,
+      "yaw": 0,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        1.5
       ],
       "collider": "mesh",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
@@ -1485,13 +1485,13 @@
       "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
       "x": -36,
       "z": 213,
-      "yaw": 270,
+      "yaw": 0,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1505,13 +1505,13 @@
       "model": "art/exports/forest-paths-b/FP02_PathCurve30_L/FP02_PathCurve30_L_v001.fbx",
       "x": 15,
       "z": 207,
-      "yaw": 75,
+      "yaw": 165,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1525,13 +1525,13 @@
       "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx",
       "x": 23,
       "z": 210,
-      "yaw": 70,
+      "yaw": 160,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "mesh",
       "status": "needs-importer",
@@ -1540,41 +1540,41 @@
     {
       "id": "D2_FP03_002",
       "zone": "d2-tree",
-      "role": "土路局部補強，不鋪成連續人工棧道",
+      "role": "土路局部補強；坡段與木階待貼合地形",
       "modelCode": "FP03",
       "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
       "x": 31,
       "z": 213,
-      "yaw": 60,
+      "yaw": 150,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        1.5
       ],
       "collider": "mesh",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FP03_003",
       "zone": "d2-tree",
-      "role": "土路局部補強，不鋪成連續人工棧道",
+      "role": "土路局部補強；坡段與木階待貼合地形",
       "modelCode": "FP03",
       "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
       "x": 39,
       "z": 217,
-      "yaw": 65,
+      "yaw": 155,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        1.5
       ],
       "collider": "mesh",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
@@ -1585,13 +1585,13 @@
       "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
       "x": 46,
       "z": 220,
-      "yaw": 65,
+      "yaw": 155,
       "scale": 1,
-      "sink": 0,
+      "sink": 0.08,
       "footprint": [
-        2.3,
         6,
-        0.4
+        2.3,
+        0.6
       ],
       "collider": "none",
       "status": "needs-importer",
@@ -1600,7 +1600,7 @@
     {
       "id": "D2_FR03_Dense_001",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": 25.0,
@@ -1614,13 +1614,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_001",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 21.65,
@@ -1634,13 +1634,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_002",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 12.5,
@@ -1654,13 +1654,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Dense_002",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": 0.0,
@@ -1674,13 +1674,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_003",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -12.5,
@@ -1694,13 +1694,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_004",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -21.65,
@@ -1714,13 +1714,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Dense_003",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": -25.0,
@@ -1734,13 +1734,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_005",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -21.65,
@@ -1754,13 +1754,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_006",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -12.5,
@@ -1774,13 +1774,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Dense_004",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": -0.0,
@@ -1794,13 +1794,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_007",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 12.5,
@@ -1814,13 +1814,13 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
       "id": "D2_FR03_Sparse_008",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 21.65,
@@ -1834,7 +1834,7 @@
         3
       ],
       "collider": "none",
-      "status": "needs-importer",
+      "status": "blocked",
       "author": "既有交付或待製作"
     },
     {
@@ -5856,24 +5856,24 @@
           "modelCode": "FO02_A",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_B",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_C",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
           "count": 1,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
@@ -5939,24 +5939,24 @@
           "modelCode": "FO02_A",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_B",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_C",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
           "count": 1,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
@@ -6022,24 +6022,24 @@
           "modelCode": "FO02_A",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_B",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_C",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
           "count": 1,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
@@ -6105,24 +6105,24 @@
           "modelCode": "FO02_A",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_B",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_C",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
           "count": 1,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
@@ -6188,24 +6188,24 @@
           "modelCode": "FO02_A",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_B",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_C",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
           "count": 1,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
@@ -6271,24 +6271,24 @@
           "modelCode": "FO02_A",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_B",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
           "count": 2,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {
           "modelCode": "FO02_C",
           "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
           "count": 1,
-          "scaleMin": 0.8,
-          "scaleMax": 1.2,
+          "scaleMin": 0.3,
+          "scaleMax": 0.42,
           "status": "needs-importer"
         },
         {

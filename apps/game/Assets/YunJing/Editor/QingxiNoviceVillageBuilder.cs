@@ -664,11 +664,14 @@ namespace YunJing.Editor
             int needed = 0, oversize = 0;
             foreach (var p in all)
             {
+                if (p.status == "missing" || p.status == "blocked") continue;   // Keep undelivered art and unanchored vines out of the scene.
                 if (p.Needed) { PlannedSlot(root, p); needed++; continue; }
+                if (QingxiD2Kit.Owns(p.model)) QingxiD2Kit.Ensure(p.model);
                 if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Ensure(p.model);   // #57 ruins, #62 day 3-4 models
                 if (QingxiScenePropKits.Owns(p.model)) QingxiScenePropKits.Ensure(p.model);
                 if (QingxiVillageHouseKit.Owns(p.model)) QingxiVillageHouseKit.Ensure(p.model);   // #85, #89 village houses
-                var source = AssetDatabase.LoadAssetAtPath<GameObject>(p.model);
+                string modelPath = QingxiD2Kit.Resolve(p.model);
+                var source = AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
                 if (source == null) throw new FileNotFoundException("Village placement model missing (Git LFS pulled?)", p.model);
                 var model = (GameObject)PrefabUtility.InstantiatePrefab(source);
                 model.name = $"{p.id} - {p.author}";
@@ -678,6 +681,7 @@ namespace YunJing.Editor
                 if (QingxiDeliveredKits.Owns(p.model)) QingxiDeliveredKits.Prepare(model, p.model);
                 if (QingxiScenePropKits.Owns(p.model)) QingxiScenePropKits.Prepare(model, p.model);
                 if (QingxiVillageHouseKit.Owns(p.model)) QingxiVillageHouseKit.Prepare(model, p.model);
+                if (QingxiD2Kit.Owns(p.model)) QingxiD2Kit.Prepare(model, p.model);
                 // Layout proxies (the 3 × 5 m plate under Eli-0731's assembled corner) mark an area, they are not ground.
                 foreach (var proxy in model.GetComponentsInChildren<Transform>(true).Where(t => t.name.StartsWith("layout_proxy")).ToArray())
                     UnityEngine.Object.DestroyImmediate(proxy.gameObject);
@@ -803,6 +807,7 @@ namespace YunJing.Editor
             layout = blockLayout; terrain = blockTerrain;
             try
             {
+                if (blockId == "D2") Debug.Log("QINGXI_D2_CLUSTERS " + QingxiD2Clusters.Expand(layout) + " authored items expanded");
                 bool upstream = layout.creekKit != null && layout.creekKit.Length > 0;
                 if (upstream || layout.creek != null) QingxiWaterheadA.Copy();   // river tiles; sedge for every creek bank
                 Placements(root);
@@ -813,7 +818,7 @@ namespace YunJing.Editor
                 if (upstream && layout.placements.Any(p => p.id == "D3_CrackedSluice")) UpstreamClues(root);
                 if (blockId == "A2") TeaPavilion(root);
                 if (blockId == "A4") QingxiTeaTerraceKit.Build(root);   // joshsu54's tea terraces, stairs and pavilion
-                Dressing(root, blockId);
+                if (blockId != "D2") Dressing(root, blockId);   // D2 trees and undergrowth are placed by authored clusters.
                 Debug.Log("QINGXI_WIND (block): " + WindFoliage(root) + " foliage renderers sway");
             }
             finally { layout = oldLayout; terrain = oldTerrain; }

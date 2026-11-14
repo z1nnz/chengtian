@@ -166,9 +166,9 @@ def cluster(cid: str, x: float, z: float, radius: float, items: list[tuple[str, 
 
 # 地標與大型物件；神木本體連板根必須由新交付件實現。
 place("WORLD_TREE", 0, 200, 0, "神木本體與整組放射板根；舊 GLB 未通過 QA", footprint=(40, 40, 90), collider="trunk-compound")
-place("AL01", 7, 205, 0, "祭壇台階朝南；可走面高 0.98 m", footprint=(6, 6, 1), collider="mesh")
+place("AL01", 7, 205, 0, "祭壇台階朝南；可走面高 0.98 m", footprint=(10, 10, 2.2), collider="mesh")
 place("CO01", 14, 182, 150, "直徑約 4 m 的被挖坑", footprint=(4, 4, .8), collider="rim-only")
-place("FR02", 10, 167, 0, "南入口根拱；須在 Unity 核對 8 m 淨跨與 5 m 淨高", footprint=(8, 3, 5), collider="mesh")
+place("ENTRY_ROOT_ARCH", 10, 167, 0, "南入口大根拱；現有 FR02 寬約 4.9 m、高約 3.5 m，需新做", footprint=(8, 3, 5), collider="mesh")
 for x, z, yaw in [(-17, 184, 235), (-23, 195, 255), (-18, 215, 295), (-7, 226, 350),
                    (12, 226, 25), (22, 215, 55), (22, 191, 115), (-3, 178, 165)]:
     place("BUTTRESS_ROOT", x, z, yaw, "神木放射板根延伸，待整組模型交付後核對", footprint=(12, 3, 4), collider="mesh")
@@ -202,13 +202,19 @@ path_parts = [
     ("FP03", 31, 213, 60), ("FP03", 39, 217, 65), ("FP01", 46, 220, 65),
 ]
 for code, x, z, yaw in path_parts:
-    place(code, x, z, yaw, "土路局部補強，不鋪成連續人工棧道", footprint=(2.3, 6, .4), collider="mesh" if code in ("FP03", "FP04", "FP05") else "none")
+    # FP01–04 run along their local X axis; the authored heading is measured from north.
+    model_yaw = (yaw + (90 if code != "FP05" else 0)) % 360
+    footprint = (2, 3, 1.8) if code == "FP05" else (6, 2.3, 1.5 if code == "FP03" else .6)
+    blocked = code in ("FP03", "FP05")  # rigid slope and stair pieces need terrain fitting before they can be shown
+    place(code, x, z, model_yaw, "土路局部補強；坡段與木階待貼合地形" if blocked else "土路局部補強，不鋪成連續人工棧道",
+          footprint=footprint, collider="mesh" if code in ("FP03", "FP04", "FP05") else "none",
+          sink=.08, forced_status="blocked" if blocked else None)
 for i in range(12):
     angle = i * math.tau / 12
     x = 25 * math.cos(angle)
     z = 200 + 24 * math.sin(angle)
     place("FR03_Dense" if i % 3 == 0 else "FR03_Sparse", x, z, i * 30,
-          "貼外圈根牆的藤簾，保留通道淨高", footprint=(2, .3, 3))
+          "貼外圈根牆的藤簾，板根未交付前暫緩顯示", footprint=(2, .3, 3), forced_status="blocked")
 for i in range(20):
     angle = i * 2.39996
     r = 15 + (i % 4) * 4
@@ -282,8 +288,8 @@ for name, x, z, r in [
     ("east-detail", 31, 214, 9), ("north-detail", 2, 225, 10),
 ]:
     cluster(f"d2-detail-{name}", x, z, r, [
-        ("LARGE_FERN", 4, .85, 1.1), ("FO02_A", 2, .8, 1.2),
-        ("FO02_B", 2, .8, 1.2), ("FO02_C", 1, .8, 1.2),
+        ("LARGE_FERN", 4, .85, 1.1), ("FO02_A", 2, .3, .42),
+        ("FO02_B", 2, .3, .42), ("FO02_C", 1, .3, .42),
         ("MUSHROOM_WHITE", 3, .8, 1.2), ("WHITE_FLOWER", 4, .8, 1.2),
         ("TWIGS", 4, .75, 1.3), ("VINE_GROUND", 2, .8, 1.2),
         ("BM02_01", 3, .65, 1.25),
