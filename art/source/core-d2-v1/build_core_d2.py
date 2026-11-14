@@ -8,11 +8,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'village-houses-b')); sys.path.insert(0, str(HERE))
 import build_village_houses_b as B
-import al_altar
+import al_altar, d2_ground
 
 B.KIT = 'core-d2-v1'
 B.ASSETS.clear()
 al_altar.register(B.ASSETS)
+d2_ground.register(B.ASSETS)
 
 if __name__ == '__main__':
     argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
