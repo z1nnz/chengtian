@@ -1,0 +1,77 @@
+{
+ "TR06_A": {
+  "objects": {
+   "TR06_A_LOD0": {
+    "tris": 57187,
+    "errors": [],
+    "warnings": [
+     "TR06_A_LOD0: ~100.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "TR06_A_LOD0: duplicate verts=1684 loose verts=0",
+     "asset lowest point z=-0.3234 (not resting on ground plane z=0)"
+    ],
+    "sec": 37.4
+   }
+  },
+  "reimport_dims": [
+   9.794,
+   9.0,
+   9.563
+  ],
+  "built_dims": [
+   9.794,
+   9.0,
+   9.563
+  ],
+  "reimport_error_m": 0.0
+ },
+ "TR06_B": {
+  "objects": {
+   "TR06_B_LOD0": {
+    "tris": 55502,
+    "errors": [],
+    "warnings": [
+     "TR06_B_LOD0: ~100.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "TR06_B_LOD0: duplicate verts=1525 loose verts=0",
+     "asset lowest point z=-0.3295 (not resting on ground plane z=0)"
+    ],
+    "sec": 35.7
+   }
+  },
+  "reimport_dims": [
+   9.243,
+   8.049,
+   11.046
+  ],
+  "built_dims": [
+   9.243,
+   8.049,
+   11.046
+  ],
+  "reimport_error_m": 0.0
+ },
+ "TR06_C": {
+  "objects": {
+   "TR06_C_LOD0": {
+    "tris": 54949,
+    "errors": [],
+    "warnings": [
+     "TR06_C_LOD0: ~100.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "TR06_C_LOD0: duplicate verts=1336 loose verts=0",
+     "asset lowest point z=-0.3431 (not resting on ground plane z=0)"
+    ],
+    "sec": 33.5
+   }
+  },
+  "reimport_dims": [
+   10.44,
+   9.499,
+   9.264
+  ],
+  "built_dims": [
+   10.44,
+   9.499,
+   9.264
+  ],
+  "reimport_error_m": 0.0
+ }
+}
