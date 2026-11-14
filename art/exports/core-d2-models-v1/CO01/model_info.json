@@ -1,0 +1,25 @@
+{
+  "asset": "CO01_ExcavatedPit",
+  "version": "v002",
+  "name_zh": "被挖的坑",
+  "slot": "D2",
+  "units": "meters",
+  "front": "-Y",
+  "dimensions_m": [
+    4.772,
+    4.766,
+    1.046
+  ],
+  "lod_triangles": {
+    "LOD0": 9898,
+    "LOD1": 3222,
+    "LOD2": 532
+  },
+  "status": {
+    "Exported": true,
+    "Imported": false,
+    "VisuallyVerified": true,
+    "InGameVerified": false
+  },
+  "note": "外徑約 4.8 m、坑深約 0.6 m；匯出 pivot 置於最低處，地表放置時模型下移約 0.68 m，且需對地形開孔；AI 三視圖已先檢視並保存。"
+}
