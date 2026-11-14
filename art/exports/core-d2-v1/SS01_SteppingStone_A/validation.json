@@ -1,0 +1,127 @@
+{
+  "asset": "SS01_SteppingStone_A",
+  "checks": [
+    {
+      "check": "footprint_within_limit",
+      "pass": true,
+      "detail": {
+        "min": [
+          -0.556,
+          -0.5738,
+          -0.15
+        ],
+        "max": [
+          0.556,
+          0.5738,
+          0.1898
+        ],
+        "box_m": [
+          [
+            -0.79,
+            -0.79,
+            -0.15
+          ],
+          [
+            0.79,
+            0.79,
+            0.5
+          ]
+        ]
+      }
+    },
+    {
+      "check": "lowest_point_at_design_z",
+      "pass": true,
+      "detail": {
+        "min_z": -0.15,
+        "design_min_z": -0.15,
+        "largest_clamp_m": 0.00049
+      }
+    },
+    {
+      "check": "lod_ratios_50_15",
+      "pass": true,
+      "detail": {
+        "triangles": {
+          "LOD0": 4998,
+          "LOD1": 2499,
+          "LOD2": 749
+        },
+        "LOD1": 0.5,
+        "LOD2": 0.15,
+        "per_group": {
+          "Main": {
+            "LOD0": 3880,
+            "LOD1": 1940,
+            "LOD2": 582
+          },
+          "Detail_Small": {
+            "LOD0": 1118,
+            "LOD1": 559,
+            "LOD2": 167
+          }
+        }
+      }
+    },
+    {
+      "check": "fbx_reimport_dimensions",
+      "pass": true,
+      "detail": {
+        "fbx_lod0_dims_m": [
+          1.112,
+          1.1476,
+          0.3398
+        ],
+        "blend_dims_m": [
+          1.112,
+          1.1476,
+          0.3398
+        ],
+        "tolerance_m": 0.02,
+        "max_error_m": 4e-05
+      }
+    },
+    {
+      "check": "fbx_has_lod0_1_2",
+      "pass": true,
+      "detail": [
+        "SS01_SteppingStone_A.001",
+        "SS01_SteppingStone_A_Collision.001",
+        "SS01_SteppingStone_A_Detail_Small_LOD0.001",
+        "SS01_SteppingStone_A_Detail_Small_LOD1.001",
+        "SS01_SteppingStone_A_Detail_Small_LOD2.001",
+        "SS01_SteppingStone_A_LOD0.001",
+        "SS01_SteppingStone_A_LOD1.001",
+        "SS01_SteppingStone_A_LOD2.001"
+      ]
+    },
+    {
+      "check": "fbx_sockets",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "check": "fbx_collision",
+      "pass": true,
+      "detail": "collision mesh present"
+    },
+    {
+      "check": "glb_written",
+      "pass": true,
+      "detail": {
+        "bytes": 549920
+      }
+    },
+    {
+      "check": "ten_views_rendered",
+      "pass": true,
+      "detail": "orthographic, framing asserted per view"
+    }
+  ],
+  "all_pass": true,
+  "seconds": 131,
+  "not_checked": [
+    "in-engine lighting and walking (see the Unity report)",
+    "mobile frame rate (not measured)"
+  ]
+}
