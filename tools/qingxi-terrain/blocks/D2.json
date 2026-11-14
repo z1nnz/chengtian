@@ -2,80 +2,6920 @@
   "version": 2,
   "units": "m",
   "block": "D2",
-  "note": "D2 古樹神木，cell [0,2]。世界座標，+Z 北。樹心凹地高 4.8 m，南、西、東外圈約 8–10 m；南端接 D1，西端預留 D4，東端預留 D6，北端預留 D7。神木原始 GLB 約 10 m 高；scale 9 為目標 90 m 的暫定倍率，匯入器須核對 Y/Z 軸、冠幅、LOD 和碰撞。",
-  "bounds": {"minX": -50, "minZ": 150, "sizeX": 100, "sizeZ": 100},
-  "noise": 0.22,
-  "relief": 1.1,
+  "note": "D2 神木林地依 V1–V6 重排；神木在微高中央，板根放射圍空地，南根拱、東往 D6 上坡、西往 D4、北留 D7。缺件仍記座標，整合時跳過。",
+  "bounds": {
+    "minX": -50,
+    "minZ": 150,
+    "sizeX": 100,
+    "sizeZ": 100
+  },
+  "noise": 0.13,
+  "relief": 0.55,
   "terrace": 0,
-  "cliffs": 2.4,
+  "cliffs": 1.5,
   "nodes": [
-    {"id": "d2-south", "x": 10, "z": 150.5},
-    {"id": "d2-gate", "x": 10, "z": 165},
-    {"id": "d2-view", "x": 9, "z": 178},
-    {"id": "d2-root-east", "x": 11, "z": 194},
-    {"id": "d2-altar", "x": 4, "z": 205},
-    {"id": "d2-pit", "x": 14, "z": 182},
-    {"id": "d2-west", "x": -49.5, "z": 214},
-    {"id": "d2-east", "x": 49.5, "z": 221},
-    {"id": "d2-north", "x": 4, "z": 249.5}
+    {
+      "id": "d2-south",
+      "x": 10,
+      "z": 150.5
+    },
+    {
+      "id": "d2-gate",
+      "x": 10,
+      "z": 167
+    },
+    {
+      "id": "d2-view",
+      "x": 8,
+      "z": 178
+    },
+    {
+      "id": "d2-pit",
+      "x": 14,
+      "z": 182
+    },
+    {
+      "id": "d2-root-gap",
+      "x": 10,
+      "z": 194
+    },
+    {
+      "id": "d2-altar",
+      "x": 7,
+      "z": 205
+    },
+    {
+      "id": "d2-west-fork",
+      "x": -13,
+      "z": 211
+    },
+    {
+      "id": "d2-west",
+      "x": -49.5,
+      "z": 214
+    },
+    {
+      "id": "d2-east-gap",
+      "x": 25,
+      "z": 210
+    },
+    {
+      "id": "d2-east-slope",
+      "x": 38,
+      "z": 217
+    },
+    {
+      "id": "d2-east",
+      "x": 49.5,
+      "z": 221
+    },
+    {
+      "id": "d2-north",
+      "x": 4,
+      "z": 249.5
+    }
   ],
   "edges": [
-    {"id": "d2-entry-1", "from": "d2-south", "to": "d2-gate", "width": 2.2, "surface": "dirt"},
-    {"id": "d2-entry-2", "from": "d2-gate", "to": "d2-view", "width": 2.2, "surface": "dirt"},
-    {"id": "d2-root-path", "from": "d2-view", "to": "d2-root-east", "width": 2.2, "surface": "dirt"},
-    {"id": "d2-altar-path", "from": "d2-root-east", "to": "d2-altar", "width": 2.2, "surface": "dirt"},
-    {"id": "d2-pit-path", "from": "d2-view", "to": "d2-pit", "width": 1.8, "surface": "dirt"},
-    {"id": "d2-west-path", "from": "d2-altar", "to": "d2-west", "width": 2.2, "surface": "dirt"},
-    {"id": "d2-east-path", "from": "d2-altar", "to": "d2-east", "width": 2.2, "surface": "dirt"},
-    {"id": "d2-north-path", "from": "d2-altar", "to": "d2-north", "width": 2.0, "surface": "dirt"}
+    {
+      "id": "entry",
+      "from": "d2-south",
+      "to": "d2-gate",
+      "width": 2.5,
+      "surface": "dirt"
+    },
+    {
+      "id": "gate-view",
+      "from": "d2-gate",
+      "to": "d2-view",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "view-root",
+      "from": "d2-view",
+      "to": "d2-root-gap",
+      "width": 2.3,
+      "surface": "dirt"
+    },
+    {
+      "id": "root-altar",
+      "from": "d2-root-gap",
+      "to": "d2-altar",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "pit-spur",
+      "from": "d2-view",
+      "to": "d2-pit",
+      "width": 1.8,
+      "surface": "dirt"
+    },
+    {
+      "id": "west-fork",
+      "from": "d2-altar",
+      "to": "d2-west-fork",
+      "width": 2.3,
+      "surface": "dirt"
+    },
+    {
+      "id": "west-exit",
+      "from": "d2-west-fork",
+      "to": "d2-west",
+      "width": 2.3,
+      "surface": "dirt"
+    },
+    {
+      "id": "east-gap",
+      "from": "d2-altar",
+      "to": "d2-east-gap",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "east-slope",
+      "from": "d2-east-gap",
+      "to": "d2-east-slope",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "east-exit",
+      "from": "d2-east-slope",
+      "to": "d2-east",
+      "width": 2.4,
+      "surface": "dirt"
+    },
+    {
+      "id": "north-exit",
+      "from": "d2-altar",
+      "to": "d2-north",
+      "width": 2.0,
+      "surface": "dirt"
+    }
   ],
   "pads": [
-    {"id": "d2-tree-pad", "surface": "forest", "x": 0, "z": 200, "halfX": 7, "halfZ": 7, "height": 4.8},
-    {"id": "d2-altar-pad", "surface": "forest", "x": 7, "z": 207, "halfX": 3, "halfZ": 3, "height": 4.9},
-    {"id": "d2-pit-pad", "surface": "forest", "x": 14, "z": 182, "halfX": 5, "halfZ": 5, "height": 5.4},
-    {"id": "d2-view-pad", "surface": "forest", "x": 9, "z": 178, "halfX": 2.2, "halfZ": 2.2, "height": 5.9}
+    {
+      "id": "tree-base",
+      "surface": "forest",
+      "x": 0,
+      "z": 200,
+      "halfX": 6,
+      "halfZ": 6,
+      "height": 6.3
+    },
+    {
+      "id": "altar",
+      "surface": "forest",
+      "x": 7,
+      "z": 205,
+      "halfX": 3.5,
+      "halfZ": 3.5,
+      "height": 5.4
+    },
+    {
+      "id": "pit",
+      "surface": "forest",
+      "x": 14,
+      "z": 182,
+      "halfX": 3,
+      "halfZ": 3,
+      "height": 5.5
+    },
+    {
+      "id": "view",
+      "surface": "forest",
+      "x": 8,
+      "z": 178,
+      "halfX": 2,
+      "halfZ": 2,
+      "height": 6.0
+    }
   ],
   "heightPoints": [
-    {"x": -40, "z": 152, "height": 8.0},
-    {"x": 10, "z": 152, "height": 7.9},
-    {"x": 40, "z": 152, "height": 8.2},
-    {"x": -42, "z": 200, "height": 9.5},
-    {"x": -23, "z": 200, "height": 7.0},
-    {"x": 0, "z": 200, "height": 4.8},
-    {"x": 22, "z": 200, "height": 7.2},
-    {"x": 42, "z": 200, "height": 9.7},
-    {"x": -40, "z": 248, "height": 9.3},
-    {"x": 4, "z": 248, "height": 8.2},
-    {"x": 40, "z": 248, "height": 9.5},
-    {"x": 14, "z": 182, "height": 5.4},
-    {"x": 9, "z": 178, "height": 5.9}
+    {
+      "x": -48,
+      "z": 152,
+      "height": 8.0
+    },
+    {
+      "x": 10,
+      "z": 150.5,
+      "height": 7.9
+    },
+    {
+      "x": 48,
+      "z": 152,
+      "height": 8.2
+    },
+    {
+      "x": -49.5,
+      "z": 214,
+      "height": 9.5
+    },
+    {
+      "x": -40,
+      "z": 200,
+      "height": 8.8
+    },
+    {
+      "x": -24,
+      "z": 202,
+      "height": 7.1
+    },
+    {
+      "x": -12,
+      "z": 191,
+      "height": 5.8
+    },
+    {
+      "x": 0,
+      "z": 200,
+      "height": 6.3
+    },
+    {
+      "x": 7,
+      "z": 205,
+      "height": 5.4
+    },
+    {
+      "x": 14,
+      "z": 182,
+      "height": 5.5
+    },
+    {
+      "x": 25,
+      "z": 210,
+      "height": 7.0
+    },
+    {
+      "x": 38,
+      "z": 217,
+      "height": 8.5
+    },
+    {
+      "x": 49.5,
+      "z": 221,
+      "height": 9.7
+    },
+    {
+      "x": 48,
+      "z": 248,
+      "height": 9.4
+    },
+    {
+      "x": 4,
+      "z": 249.5,
+      "height": 8.2
+    },
+    {
+      "x": -48,
+      "z": 248,
+      "height": 9.3
+    },
+    {
+      "x": 10,
+      "z": 167,
+      "height": 6.9
+    },
+    {
+      "x": 8,
+      "z": 178,
+      "height": 6.0
+    }
   ],
   "flats": [
-    {"id": "d2-entry-flat", "note": "南入口根間步道底", "x": 10, "z": 168, "halfX": 2.2, "halfZ": 8, "height": 6.8, "blend": 3},
-    {"id": "d2-root-flat", "note": "根弓下保留 2.2 m 路面", "x": 11, "z": 194, "halfX": 2.2, "halfZ": 6, "height": 5.1, "blend": 2.5}
+    {
+      "id": "south-arch",
+      "note": "根拱下保持通行",
+      "x": 10,
+      "z": 167,
+      "halfX": 4.2,
+      "halfZ": 4.5,
+      "height": 6.9,
+      "blend": 3
+    },
+    {
+      "id": "altar-approach",
+      "note": "祭壇台階朝南",
+      "x": 7,
+      "z": 201,
+      "halfX": 3,
+      "halfZ": 4,
+      "height": 5.4,
+      "blend": 2
+    },
+    {
+      "id": "east-root-gap",
+      "note": "根隙往 D6 上坡",
+      "x": 25,
+      "z": 210,
+      "halfX": 3,
+      "halfZ": 4,
+      "height": 7.0,
+      "blend": 2.5
+    }
   ],
   "placements": [
-    {"id": "D2_WorldTree", "zone": "d2-tree", "role": "世界古樹，目標高 90 m、樹幹局部碰撞", "model": "art/exports/elder-world-tree-hero-v1/elder-world-tree-hero-v1.glb", "x": 0, "z": 200, "yaw": 20, "scale": 9, "footprint": [93, 64, 90], "collider": "trunk-compound", "status": "needs-importer", "author": "核心組（既有母稿）"},
-    {"id": "D2_DugPit", "zone": "d2-pit", "role": "神木旁被挖的坑，鑿痕朝南側路", "model": "art/exports/core-ruins-v1/CO01_DugPit/CO01_DugPit_v001.fbx", "x": 14, "z": 182, "yaw": 150, "footprint": [4.5, 4, 0.8], "collider": "rim-only", "status": "needs-importer", "author": "核心組"},
-    {"id": "D2_RootArch", "zone": "d2-tree", "role": "入口巨根弓，路從中間穿過", "model": "art/exports/forest-roots-b/FR02_RootArch/FR02_RootArch_v001.fbx", "x": 10, "z": 167, "yaw": 0, "footprint": [7, 3, 5], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
-    {"id": "D2_RootWall_W", "zone": "d2-tree", "role": "西側盤根框景", "model": "art/exports/forest-roots-b/FR01_RootWall_Braided/FR01_RootWall_Braided_v001.fbx", "x": -15, "z": 191, "yaw": 45, "footprint": [8, 2, 4], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
-    {"id": "D2_RootWall_E", "zone": "d2-tree", "role": "東側盤根框景", "model": "art/exports/forest-roots-b/FR01_RootWall_Wave/FR01_RootWall_Wave_v001.fbx", "x": 19, "z": 198, "yaw": 300, "footprint": [8, 2, 4], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
-    {"id": "D2_FallenLog_W", "zone": "d2-tree", "role": "西外圈倒木", "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx", "x": -29, "z": 177, "yaw": 50, "footprint": [6, 1.4, 1.2], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
-    {"id": "D2_FallenLog_E", "zone": "d2-tree", "role": "東外圈倒木", "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx", "x": 33, "z": 216, "yaw": 115, "footprint": [6, 1.4, 1.2], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
-    {"id": "D2_RootStump_W", "zone": "d2-tree", "role": "西側樹樁", "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx", "x": -22, "z": 222, "yaw": 65, "footprint": [2, 2, 1.6], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
-    {"id": "D2_RootStump_E", "zone": "d2-tree", "role": "東側樹樁", "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx", "x": 28, "z": 171, "yaw": 210, "footprint": [2, 2, 1.6], "collider": "mesh", "status": "needs-importer", "author": "既有模型"},
-    {"id": "D2_Fern_SW", "zone": "d2-tree", "role": "入口左側蕨叢", "model": "art/exports/modelling-basics-c/BM09_01.fbx", "x": 5, "z": 174, "yaw": 30, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
-    {"id": "D2_Fern_SE", "zone": "d2-tree", "role": "入口右側蕨叢", "model": "art/exports/modelling-basics-c/BM09_02.fbx", "x": 17, "z": 173, "yaw": 110, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
-    {"id": "D2_Fern_Pit", "zone": "d2-pit", "role": "坑緣蕨叢", "model": "art/exports/modelling-basics-c/BM09_01.fbx", "x": 18, "z": 185, "yaw": 250, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
-    {"id": "D2_Fern_W", "zone": "d2-tree", "role": "西根下蕨叢", "model": "art/exports/modelling-basics-c/BM09_02.fbx", "x": -13, "z": 204, "yaw": 330, "footprint": [1.3, 1.3, 0.8], "collider": "none", "status": "needs-importer", "author": "Eli"},
-    {"id": "D2_PathEntry", "zone": "d2-tree", "role": "南入口根間步道", "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx", "x": 10, "z": 158, "yaw": 0, "footprint": [2.2, 6, 0.25], "collider": "none", "status": "needs-importer", "author": "Josh"},
-    {"id": "D2_PathCurve", "zone": "d2-tree", "role": "神木前彎曲步道", "model": "art/exports/forest-paths-b/FP02_PathCurve30_L/FP02_PathCurve30_L_v001.fbx", "x": 9, "z": 178, "yaw": 345, "footprint": [2.2, 6, 0.25], "collider": "none", "status": "needs-importer", "author": "Josh"},
-    {"id": "D2_PathRoot", "zone": "d2-tree", "role": "跨根步道", "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx", "x": 11, "z": 194, "yaw": 0, "footprint": [2.2, 5, 0.45], "collider": "mesh", "status": "needs-importer", "author": "Josh"},
-    {"id": "D2_PathEast", "zone": "d2-tree", "role": "往 D6 的根間步道", "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx", "x": 32, "z": 216, "yaw": 75, "footprint": [2.2, 6, 0.25], "collider": "none", "status": "needs-importer", "author": "Josh"}
+    {
+      "id": "D2_WORLD_TREE_001",
+      "zone": "d2-tree",
+      "role": "神木本體與整組放射板根；舊 GLB 未通過 QA",
+      "modelCode": "WORLD_TREE",
+      "model": "missing/D2/WorldTreeButtressGroup.fbx",
+      "x": 0,
+      "z": 200,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        40,
+        40,
+        90
+      ],
+      "collider": "trunk-compound",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_AL01_001",
+      "zone": "d2-tree",
+      "role": "祭壇台階朝南；可走面高 0.98 m",
+      "modelCode": "AL01",
+      "model": "art/exports/core-d2-v1/AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.fbx",
+      "x": 7,
+      "z": 205,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        6,
+        1
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_CO01_001",
+      "zone": "d2-tree",
+      "role": "直徑約 4 m 的被挖坑",
+      "modelCode": "CO01",
+      "model": "art/exports/core-ruins-v1/CO01_DugPit/CO01_DugPit_v001.fbx",
+      "x": 14,
+      "z": 182,
+      "yaw": 150,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        4,
+        4,
+        0.8
+      ],
+      "collider": "rim-only",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR02_001",
+      "zone": "d2-tree",
+      "role": "南入口根拱；須在 Unity 核對 8 m 淨跨與 5 m 淨高",
+      "modelCode": "FR02",
+      "model": "art/exports/forest-roots-b/FR02_RootArch/FR02_RootArch_v001.fbx",
+      "x": 10,
+      "z": 167,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        8,
+        3,
+        5
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_001",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": -17,
+      "z": 184,
+      "yaw": 235,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_002",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": -23,
+      "z": 195,
+      "yaw": 255,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_003",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": -18,
+      "z": 215,
+      "yaw": 295,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_004",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": -7,
+      "z": 226,
+      "yaw": 350,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_005",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": 12,
+      "z": 226,
+      "yaw": 25,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_006",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": 22,
+      "z": 215,
+      "yaw": 55,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_007",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": 22,
+      "z": 191,
+      "yaw": 115,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BUTTRESS_ROOT_008",
+      "zone": "d2-tree",
+      "role": "神木放射板根延伸，待整組模型交付後核對",
+      "modelCode": "BUTTRESS_ROOT",
+      "model": "missing/D2/BUTTRESS_ROOT.fbx",
+      "x": -3,
+      "z": 178,
+      "yaw": 165,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        12,
+        3,
+        4
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Braided_001",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Braided",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Braided/FR01_RootWall_Braided_v001.fbx",
+      "x": -24,
+      "z": 184,
+      "yaw": 35,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Stacked_001",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Stacked",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Stacked/FR01_RootWall_Stacked_v001.fbx",
+      "x": -27,
+      "z": 202,
+      "yaw": 70,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Wave_001",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Wave",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Wave/FR01_RootWall_Wave_v001.fbx",
+      "x": -25,
+      "z": 220,
+      "yaw": 115,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Braided_002",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Braided",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Braided/FR01_RootWall_Braided_v001.fbx",
+      "x": 21,
+      "z": 228,
+      "yaw": 45,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Stacked_002",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Stacked",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Stacked/FR01_RootWall_Stacked_v001.fbx",
+      "x": 31,
+      "z": 219,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Wave_002",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Wave",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Wave/FR01_RootWall_Wave_v001.fbx",
+      "x": 29,
+      "z": 190,
+      "yaw": 110,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR01_Braided_003",
+      "zone": "d2-tree",
+      "role": "外圈補板根牆，入口與東西出口留缺口",
+      "modelCode": "FR01_Braided",
+      "model": "art/exports/forest-roots-b/FR01_RootWall_Braided/FR01_RootWall_Braided_v001.fbx",
+      "x": 22,
+      "z": 175,
+      "yaw": 140,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        2,
+        4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderPine_B_001",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderPine_B",
+      "model": "art/exports/elder-trees-v1/ElderPine_B.fbx",
+      "x": -35,
+      "z": 232,
+      "yaw": 347,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderPine_C_001",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderPine_C",
+      "model": "art/exports/elder-trees-v1/ElderPine_C.fbx",
+      "x": -37,
+      "z": 166,
+      "yaw": 267,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderCypress_B_001",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderCypress_B",
+      "model": "art/exports/elder-trees-v1/ElderCypress_B.fbx",
+      "x": -39,
+      "z": 198,
+      "yaw": 285,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderPine_D_001",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderPine_D",
+      "model": "art/exports/elder-trees-v1/ElderPine_D.fbx",
+      "x": -29,
+      "z": 244,
+      "yaw": 41,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderCypress_C_001",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderCypress_C",
+      "model": "art/exports/elder-trees-v1/ElderCypress_C.fbx",
+      "x": 37,
+      "z": 241,
+      "yaw": 140,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderPine_B_002",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderPine_B",
+      "model": "art/exports/elder-trees-v1/ElderPine_B.fbx",
+      "x": 42,
+      "z": 185,
+      "yaw": 119,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderCypress_D_001",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderCypress_D",
+      "model": "art/exports/elder-trees-v1/ElderCypress_D.fbx",
+      "x": 35,
+      "z": 160,
+      "yaw": 45,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderPine_C_002",
+      "zone": "d2-tree",
+      "role": "外圈次級巨木，中心區不可擋視線",
+      "modelCode": "ElderPine_C",
+      "model": "art/exports/elder-trees-v1/ElderPine_C.fbx",
+      "x": -43,
+      "z": 218,
+      "yaw": 277,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        7,
+        7,
+        30
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A04_001",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A04",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -29,
+      "z": 174,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A05_001",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A05",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": -31,
+      "z": 188,
+      "yaw": 37,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A04_002",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A04",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -34,
+      "z": 212,
+      "yaw": 74,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A05_002",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A05",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": -22,
+      "z": 231,
+      "yaw": 111,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A04_003",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A04",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -11,
+      "z": 238,
+      "yaw": 148,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A05_003",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A05",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 18,
+      "z": 239,
+      "yaw": 185,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A04_004",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A04",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": 33,
+      "z": 230,
+      "yaw": 222,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A05_004",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A05",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 39,
+      "z": 209,
+      "yaw": 259,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A04_005",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A04",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": 32,
+      "z": 181,
+      "yaw": 296,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A05_005",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A05",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 25,
+      "z": 162,
+      "yaw": 333,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A04_006",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A04",
+      "model": "art/exports/qingxi-encounter-a/A04_MossBoulderCover.fbx",
+      "x": -17,
+      "z": 160,
+      "yaw": 10,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A05_006",
+      "zone": "d2-tree",
+      "role": "外圈苔巨石；不堵主路",
+      "modelCode": "A05",
+      "model": "art/exports/qingxi-encounter-a/A05_LayeredRockCover.fbx",
+      "x": 40,
+      "z": 167,
+      "yaw": 47,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        3,
+        2
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_HOLLOW_LOG_001",
+      "zone": "d2-tree",
+      "role": "外圈唯一空心倒木",
+      "modelCode": "HOLLOW_LOG",
+      "model": "missing/D2/HOLLOW_LOG.fbx",
+      "x": -34,
+      "z": 225,
+      "yaw": 38,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        8,
+        2,
+        2
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A03_001",
+      "zone": "d2-tree",
+      "role": "外圈倒木；空地內不放",
+      "modelCode": "A03",
+      "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx",
+      "x": -32,
+      "z": 175,
+      "yaw": 48,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        1.5,
+        1.5
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A03_002",
+      "zone": "d2-tree",
+      "role": "外圈倒木；空地內不放",
+      "modelCode": "A03",
+      "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx",
+      "x": -38,
+      "z": 202,
+      "yaw": 91,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        1.5,
+        1.5
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A03_003",
+      "zone": "d2-tree",
+      "role": "外圈倒木；空地內不放",
+      "modelCode": "A03",
+      "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx",
+      "x": 32,
+      "z": 234,
+      "yaw": 132,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        1.5,
+        1.5
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A03_004",
+      "zone": "d2-tree",
+      "role": "外圈倒木；空地內不放",
+      "modelCode": "A03",
+      "model": "art/exports/qingxi-encounter-a/A03_FallenLog.fbx",
+      "x": 38,
+      "z": 178,
+      "yaw": 207,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        6,
+        1.5,
+        1.5
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A06_001",
+      "zone": "d2-tree",
+      "role": "外圈樹樁；空地內不放",
+      "modelCode": "A06",
+      "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx",
+      "x": -31,
+      "z": 162,
+      "yaw": 30,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        1.6
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A06_002",
+      "zone": "d2-tree",
+      "role": "外圈樹樁；空地內不放",
+      "modelCode": "A06",
+      "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx",
+      "x": -37,
+      "z": 224,
+      "yaw": 77,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        1.6
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A06_003",
+      "zone": "d2-tree",
+      "role": "外圈樹樁；空地內不放",
+      "modelCode": "A06",
+      "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx",
+      "x": 30,
+      "z": 244,
+      "yaw": 145,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        1.6
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_A06_004",
+      "zone": "d2-tree",
+      "role": "外圈樹樁；空地內不放",
+      "modelCode": "A06",
+      "model": "art/exports/qingxi-encounter-a/A06_RootStump.fbx",
+      "x": 37,
+      "z": 196,
+      "yaw": 250,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        1.6
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP01_001",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP01",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": 10,
+      "z": 157,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP01_002",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP01",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": 10,
+      "z": 162,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP04_001",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP04",
+      "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx",
+      "x": 10,
+      "z": 173,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP02_L_001",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP02_L",
+      "model": "art/exports/forest-paths-b/FP02_PathCurve30_L/FP02_PathCurve30_L_v001.fbx",
+      "x": 9,
+      "z": 180,
+      "yaw": 350,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP01_003",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP01",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": 10,
+      "z": 187,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP04_002",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP04",
+      "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx",
+      "x": 10,
+      "z": 194,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP05_001",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP05",
+      "model": "art/exports/forest-paths-b/FP05_PathLogSteps/FP05_PathLogSteps_v001.fbx",
+      "x": 8,
+      "z": 199,
+      "yaw": 345,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP02_R_001",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP02_R",
+      "model": "art/exports/forest-paths-b/FP02_PathCurve30_R/FP02_PathCurve30_R_v001.fbx",
+      "x": 2,
+      "z": 207,
+      "yaw": 270,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP01_004",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP01",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": -7,
+      "z": 210,
+      "yaw": 270,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP03_001",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP03",
+      "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
+      "x": -23,
+      "z": 212,
+      "yaw": 270,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP01_005",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP01",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": -36,
+      "z": 213,
+      "yaw": 270,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP02_L_002",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP02_L",
+      "model": "art/exports/forest-paths-b/FP02_PathCurve30_L/FP02_PathCurve30_L_v001.fbx",
+      "x": 15,
+      "z": 207,
+      "yaw": 75,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP04_003",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP04",
+      "model": "art/exports/forest-paths-b/FP04_PathRootCrossing/FP04_PathRootCrossing_v001.fbx",
+      "x": 23,
+      "z": 210,
+      "yaw": 70,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP03_002",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP03",
+      "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
+      "x": 31,
+      "z": 213,
+      "yaw": 60,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP03_003",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP03",
+      "model": "art/exports/forest-paths-b/FP03_PathSlope/FP03_PathSlope_v001.fbx",
+      "x": 39,
+      "z": 217,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FP01_006",
+      "zone": "d2-tree",
+      "role": "土路局部補強，不鋪成連續人工棧道",
+      "modelCode": "FP01",
+      "model": "art/exports/forest-paths-b/FP01_PathStraight/FP01_PathStraight_v001.fbx",
+      "x": 46,
+      "z": 220,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2.3,
+        6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Dense_001",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Dense",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
+      "x": 25.0,
+      "z": 200.0,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_001",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": 21.65,
+      "z": 212.0,
+      "yaw": 30,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_002",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": 12.5,
+      "z": 220.78,
+      "yaw": 60,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Dense_002",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Dense",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
+      "x": 0.0,
+      "z": 224.0,
+      "yaw": 90,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_003",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": -12.5,
+      "z": 220.78,
+      "yaw": 120,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_004",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": -21.65,
+      "z": 212.0,
+      "yaw": 150,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Dense_003",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Dense",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
+      "x": -25.0,
+      "z": 200.0,
+      "yaw": 180,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_005",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": -21.65,
+      "z": 188.0,
+      "yaw": 210,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_006",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": -12.5,
+      "z": 179.22,
+      "yaw": 240,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Dense_004",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Dense",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
+      "x": -0.0,
+      "z": 176.0,
+      "yaw": 270,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_007",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": 12.5,
+      "z": 179.22,
+      "yaw": 300,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_FR03_Sparse_008",
+      "zone": "d2-tree",
+      "role": "貼外圈根牆的藤簾，保留通道淨高",
+      "modelCode": "FR03_Sparse",
+      "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
+      "x": 21.65,
+      "z": 188.0,
+      "yaw": 330,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        0.3,
+        3
+      ],
+      "collider": "none",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_001",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": 15.0,
+      "z": 200.0,
+      "yaw": 90.0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_001",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": -14.0,
+      "z": 212.8,
+      "yaw": 227.5,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_C_001",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_C",
+      "model": "missing/D2/SURFACE_ROOT_C.fbx",
+      "x": 2.0,
+      "z": 177.1,
+      "yaw": 5.0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_002",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": 16.4,
+      "z": 221.4,
+      "yaw": 142.5,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_002",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": -14.8,
+      "z": 197.4,
+      "yaw": 280.0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_C_002",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_C",
+      "model": "missing/D2/SURFACE_ROOT_C.fbx",
+      "x": 16.0,
+      "z": 189.8,
+      "yaw": 57.5,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_003",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": -6.0,
+      "z": 222.2,
+      "yaw": 195.0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_003",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": -12.4,
+      "z": 176.0,
+      "yaw": 332.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_C_003",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_C",
+      "model": "missing/D2/SURFACE_ROOT_C.fbx",
+      "x": 14.1,
+      "z": 205.1,
+      "yaw": 110.1,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_004",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": -17.6,
+      "z": 207.3,
+      "yaw": 247.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_004",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": 9.7,
+      "z": 179.2,
+      "yaw": 25.1,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_C_004",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_C",
+      "model": "missing/D2/SURFACE_ROOT_C.fbx",
+      "x": 8.1,
+      "z": 225.8,
+      "yaw": 162.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_005",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": -13.0,
+      "z": 192.5,
+      "yaw": 300.1,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_005",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": 18.6,
+      "z": 195.9,
+      "yaw": 77.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_C_005",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_C",
+      "model": "missing/D2/SURFACE_ROOT_C.fbx",
+      "x": -13.2,
+      "z": 218.8,
+      "yaw": 215.1,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_006",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": -3.5,
+      "z": 173.2,
+      "yaw": 352.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_006",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": 11.5,
+      "z": 209.7,
+      "yaw": 130.1,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_C_006",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_C",
+      "model": "missing/D2/SURFACE_ROOT_C.fbx",
+      "x": -19.0,
+      "z": 200.8,
+      "yaw": 267.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_A_007",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_A",
+      "model": "missing/D2/SURFACE_ROOT_A.fbx",
+      "x": 16.3,
+      "z": 183.8,
+      "yaw": 45.1,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_SURFACE_ROOT_B_007",
+      "zone": "d2-tree",
+      "role": "半埋地表盤根；路線需可跨越",
+      "modelCode": "SURFACE_ROOT_B",
+      "model": "missing/D2/SURFACE_ROOT_B.fbx",
+      "x": -1.2,
+      "z": 227.0,
+      "yaw": 182.6,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1.4,
+        0.35
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROTTEN_LOG_001",
+      "zone": "d2-tree",
+      "role": "長蕈苔的朽木",
+      "modelCode": "ROTTEN_LOG",
+      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "x": 32.34,
+      "z": 206.56,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1,
+        1
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROTTEN_LOG_002",
+      "zone": "d2-tree",
+      "role": "長蕈苔的朽木",
+      "modelCode": "ROTTEN_LOG",
+      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "x": 10.49,
+      "z": 231.29,
+      "yaw": 59,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1,
+        1
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROTTEN_LOG_003",
+      "zone": "d2-tree",
+      "role": "長蕈苔的朽木",
+      "modelCode": "ROTTEN_LOG",
+      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "x": -21.85,
+      "z": 224.73,
+      "yaw": 118,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1,
+        1
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROTTEN_LOG_004",
+      "zone": "d2-tree",
+      "role": "長蕈苔的朽木",
+      "modelCode": "ROTTEN_LOG",
+      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "x": -32.34,
+      "z": 193.44,
+      "yaw": 177,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1,
+        1
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROTTEN_LOG_005",
+      "zone": "d2-tree",
+      "role": "長蕈苔的朽木",
+      "modelCode": "ROTTEN_LOG",
+      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "x": -10.49,
+      "z": 168.71,
+      "yaw": 236,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1,
+        1
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROTTEN_LOG_006",
+      "zone": "d2-tree",
+      "role": "長蕈苔的朽木",
+      "modelCode": "ROTTEN_LOG",
+      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "x": 21.85,
+      "z": 175.27,
+      "yaw": 295,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        3,
+        1,
+        1
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_001",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": 26.75,
+      "z": 208.27,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_002",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": 19.03,
+      "z": 220.54,
+      "yaw": 31,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_003",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": 6.21,
+      "z": 227.3,
+      "yaw": 62,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_004",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": -8.27,
+      "z": 226.75,
+      "yaw": 93,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_005",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": -20.54,
+      "z": 219.03,
+      "yaw": 124,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_006",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": -27.3,
+      "z": 206.21,
+      "yaw": 155,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_007",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": -26.75,
+      "z": 191.73,
+      "yaw": 186,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_008",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": -19.03,
+      "z": 179.46,
+      "yaw": 217,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_009",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": -6.21,
+      "z": 172.7,
+      "yaw": 248,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_010",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": 8.27,
+      "z": 173.25,
+      "yaw": 279,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_011",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": 20.54,
+      "z": 180.97,
+      "yaw": 310,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BRANCH_PILE_012",
+      "zone": "d2-tree",
+      "role": "斷枝堆，林地邊緣",
+      "modelCode": "BRANCH_PILE",
+      "model": "missing/D2/BRANCH_PILE.fbx",
+      "x": 27.3,
+      "z": 193.79,
+      "yaw": 341,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        1.5,
+        0.7
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_01_001",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_01",
+      "model": "art/exports/modelling-basics-c/BM03_01.fbx",
+      "x": 23.0,
+      "z": 200.0,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_02_001",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_02",
+      "model": "art/exports/modelling-basics-c/BM03_02.fbx",
+      "x": -19.9,
+      "z": 218.2,
+      "yaw": 47,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_01_001",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_01",
+      "model": "art/exports/modelling-basics-c/BM04_01.fbx",
+      "x": 2.7,
+      "z": 169.1,
+      "yaw": 94,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_02_001",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_02",
+      "model": "art/exports/modelling-basics-c/BM04_02.fbx",
+      "x": 21.3,
+      "z": 227.8,
+      "yaw": 141,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_01_002",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_01",
+      "model": "art/exports/modelling-basics-c/BM03_01.fbx",
+      "x": -38.4,
+      "z": 193.2,
+      "yaw": 188,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_02_002",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_02",
+      "model": "art/exports/modelling-basics-c/BM03_02.fbx",
+      "x": 19.4,
+      "z": 187.7,
+      "yaw": 235,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_01_002",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_01",
+      "model": "art/exports/modelling-basics-c/BM04_01.fbx",
+      "x": -7.0,
+      "z": 226.1,
+      "yaw": 282,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_02_002",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_02",
+      "model": "art/exports/modelling-basics-c/BM04_02.fbx",
+      "x": -14.3,
+      "z": 172.5,
+      "yaw": 329,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_01_003",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_01",
+      "model": "art/exports/modelling-basics-c/BM03_01.fbx",
+      "x": 32.9,
+      "z": 212.0,
+      "yaw": 16,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_02_003",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_02",
+      "model": "art/exports/modelling-basics-c/BM03_02.fbx",
+      "x": -36.0,
+      "z": 214.9,
+      "yaw": 63,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_01_003",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_01",
+      "model": "art/exports/modelling-basics-c/BM04_01.fbx",
+      "x": 9.7,
+      "z": 179.2,
+      "yaw": 110,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_02_003",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_02",
+      "model": "art/exports/modelling-basics-c/BM04_02.fbx",
+      "x": 8.1,
+      "z": 225.8,
+      "yaw": 157,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_01_004",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_01",
+      "model": "art/exports/modelling-basics-c/BM03_01.fbx",
+      "x": -26.8,
+      "z": 184.5,
+      "yaw": 204,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_02_004",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_02",
+      "model": "art/exports/modelling-basics-c/BM03_02.fbx",
+      "x": 34.2,
+      "z": 192.5,
+      "yaw": 251,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_01_004",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_01",
+      "model": "art/exports/modelling-basics-c/BM04_01.fbx",
+      "x": -22.4,
+      "z": 231.9,
+      "yaw": 298,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_02_004",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_02",
+      "model": "art/exports/modelling-basics-c/BM04_02.fbx",
+      "x": -3.0,
+      "z": 177.2,
+      "yaw": 345,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_01_005",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_01",
+      "model": "art/exports/modelling-basics-c/BM03_01.fbx",
+      "x": 20.6,
+      "z": 217.4,
+      "yaw": 32,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_02_005",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_02",
+      "model": "art/exports/modelling-basics-c/BM03_02.fbx",
+      "x": -31.0,
+      "z": 201.3,
+      "yaw": 79,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_01_005",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_01",
+      "model": "art/exports/modelling-basics-c/BM04_01.fbx",
+      "x": 24.8,
+      "z": 175.3,
+      "yaw": 126,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM04_02_005",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM04_02",
+      "model": "art/exports/modelling-basics-c/BM04_02.fbx",
+      "x": -1.8,
+      "z": 239.0,
+      "yaw": 173,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_01_006",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_01",
+      "model": "art/exports/modelling-basics-c/BM03_01.fbx",
+      "x": -14.7,
+      "z": 182.3,
+      "yaw": 220,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_BM03_02_006",
+      "zone": "d2-tree",
+      "role": "中型苔石群",
+      "modelCode": "BM03_02",
+      "model": "art/exports/modelling-basics-c/BM03_02.fbx",
+      "x": 26.8,
+      "z": 203.6,
+      "yaw": 267,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1.4,
+        0.8
+      ],
+      "collider": "mesh",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_JianmuSapling_001",
+      "zone": "d2-tree",
+      "role": "幼樹或枯立木",
+      "modelCode": "JianmuSapling",
+      "model": "missing/D2/JianmuSapling.fbx",
+      "x": -33,
+      "z": 182,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        8
+      ],
+      "collider": "trunk-compound",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderWithered_001",
+      "zone": "d2-tree",
+      "role": "幼樹或枯立木",
+      "modelCode": "ElderWithered",
+      "model": "art/exports/elder-trees-v1/ElderWithered.fbx",
+      "x": -29,
+      "z": 234,
+      "yaw": 52,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        8
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_JianmuSapling_002",
+      "zone": "d2-tree",
+      "role": "幼樹或枯立木",
+      "modelCode": "JianmuSapling",
+      "model": "missing/D2/JianmuSapling.fbx",
+      "x": 36,
+      "z": 228,
+      "yaw": 104,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        8
+      ],
+      "collider": "trunk-compound",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ElderWithered_002",
+      "zone": "d2-tree",
+      "role": "幼樹或枯立木",
+      "modelCode": "ElderWithered",
+      "model": "art/exports/elder-trees-v1/ElderWithered.fbx",
+      "x": 38,
+      "z": 173,
+      "yaw": 156,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        8
+      ],
+      "collider": "trunk-compound",
+      "status": "needs-importer",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_JianmuSapling_003",
+      "zone": "d2-tree",
+      "role": "幼樹或枯立木",
+      "modelCode": "JianmuSapling",
+      "model": "missing/D2/JianmuSapling.fbx",
+      "x": -43,
+      "z": 207,
+      "yaw": 208,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        2,
+        8
+      ],
+      "collider": "trunk-compound",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_001",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 151.0,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_001",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 151.0,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_001",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 151.0,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_002",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 157.3,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_002",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 157.3,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_002",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 157.3,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_003",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 163.6,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_003",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 163.6,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_003",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 163.6,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_004",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 169.9,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_004",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 169.9,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_004",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 169.9,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_005",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 176.2,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_005",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 176.2,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_005",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 176.2,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_006",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 182.5,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_006",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 182.5,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_006",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 182.5,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_007",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 188.8,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_007",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 188.8,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_007",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 188.8,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_008",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 8.9,
+      "z": 195.1,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_008",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 10,
+      "z": 195.1,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_008",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 11.1,
+      "z": 195.1,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_009",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 14.0,
+      "z": 205.9,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_009",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 14.0,
+      "z": 207.0,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_009",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 14.0,
+      "z": 208.1,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_010",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 19.2,
+      "z": 207.6,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_010",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 19.2,
+      "z": 208.7,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_010",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 19.2,
+      "z": 209.8,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_011",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 24.4,
+      "z": 209.3,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_011",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 24.4,
+      "z": 210.4,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_011",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 24.4,
+      "z": 211.5,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_012",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 29.6,
+      "z": 211.0,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_012",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 29.6,
+      "z": 212.1,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_012",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 29.6,
+      "z": 213.2,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_013",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 34.8,
+      "z": 212.7,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_013",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 34.8,
+      "z": 213.8,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_013",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 34.8,
+      "z": 214.9,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_014",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 40.0,
+      "z": 214.4,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_014",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 40.0,
+      "z": 215.5,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_014",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 40.0,
+      "z": 216.6,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_A_015",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_A",
+      "model": "missing/D2/STEP_STONE_A.fbx",
+      "x": 45.2,
+      "z": 216.1,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_B_015",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_B",
+      "model": "missing/D2/STEP_STONE_B.fbx",
+      "x": 45.2,
+      "z": 217.2,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_STEP_STONE_C_015",
+      "zone": "d2-tree",
+      "role": "泥路半埋踏石",
+      "modelCode": "STEP_STONE_C",
+      "model": "missing/D2/STEP_STONE_C.fbx",
+      "x": 45.2,
+      "z": 218.3,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0.08,
+      "footprint": [
+        0.7,
+        0.5,
+        0.15
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_UPHILL_STAIR_001",
+      "zone": "d2-tree",
+      "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
+      "modelCode": "UPHILL_STAIR",
+      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "x": 32,
+      "z": 213,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        3,
+        0.5
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_UPHILL_STAIR_002",
+      "zone": "d2-tree",
+      "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
+      "modelCode": "UPHILL_STAIR",
+      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "x": 36,
+      "z": 216,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        3,
+        0.5
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_UPHILL_STAIR_003",
+      "zone": "d2-tree",
+      "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
+      "modelCode": "UPHILL_STAIR",
+      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "x": 40,
+      "z": 218,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        3,
+        0.5
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_UPHILL_STAIR_004",
+      "zone": "d2-tree",
+      "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
+      "modelCode": "UPHILL_STAIR",
+      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "x": 44,
+      "z": 219,
+      "yaw": 65,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        2,
+        3,
+        0.5
+      ],
+      "collider": "mesh",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROOT_CAVITY_001",
+      "zone": "d2-tree",
+      "role": "根底樹洞口；應做進神木板根組",
+      "modelCode": "ROOT_CAVITY",
+      "model": "missing/D2/ROOT_CAVITY.fbx",
+      "x": -6,
+      "z": 207,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1,
+        1.6
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_ROOT_CAVITY_002",
+      "zone": "d2-tree",
+      "role": "根底樹洞口；應做進神木板根組",
+      "modelCode": "ROOT_CAVITY",
+      "model": "missing/D2/ROOT_CAVITY.fbx",
+      "x": 18,
+      "z": 215,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.5,
+        1,
+        1.6
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_001",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 6,
+      "z": 173,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_002",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 15,
+      "z": 176,
+      "yaw": 41,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_003",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 18,
+      "z": 181,
+      "yaw": 82,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_004",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 12,
+      "z": 188,
+      "yaw": 123,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_005",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 4,
+      "z": 194,
+      "yaw": 164,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_006",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 20,
+      "z": 201,
+      "yaw": 205,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_007",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 14,
+      "z": 211,
+      "yaw": 246,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_008",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": -5,
+      "z": 214,
+      "yaw": 287,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_009",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 29,
+      "z": 215,
+      "yaw": 328,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PUDDLE_010",
+      "zone": "d2-tree",
+      "role": "林地淺水窪貼花，非河流",
+      "modelCode": "PUDDLE",
+      "model": "missing/D2/PUDDLE.fbx",
+      "x": 11,
+      "z": 163,
+      "yaw": 369,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        1.1,
+        0.8,
+        0.02
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_001",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 16.5,
+      "z": 182.0,
+      "yaw": 0,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_002",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 16.02,
+      "z": 183.47,
+      "yaw": 36,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_003",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 14.77,
+      "z": 184.38,
+      "yaw": 72,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_004",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 13.23,
+      "z": 184.38,
+      "yaw": 108,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_005",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 11.98,
+      "z": 183.47,
+      "yaw": 144,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_006",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 11.5,
+      "z": 182.0,
+      "yaw": 180,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_007",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 11.98,
+      "z": 180.53,
+      "yaw": 216,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_008",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 13.23,
+      "z": 179.62,
+      "yaw": 252,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_009",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 14.77,
+      "z": 179.62,
+      "yaw": 288,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    },
+    {
+      "id": "D2_PIT_EARTH_010",
+      "zone": "d2-tree",
+      "role": "坑邊翻土與斷根",
+      "modelCode": "PIT_EARTH",
+      "model": "missing/D2/PIT_EARTH.fbx",
+      "x": 16.02,
+      "z": 180.53,
+      "yaw": 324,
+      "scale": 1,
+      "sink": 0,
+      "footprint": [
+        0.8,
+        0.6,
+        0.4
+      ],
+      "collider": "none",
+      "status": "missing",
+      "author": "既有交付或待製作"
+    }
   ],
   "herbs": [],
   "fortunes": [],
   "checkpoints": [],
   "route": [],
-  "creek": null
+  "creek": null,
+  "shots": [
+    {
+      "id": "D2-V1",
+      "x": 42,
+      "y": 72,
+      "z": 129,
+      "yaw": 320,
+      "pitch": 45,
+      "time": "陰天上午",
+      "lookAtX": 0,
+      "lookAtY": 6,
+      "lookAtZ": 200
+    },
+    {
+      "id": "D2-V2",
+      "x": 10,
+      "y": 9.5,
+      "z": 152,
+      "yaw": 0,
+      "pitch": 0,
+      "time": "上午",
+      "lookAtX": 0,
+      "lookAtY": 15,
+      "lookAtZ": 200
+    },
+    {
+      "id": "D2-V3",
+      "x": 8,
+      "y": 7.5,
+      "z": 178,
+      "yaw": 350,
+      "pitch": -8,
+      "time": "上午",
+      "lookAtX": 1,
+      "lookAtY": 16,
+      "lookAtZ": 203
+    },
+    {
+      "id": "D2-V4",
+      "x": 7,
+      "y": 7.0,
+      "z": 205,
+      "yaw": 180,
+      "pitch": 0,
+      "time": "上午",
+      "lookAtX": 10,
+      "lookAtY": 7,
+      "lookAtZ": 167
+    },
+    {
+      "id": "D2-V5",
+      "x": 25,
+      "y": 8.6,
+      "z": 210,
+      "yaw": 55,
+      "pitch": 0,
+      "time": "上午",
+      "lookAtX": 49.5,
+      "lookAtY": 10,
+      "lookAtZ": 221
+    },
+    {
+      "id": "D2-V6",
+      "x": 14,
+      "y": 6.3,
+      "z": 184,
+      "yaw": 315,
+      "pitch": 5,
+      "time": "上午",
+      "lookAtX": 12,
+      "lookAtY": 5.5,
+      "lookAtZ": 183
+    }
+  ],
+  "clusters": [
+    {
+      "id": "d2-floor-south-west",
+      "x": -5,
+      "z": 158,
+      "radius": 7,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-south-east",
+      "x": 26,
+      "z": 158,
+      "radius": 7,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-arch-west",
+      "x": -2,
+      "z": 168,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-arch-east",
+      "x": 21,
+      "z": 169,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-view-west",
+      "x": -7,
+      "z": 179,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-view-east",
+      "x": 22,
+      "z": 178,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-pit",
+      "x": 15,
+      "z": 184,
+      "radius": 8,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-root-southwest",
+      "x": -13,
+      "z": 190,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-root-southeast",
+      "x": 22,
+      "z": 192,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-altar-west",
+      "x": -9,
+      "z": 208,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-altar-east",
+      "x": 20,
+      "z": 207,
+      "radius": 9,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-west-path",
+      "x": -31,
+      "z": 212,
+      "radius": 12,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-east-path",
+      "x": 34,
+      "z": 215,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-northwest",
+      "x": -25,
+      "z": 235,
+      "radius": 13,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-northeast",
+      "x": 26,
+      "z": 235,
+      "radius": 13,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-floor-north",
+      "x": 5,
+      "z": 234,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "BM09_01",
+          "model": "art/exports/modelling-basics-c/BM09_01.fbx",
+          "count": 3,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BM09_02",
+          "model": "art/exports/modelling-basics-c/BM09_02.fbx",
+          "count": 2,
+          "scaleMin": 0.85,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "BROADLEAF_A",
+          "model": "missing/D2/BROADLEAF_A.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BROADLEAF_B",
+          "model": "missing/D2/BROADLEAF_B.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "LEAF_PILE",
+          "model": "missing/D2/LEAF_PILE.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.4,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM01_01",
+          "model": "art/exports/modelling-basics-c/BM01_01.fbx",
+          "count": 2,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "林下蕨、闊葉、蕈、苔、落葉與碎石；沿根和路外側密植"
+    },
+    {
+      "id": "d2-detail-arch-detail",
+      "x": 10,
+      "z": 169,
+      "radius": 7,
+      "items": [
+        {
+          "modelCode": "LARGE_FERN",
+          "model": "missing/D2/LARGE_FERN.fbx",
+          "count": 4,
+          "scaleMin": 0.85,
+          "scaleMax": 1.1,
+          "status": "missing"
+        },
+        {
+          "modelCode": "FO02_A",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_B",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_C",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
+          "count": 1,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "MUSHROOM_WHITE",
+          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "WHITE_FLOWER",
+          "model": "missing/D2/WHITE_FLOWER.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "TWIGS",
+          "model": "missing/D2/TWIGS.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "VINE_GROUND",
+          "model": "missing/D2/VINE_GROUND.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM02_01",
+          "model": "art/exports/modelling-basics-c/BM02_01.fbx",
+          "count": 3,
+          "scaleMin": 0.65,
+          "scaleMax": 1.25,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "停留點前中景細節；坑緣、根腳與石台側密，台階留空"
+    },
+    {
+      "id": "d2-detail-pit-detail",
+      "x": 14,
+      "z": 183,
+      "radius": 6,
+      "items": [
+        {
+          "modelCode": "LARGE_FERN",
+          "model": "missing/D2/LARGE_FERN.fbx",
+          "count": 4,
+          "scaleMin": 0.85,
+          "scaleMax": 1.1,
+          "status": "missing"
+        },
+        {
+          "modelCode": "FO02_A",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_B",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_C",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
+          "count": 1,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "MUSHROOM_WHITE",
+          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "WHITE_FLOWER",
+          "model": "missing/D2/WHITE_FLOWER.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "TWIGS",
+          "model": "missing/D2/TWIGS.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "VINE_GROUND",
+          "model": "missing/D2/VINE_GROUND.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM02_01",
+          "model": "art/exports/modelling-basics-c/BM02_01.fbx",
+          "count": 3,
+          "scaleMin": 0.65,
+          "scaleMax": 1.25,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "停留點前中景細節；坑緣、根腳與石台側密，台階留空"
+    },
+    {
+      "id": "d2-detail-altar-detail",
+      "x": 7,
+      "z": 205,
+      "radius": 8,
+      "items": [
+        {
+          "modelCode": "LARGE_FERN",
+          "model": "missing/D2/LARGE_FERN.fbx",
+          "count": 4,
+          "scaleMin": 0.85,
+          "scaleMax": 1.1,
+          "status": "missing"
+        },
+        {
+          "modelCode": "FO02_A",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_B",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_C",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
+          "count": 1,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "MUSHROOM_WHITE",
+          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "WHITE_FLOWER",
+          "model": "missing/D2/WHITE_FLOWER.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "TWIGS",
+          "model": "missing/D2/TWIGS.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "VINE_GROUND",
+          "model": "missing/D2/VINE_GROUND.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM02_01",
+          "model": "art/exports/modelling-basics-c/BM02_01.fbx",
+          "count": 3,
+          "scaleMin": 0.65,
+          "scaleMax": 1.25,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "停留點前中景細節；坑緣、根腳與石台側密，台階留空"
+    },
+    {
+      "id": "d2-detail-west-detail",
+      "x": -27,
+      "z": 210,
+      "radius": 9,
+      "items": [
+        {
+          "modelCode": "LARGE_FERN",
+          "model": "missing/D2/LARGE_FERN.fbx",
+          "count": 4,
+          "scaleMin": 0.85,
+          "scaleMax": 1.1,
+          "status": "missing"
+        },
+        {
+          "modelCode": "FO02_A",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_B",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_C",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
+          "count": 1,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "MUSHROOM_WHITE",
+          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "WHITE_FLOWER",
+          "model": "missing/D2/WHITE_FLOWER.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "TWIGS",
+          "model": "missing/D2/TWIGS.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "VINE_GROUND",
+          "model": "missing/D2/VINE_GROUND.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM02_01",
+          "model": "art/exports/modelling-basics-c/BM02_01.fbx",
+          "count": 3,
+          "scaleMin": 0.65,
+          "scaleMax": 1.25,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "停留點前中景細節；坑緣、根腳與石台側密，台階留空"
+    },
+    {
+      "id": "d2-detail-east-detail",
+      "x": 31,
+      "z": 214,
+      "radius": 9,
+      "items": [
+        {
+          "modelCode": "LARGE_FERN",
+          "model": "missing/D2/LARGE_FERN.fbx",
+          "count": 4,
+          "scaleMin": 0.85,
+          "scaleMax": 1.1,
+          "status": "missing"
+        },
+        {
+          "modelCode": "FO02_A",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_B",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_C",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
+          "count": 1,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "MUSHROOM_WHITE",
+          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "WHITE_FLOWER",
+          "model": "missing/D2/WHITE_FLOWER.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "TWIGS",
+          "model": "missing/D2/TWIGS.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "VINE_GROUND",
+          "model": "missing/D2/VINE_GROUND.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM02_01",
+          "model": "art/exports/modelling-basics-c/BM02_01.fbx",
+          "count": 3,
+          "scaleMin": 0.65,
+          "scaleMax": 1.25,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "停留點前中景細節；坑緣、根腳與石台側密，台階留空"
+    },
+    {
+      "id": "d2-detail-north-detail",
+      "x": 2,
+      "z": 225,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "LARGE_FERN",
+          "model": "missing/D2/LARGE_FERN.fbx",
+          "count": 4,
+          "scaleMin": 0.85,
+          "scaleMax": 1.1,
+          "status": "missing"
+        },
+        {
+          "modelCode": "FO02_A",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_A/FO02_GlowMushroom_A_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_B",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_B/FO02_GlowMushroom_B_v001.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "FO02_C",
+          "model": "art/exports/forest-roots-b/FO02_GlowMushroom_C/FO02_GlowMushroom_C_v001.fbx",
+          "count": 1,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "MUSHROOM_WHITE",
+          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "WHITE_FLOWER",
+          "model": "missing/D2/WHITE_FLOWER.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "TWIGS",
+          "model": "missing/D2/TWIGS.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.3,
+          "status": "missing"
+        },
+        {
+          "modelCode": "VINE_GROUND",
+          "model": "missing/D2/VINE_GROUND.fbx",
+          "count": 2,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BM02_01",
+          "model": "art/exports/modelling-basics-c/BM02_01.fbx",
+          "count": 3,
+          "scaleMin": 0.65,
+          "scaleMax": 1.25,
+          "status": "needs-importer"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "停留點前中景細節；坑緣、根腳與石台側密，台階留空"
+    },
+    {
+      "id": "d2-forest-01",
+      "x": -38,
+      "z": 168,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "ElderPine_C",
+          "model": "art/exports/elder-trees-v1/ElderPine_C.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_C",
+          "model": "art/exports/elder-trees-v1/ElderCypress_C.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-02",
+      "x": -43,
+      "z": 194,
+      "radius": 6,
+      "items": [
+        {
+          "modelCode": "ElderPine_B",
+          "model": "art/exports/elder-trees-v1/ElderPine_B.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_B",
+          "model": "art/exports/elder-trees-v1/ElderCypress_B.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-03",
+      "x": -38,
+      "z": 227,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "ElderPine_C",
+          "model": "art/exports/elder-trees-v1/ElderPine_C.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_C",
+          "model": "art/exports/elder-trees-v1/ElderCypress_C.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-04",
+      "x": -18,
+      "z": 243,
+      "radius": 6,
+      "items": [
+        {
+          "modelCode": "ElderPine_B",
+          "model": "art/exports/elder-trees-v1/ElderPine_B.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_B",
+          "model": "art/exports/elder-trees-v1/ElderCypress_B.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-05",
+      "x": 13,
+      "z": 242,
+      "radius": 7,
+      "items": [
+        {
+          "modelCode": "ElderPine_C",
+          "model": "art/exports/elder-trees-v1/ElderPine_C.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_C",
+          "model": "art/exports/elder-trees-v1/ElderCypress_C.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-06",
+      "x": 39,
+      "z": 231,
+      "radius": 10,
+      "items": [
+        {
+          "modelCode": "ElderPine_B",
+          "model": "art/exports/elder-trees-v1/ElderPine_B.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_B",
+          "model": "art/exports/elder-trees-v1/ElderCypress_B.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-07",
+      "x": 43,
+      "z": 196,
+      "radius": 6,
+      "items": [
+        {
+          "modelCode": "ElderPine_C",
+          "model": "art/exports/elder-trees-v1/ElderPine_C.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_C",
+          "model": "art/exports/elder-trees-v1/ElderCypress_C.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-forest-08",
+      "x": 35,
+      "z": 169,
+      "radius": 11,
+      "items": [
+        {
+          "modelCode": "ElderPine_B",
+          "model": "art/exports/elder-trees-v1/ElderPine_B.fbx",
+          "count": 6,
+          "scaleMin": 0.8,
+          "scaleMax": 1.15,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCypress_B",
+          "model": "art/exports/elder-trees-v1/ElderCypress_B.fbx",
+          "count": 5,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "ElderCamphor_B",
+          "model": "art/exports/elder-trees-v1/ElderCamphor_B.fbx",
+          "count": 3,
+          "scaleMin": 0.8,
+          "scaleMax": 1.1,
+          "status": "needs-importer"
+        },
+        {
+          "modelCode": "SHRUB_A",
+          "model": "missing/D2/SHRUB_A.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        },
+        {
+          "modelCode": "SHRUB_B",
+          "model": "missing/D2/SHRUB_B.fbx",
+          "count": 4,
+          "scaleMin": 0.75,
+          "scaleMax": 1.25,
+          "status": "missing"
+        }
+      ],
+      "yaw": "random",
+      "avoidPath": true,
+      "note": "外圈松為主、黃綠闊葉穿插，中心視線與道路留空"
+    },
+    {
+      "id": "d2-root-root-west",
+      "x": -16,
+      "z": 194,
+      "radius": 8,
+      "items": [
+        {
+          "modelCode": "VINE_ROOT",
+          "model": "missing/D2/VINE_ROOT.fbx",
+          "count": 7,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BARK_PIECE",
+          "model": "missing/D2/BARK_PIECE.fbx",
+          "count": 5,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 4,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        }
+      ],
+      "yaw": "outward",
+      "avoidPath": true,
+      "note": "沿板根表面與根腳生長，需以實際模型接觸面校正"
+    },
+    {
+      "id": "d2-root-root-east",
+      "x": 20,
+      "z": 201,
+      "radius": 8,
+      "items": [
+        {
+          "modelCode": "VINE_ROOT",
+          "model": "missing/D2/VINE_ROOT.fbx",
+          "count": 7,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BARK_PIECE",
+          "model": "missing/D2/BARK_PIECE.fbx",
+          "count": 5,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 4,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        }
+      ],
+      "yaw": "outward",
+      "avoidPath": true,
+      "note": "沿板根表面與根腳生長，需以實際模型接觸面校正"
+    },
+    {
+      "id": "d2-root-root-north",
+      "x": 3,
+      "z": 219,
+      "radius": 8,
+      "items": [
+        {
+          "modelCode": "VINE_ROOT",
+          "model": "missing/D2/VINE_ROOT.fbx",
+          "count": 7,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BARK_PIECE",
+          "model": "missing/D2/BARK_PIECE.fbx",
+          "count": 5,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 4,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        }
+      ],
+      "yaw": "outward",
+      "avoidPath": true,
+      "note": "沿板根表面與根腳生長，需以實際模型接觸面校正"
+    },
+    {
+      "id": "d2-root-root-south",
+      "x": 1,
+      "z": 183,
+      "radius": 8,
+      "items": [
+        {
+          "modelCode": "VINE_ROOT",
+          "model": "missing/D2/VINE_ROOT.fbx",
+          "count": 7,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "BARK_PIECE",
+          "model": "missing/D2/BARK_PIECE.fbx",
+          "count": 5,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MOSS_CLUMP",
+          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "count": 4,
+          "scaleMin": 0.7,
+          "scaleMax": 1.2,
+          "status": "missing"
+        },
+        {
+          "modelCode": "MUSHROOM_BROWN",
+          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "count": 4,
+          "scaleMin": 0.8,
+          "scaleMax": 1.2,
+          "status": "missing"
+        }
+      ],
+      "yaw": "outward",
+      "avoidPath": true,
+      "note": "沿板根表面與根腳生長，需以實際模型接觸面校正"
+    }
+  ],
+  "clusterSeed": 1114
 }
