@@ -1,0 +1,146 @@
+{
+  "asset": "TR01_C_CliffPine",
+  "version": "v002",
+  "minTier": "low",
+  "name_zh": "崖松（細幹大斜、一條長枝外伸、冠疏、斷樁三處）",
+  "species": "TR01",
+  "species_zh": "松",
+  "slot": "B1 崖邊",
+  "work_pack": "2026-11-14 樹木重做 v2：照天空島世界樹的做法（B：針葉和大喬木）",
+  "method": "docs/execution/2026-11-14/tree-method（天空島世界樹）：S 形主幹、不對稱主枝、三級枝、葉冠錨點＋枝梢流、五頂點立體葉、頂點色",
+  "reference": "art/references/TR01/v002-r3/TR01-cand-1.png（prompt.txt 同資料夾）",
+  "height_m": 14.559,
+  "dimensions_m": [
+    12.143,
+    8.387,
+    14.859
+  ],
+  "bounds_min_m": [
+    -2.271,
+    -4.529,
+    -0.3
+  ],
+  "bounds_max_m": [
+    9.872,
+    3.858,
+    14.559
+  ],
+  "ground_z_m": 0.0,
+  "root_depth_m": 0.3,
+  "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
+  "front": "-Y (Blender) = +Z (Unity)",
+  "crown_anchors": 14,
+  "main_limbs": 15,
+  "seed": 313,
+  "collision": true,
+  "collision_note": "TR01_C_CliffPine_Collision: 8-sided prism round the trunk (radius 0.26 m, z 0-3 m); hide its renderer, use it as a MeshCollider or a CapsuleCollider of the same size. The crown does not block.",
+  "collision_capsule": {
+    "radius": 0.26,
+    "height": 3.0,
+    "centre": [
+      0.23,
+      -0.03,
+      1.5
+    ]
+  },
+  "objects_per_lod": 1,
+  "materials": [
+    "M_TR01_Bark",
+    "M_TR01_Leaves",
+    "M_TR01_Impostor"
+  ],
+  "material_slots": {
+    "LOD0-2": [
+      "M_TR01_Bark",
+      "M_TR01_Leaves"
+    ],
+    "LOD3": [
+      "M_TR01_Impostor"
+    ]
+  },
+  "shared_textures": "art/exports/trees-v2/TR01_Shared/Textures",
+  "texture_resolution_px": {
+    "TR01_Bark_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "TR01_Bark_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "TR01_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "TR01_Impostor_BaseColor.png": [
+      1536,
+      512
+    ],
+    "TR01_Impostor_Normal.png": [
+      1536,
+      512
+    ],
+    "TR01_Leaves_Palette.png": [
+      256,
+      64
+    ]
+  },
+  "leaf_geometry": "pine fascicles: five vertices, two triangles - two needles leave one base and open 16-34 deg (a V in 3D); LOD0 0.52-0.70 m x 0.10-0.13 m, 9-12 per brush; a brush sweeps forward along its shoot (a pine shoot brush, a little flattened), brushes follow each tip twig from 30 % of its length to the tip; LOD1 0.75-0.95 m x 0.16-0.21 m, 6-8 per brush; LOD2 1.2-1.5 m x 0.34-0.44 m, 4-5 per brush; LOD3: two crossed impostor cards",
+  "leaf_material": "opaque (no alpha), both faces drawn, roughness about 0.9, metallic 0; BaseColor = the palette texture on UV0 (or multiply the vertex colour instead)",
+  "vertex_colour": "Color (FBX vertex colour, linear): leaves RGB = leaf colour from height / inside-outside, A = canopy occlusion (not transparency); wood RGB 1, A 1",
+  "wind": "UV1 \"Wind\": u = sway weight (trunk 0, limbs 0.03-0.3, secondaries 0.3-0.5, tips 0.5-0.8, leaves 0.62-1), v = phase 0..1",
+  "lod_switch_distance_m": [
+    35,
+    90,
+    220,
+    1200
+  ],
+  "lod3": "two crossed cards with a front impostor of LOD0 (impostor atlas column 2)",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 48372,
+      "cap": 60000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 6966,
+      "leaf_blades": 20703
+    },
+    "LOD1": {
+      "triangles": 12260,
+      "cap": 15000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 2200,
+      "leaf_blades": 5030
+    },
+    "LOD2": {
+      "triangles": 3115,
+      "cap": 4000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 409,
+      "leaf_blades": 1353
+    },
+    "LOD3": {
+      "triangles": 4,
+      "cap": 200,
+      "objects": 1,
+      "materials": 1,
+      "wood_triangles": 0,
+      "leaf_blades": 0
+    }
+  },
+  "lod_totals": {
+    "LOD0": 48372,
+    "LOD1": 12260,
+    "LOD2": 3115,
+    "LOD3": 4
+  },
+  "texture_naming": "BaseColor = Albedo; MetallicSmoothness = URP mask (R metallic 0, A smoothness), same naming as village-houses-b (VL)",
+  "status": {
+    "Exported": true,
+    "Imported": "未驗",
+    "Visually_Verified": "未驗",
+    "In_game_Verified": "未驗"
+  }
+}

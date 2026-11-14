@@ -1,0 +1,141 @@
+{
+  "asset": "TR01_C_CliffPine",
+  "version": "v002",
+  "built": "2026-11-15 01:49",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "anchors_12_20": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0005,
+    "fbx_vertex_colour": true,
+    "fbx_wind_uv": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR01_C_CliffPine",
+      "TR01_C_CliffPine_Collision",
+      "TR01_C_CliffPine_LOD0",
+      "TR01_C_CliffPine_LOD1",
+      "TR01_C_CliffPine_LOD2",
+      "TR01_C_CliffPine_LOD3"
+    ],
+    "TR01_C_CliffPine_Collision": {
+      "tris": 28,
+      "min": [
+        -0.031,
+        -0.291,
+        -0.0
+      ],
+      "max": [
+        0.49,
+        0.23,
+        3.0
+      ],
+      "colour_layers": [],
+      "uv_layers": [],
+      "materials": []
+    },
+    "TR01_C_CliffPine_LOD0": {
+      "tris": 48372,
+      "min": [
+        -2.271,
+        -4.529,
+        -0.3
+      ],
+      "max": [
+        9.872,
+        3.858,
+        14.559
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR01_Bark.003",
+        "M_TR01_Leaves.003"
+      ]
+    },
+    "TR01_C_CliffPine_LOD1": {
+      "tris": 12260,
+      "min": [
+        -2.461,
+        -4.76,
+        -0.3
+      ],
+      "max": [
+        10.04,
+        3.932,
+        14.729
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR01_Bark.003",
+        "M_TR01_Leaves.003"
+      ]
+    },
+    "TR01_C_CliffPine_LOD2": {
+      "tris": 3115,
+      "min": [
+        -2.763,
+        -5.176,
+        -0.3
+      ],
+      "max": [
+        10.428,
+        4.472,
+        15.243
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR01_Bark.003",
+        "M_TR01_Leaves.003"
+      ]
+    },
+    "TR01_C_CliffPine_LOD3": {
+      "tris": 4,
+      "min": [
+        -3.679,
+        -7.479,
+        -0.3
+      ],
+      "max": [
+        11.28,
+        7.479,
+        14.659
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR01_Impostor.003"
+      ]
+    }
+  },
+  "files": {
+    "TR01_C_CliffPine_v002.fbx": "fdb51b1f23c30ce37d2bd46c96af97ad8669256585174dbc4a19abfc4cb2ff63",
+    "TR01_C_CliffPine_v002.glb": "ffa3f496bc424dfe9650c6fcd0d68620b507aa90decd717202b84bfa0a0305ac"
+  }
+}
