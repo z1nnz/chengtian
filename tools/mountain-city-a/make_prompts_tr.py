@@ -26,6 +26,34 @@ ITEMS = {
              'through; each streamer carries many small narrow lance-shaped leaves; muted willow green, lighter yellow-green '
              'at the outer tops, darker cool green inside and below.' + VALLEY +
              ' Show only this one tree with a small patch of bank; no water plants, no fence, no buildings, no writing.'),
+    'TR04': ('Three-view orthographic turnaround sheet (front, side, top) of a single mature Chinese mountain '
+             'maple tree (acer, autumn) about 10 m tall: a sturdy grey-brown trunk about 0.4 m across with a slight lean and '
+             'gentle S-curve, splitting at about 2.5 m into four to six unequal ascending limbs, asymmetric; many layers of '
+             'fine twigs spreading in broad, slightly tiered horizontal sprays, the canopy wide and irregular with clear gaps '
+             'where limbs and sky show through, not a ball; small five-lobed palmate leaves in subdued deep autumn colours: '
+             'dark ochre red, rust red and brownish crimson, a few dull orange at the sunlit top, darker maroon inside and '
+             'below; no bright scarlet.' + VALLEY +
+             ' Show only this one tree with a small patch of ground; no shrine, no lanterns, no fence, no buildings, no writing.'),
+    'TR07': ('Three-view orthographic turnaround sheet (front, side, top) of a single old Chinese plum blossom tree (mei, '
+             'prunus mume) about 5 m tall in a village courtyard: a short, gnarled, twisted black-brown trunk about 0.3 m '
+             'across with knots and a split, angular zig-zag branches that twist and turn sharply in the classic Chinese '
+             'plum painting manner, thin straight new shoots rising from the older limbs, open airy crown with lots of empty '
+             'space; small five-petal blossoms in pale pink and white dotted sparsely along the dark branches, a few small '
+             'young green leaves, the branches clearly visible, not covered.' + VALLEY +
+             ' Show only this one tree with a small patch of ground; no pot, no rocks, no fence, no buildings, no writing.'),
+    'TR08': ('Three-view orthographic turnaround sheet (front, side, top) of a single dead leafless old tree about 8 m tall '
+             'on a village edge: a thick weathered grey trunk about 0.5 m across, bark partly peeled showing pale silver '
+             'wood, a dark hollow cavity low on the trunk, three clear tiers of branches (thick limbs, secondary branches, '
+             'fine twigs) forming a strong asymmetric silhouette, two broken snapped limbs with jagged ends, one limb '
+             'leaning far to one side; roots gripping the ground; no leaves at all.' + VALLEY +
+             ' Show only this one tree with a small patch of ground; no crows, no fence, no buildings, no writing.'),
+    'TR09': ('Three-view orthographic turnaround sheet (front, side, top) of a single clump of Chinese bamboo about 7 m tall '
+             'growing from one root base: nine to twelve green culms of uneven thickness (3 to 7 cm across) with clear '
+             'node rings every 25 to 35 cm, the culms rising together and arching slightly outward, a few older culms '
+             'yellow-green, thin side branches at the upper nodes carrying drooping sprays of narrow lance-shaped bamboo '
+             'leaves hanging in layered clusters, foliage concentrated in the upper half, lower culms bare with a few dry '
+             'sheaths at the base; muted natural greens.' + VALLEY +
+             ' Show only this one clump with a small patch of ground; no fence, no buildings, no panda, no writing.'),
 }
 items = {k: {'object': v, 'layout': 'single', 'negative_extra': NEG} for k, v in ITEMS.items()}
 out = {k: base[k] for k in ('style52', 'negative53', 'layout_single', 'layout_building')}
