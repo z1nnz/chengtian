@@ -7,7 +7,7 @@ src = open(BASE, encoding='utf-8').read()
 lib = src.split('# ---------------- 樹幹')[0]
 exec(compile(lib, BASE, 'exec'))
 import os as _os
-NSEED = int(_os.environ.get('GT_NSEED', '4'))  # z1nnz 11/16 定版：種子 4 最接近他打勾的那張
+NSEED = int(_os.environ.get('GT_NSEED', '1'))  # z1nnz 11/16 定版：種子 1（他選的「右邊那張」）
 noise.seed_set(NSEED)          # tube(), fb(), MAT, R, objs, TAG/QUICK...
 
 tail = src[src.index('# ---------------- 地面'):]
