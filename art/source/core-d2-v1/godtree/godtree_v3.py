@@ -140,8 +140,10 @@ for j in range(5):
     branch(f'Center{j}', tuple(p0), tuple(dv), R.uniform(16, 22), R.uniform(1.3, 1.8), 700 + j * 5, 2)
 
 # 中心芯：補滿六股之間的洞（大多被遮住）
-objs.append(tube('Core', [(0, 0, -1), (0, 0, 10), (.2, 0, 20), (.3, .1, ZS - 4)],
-                 radius=lambda t: 5.4 - 1.6 * t, flat=lambda t: 1.0, seed=7.0, rib=.12, twist=.06))
+objs.append(tube('Core', [(0, 0, -1.5), (0, 0, 10), (.2, 0, 20), (.3, .1, ZS - 4)],
+                 radius=None, flat=None, seed=7.0, rib=.10, twist=.06,
+                 rpos=lambda c, t: 8.2 - .12 * max(0, c.z) + 3.4 * _ss((12 - c.z) / 12) ** 1.4,
+                 fpos=lambda c, t: 1.0))
 
 
 # ---------------- 次級板根與地表細根 ----------------
@@ -170,7 +172,7 @@ for n in range(12):
     a = strand_ang[n % NS] + math.pi / NS + R.uniform(-.25, .25) if n < NS else R.uniform(0, 2 * math.pi)
     L = R.uniform(20, 36)
     th = R.uniform(1.0, 2.0)
-    objs.append(snake(f'Root{n}', a, L, th, start=10.5, seed=300 + n, z0=3.2, arch=R.choice([0, .2, .45, .8])))
+    objs.append(snake(f'Root{n}', a, L, th, start=11.5, seed=300 + n, z0=1.2, arch=R.choice([0, .2, .45, .8])))
     for f in range(1):
         st = 10.5 + L * R.uniform(.3, .6)
         fa = a + R.choice([-1, 1]) * R.uniform(.35, .8)
