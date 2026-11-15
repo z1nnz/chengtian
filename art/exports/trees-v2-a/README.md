@@ -4,7 +4,7 @@
 | 工作包 | `docs/execution/2026-11-14/樹木重做-v2-分工.md`（feature/qingxi-creek-chapter 分支；A 負責 TR04／06／07／08／09 v002） |
 | ID | TR04 楓、TR06 垂柳、TR07 梅、TR08 枯樹、TR09 竹叢，v002，每種變體 A、B、C（共 15 個） |
 | 擺哪 | TR04：D3、A3；TR06：A1 溪邊、A3；TR07：A1 院子；TR08：A1、A9；TR09：A1 北側、A8 竹海 |
-| 分支／PR | art/a-1114-tr-trees-v2-shaped ／ 待開 |
+| 分支／PR | art/a-1114-tr-trees-v2-shaped ／ #120 |
 | 版本 | v002 |
 | 狀態 | Exported；Imported：見「驗收紀錄」的 Unity 6000.3.28f1 檢查；Visually Verified：預覽圖；In-game Verified：未驗 |
 | 素材來源 | 原創。建模腳本 `art/source/trees-v2-a/build_tr.py`（Python 程序建模，照世界樹指南的順序）；三視圖用 Codex CLI 生成，存 `art/references/TR04／06／07／08／09/` |
