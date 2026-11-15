@@ -1,0 +1,40 @@
+{
+  "asset": "GT01_GodTree",
+  "version": "v001",
+  "units": "meters",
+  "source": "godtree_v3.py six-strand shape; game tessellation and leaf cards in bake_godtree.py",
+  "reference": "art/references/core-d2-v1/godtree/godtree-three-view-v1.png",
+  "scan": {
+    "name": "Poly Haven bark_brown_02",
+    "url": "https://polyhaven.com/a/bark_brown_02",
+    "license": "CC0"
+  },
+  "textures": {
+    "BaseColor": "GT01_GodTree_BaseColor.png",
+    "Normal": "GT01_GodTree_Normal.png",
+    "Roughness": "GT01_GodTree_Roughness.png",
+    "AO": "GT01_GodTree_AO.png"
+  },
+  "texture_note": "2k scan-derived maps; mesh-specific high-to-low Normal/AO/Base Color baking is pending",
+  "triangles": {
+    "LOD0": 240426,
+    "LOD1": 120212,
+    "LOD2": 36062
+  },
+  "bounds_min_m": [
+    -39.302,
+    -43.317,
+    -2.431
+  ],
+  "bounds_max_m": [
+    41.505,
+    41.883,
+    60.652
+  ],
+  "dimensions_m": [
+    80.807,
+    85.2,
+    63.083
+  ],
+  "collision": "GT01_Collision_Trunk"
+}

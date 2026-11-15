@@ -14,11 +14,15 @@ Same kit and driver as AL01 (build_core_d2.py): fr_parts sweep / pebble / moss /
 Origins: centre of the piece at ground level z = 0 (the pit: centre of the hole at ground level; its floor is below 0).
 """
 import math, random
+from pathlib import Path
+import bpy
+import numpy as np
 from mathutils import Vector, noise
 import bmesh
 import cr_mats as cm
 import fr_mats as fm
 import fr_parts as FP
+import ti_mats as tm
 from ti_core import S, mesh, surface
 
 
@@ -31,6 +35,61 @@ def palette():
     P['mud'] = cm.stone('Pit_WetMud', light=(.055, .043, .032), dark=(.022, .018, .014), ochre=(.06, .045, .03), moss=0., lichen=0., crack=.1)
     P['cut'] = fm.root_tip('Root_CutEnd')
     return P
+
+
+def scanned_bark_material():
+    """Poly Haven CC0 bark scan, mapped from fr_parts' along/circumference attribute."""
+    tex = Path(__file__).resolve().parent / 'godtree' / 'tex'
+    m, graph = tm._new('SR01_BarkBrown02_Scan', 'Main')
+    nodes, links = graph.n, graph.l
+    attr = nodes.new('ShaderNodeAttribute'); attr.attribute_name = 'bark'
+    sep = nodes.new('ShaderNodeSeparateXYZ')
+    links.new(attr.outputs['Vector'], sep.inputs[0])
+    uv = nodes.new('ShaderNodeCombineXYZ')
+    for out, target in ((sep.outputs['Y'], uv.inputs['X']), (sep.outputs['X'], uv.inputs['Y'])):
+        scale = nodes.new('ShaderNodeMath'); scale.operation = 'DIVIDE'
+        scale.inputs[1].default_value = 2.6
+        links.new(out, scale.inputs[0]); links.new(scale.outputs[0], target)
+    diff = nodes.new('ShaderNodeTexImage')
+    diff.image = bpy.data.images.load(str(tex / 'bark_brown_02_diff_2k.png'), check_existing=True)
+    diff.image.colorspace_settings.name = 'sRGB'
+    links.new(uv.outputs[0], diff.inputs['Vector'])
+    desaturate = nodes.new('ShaderNodeHueSaturation')
+    desaturate.inputs['Saturation'].default_value = .50
+    desaturate.inputs['Value'].default_value = .48
+    links.new(diff.outputs['Color'], desaturate.inputs['Color'])
+    normal = nodes.new('ShaderNodeTexImage')
+    normal.image = bpy.data.images.load(str(tex / 'bark_brown_02_nor_gl_2k.png'), check_existing=True)
+    normal.image.colorspace_settings.name = 'Non-Color'
+    links.new(uv.outputs[0], normal.inputs['Vector'])
+    nm = nodes.new('ShaderNodeNormalMap')
+    links.new(normal.outputs['Color'], nm.inputs['Color'])
+    rough = nodes.new('ShaderNodeTexImage')
+    rough.image = bpy.data.images.load(str(tex / 'bark_brown_02_rough_2k.png'), check_existing=True)
+    rough.image.colorspace_settings.name = 'Non-Color'
+    links.new(uv.outputs[0], rough.inputs['Vector'])
+    tm._finish(graph, desaturate.outputs['Color'], rough.outputs['Color'], 0.0, nm.outputs['Normal'], spec=.25)
+    return m
+
+
+def displace_scanned_roots():
+    """Put 5–15 cm of scanned plate/furrow relief into SR01 geometry."""
+    tex = Path(__file__).resolve().parent / 'godtree' / 'tex' / 'bark_brown_02_disp_2k.png'
+    image = bpy.data.images.load(str(tex), check_existing=True)
+    image.colorspace_settings.name = 'Non-Color'
+    width, height = image.size
+    pixels = np.asarray(image.pixels[:], dtype=np.float32).reshape(height, width, 4)[:, :, 0]
+    for ob in bpy.context.scene.objects:
+        if ob.type != 'MESH' or not ob.name.startswith('Root_') or 'bark' not in ob.data.attributes:
+            continue
+        data = ob.data; bark = data.attributes['bark'].data
+        for i, v in enumerate(data.vertices):
+            s, around, _ = bark[i].vector
+            x = int((around / 2.6 % 1) * width) % width
+            y = int((s / 2.6 % 1) * height) % height
+            relief = (float(pixels[y, x]) - .5) * .22
+            v.co += v.normal * relief
+        data.update()
 
 
 # ------------------------------------------------------------------ stones
@@ -185,9 +244,9 @@ def _hump(name, pts, w, h, mat):
 
 
 SR = {   # trunk-end start, the main run (plan), girth, seed, forks
-    'A': ([(-2.15, .1, -.1), (-1.6, .02, .28), (-.8, -.1, .3), (.1, .05, .24), (.95, .2, .16), (1.7, .05, .06), (2.15, -.05, -.12)], .44, 31, 4),
-    'B': ([(-1.6, -.05, -.1), (-1.05, 0., .22), (-.3, .1, .22), (.45, -.05, .15), (1.15, -.15, .05), (1.6, -.1, -.12)], .34, 32, 3),
-    'C': ([(-1.05, 0., -.08), (-.6, .03, .16), (.0, -.04, .14), (.6, .06, .07), (1.05, 0., -.1)], .25, 33, 3),
+    'A': ([(-2.15, .1, -.1), (-1.6, .02, .33), (-.8, -.2, .55), (.1, .05, .46), (.95, .3, .25), (1.7, .05, .06), (2.15, -.05, -.12)], .44, 31, 4),
+    'B': ([(-1.6, -.05, -.1), (-1.05, 0., .27), (-.3, .15, .39), (.45, -.08, .25), (1.15, -.15, .05), (1.6, -.1, -.12)], .34, 32, 3),
+    'C': ([(-1.05, 0., -.08), (-.6, .08, .2), (.0, -.12, .25), (.6, .12, .12), (1.05, 0., -.1)], .25, 33, 3),
 }
 
 
@@ -195,7 +254,20 @@ def build_sr(key):
     def build(P):
         pts, r0, seed, forks = SR[key]; R = random.Random(f'SR01{key}')
         ground = lambda x, y: 0.
+        x0, x1 = pts[0][0] - .4, pts[-1][0] + .4
+        halfwidth = max(.75, r0 * 2.2)
+        def bed(u, v):
+            a = math.tau * u
+            rr = .001 + .999 * v
+            x = (x0 + x1) * .5 + math.cos(a) * (x1 - x0) * .5 * rr
+            y = math.sin(a) * halfwidth * rr
+            edge = (1 - rr * rr) ** 1.5
+            z = max(.003, edge * (.09 + .025 * noise.noise(Vector((x * 2.8, y * 2.8, seed)))))
+            return x, y, z
+        surface('Earth_Bed', 64, 12, bed, P['earth'], closed_u=True, group='Main')
+        P['bark'] = [scanned_bark_material()]
         root(f'Root_{key}', pts, r0, P['bark'], seed, ground, forks=forks)
+        displace_scanned_roots()
         for p in (pts[0], pts[-1]):
             _hump('Earth_Hump', [p], r0 * .95, r0 * .6, P['earth'])
         for j in range(12):                      # moss on the shaded (+Y) flank
@@ -330,7 +402,8 @@ def register(ASSETS):
             origin='centre of the stone at ground level z = 0; 15 cm buried below', note=f'Half-buried stepping stone {k} for the D2 mud paths; top {H} m above ground.')
     for k, (pts, r0, _, _) in SR.items():
         x0, x1 = pts[0][0] - r0 * 2.6, pts[-1][0] + r0 * 2.6; w = 1.6 + r0 * 4
-        ASSETS[f'SR01_SurfaceRoot_{k}'] = dict(common, zh=f'地表盤根 {k}', kind='root', palette=palette, build=build_sr(k),
+        ASSETS[f'SR01_SurfaceRoot_{k}'] = dict(common, zh=f'地表盤根 {k}', kind='root', palette=palette, build=build_sr(k), ver='v003', tex=2048,
+            method='procedural branched root with Poly Haven bark_brown_02 scanned displacement (5-15 cm relief), scanned color/normal/roughness baked to 2048 atlas',
             limit=(x1 - x0, w * 2, 1.), box=((x0, -w, -.45), (x1, w, r0 * 2.4)), base_z={'A': -.073, 'B': -.074, 'C': -.082}[k], clamp_max=.5,
             ref=f'core-d2-models-v1/SR01/turnaround', slot='D2_AncientTree_SurfaceRoot',
             origin='centre at ground level z = 0; trunk end -X; both ends dive under the ground', note=f'Surface root {k}, girth {r0} m, half buried.')

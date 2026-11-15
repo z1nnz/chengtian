@@ -1,8 +1,9 @@
 # D2 神木 v3：照神木設定圖（godtree-concept-1）——六股粗木絞成樹幹，往下散成板根，往上分成主枝
 import sys, math, random
+from pathlib import Path
 from mathutils import Vector
 
-BASE = 'D:/chengtian/4-素材與快取/bark-sample/godtree_base.py'
+BASE = str(Path(__file__).resolve().parent / 'godtree_base.py')
 src = open(BASE, encoding='utf-8').read()
 lib = src.split('# ---------------- 樹幹')[0]
 exec(compile(lib, BASE, 'exec'))          # tube(), fb(), MAT, R, objs, TAG/QUICK...
@@ -156,7 +157,7 @@ for n in range(40):
 
 # ---------------- 樹冠：照天空島世界樹做法（一片片立體小葉沿枝梢排）----------------
 import sys as _sys
-_TG = 'C:/Users/User/AppData/Local/Temp/claude/5b1d5a1d6e0ced79/95010672-bf02-4e75-99c7-37774fc10d08/scratchpad/lifetree/tree_gen.py'
+_TG = str(Path(__file__).resolve().parent / 'tree_gen.py')
 _code = open(_TG, encoding='utf-8').read()
 _lm = _code[_code.index('def leaf_material'):_code.index('def scene_and_render')]
 _code = _code[:_code.index('def bark_material')].replace("(.02 if level == 4 else .045)", "(LEAF_SP4 if level == 4 else LEAF_SP3)") + _lm

@@ -24,6 +24,9 @@ output/
 *.blend1
 *.blend2
 
+# Downloaded Poly Haven scan set; source URL and license are documented with the asset.
+art/source/core-d2-v1/godtree/tex/
+
 
 # Unity scenes and data written by the Editor builders (reproducible, see docs/graybox/qingxi-hunt/README.md)
 apps/game/Assets/YunJing/Generated/

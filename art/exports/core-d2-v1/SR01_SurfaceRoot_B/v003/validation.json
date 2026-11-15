@@ -1,0 +1,127 @@
+{
+  "asset": "SR01_SurfaceRoot_B",
+  "checks": [
+    {
+      "check": "footprint_within_limit",
+      "pass": true,
+      "detail": {
+        "min": [
+          -2.0522,
+          -0.7767,
+          -0.0736
+        ],
+        "max": [
+          2.0522,
+          0.75,
+          0.5089
+        ],
+        "box_m": [
+          [
+            -2.484,
+            -2.96,
+            -0.45
+          ],
+          [
+            2.484,
+            2.96,
+            0.8160000000000001
+          ]
+        ]
+      }
+    },
+    {
+      "check": "lowest_point_at_design_z",
+      "pass": true,
+      "detail": {
+        "min_z": -0.07363,
+        "design_min_z": -0.074,
+        "largest_clamp_m": 0
+      }
+    },
+    {
+      "check": "lod_ratios_50_15",
+      "pass": true,
+      "detail": {
+        "triangles": {
+          "LOD0": 9758,
+          "LOD1": 4877,
+          "LOD2": 1462
+        },
+        "LOD1": 0.5,
+        "LOD2": 0.15,
+        "per_group": {
+          "Main": {
+            "LOD0": 5470,
+            "LOD1": 2734,
+            "LOD2": 820
+          },
+          "Detail_Small": {
+            "LOD0": 4288,
+            "LOD1": 2143,
+            "LOD2": 642
+          }
+        }
+      }
+    },
+    {
+      "check": "fbx_reimport_dimensions",
+      "pass": true,
+      "detail": {
+        "fbx_lod0_dims_m": [
+          4.1044,
+          1.5267,
+          0.5826
+        ],
+        "blend_dims_m": [
+          4.1044,
+          1.5267,
+          0.5826
+        ],
+        "tolerance_m": 0.02,
+        "max_error_m": 5e-05
+      }
+    },
+    {
+      "check": "fbx_has_lod0_1_2",
+      "pass": true,
+      "detail": [
+        "SR01_SurfaceRoot_B.001",
+        "SR01_SurfaceRoot_B_Collision.001",
+        "SR01_SurfaceRoot_B_Detail_Small_LOD0.001",
+        "SR01_SurfaceRoot_B_Detail_Small_LOD1.001",
+        "SR01_SurfaceRoot_B_Detail_Small_LOD2.001",
+        "SR01_SurfaceRoot_B_LOD0.001",
+        "SR01_SurfaceRoot_B_LOD1.001",
+        "SR01_SurfaceRoot_B_LOD2.001"
+      ]
+    },
+    {
+      "check": "fbx_sockets",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "check": "fbx_collision",
+      "pass": true,
+      "detail": "collision mesh present"
+    },
+    {
+      "check": "glb_written",
+      "pass": true,
+      "detail": {
+        "bytes": 2420964
+      }
+    },
+    {
+      "check": "ten_views_rendered",
+      "pass": true,
+      "detail": "orthographic, framing asserted per view"
+    }
+  ],
+  "all_pass": true,
+  "seconds": 105,
+  "not_checked": [
+    "in-engine lighting and walking (see the Unity report)",
+    "mobile frame rate (not measured)"
+  ]
+}

@@ -15,6 +15,7 @@ import math, random
 from mathutils import Vector
 import cr_mats as cm
 import fr_parts as FP
+import d2_ground as dg
 from cr_parts import rbox
 from ti_core import S, lathe, socket
 
@@ -146,6 +147,7 @@ def build_al01(P):
                           (PLINTH_R - .2, z + PLINTH_H - .005), (PLINTH_R - .34, z + PLINTH_H - .045), (0., z + PLINTH_H - .06)], (0., .15, 0.), P['plinth'], seg=40, group='Main')
     # roots: buttress roots from the tree behind the right back corner, humping over the wall and breaking into side roots
     # and fine feeders that creep across the paving into the joints (see _root)
+    P['bark'] = [dg.scanned_bark_material()]
     bark = P['bark']
     _root('Root_Corner_A', [(4.75, 4.6, -.4), (4.3, 4.15, .7), (3.85, 3.7, 1.3), (3.2, 3.05, 1.5), (2.6, 2.45, TOP + .32), (1.9, 1.95, TOP + .13), (1.2, 1.7, TOP + .03), (.7, 1.8, TOP - .1)], .58, bark, 11, forks=4)
     _root('Root_Corner_B', [(3.3, 4.85, -.4), (3.2, 4.3, .55), (3.1, 3.7, 1.08), (2.98, 2.8, 1.12), (2.92, 1.8, .8), (3.0, .8, .45), (3.12, -.1, .16), (3.3, -.9, -.12)], .5, bark, 12, forks=3)
@@ -154,6 +156,7 @@ def build_al01(P):
     _root('Root_Back_Left', [(-4.1, 4.75, -.35), (-3.6, 4.2, .35), (-3.0, 3.5, .75), (-2.3, 2.85, 1.0), (-1.6, 2.5, TOP + .1), (-.8, 2.2, TOP - .1)], .36, bark, 15, forks=3)
     _root('Root_Back_Mid', [(.55, 4.9, -.35), (.48, 4.3, .3), (.35, 3.5, .68), (.15, 2.8, 1.0), (-.15, 2.3, TOP + .08), (-.3, 1.6, TOP - .1)], .3, bark, 16, forks=2)
     _root('Root_Front_Left', [(-4.5, -.7, -.3), (-3.95, -1.1, .18), (-3.3, -1.6, .36), (-2.88, -2.5, .3), (-3.05, -3.5, -.1)], .2, bark, 17, forks=2)
+    dg.displace_scanned_roots()
     # stones fallen at the foot
     for j, (x, y, s) in enumerate(((-3.0, -2.95, .34), (2.2, -3.25, .26), (3.15, -1.0, .22), (-3.05, 1.4, .3), (-1.9, 3.0, .24), (.6, 3.05, .28))):
         FP.pebble(f'Foot_Stone_{j}', (x, y, s * .22), s, P['stone'][j % 2], seed=70 + j, detail=1, group='Main')
@@ -215,12 +218,12 @@ NOTE = ('Stone offering terrace among the great tree roots in D2 (placement (7, 
 
 def register(ASSETS):
     ASSETS['AL01_RootAltarTerrace'] = dict(
-        zh='樹根下祭壇台石', kind='altar', palette=palette, build=build_al01, limit=(10.4, 10.0, 2.2), tex=2048, ver='v001',
+        zh='樹根下祭壇台石', kind='altar', palette=palette, build=build_al01, limit=(10.4, 10.0, 2.2), tex=2048, ver='v002',
         box=((-4.8, -4.7, -.2), (5.6, 5.3, 2.0)), ref='core-d2-v1/AL01_RootAltarTerrace/turnaround', slot='D2_AncientTree_RootAltar', minTier='standard',
         clamp_max=.06, uv_shape='CONVEX', uv_detach_zero=True, base_z=-.18,
         atlases={'Main': ['Main', 'Detail_Small']},
         origin='footprint centre of the terrace, bottom z = 0, front (steps) -Y',
         method='procedural mesh construction (art/source/core-d2-v1/al_altar.py with village-houses-b cr_parts / fr_parts: chiselled blocks and slabs, '
-               'lathed plinth, swept roots); procedural stone, bark, moss and leaf shaders baked to one 2048 atlas',
+               'lathed plinth, swept roots with Poly Haven bark_brown_02 scanned displacement); stone, scanned bark, moss and leaves baked to one 2048 atlas',
         based_on='new piece for the D2 block design (docs/execution/world-plan/D2.md, missing-piece list)',
         note=NOTE)

@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "exports_nonempty": true,
+    "lod_order": true,
+    "lod0_150k_to_250k": true,
+    "scan_maps_2k": true,
+    "bottom_below_ground": true
+  },
+  "pass": true,
+  "triangles": {
+    "LOD0": 240426,
+    "LOD1": 120212,
+    "LOD2": 36062
+  }
+}

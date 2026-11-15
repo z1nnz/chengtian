@@ -1,0 +1,134 @@
+{
+  "asset": "AL01_RootAltarTerrace",
+  "checks": [
+    {
+      "check": "footprint_within_limit",
+      "pass": true,
+      "detail": {
+        "min": [
+          -4.2685,
+          -4.4503,
+          -0.1802
+        ],
+        "max": [
+          5.5227,
+          5.3,
+          1.8115
+        ],
+        "box_m": [
+          [
+            -4.8,
+            -4.7,
+            -0.2
+          ],
+          [
+            5.6,
+            5.3,
+            2.0
+          ]
+        ]
+      }
+    },
+    {
+      "check": "lowest_point_at_design_z",
+      "pass": true,
+      "detail": {
+        "min_z": -0.18022,
+        "design_min_z": -0.18,
+        "largest_clamp_m": 0.02995
+      }
+    },
+    {
+      "check": "lod_ratios_50_15",
+      "pass": true,
+      "detail": {
+        "triangles": {
+          "LOD0": 152158,
+          "LOD1": 76078,
+          "LOD2": 22822
+        },
+        "LOD1": 0.5,
+        "LOD2": 0.15,
+        "per_group": {
+          "Main": {
+            "LOD0": 85510,
+            "LOD1": 42754,
+            "LOD2": 12826
+          },
+          "Detail_Small": {
+            "LOD0": 66648,
+            "LOD1": 33324,
+            "LOD2": 9996
+          }
+        }
+      }
+    },
+    {
+      "check": "fbx_reimport_dimensions",
+      "pass": true,
+      "detail": {
+        "fbx_lod0_dims_m": [
+          9.7912,
+          9.7503,
+          1.9917
+        ],
+        "blend_dims_m": [
+          9.7912,
+          9.7503,
+          1.9917
+        ],
+        "tolerance_m": 0.02,
+        "max_error_m": 3e-05
+      }
+    },
+    {
+      "check": "fbx_has_lod0_1_2",
+      "pass": true,
+      "detail": [
+        "AL01_RootAltarTerrace.001",
+        "AL01_RootAltarTerrace_Collision.001",
+        "AL01_RootAltarTerrace_Detail_Small_LOD0.001",
+        "AL01_RootAltarTerrace_Detail_Small_LOD1.001",
+        "AL01_RootAltarTerrace_Detail_Small_LOD2.001",
+        "AL01_RootAltarTerrace_LOD0.001",
+        "AL01_RootAltarTerrace_LOD1.001",
+        "AL01_RootAltarTerrace_LOD2.001",
+        "Socket_Plinth_Top.001"
+      ]
+    },
+    {
+      "check": "fbx_sockets",
+      "pass": true,
+      "detail": {
+        "Socket_Plinth_Top.001": [
+          0.0,
+          0.15,
+          1.22
+        ]
+      }
+    },
+    {
+      "check": "fbx_collision",
+      "pass": true,
+      "detail": "collision mesh present"
+    },
+    {
+      "check": "glb_written",
+      "pass": true,
+      "detail": {
+        "bytes": 13662412
+      }
+    },
+    {
+      "check": "ten_views_rendered",
+      "pass": true,
+      "detail": "orthographic, framing asserted per view"
+    }
+  ],
+  "all_pass": true,
+  "seconds": 147,
+  "not_checked": [
+    "in-engine lighting and walking (see the Unity report)",
+    "mobile frame rate (not measured)"
+  ]
+}

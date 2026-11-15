@@ -1,16 +1,18 @@
 # D2 神木：樹幹下段 + 板根 試做（高模，渲染用；之後烘焙成遊戲用低模）
 import bpy, bmesh, math, sys, random, numpy as np
+from pathlib import Path
 from mathutils import Vector, noise
 
-TEX = 'D:/chengtian/4-素材與快取/polyhaven-bark/'
-OUT = 'D:/chengtian/4-素材與快取/bark-sample/'
+HERE = Path(__file__).resolve().parent
+TEX = str(HERE / 'tex') + '/'
+OUT = str(HERE.parents[2] / 'previews' / 'core-d2-v1' / 'GT01_GodTree') + '/'
 SET = 'bark_brown_02'
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 TAG = ARGS[0] if ARGS else 'v1'
 QUICK = 'quick' in ARGS
 TILE = 2.6          # 一張掃描圖覆蓋的實際尺寸 (m)
 AMP = 0.16          # 掃描凹凸做進幾何的深度 (m)
-STEP = 0.10 if QUICK else 0.05
+STEP = 0.55 if 'game' in ARGS else (0.10 if QUICK else 0.05)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
 
@@ -76,7 +78,7 @@ def tube(name, pts, radius, flat, seed, rib=.22, twist=.12, NU=None, up_axis=Non
     NV = len(rings) - 1
     rmax = max((rpos(rings[k][0], k / NV) if rpos else radius(k / NV)) for k in range(0, NV + 1, max(1, NV // 20)))
     if NU is None:
-        NU = int(min(640, max(48, 2 * math.pi * rmax * max(1.0, (fpos(rings[0][0], 0) if fpos else flat(0))) / STEP * .8)))
+        NU = int(min(64, max(16, 2 * math.pi * rmax * 1.7))) if 'game' in ARGS else int(min(640, max(48, 2 * math.pi * rmax * max(1.0, (fpos(rings[0][0], 0) if fpos else flat(0))) / STEP * .8)))
     rep = max(1, round(2 * math.pi * rmax * .8 / TILE))
     bm = bmesh.new()
     uvl = bm.loops.layers.uv.new('UV')
@@ -130,6 +132,18 @@ def tube(name, pts, radius, flat, seed, rib=.22, twist=.12, NU=None, up_axis=Non
                 lp[uvl].uv = (rep if wrap else u, v)
                 lp[col] = M[kk][ii]
             f.smooth = True
+    if 'game' in ARGS:
+        # Close every game-mesh tube; most caps are buried inside the trunk or soil.
+        for row, center, reverse in ((V[0], rings[0][0], True), (V[-1], rings[-1][0], False)):
+            mid = bm.verts.new(center)
+            for i in range(NU):
+                j = (i + 1) % NU
+                tri = (row[j], row[i], mid) if reverse else (row[i], row[j], mid)
+                face = bm.faces.new(tri)
+                for loop, uv in zip(face.loops, ((.4, .4), (.6, .4), (.5, .6))):
+                    loop[uvl].uv = uv
+                    loop[col] = (0, .5, 0, 1)
+        bmesh.ops.reverse_faces(bm, faces=bm.faces)
     me = bpy.data.meshes.new(name)
     bm.to_mesh(me)
     bm.free()

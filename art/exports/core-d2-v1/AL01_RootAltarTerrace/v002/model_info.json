@@ -1,0 +1,224 @@
+{
+  "asset": "AL01_RootAltarTerrace",
+  "version": "v002",
+  "minTier": "standard",
+  "detailObjects": [
+    "AL01_RootAltarTerrace_Detail_Small"
+  ],
+  "name_zh": "樹根下祭壇台石",
+  "slot": "D2_AncientTree_RootAltar",
+  "note": "Stone offering terrace among the great tree roots in D2 (placement (7, 207); walking surface at z = 0.98 m above its base). Three steps on -Y, a plain empty round plinth. Walkable: terrace, steps and plinth are in the collision mesh; roots and growth are not.",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 152158,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD1": {
+      "triangles": 76078,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD2": {
+      "triangles": 22822,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    }
+  },
+  "texture_resolution_px": {
+    "AL01_RootAltarTerrace_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "AL01_RootAltarTerrace_Metallic.png": [
+      2048,
+      2048
+    ],
+    "AL01_RootAltarTerrace_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "AL01_RootAltarTerrace_Normal.png": [
+      2048,
+      2048
+    ],
+    "AL01_RootAltarTerrace_Roughness.png": [
+      2048,
+      2048
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "footprint centre of the terrace, bottom z = 0, front (steps) -Y",
+  "dimensions_m": [
+    9.7912,
+    9.7503,
+    1.9917
+  ],
+  "bounds_min_m": [
+    -4.2685,
+    -4.4503,
+    -0.1802
+  ],
+  "bounds_max_m": [
+    5.5227,
+    5.3,
+    1.8115
+  ],
+  "size_limit_m": [
+    10.4,
+    10.0,
+    2.2
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        9.6261,
+        8.8487,
+        1.8817
+      ],
+      "min": [
+        -4.2685,
+        -3.5487,
+        -0.0703
+      ],
+      "max": [
+        5.3576,
+        5.3,
+        1.8115
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        9.2177,
+        8.8416,
+        1.802
+      ],
+      "min": [
+        -3.695,
+        -4.4503,
+        -0.1802
+      ],
+      "max": [
+        5.5227,
+        4.3913,
+        1.6218
+      ]
+    }
+  },
+  "lods": {
+    "Main": {
+      "LOD0": 85510,
+      "LOD1": 42754,
+      "LOD2": 12826
+    },
+    "Detail_Small": {
+      "LOD0": 66648,
+      "LOD1": 33324,
+      "LOD2": 9996
+    }
+  },
+  "lod_totals": {
+    "LOD0": 152158,
+    "LOD1": 76078,
+    "LOD2": 22822
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_AL01_RootAltarTerrace_Main"
+  ],
+  "textures": [
+    "AL01_RootAltarTerrace_BaseColor.png",
+    "AL01_RootAltarTerrace_Metallic.png",
+    "AL01_RootAltarTerrace_MetallicSmoothness.png",
+    "AL01_RootAltarTerrace_Normal.png",
+    "AL01_RootAltarTerrace_Roughness.png"
+  ],
+  "texture_size_px": 2048,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_AL01_RootAltarTerrace_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "AL01_RootAltarTerrace_BaseColor.png",
+        "Normal": "AL01_RootAltarTerrace_Normal.png",
+        "MetallicSmoothness": "AL01_RootAltarTerrace_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "AL01_RootAltarTerrace_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "parts": {
+    "terrace_m": [
+      5.2,
+      5.2,
+      0.98
+    ],
+    "steps_top_z_m": [
+      0.3,
+      0.6,
+      0.9
+    ],
+    "step_width_m": 3.0,
+    "tread_m": 0.42,
+    "plinth_radius_height_m": [
+      0.62,
+      0.3
+    ],
+    "walk_surface_z_m": 0.98,
+    "plinth": "empty on purpose: no figure, no offerings, no writing"
+  },
+  "sockets_blender_xyz": {
+    "Socket_Plinth_Top": [
+      0.0,
+      0.15,
+      1.22
+    ]
+  },
+  "sockets_fbx_reimport_xyz": {
+    "Socket_Plinth_Top.001": [
+      0.0,
+      0.15,
+      1.22
+    ]
+  },
+  "fbx_objects": [
+    "AL01_RootAltarTerrace.001",
+    "AL01_RootAltarTerrace_Collision.001",
+    "AL01_RootAltarTerrace_Detail_Small_LOD0.001",
+    "AL01_RootAltarTerrace_Detail_Small_LOD1.001",
+    "AL01_RootAltarTerrace_Detail_Small_LOD2.001",
+    "AL01_RootAltarTerrace_LOD0.001",
+    "AL01_RootAltarTerrace_LOD1.001",
+    "AL01_RootAltarTerrace_LOD2.001",
+    "Socket_Plinth_Top.001"
+  ],
+  "glb": "AL01_RootAltarTerrace_v002.glb",
+  "interface": {},
+  "modeling_method": "procedural mesh construction (art/source/core-d2-v1/al_altar.py with village-houses-b cr_parts / fr_parts: chiselled blocks and slabs, lathed plinth, swept roots with Poly Haven bark_brown_02 scanned displacement); stone, scanned bark, moss and leaves baked to one 2048 atlas",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 69.9,
+        "median": 70.5,
+        "p90": 74.1,
+        "area_m2": 345.4
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": null,
+  "reference": "art/references/core-d2-v1/ (AI three-view core-d2-v1/AL01_RootAltarTerrace/turnaround; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-houses-unity/ (local Unity batch check, not committed)",
+  "based_on": "new piece for the D2 block design (docs/execution/world-plan/D2.md, missing-piece list)"
+}
