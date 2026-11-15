@@ -5,7 +5,10 @@ from mathutils import Vector
 BASE = 'D:/chengtian/4-素材與快取/bark-sample/godtree_base.py'
 src = open(BASE, encoding='utf-8').read()
 lib = src.split('# ---------------- 樹幹')[0]
-exec(compile(lib, BASE, 'exec'))          # tube(), fb(), MAT, R, objs, TAG/QUICK...
+exec(compile(lib, BASE, 'exec'))
+import os as _os
+NSEED = int(_os.environ.get('GT_NSEED', '4'))  # z1nnz 11/16 定版：種子 4 最接近他打勾的那張
+noise.seed_set(NSEED)          # tube(), fb(), MAT, R, objs, TAG/QUICK...
 
 tail = src[src.index('# ---------------- 地面'):]
 
@@ -125,13 +128,10 @@ for j in range(5):
     branch(f'Center{j}', tuple(p0), tuple(dv), R.uniform(16, 22), R.uniform(1.3, 1.8), 700 + j * 5, 2)
 
 # 頂端中間：兩條幾乎直立的長枝，撐起樹冠正中央的頂
-_Rmain = R
-R = random.Random(77)          # 用另一組亂數，不改動後面根的排列（z1nnz 選定的根）
 for j in range(3):
     az = R.uniform(0, 2 * math.pi)
     dv = Vector((math.cos(az) * .12, math.sin(az) * .12, 1)).normalized()
-    branch(f'Crown{j}', (math.cos(az) * 1.0, math.sin(az) * 1.0, ZS - 2), tuple(dv), R.uniform(30, 34), 1.3, 760 + j * 3, 1)
-R = _Rmain
+    branch(f'Crown{j}', (math.cos(az) * 1.0, math.sin(az) * 1.0, ZS - 2), tuple(dv), R.uniform(24, 28), 1.2, 760 + j * 3, 1)
 CENTER_TIPS = TIPS[_c0:]
 
 # 中心芯：補滿六股之間的洞（大多被遮住）
@@ -193,6 +193,7 @@ _argv = _sys.argv
 _sys.argv = ['x', '--', '.', '11']
 TG = {}
 exec(compile(_code, _TG, 'exec'), TG)
+TG['noise'].seed_set(NSEED)
 _sys.argv = _argv
 TG['LEAF_LEN'] = (.28, .40)
 TG['GOLD'] = (.30, .22, .05)
@@ -217,7 +218,7 @@ _zcut = _ztop[int(len(_ztop) * .7)]
 for k, (p0, dv, rr) in enumerate([t for t in CENTER_TIPS if t[0].z >= _zcut]):
     for m in range(3):
         d = Vector((dv.x * .4 + R.uniform(-.4, .4), dv.y * .4 + R.uniform(-.4, .4), 1.0)).normalized()
-        TG['grow'](p0, d, R.uniform(14, 19), .2, 1, 8000 + k * 7 + m)
+        TG['grow'](p0, d, R.uniform(12, 17), .2, 1, 8000 + k * 7 + m)
 wood = TG['tube_mesh']()
 wo = bpy.data.objects.new('CrownWood', wood)
 bpy.context.scene.collection.objects.link(wo)
