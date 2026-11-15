@@ -113,7 +113,7 @@ def tube(name, pts, radius, flat, seed, rib=.22, twist=.12, NU=None, up_axis=Non
             p = c + d3
             nrm = (side * math.cos(th) * fl + nu * math.sin(th)).normalized()
             mo = nrm.z * .55 + fb(p, .45, 3) * .65 + fb(p, 2.5, 3) * .30 - d * .5 - r2 * .25
-            mo = max(0, min(1, (mo - .50) / .20))
+            mo = max(0, min(1, (mo - .44) / .20))
             mo = mo * mo * (3 - 2 * mo)
             if cap_moss:
                 p += nrm * mo * .02
@@ -187,8 +187,8 @@ def bark_material():
     sep = N.new('ShaderNodeSeparateColor')
     Lk.new(vc.outputs['Color'], sep.inputs[0])
     hsv = N.new('ShaderNodeHueSaturation')
-    hsv.inputs['Saturation'].default_value = .55
-    hsv.inputs['Value'].default_value = 1.0
+    hsv.inputs['Saturation'].default_value = .5
+    hsv.inputs['Value'].default_value = 1.25
     Lk.new(dif.outputs[0], hsv.inputs['Color'])
     tint = mix('MULTIPLY', 1.0)
     tint.inputs[2].default_value = (1.0, .94, .86, 1)
@@ -206,7 +206,7 @@ def bark_material():
     nz = N.new('ShaderNodeTexNoise')
     nz.inputs['Scale'].default_value = 7
     nz.inputs['Detail'].default_value = 8
-    lr = ramp(.60, .66)
+    lr = ramp(.52, .60)
     Lk.new(nz.outputs[0], lr.inputs[0])
     lm = N.new('ShaderNodeMath')
     lm.operation = 'MULTIPLY'

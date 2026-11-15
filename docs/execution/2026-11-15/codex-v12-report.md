@@ -37,3 +37,9 @@ GT01 使用神木 v3 的六股主幹與板根輪廓、掃描位移幾何、三�
 3. GT01 碰撞只覆蓋樹幹，外伸板根的碰撞殼、完整貼圖打包（含 Unity MaskURP）、多角度線框與 1.75 m 可辨識尺度對照仍需補齊。沒有跑 Unity 匯入、編譯、手機效能或場景實測。
 
 目前應把 GT01 與 AL01 v002 視作**待美術審核的試作**。SR01 v003 已完成程式化管線檢查，但視覺接近度仍待 D2 同鏡位驗收。這份記錄不代表 D2 已完成，也不把 300 小時工作包算進本次成果。
+
+## 11/16 後續核對：合併神木 v3 定版
+
+- 再次執行 `git fetch origin art/core-1114-d2-altar-terrace`，將 `bb087e86` 合入本分支；Git 自動合併 `godtree_base.py` 與 `godtree_v3.py`。合併後依賴仍指向本倉庫的 `godtree_base.py`、`tree_gen.py`，沒有沿用上游提交中的本機絕對路徑。`GT_NSEED` 預設為 4，供 Blender noise 固定種子。既有的 BP01、AL01 本地未提交內容沒有納入。
+- 用 Blender 5.2.2 執行 `godtree_v3.py -- gt01-merged quick` 成功，取得 [`full`](../../../art/previews/core-d2-v1/GT01_GodTree/godtree3_gt01-merged_full.png) 與 [`base`](../../../art/previews/core-d2-v1/GT01_GodTree/godtree3_gt01-merged_base.png)。兩張是高模概念渲染；`full` 的樹冠和板根體量比舊 [`GT01_GodTree_hero.png`](../../../art/previews/core-d2-v1/GT01_GodTree/GT01_GodTree_hero.png) 更接近三視圖，但 `base` 可見木材接縫，光照偏暗，尚未通過美術驗收。
+- 現有 `GT01_GodTree_v001.fbx`、`.glb`、LOD 數字及 2K 圖仍來自較早的 `bake_godtree.py` 執行，不代表已套用 `bb087e86` 的種子 4 高模。`bake_godtree.py` 以 `exec` 載入 v3 的樹冠之前程式碼，另建稀疏葉卡；也不做 4K 唯一 UV 的高低模 Base Color／Normal／AO 烘焙。GT01 v002 仍未交付。
