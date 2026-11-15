@@ -220,7 +220,7 @@ for i in range(12):
     x = 25 * math.cos(angle)
     z = 200 + 24 * math.sin(angle)
     place("FR03_Dense" if i % 3 == 0 else "FR03_Sparse", x, z, i * 30,
-          "貼外圈根牆的藤簾，板根未交付前暫緩顯示", footprint=(2, .3, 3), forced_status="blocked")
+          "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代", footprint=(2, .3, 3), forced_status="blocked")
 for i in range(20):
     angle = i * 2.39996
     r = 15 + (i % 4) * 4
@@ -325,9 +325,101 @@ for name, x, z in [("root-west", -16, 194), ("root-east", 20, 201),
         ("MOSS_CLUMP", 4, .7, 1.2), ("MUSHROOM_BROWN", 4, .8, 1.2),
     ], "沿板根表面與根腳生長，需以實際模型接觸面校正", "outward")
 
+# 已有的缺件座標沿用，改用 11/15 正式工作包 ID；不增加重複定位。
+workpack_aliases = {
+    "ENTRY_ROOT_ARCH": "DR01", "ROOT_CAVITY": "DR04", "HOLLOW_LOG": "DR05",
+    "ROTTEN_LOG": "DR08", "BRANCH_PILE": "DR09", "BARK_PIECE": "DR12",
+    "PUDDLE": "DS03", "PIT_EARTH": "DS05", "UPHILL_STAIR": "DS09",
+    "MUSHROOM_BROWN": "DP01", "MUSHROOM_WHITE": "DP02",
+    "MOSS_CLUMP": "DP06", "TWIGS": "DP14", "LEAF_PILE": "DP19",
+}
+renumber = Counter()
+for placement in placements:
+    code = workpack_aliases.get(placement["modelCode"])
+    if code:
+        renumber[code] += 1
+        placement["id"] = f"D2_{code}_{renumber[code]:03}"
+        placement["modelCode"] = code
+        placement["model"] = asset(code)
+        placement["status"] = "missing"
+for group in clusters:
+    for item in group["items"]:
+        code = workpack_aliases.get(item["modelCode"])
+        if code:
+            item["modelCode"] = code
+            item["model"] = asset(code)
+            item["status"] = "missing"
+
 layout["placements"] = placements
 layout["clusters"] = clusters
 layout["clusterSeed"] = SEED
+# 11/15 的三份 300h 包是待交付清單。這些錨點只供模型到貨後細排，
+# 不算進 placements / clusters，也不會在 Unity 生成替代物。
+workpack_targets = {
+    "DR": [
+        ("DR01", 1, 10, 167, "南入口根拱；FR02 尺寸不足"),
+        ("DR02", 14, 0, 200, "空地外圈板根牆；保留南、西、東三個通道"),
+        ("DR03", None, 24, 211, "根牆斷口與交叉處"),
+        ("DR04", 2, -6, 207, "板根之間的根洞"),
+        ("DR05", 1, -34, 225, "外圈空心倒木"),
+        ("DR06", 4, -32, 175, "外圈倒伏巨木"),
+        ("DR07", 4, -31, 162, "外圈巨樹樁"),
+        ("DR08", 6, 31, 210, "林緣朽木"),
+        ("DR09", 12, 25, 196, "林緣斷枝堆"),
+        ("DR10", 3, -33, 182, "外圈枯立木"),
+        ("DR11", 2, -38, 202, "倒樹根盤，遠離主路"),
+        ("DR12", 20, 20, 201, "根腳與坑邊的樹皮片"),
+        ("DR13", None, -16, 194, "板根間 8 m 根網拼塊"),
+        ("DR14", None, 10, 173, "跨 2.2 m 泥路的根"),
+        ("DR15", 4, -24, 184, "FR01 三款與 FR02 的表面更新；不另加場景件"),
+        ("DR16", None, 10, 167, "FR03 立體葉更新；待 DR01/DR02 掛點"),
+    ],
+    "DS": [
+        ("DS01", None, -5, 158, "4 m 林床拼塊鋪地；須避開路與祭壇"),
+        ("DS02", None, 10, 157, "南北、東西三條 2.2 m 泥路"),
+        ("DS03", 10, 14, 183, "水窪泥邊；水面由程式製作"),
+        ("DS04", None, 10, 178, "SS01 半埋踏石帶；沿南路"),
+        ("DS05", 10, 14, 182, "CO01 坑緣翻土"),
+        ("DS06", 12, -29, 174, "外圈大型苔石"),
+        ("DS07", 30, -13, 190, "中型苔石"),
+        ("DS08", 6, 39, 209, "林緣岩露頭"),
+        ("DS09", 4, 38, 217, "往 D6 上坡石階"),
+        ("DS10", None, -27, 202, "外圈土坡模組"),
+        ("DS11", 30, 20, 207, "林下苔丘"),
+        ("DS12", None, -16, 194, "疊在板根上的苔被"),
+        ("DS13", 1, 7, 205, "AL01 祭壇地面收邊"),
+    ],
+    "DP": [
+        ("DP01", 64, 20, 201, "根腳褐蕈叢"),
+        ("DP02", 18, 14, 183, "苔與朽木上的白蕈叢"),
+        ("DP03", 30, -32, 175, "樹幹與朽木側的層狀菌"),
+        ("DP04", 20, 14, 183, "苔上小菇與黏菌"),
+        ("DP05", None, 14, 183, "蕈叢示範組；不另加場景件"),
+        ("DP06", 48, -13, 190, "石與根腳苔團"),
+        ("DP07", 60, 20, 201, "貼石與根的苔被片"),
+        ("DP08", 60, 10, 169, "南入口與坑緣的小蕨"),
+        ("DP09", 80, 14, 183, "DS01 上的林下地被"),
+        ("DP10", 40, 10, 167, "根拱與石邊垂藤"),
+        ("DP11", 30, 31, 214, "祭壇與東路莎草"),
+        ("DP12", 20, -27, 210, "外圈枯萎小灌叢"),
+        ("DP13", None, 20, 201, "石與樹皮上的地衣片"),
+        ("DP14", 60, 14, 183, "坑邊與南路細枯枝"),
+        ("DP15", 24, 25, 196, "林緣中斷枝"),
+        ("DP16", 40, 14, 183, "林床小樹皮片"),
+        ("DP17", 80, 10, 178, "林床與路邊碎石"),
+        ("DP18", 40, -5, 158, "林床落果"),
+        ("DP19", 32, 14, 183, "南路與坑邊落葉堆"),
+        ("DP20", 40, 14, 183, "坑邊半埋細根網"),
+        ("DP21", 12, -27, 210, "外圈小朽樹樁"),
+        ("DP22", 10, 14, 183, "DS03 水窪內濕葉與枝"),
+    ],
+}
+layout["workpackAssets"] = [
+    {"id": code, "status": "missing", "targetCount": count,
+     "anchor": {"x": x, "z": z}, "integrationNote": note}
+    for group in ("DR", "DS", "DP")
+    for code, count, x, z, note in workpack_targets[group]
+]
 layout["herbs"] = []
 layout["fortunes"] = []
 layout["checkpoints"] = []

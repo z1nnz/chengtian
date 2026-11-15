@@ -378,11 +378,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ENTRY_ROOT_ARCH_001",
+      "id": "D2_DR01_001",
       "zone": "d2-tree",
       "role": "南入口大根拱；現有 FR02 寬約 4.9 m、高約 3.5 m，需新做",
-      "modelCode": "ENTRY_ROOT_ARCH",
-      "model": "missing/D2/ENTRY_ROOT_ARCH.fbx",
+      "modelCode": "DR01",
+      "model": "missing/D2/DR01.fbx",
       "x": 10,
       "z": 167,
       "yaw": 0,
@@ -1098,11 +1098,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_HOLLOW_LOG_001",
+      "id": "D2_DR05_001",
       "zone": "d2-tree",
       "role": "外圈唯一空心倒木",
-      "modelCode": "HOLLOW_LOG",
-      "model": "missing/D2/HOLLOW_LOG.fbx",
+      "modelCode": "DR05",
+      "model": "missing/D2/DR05.fbx",
       "x": -34,
       "z": 225,
       "yaw": 38,
@@ -1600,7 +1600,7 @@
     {
       "id": "D2_FR03_Dense_001",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": 25.0,
@@ -1620,7 +1620,7 @@
     {
       "id": "D2_FR03_Sparse_001",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 21.65,
@@ -1640,7 +1640,7 @@
     {
       "id": "D2_FR03_Sparse_002",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 12.5,
@@ -1660,7 +1660,7 @@
     {
       "id": "D2_FR03_Dense_002",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": 0.0,
@@ -1680,7 +1680,7 @@
     {
       "id": "D2_FR03_Sparse_003",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -12.5,
@@ -1700,7 +1700,7 @@
     {
       "id": "D2_FR03_Sparse_004",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -21.65,
@@ -1720,7 +1720,7 @@
     {
       "id": "D2_FR03_Dense_003",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": -25.0,
@@ -1740,7 +1740,7 @@
     {
       "id": "D2_FR03_Sparse_005",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -21.65,
@@ -1760,7 +1760,7 @@
     {
       "id": "D2_FR03_Sparse_006",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": -12.5,
@@ -1780,7 +1780,7 @@
     {
       "id": "D2_FR03_Dense_004",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Dense",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Dense/FR03_VineCurtain_Dense_v001.fbx",
       "x": -0.0,
@@ -1800,7 +1800,7 @@
     {
       "id": "D2_FR03_Sparse_007",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 12.5,
@@ -1820,7 +1820,7 @@
     {
       "id": "D2_FR03_Sparse_008",
       "zone": "d2-tree",
-      "role": "貼外圈根牆的藤簾，板根未交付前暫緩顯示",
+      "role": "FR03 藤簾待 DR16 換立體葉，並須 DR01/DR02 正式掛點；不得掛在 FR01/FR02 暫代",
       "modelCode": "FR03_Sparse",
       "model": "art/exports/forest-roots-b/FR03_VineCurtain_Sparse/FR03_VineCurtain_Sparse_v001.fbx",
       "x": 21.65,
@@ -2238,11 +2238,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROTTEN_LOG_001",
+      "id": "D2_DR08_001",
       "zone": "d2-tree",
       "role": "長蕈苔的朽木",
-      "modelCode": "ROTTEN_LOG",
-      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "modelCode": "DR08",
+      "model": "missing/D2/DR08.fbx",
       "x": 32.34,
       "z": 206.56,
       "yaw": 0,
@@ -2258,11 +2258,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROTTEN_LOG_002",
+      "id": "D2_DR08_002",
       "zone": "d2-tree",
       "role": "長蕈苔的朽木",
-      "modelCode": "ROTTEN_LOG",
-      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "modelCode": "DR08",
+      "model": "missing/D2/DR08.fbx",
       "x": 10.49,
       "z": 231.29,
       "yaw": 59,
@@ -2278,11 +2278,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROTTEN_LOG_003",
+      "id": "D2_DR08_003",
       "zone": "d2-tree",
       "role": "長蕈苔的朽木",
-      "modelCode": "ROTTEN_LOG",
-      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "modelCode": "DR08",
+      "model": "missing/D2/DR08.fbx",
       "x": -21.85,
       "z": 224.73,
       "yaw": 118,
@@ -2298,11 +2298,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROTTEN_LOG_004",
+      "id": "D2_DR08_004",
       "zone": "d2-tree",
       "role": "長蕈苔的朽木",
-      "modelCode": "ROTTEN_LOG",
-      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "modelCode": "DR08",
+      "model": "missing/D2/DR08.fbx",
       "x": -32.34,
       "z": 193.44,
       "yaw": 177,
@@ -2318,11 +2318,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROTTEN_LOG_005",
+      "id": "D2_DR08_005",
       "zone": "d2-tree",
       "role": "長蕈苔的朽木",
-      "modelCode": "ROTTEN_LOG",
-      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "modelCode": "DR08",
+      "model": "missing/D2/DR08.fbx",
       "x": -10.49,
       "z": 168.71,
       "yaw": 236,
@@ -2338,11 +2338,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROTTEN_LOG_006",
+      "id": "D2_DR08_006",
       "zone": "d2-tree",
       "role": "長蕈苔的朽木",
-      "modelCode": "ROTTEN_LOG",
-      "model": "missing/D2/ROTTEN_LOG.fbx",
+      "modelCode": "DR08",
+      "model": "missing/D2/DR08.fbx",
       "x": 21.85,
       "z": 175.27,
       "yaw": 295,
@@ -2358,11 +2358,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_001",
+      "id": "D2_DR09_001",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": 26.75,
       "z": 208.27,
       "yaw": 0,
@@ -2378,11 +2378,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_002",
+      "id": "D2_DR09_002",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": 19.03,
       "z": 220.54,
       "yaw": 31,
@@ -2398,11 +2398,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_003",
+      "id": "D2_DR09_003",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": 6.21,
       "z": 227.3,
       "yaw": 62,
@@ -2418,11 +2418,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_004",
+      "id": "D2_DR09_004",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": -8.27,
       "z": 226.75,
       "yaw": 93,
@@ -2438,11 +2438,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_005",
+      "id": "D2_DR09_005",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": -20.54,
       "z": 219.03,
       "yaw": 124,
@@ -2458,11 +2458,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_006",
+      "id": "D2_DR09_006",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": -27.3,
       "z": 206.21,
       "yaw": 155,
@@ -2478,11 +2478,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_007",
+      "id": "D2_DR09_007",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": -26.75,
       "z": 191.73,
       "yaw": 186,
@@ -2498,11 +2498,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_008",
+      "id": "D2_DR09_008",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": -19.03,
       "z": 179.46,
       "yaw": 217,
@@ -2518,11 +2518,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_009",
+      "id": "D2_DR09_009",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": -6.21,
       "z": 172.7,
       "yaw": 248,
@@ -2538,11 +2538,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_010",
+      "id": "D2_DR09_010",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": 8.27,
       "z": 173.25,
       "yaw": 279,
@@ -2558,11 +2558,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_011",
+      "id": "D2_DR09_011",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": 20.54,
       "z": 180.97,
       "yaw": 310,
@@ -2578,11 +2578,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_BRANCH_PILE_012",
+      "id": "D2_DR09_012",
       "zone": "d2-tree",
       "role": "斷枝堆，林地邊緣",
-      "modelCode": "BRANCH_PILE",
-      "model": "missing/D2/BRANCH_PILE.fbx",
+      "modelCode": "DR09",
+      "model": "missing/D2/DR09.fbx",
       "x": 27.3,
       "z": 193.79,
       "yaw": 341,
@@ -4038,11 +4038,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_UPHILL_STAIR_001",
+      "id": "D2_DS09_001",
       "zone": "d2-tree",
       "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
-      "modelCode": "UPHILL_STAIR",
-      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "modelCode": "DS09",
+      "model": "missing/D2/DS09.fbx",
       "x": 32,
       "z": 213,
       "yaw": 65,
@@ -4058,11 +4058,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_UPHILL_STAIR_002",
+      "id": "D2_DS09_002",
       "zone": "d2-tree",
       "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
-      "modelCode": "UPHILL_STAIR",
-      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "modelCode": "DS09",
+      "model": "missing/D2/DS09.fbx",
       "x": 36,
       "z": 216,
       "yaw": 65,
@@ -4078,11 +4078,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_UPHILL_STAIR_003",
+      "id": "D2_DS09_003",
       "zone": "d2-tree",
       "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
-      "modelCode": "UPHILL_STAIR",
-      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "modelCode": "DS09",
+      "model": "missing/D2/DS09.fbx",
       "x": 40,
       "z": 218,
       "yaw": 65,
@@ -4098,11 +4098,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_UPHILL_STAIR_004",
+      "id": "D2_DS09_004",
       "zone": "d2-tree",
       "role": "通 D6 的不規則嵌土石階；需核對 SG 尺寸",
-      "modelCode": "UPHILL_STAIR",
-      "model": "missing/D2/UPHILL_STAIR.fbx",
+      "modelCode": "DS09",
+      "model": "missing/D2/DS09.fbx",
       "x": 44,
       "z": 219,
       "yaw": 65,
@@ -4118,11 +4118,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROOT_CAVITY_001",
+      "id": "D2_DR04_001",
       "zone": "d2-tree",
       "role": "根底樹洞口；應做進神木板根組",
-      "modelCode": "ROOT_CAVITY",
-      "model": "missing/D2/ROOT_CAVITY.fbx",
+      "modelCode": "DR04",
+      "model": "missing/D2/DR04.fbx",
       "x": -6,
       "z": 207,
       "yaw": 0,
@@ -4138,11 +4138,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_ROOT_CAVITY_002",
+      "id": "D2_DR04_002",
       "zone": "d2-tree",
       "role": "根底樹洞口；應做進神木板根組",
-      "modelCode": "ROOT_CAVITY",
-      "model": "missing/D2/ROOT_CAVITY.fbx",
+      "modelCode": "DR04",
+      "model": "missing/D2/DR04.fbx",
       "x": 18,
       "z": 215,
       "yaw": 0,
@@ -4158,11 +4158,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_001",
+      "id": "D2_DS03_001",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 6,
       "z": 173,
       "yaw": 0,
@@ -4178,11 +4178,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_002",
+      "id": "D2_DS03_002",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 15,
       "z": 176,
       "yaw": 41,
@@ -4198,11 +4198,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_003",
+      "id": "D2_DS03_003",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 18,
       "z": 181,
       "yaw": 82,
@@ -4218,11 +4218,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_004",
+      "id": "D2_DS03_004",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 12,
       "z": 188,
       "yaw": 123,
@@ -4238,11 +4238,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_005",
+      "id": "D2_DS03_005",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 4,
       "z": 194,
       "yaw": 164,
@@ -4258,11 +4258,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_006",
+      "id": "D2_DS03_006",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 20,
       "z": 201,
       "yaw": 205,
@@ -4278,11 +4278,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_007",
+      "id": "D2_DS03_007",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 14,
       "z": 211,
       "yaw": 246,
@@ -4298,11 +4298,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_008",
+      "id": "D2_DS03_008",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": -5,
       "z": 214,
       "yaw": 287,
@@ -4318,11 +4318,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_009",
+      "id": "D2_DS03_009",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 29,
       "z": 215,
       "yaw": 328,
@@ -4338,11 +4338,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PUDDLE_010",
+      "id": "D2_DS03_010",
       "zone": "d2-tree",
       "role": "林地淺水窪貼花，非河流",
-      "modelCode": "PUDDLE",
-      "model": "missing/D2/PUDDLE.fbx",
+      "modelCode": "DS03",
+      "model": "missing/D2/DS03.fbx",
       "x": 11,
       "z": 163,
       "yaw": 369,
@@ -4358,11 +4358,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_001",
+      "id": "D2_DS05_001",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 16.5,
       "z": 182.0,
       "yaw": 0,
@@ -4378,11 +4378,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_002",
+      "id": "D2_DS05_002",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 16.02,
       "z": 183.47,
       "yaw": 36,
@@ -4398,11 +4398,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_003",
+      "id": "D2_DS05_003",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 14.77,
       "z": 184.38,
       "yaw": 72,
@@ -4418,11 +4418,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_004",
+      "id": "D2_DS05_004",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 13.23,
       "z": 184.38,
       "yaw": 108,
@@ -4438,11 +4438,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_005",
+      "id": "D2_DS05_005",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 11.98,
       "z": 183.47,
       "yaw": 144,
@@ -4458,11 +4458,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_006",
+      "id": "D2_DS05_006",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 11.5,
       "z": 182.0,
       "yaw": 180,
@@ -4478,11 +4478,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_007",
+      "id": "D2_DS05_007",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 11.98,
       "z": 180.53,
       "yaw": 216,
@@ -4498,11 +4498,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_008",
+      "id": "D2_DS05_008",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 13.23,
       "z": 179.62,
       "yaw": 252,
@@ -4518,11 +4518,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_009",
+      "id": "D2_DS05_009",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 14.77,
       "z": 179.62,
       "yaw": 288,
@@ -4538,11 +4538,11 @@
       "author": "既有交付或待製作"
     },
     {
-      "id": "D2_PIT_EARTH_010",
+      "id": "D2_DS05_010",
       "zone": "d2-tree",
       "role": "坑邊翻土與斷根",
-      "modelCode": "PIT_EARTH",
-      "model": "missing/D2/PIT_EARTH.fbx",
+      "modelCode": "DS05",
+      "model": "missing/D2/DS05.fbx",
       "x": 16.02,
       "z": 180.53,
       "yaw": 324,
@@ -4677,24 +4677,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -4752,24 +4752,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -4827,24 +4827,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -4902,24 +4902,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -4977,24 +4977,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5052,24 +5052,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5127,24 +5127,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5202,24 +5202,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5277,24 +5277,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5352,24 +5352,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5427,24 +5427,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5502,24 +5502,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5577,24 +5577,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5652,24 +5652,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5727,24 +5727,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5802,24 +5802,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.3,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 2,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "LEAF_PILE",
-          "model": "missing/D2/LEAF_PILE.fbx",
+          "modelCode": "DP19",
+          "model": "missing/D2/DP19.fbx",
           "count": 2,
           "scaleMin": 0.8,
           "scaleMax": 1.4,
@@ -5877,8 +5877,8 @@
           "status": "needs-importer"
         },
         {
-          "modelCode": "MUSHROOM_WHITE",
-          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "modelCode": "DP02",
+          "model": "missing/D2/DP02.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -5893,8 +5893,8 @@
           "status": "missing"
         },
         {
-          "modelCode": "TWIGS",
-          "model": "missing/D2/TWIGS.fbx",
+          "modelCode": "DP14",
+          "model": "missing/D2/DP14.fbx",
           "count": 4,
           "scaleMin": 0.75,
           "scaleMax": 1.3,
@@ -5960,8 +5960,8 @@
           "status": "needs-importer"
         },
         {
-          "modelCode": "MUSHROOM_WHITE",
-          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "modelCode": "DP02",
+          "model": "missing/D2/DP02.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -5976,8 +5976,8 @@
           "status": "missing"
         },
         {
-          "modelCode": "TWIGS",
-          "model": "missing/D2/TWIGS.fbx",
+          "modelCode": "DP14",
+          "model": "missing/D2/DP14.fbx",
           "count": 4,
           "scaleMin": 0.75,
           "scaleMax": 1.3,
@@ -6043,8 +6043,8 @@
           "status": "needs-importer"
         },
         {
-          "modelCode": "MUSHROOM_WHITE",
-          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "modelCode": "DP02",
+          "model": "missing/D2/DP02.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -6059,8 +6059,8 @@
           "status": "missing"
         },
         {
-          "modelCode": "TWIGS",
-          "model": "missing/D2/TWIGS.fbx",
+          "modelCode": "DP14",
+          "model": "missing/D2/DP14.fbx",
           "count": 4,
           "scaleMin": 0.75,
           "scaleMax": 1.3,
@@ -6126,8 +6126,8 @@
           "status": "needs-importer"
         },
         {
-          "modelCode": "MUSHROOM_WHITE",
-          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "modelCode": "DP02",
+          "model": "missing/D2/DP02.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -6142,8 +6142,8 @@
           "status": "missing"
         },
         {
-          "modelCode": "TWIGS",
-          "model": "missing/D2/TWIGS.fbx",
+          "modelCode": "DP14",
+          "model": "missing/D2/DP14.fbx",
           "count": 4,
           "scaleMin": 0.75,
           "scaleMax": 1.3,
@@ -6209,8 +6209,8 @@
           "status": "needs-importer"
         },
         {
-          "modelCode": "MUSHROOM_WHITE",
-          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "modelCode": "DP02",
+          "model": "missing/D2/DP02.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -6225,8 +6225,8 @@
           "status": "missing"
         },
         {
-          "modelCode": "TWIGS",
-          "model": "missing/D2/TWIGS.fbx",
+          "modelCode": "DP14",
+          "model": "missing/D2/DP14.fbx",
           "count": 4,
           "scaleMin": 0.75,
           "scaleMax": 1.3,
@@ -6292,8 +6292,8 @@
           "status": "needs-importer"
         },
         {
-          "modelCode": "MUSHROOM_WHITE",
-          "model": "missing/D2/MUSHROOM_WHITE.fbx",
+          "modelCode": "DP02",
+          "model": "missing/D2/DP02.fbx",
           "count": 3,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -6308,8 +6308,8 @@
           "status": "missing"
         },
         {
-          "modelCode": "TWIGS",
-          "model": "missing/D2/TWIGS.fbx",
+          "modelCode": "DP14",
+          "model": "missing/D2/DP14.fbx",
           "count": 4,
           "scaleMin": 0.75,
           "scaleMax": 1.3,
@@ -6899,24 +6899,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "BARK_PIECE",
-          "model": "missing/D2/BARK_PIECE.fbx",
+          "modelCode": "DR12",
+          "model": "missing/D2/DR12.fbx",
           "count": 5,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 4,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 4,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -6942,24 +6942,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "BARK_PIECE",
-          "model": "missing/D2/BARK_PIECE.fbx",
+          "modelCode": "DR12",
+          "model": "missing/D2/DR12.fbx",
           "count": 5,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 4,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 4,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -6985,24 +6985,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "BARK_PIECE",
-          "model": "missing/D2/BARK_PIECE.fbx",
+          "modelCode": "DR12",
+          "model": "missing/D2/DR12.fbx",
           "count": 5,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 4,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 4,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -7028,24 +7028,24 @@
           "status": "missing"
         },
         {
-          "modelCode": "BARK_PIECE",
-          "model": "missing/D2/BARK_PIECE.fbx",
+          "modelCode": "DR12",
+          "model": "missing/D2/DR12.fbx",
           "count": 5,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MOSS_CLUMP",
-          "model": "missing/D2/MOSS_CLUMP.fbx",
+          "modelCode": "DP06",
+          "model": "missing/D2/DP06.fbx",
           "count": 4,
           "scaleMin": 0.7,
           "scaleMax": 1.2,
           "status": "missing"
         },
         {
-          "modelCode": "MUSHROOM_BROWN",
-          "model": "missing/D2/MUSHROOM_BROWN.fbx",
+          "modelCode": "DP01",
+          "model": "missing/D2/DP01.fbx",
           "count": 4,
           "scaleMin": 0.8,
           "scaleMax": 1.2,
@@ -7057,5 +7057,517 @@
       "note": "沿板根表面與根腳生長，需以實際模型接觸面校正"
     }
   ],
-  "clusterSeed": 1114
+  "clusterSeed": 1114,
+  "workpackAssets": [
+    {
+      "id": "DR01",
+      "status": "missing",
+      "targetCount": 1,
+      "anchor": {
+        "x": 10,
+        "z": 167
+      },
+      "integrationNote": "南入口根拱；FR02 尺寸不足"
+    },
+    {
+      "id": "DR02",
+      "status": "missing",
+      "targetCount": 14,
+      "anchor": {
+        "x": 0,
+        "z": 200
+      },
+      "integrationNote": "空地外圈板根牆；保留南、西、東三個通道"
+    },
+    {
+      "id": "DR03",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 24,
+        "z": 211
+      },
+      "integrationNote": "根牆斷口與交叉處"
+    },
+    {
+      "id": "DR04",
+      "status": "missing",
+      "targetCount": 2,
+      "anchor": {
+        "x": -6,
+        "z": 207
+      },
+      "integrationNote": "板根之間的根洞"
+    },
+    {
+      "id": "DR05",
+      "status": "missing",
+      "targetCount": 1,
+      "anchor": {
+        "x": -34,
+        "z": 225
+      },
+      "integrationNote": "外圈空心倒木"
+    },
+    {
+      "id": "DR06",
+      "status": "missing",
+      "targetCount": 4,
+      "anchor": {
+        "x": -32,
+        "z": 175
+      },
+      "integrationNote": "外圈倒伏巨木"
+    },
+    {
+      "id": "DR07",
+      "status": "missing",
+      "targetCount": 4,
+      "anchor": {
+        "x": -31,
+        "z": 162
+      },
+      "integrationNote": "外圈巨樹樁"
+    },
+    {
+      "id": "DR08",
+      "status": "missing",
+      "targetCount": 6,
+      "anchor": {
+        "x": 31,
+        "z": 210
+      },
+      "integrationNote": "林緣朽木"
+    },
+    {
+      "id": "DR09",
+      "status": "missing",
+      "targetCount": 12,
+      "anchor": {
+        "x": 25,
+        "z": 196
+      },
+      "integrationNote": "林緣斷枝堆"
+    },
+    {
+      "id": "DR10",
+      "status": "missing",
+      "targetCount": 3,
+      "anchor": {
+        "x": -33,
+        "z": 182
+      },
+      "integrationNote": "外圈枯立木"
+    },
+    {
+      "id": "DR11",
+      "status": "missing",
+      "targetCount": 2,
+      "anchor": {
+        "x": -38,
+        "z": 202
+      },
+      "integrationNote": "倒樹根盤，遠離主路"
+    },
+    {
+      "id": "DR12",
+      "status": "missing",
+      "targetCount": 20,
+      "anchor": {
+        "x": 20,
+        "z": 201
+      },
+      "integrationNote": "根腳與坑邊的樹皮片"
+    },
+    {
+      "id": "DR13",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": -16,
+        "z": 194
+      },
+      "integrationNote": "板根間 8 m 根網拼塊"
+    },
+    {
+      "id": "DR14",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 10,
+        "z": 173
+      },
+      "integrationNote": "跨 2.2 m 泥路的根"
+    },
+    {
+      "id": "DR15",
+      "status": "missing",
+      "targetCount": 4,
+      "anchor": {
+        "x": -24,
+        "z": 184
+      },
+      "integrationNote": "FR01 三款與 FR02 的表面更新；不另加場景件"
+    },
+    {
+      "id": "DR16",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 10,
+        "z": 167
+      },
+      "integrationNote": "FR03 立體葉更新；待 DR01/DR02 掛點"
+    },
+    {
+      "id": "DS01",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": -5,
+        "z": 158
+      },
+      "integrationNote": "4 m 林床拼塊鋪地；須避開路與祭壇"
+    },
+    {
+      "id": "DS02",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 10,
+        "z": 157
+      },
+      "integrationNote": "南北、東西三條 2.2 m 泥路"
+    },
+    {
+      "id": "DS03",
+      "status": "missing",
+      "targetCount": 10,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "水窪泥邊；水面由程式製作"
+    },
+    {
+      "id": "DS04",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 10,
+        "z": 178
+      },
+      "integrationNote": "SS01 半埋踏石帶；沿南路"
+    },
+    {
+      "id": "DS05",
+      "status": "missing",
+      "targetCount": 10,
+      "anchor": {
+        "x": 14,
+        "z": 182
+      },
+      "integrationNote": "CO01 坑緣翻土"
+    },
+    {
+      "id": "DS06",
+      "status": "missing",
+      "targetCount": 12,
+      "anchor": {
+        "x": -29,
+        "z": 174
+      },
+      "integrationNote": "外圈大型苔石"
+    },
+    {
+      "id": "DS07",
+      "status": "missing",
+      "targetCount": 30,
+      "anchor": {
+        "x": -13,
+        "z": 190
+      },
+      "integrationNote": "中型苔石"
+    },
+    {
+      "id": "DS08",
+      "status": "missing",
+      "targetCount": 6,
+      "anchor": {
+        "x": 39,
+        "z": 209
+      },
+      "integrationNote": "林緣岩露頭"
+    },
+    {
+      "id": "DS09",
+      "status": "missing",
+      "targetCount": 4,
+      "anchor": {
+        "x": 38,
+        "z": 217
+      },
+      "integrationNote": "往 D6 上坡石階"
+    },
+    {
+      "id": "DS10",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": -27,
+        "z": 202
+      },
+      "integrationNote": "外圈土坡模組"
+    },
+    {
+      "id": "DS11",
+      "status": "missing",
+      "targetCount": 30,
+      "anchor": {
+        "x": 20,
+        "z": 207
+      },
+      "integrationNote": "林下苔丘"
+    },
+    {
+      "id": "DS12",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": -16,
+        "z": 194
+      },
+      "integrationNote": "疊在板根上的苔被"
+    },
+    {
+      "id": "DS13",
+      "status": "missing",
+      "targetCount": 1,
+      "anchor": {
+        "x": 7,
+        "z": 205
+      },
+      "integrationNote": "AL01 祭壇地面收邊"
+    },
+    {
+      "id": "DP01",
+      "status": "missing",
+      "targetCount": 64,
+      "anchor": {
+        "x": 20,
+        "z": 201
+      },
+      "integrationNote": "根腳褐蕈叢"
+    },
+    {
+      "id": "DP02",
+      "status": "missing",
+      "targetCount": 18,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "苔與朽木上的白蕈叢"
+    },
+    {
+      "id": "DP03",
+      "status": "missing",
+      "targetCount": 30,
+      "anchor": {
+        "x": -32,
+        "z": 175
+      },
+      "integrationNote": "樹幹與朽木側的層狀菌"
+    },
+    {
+      "id": "DP04",
+      "status": "missing",
+      "targetCount": 20,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "苔上小菇與黏菌"
+    },
+    {
+      "id": "DP05",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "蕈叢示範組；不另加場景件"
+    },
+    {
+      "id": "DP06",
+      "status": "missing",
+      "targetCount": 48,
+      "anchor": {
+        "x": -13,
+        "z": 190
+      },
+      "integrationNote": "石與根腳苔團"
+    },
+    {
+      "id": "DP07",
+      "status": "missing",
+      "targetCount": 60,
+      "anchor": {
+        "x": 20,
+        "z": 201
+      },
+      "integrationNote": "貼石與根的苔被片"
+    },
+    {
+      "id": "DP08",
+      "status": "missing",
+      "targetCount": 60,
+      "anchor": {
+        "x": 10,
+        "z": 169
+      },
+      "integrationNote": "南入口與坑緣的小蕨"
+    },
+    {
+      "id": "DP09",
+      "status": "missing",
+      "targetCount": 80,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "DS01 上的林下地被"
+    },
+    {
+      "id": "DP10",
+      "status": "missing",
+      "targetCount": 40,
+      "anchor": {
+        "x": 10,
+        "z": 167
+      },
+      "integrationNote": "根拱與石邊垂藤"
+    },
+    {
+      "id": "DP11",
+      "status": "missing",
+      "targetCount": 30,
+      "anchor": {
+        "x": 31,
+        "z": 214
+      },
+      "integrationNote": "祭壇與東路莎草"
+    },
+    {
+      "id": "DP12",
+      "status": "missing",
+      "targetCount": 20,
+      "anchor": {
+        "x": -27,
+        "z": 210
+      },
+      "integrationNote": "外圈枯萎小灌叢"
+    },
+    {
+      "id": "DP13",
+      "status": "missing",
+      "targetCount": null,
+      "anchor": {
+        "x": 20,
+        "z": 201
+      },
+      "integrationNote": "石與樹皮上的地衣片"
+    },
+    {
+      "id": "DP14",
+      "status": "missing",
+      "targetCount": 60,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "坑邊與南路細枯枝"
+    },
+    {
+      "id": "DP15",
+      "status": "missing",
+      "targetCount": 24,
+      "anchor": {
+        "x": 25,
+        "z": 196
+      },
+      "integrationNote": "林緣中斷枝"
+    },
+    {
+      "id": "DP16",
+      "status": "missing",
+      "targetCount": 40,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "林床小樹皮片"
+    },
+    {
+      "id": "DP17",
+      "status": "missing",
+      "targetCount": 80,
+      "anchor": {
+        "x": 10,
+        "z": 178
+      },
+      "integrationNote": "林床與路邊碎石"
+    },
+    {
+      "id": "DP18",
+      "status": "missing",
+      "targetCount": 40,
+      "anchor": {
+        "x": -5,
+        "z": 158
+      },
+      "integrationNote": "林床落果"
+    },
+    {
+      "id": "DP19",
+      "status": "missing",
+      "targetCount": 32,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "南路與坑邊落葉堆"
+    },
+    {
+      "id": "DP20",
+      "status": "missing",
+      "targetCount": 40,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "坑邊半埋細根網"
+    },
+    {
+      "id": "DP21",
+      "status": "missing",
+      "targetCount": 12,
+      "anchor": {
+        "x": -27,
+        "z": 210
+      },
+      "integrationNote": "外圈小朽樹樁"
+    },
+    {
+      "id": "DP22",
+      "status": "missing",
+      "targetCount": 10,
+      "anchor": {
+        "x": 14,
+        "z": 183
+      },
+      "integrationNote": "DS03 水窪內濕葉與枝"
+    }
+  ]
 }

@@ -130,7 +130,10 @@ namespace YunJing
                 Check("qi post offers breathing", (foraging.Prompt(walker.transform.position) ?? "").Contains("引氣呼吸"));
                 foraging.TryInteract(walker.transform.position, out _);
                 Check("breathing drill starts and holds the walker", training.Breath != null && training.Frozen);
-                yield return Frames(30);
+                // The player can run well above 60 fps; 30 frames may be less than 0.1 s.
+                float breathDeadline = Time.realtimeSinceStartup + 3f;
+                while (training.Breath != null && training.Breath.Elapsed <= -1.4 && Time.realtimeSinceStartup < breathDeadline)
+                    yield return null;
                 Check("breathing guide advances", training.Breath != null && training.Breath.Elapsed > -1.4);
                 training.End();
                 Teleport(walker, training.blockPost.position + training.blockPost.forward * -1.1f);
@@ -312,7 +315,11 @@ namespace YunJing
                         yield return Frames(5);
                         Check("the room door leads out to the yard", (indoorForaging.Prompt(walker.transform.position) ?? "").Contains("院子"));
                         indoorForaging.TryInteract(walker.transform.position, out _);
-                        yield return new WaitForSecondsRealtime(1.4f);
+                        // Scene streaming and the teleport complete on different frames.
+                        float doorDeadline = Time.realtimeSinceStartup + 5f;
+                        while (Vector3.Distance(walker.transform.position, inside.houseDoor.position) >= 1.5f && Time.realtimeSinceStartup < doorDeadline)
+                            yield return null;
+                        yield return Frames(2);
                         Check($"out in front of the house (at {walker.transform.position}, door {inside.houseDoor.position})", Vector3.Distance(walker.transform.position, inside.houseDoor.position) < 1.5f);
                         Check("the house door leads in", (indoorForaging.Prompt(walker.transform.position) ?? "").Contains("進屋"));
                     }
@@ -351,9 +358,16 @@ namespace YunJing
                             yardPrompt.Contains("武技格擋") || (yardLesson != null && yardPrompt == yardLesson.PromptText));
                     }
                     Teleport(walker, inside.exitDoor.position);
-                    yield return Frames(5);
-                    indoorForaging.TryInteract(walker.transform.position, out _);
-                    yield return new WaitForSecondsRealtime(2.5f);
+                    float fadeDeadline = Time.realtimeSinceStartup + 5f;
+                    while (QingxiSceneFade.Busy && Time.realtimeSinceStartup < fadeDeadline)
+                        yield return null;
+                    Check("exit gate offers village return", (indoorForaging.Prompt(walker.transform.position) ?? "").Contains("青溪村"));
+                    Check("exit gate accepts village return", indoorForaging.TryInteract(walker.transform.position, out _));
+                    float exitDeadline = Time.realtimeSinceStartup + 10f;
+                    while (Time.realtimeSinceStartup < exitDeadline &&
+                           (SceneManager.GetActiveScene().name != home || QingxiFirstPerson.Current == null ||
+                            Vector3.Distance(QingxiFirstPerson.Current.transform.position, lodgingDoor) >= 1.5f))
+                        yield return null;
                     walker = QingxiFirstPerson.Current;
                     foraging = walker.GetComponent<QingxiLocalForaging>();
                     Check($"back outside the lodging (at {walker.transform.position}, door {lodgingDoor})", SceneManager.GetActiveScene().name == home && Vector3.Distance(walker.transform.position, lodgingDoor) < 1.5f);

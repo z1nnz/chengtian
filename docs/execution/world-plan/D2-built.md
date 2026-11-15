@@ -2,6 +2,10 @@
 
 2026-11-15。施工資料以 [`D2.json`](../../../tools/qingxi-terrain/blocks/D2.json) 為準；六張設定圖在 `art/references/blocks/D2/`。A 佈局已由 `08bdad63` 提交。本文件記錄 B 整合的實際驗證結果，不把缺件定位算作已顯示的物件。
 
+11/15 工作包的 DR01–DR16、DS01–DS13、DP01–DP22 已登記在 `D2.json` 的 `workpackAssets`（共 51 個 ID，狀態皆為 `missing`）。錨點是交件後細排的起點，**不算場景實例**；原有缺件中 14 種改用正式 ID，總定位仍為 1,098 件。DR15 是舊根件換表面，DP05 是蕈叢擺放示範，不能各自當成一件新模型。FR03 的 12 個定位仍為 `blocked`：待 DR01／DR02 有實際掛點、DR16 換成立體小葉後才可解除，不掛到舊 FR01／FR02 上湊數。
+
+v12 重建 Windows 玩家後，場景生成維持 886 個聚落展開件與 1,098 個總定位；修正 smoke 的轉場等待後，`--abc-smoke` 連續兩次 PASS，最終 `--keyart-shots` 退出碼 0，六張並排圖已重拍。畫面仍缺主體及林床層次，外觀驗收未過。詳見 [`codex-v12-report.md`](codex-v12-report.md)。
+
 ## 六項檢查
 
 | 項目 | 結果 | 證據與待辦 |
