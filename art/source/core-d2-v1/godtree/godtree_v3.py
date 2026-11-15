@@ -116,12 +116,15 @@ for i, limb in enumerate(LIMBS):
         branch(f'Br{i}_{j}', tuple(p0), tuple(dv), R.uniform(10, 16), rr, 500 + i * 11 + j, 1)
 
 # 中央往上的枝：補滿樹冠中間（樹幹正上方）
+_c0 = len(TIPS)
 for j in range(5):
     az = j * 2 * math.pi / 5 + R.uniform(-.3, .3)
     tilt = R.uniform(.25, .6)
     dv = Vector((math.cos(az) * tilt, math.sin(az) * tilt, 1)).normalized()
     p0 = Vector((math.cos(az) * 1.5, math.sin(az) * 1.5, ZS - 3))
     branch(f'Center{j}', tuple(p0), tuple(dv), R.uniform(16, 22), R.uniform(1.3, 1.8), 700 + j * 5, 2)
+
+CENTER_TIPS = TIPS[_c0:]
 
 # 中心芯：補滿六股之間的洞（大多被遮住）
 objs.append(tube('Core', [(0, 0, -1.5), (0, 0, 10), (.2, 0, 20), (.3, .1, ZS - 4)],
@@ -200,6 +203,11 @@ for k, (p0, dv, rr) in enumerate(TIPS):
     TG['grow'](p0, d, R.uniform(13, 19), max(.12, min(rr, .35)), 1, 1000 + k)
     d2 = Vector((d.x + R.uniform(-.6, .6), d.y + R.uniform(-.6, .6), d.z - .35)).normalized()
     TG['grow'](p0, d2, R.uniform(9, 14), max(.1, min(rr, .3)), 1, 5000 + k)
+# 頂端補圓：中央枝的枝梢再往上長一層
+for k, (p0, dv, rr) in enumerate(CENTER_TIPS):
+    for m in range(2):
+        d = Vector((dv.x * .4 + R.uniform(-.4, .4), dv.y * .4 + R.uniform(-.4, .4), 1.0)).normalized()
+        TG['grow'](p0, d, R.uniform(12, 17), .2, 1, 8000 + k * 7 + m)
 wood = TG['tube_mesh']()
 wo = bpy.data.objects.new('CrownWood', wood)
 bpy.context.scene.collection.objects.link(wo)
