@@ -124,6 +124,14 @@ for j in range(5):
     p0 = Vector((math.cos(az) * 1.5, math.sin(az) * 1.5, ZS - 3))
     branch(f'Center{j}', tuple(p0), tuple(dv), R.uniform(16, 22), R.uniform(1.3, 1.8), 700 + j * 5, 2)
 
+# 頂端中間：兩條幾乎直立的長枝，撐起樹冠正中央的頂
+_Rmain = R
+R = random.Random(77)          # 用另一組亂數，不改動後面根的排列（z1nnz 選定的根）
+for j in range(3):
+    az = R.uniform(0, 2 * math.pi)
+    dv = Vector((math.cos(az) * .12, math.sin(az) * .12, 1)).normalized()
+    branch(f'Crown{j}', (math.cos(az) * 1.0, math.sin(az) * 1.0, ZS - 2), tuple(dv), R.uniform(30, 34), 1.3, 760 + j * 3, 1)
+R = _Rmain
 CENTER_TIPS = TIPS[_c0:]
 
 # 中心芯：補滿六股之間的洞（大多被遮住）
@@ -204,10 +212,12 @@ for k, (p0, dv, rr) in enumerate(TIPS):
     d2 = Vector((d.x + R.uniform(-.6, .6), d.y + R.uniform(-.6, .6), d.z - .35)).normalized()
     TG['grow'](p0, d2, R.uniform(9, 14), max(.1, min(rr, .3)), 1, 5000 + k)
 # 頂端補圓：中央枝的枝梢再往上長一層
-for k, (p0, dv, rr) in enumerate(CENTER_TIPS):
-    for m in range(2):
+_ztop = sorted(t[0].z for t in CENTER_TIPS)
+_zcut = _ztop[int(len(_ztop) * .7)]
+for k, (p0, dv, rr) in enumerate([t for t in CENTER_TIPS if t[0].z >= _zcut]):
+    for m in range(3):
         d = Vector((dv.x * .4 + R.uniform(-.4, .4), dv.y * .4 + R.uniform(-.4, .4), 1.0)).normalized()
-        TG['grow'](p0, d, R.uniform(12, 17), .2, 1, 8000 + k * 7 + m)
+        TG['grow'](p0, d, R.uniform(14, 19), .2, 1, 8000 + k * 7 + m)
 wood = TG['tube_mesh']()
 wo = bpy.data.objects.new('CrownWood', wood)
 bpy.context.scene.collection.objects.link(wo)
