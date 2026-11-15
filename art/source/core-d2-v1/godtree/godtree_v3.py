@@ -12,23 +12,7 @@ tail = src[src.index('# ---------------- 地面'):]
 
 def gh(x, y):
     rr = math.hypot(x, y)
-    return fb((x, y, 0), .04, 3) * .9 + fb((x, y, 1), .5, 3) * .08 + 4.2 * max(0, 1 - rr / 27) ** 1.5
-
-
-BERM = 0.0  # 堆土埂會把根蓋太多（z1nnz 11/16：埋太多），先關掉
-
-
-def gh_ground(x, y):
-    """地面：在每股板根埋進土裡的那一段堆起土埂，把根的收尾蓋住。"""
-    z = gh(x, y)
-    d = math.hypot(x, y)
-    if 9 < d < 36:
-        ph = math.atan2(y, x)
-        for a in strand_ang:
-            da = (ph - a + math.pi) % (2 * math.pi) - math.pi
-            w = math.exp(-((da * d) / 2.6) ** 2) * math.exp(-((d - 22) / 7) ** 2)
-            z += BERM * w
-    return z
+    return fb((x, y, 0), .04, 3) * .9 + fb((x, y, 1), .5, 3) * .08 + 2.2 * max(0, 1 - rr / 24) ** 1.6
 
 
 def clamp(v, a=0.0, b=1.0):
@@ -63,7 +47,7 @@ def strand_f(c, t):
     if c.z > ZS - 1.5:
         return 1.0
     w = _ss((d - 6.8) / 6.0)
-    return 1 + .55 * w * clamp((20 - d) / 8)
+    return 1 + 1.0 * w * clamp((20 - d) / 8)
 
 
 LIMBS = []
@@ -71,10 +55,10 @@ TIPS = []
 for i, a in enumerate(strand_ang):
     pts = []
     # 根端（地下）→ 拱起的板根 → 緩緩轉上來接樹幹（轉彎半徑要大於股粗，否則會摺疊）
-    L = R.uniform(24, 32)
+    L = R.uniform(32, 42)
     w = R.uniform(-1, 1)
-    arch = R.uniform(.5, 1.5)
-    for d, zf in [(L, -2.0), (L * .8, -.4), (L * .64, arch * .55 - .3), (21, arch + .3), (16.5, arch + 2.1), (12.5, 5.0), (9.4, 8.3), (7.4, 12.0)]:
+    arch = R.uniform(3.0, 5.5)
+    for d, zf in [(L, -1.6), (L * .8, .2), (L * .62, arch * .7), (L * .47, arch), (16, arch + 1.6), (12.5, 4.6), (9.6, 7.6), (7.6, 11.0)]:
         aa = a + w * .10 * (d / L)
         x, y = d * math.cos(aa), d * math.sin(aa)
         pts.append((x, y, gh(x, y) + zf))
@@ -157,7 +141,7 @@ def snake(name, a, L, thick, start, seed, wig=1.2, z0=None, arch=0.0):
         t = k / N
         ww = (math.sin(t * 5.0 + seed) * (.2 + t) + fb((seed, t * 3, 0), 1, 2)) * wig * min(1, t * 4)
         p = dirv * (start + L * t) + perp * ww
-        zs = gh(p.x, p.y) - rad(t) * .37 + arch * math.sin(math.pi * clamp((t - .15) / .5)) * (t < .65)
+        zs = gh(p.x, p.y) + rad(t) * .3 + arch * math.sin(math.pi * clamp((t - .15) / .5)) * (t < .65)
         if z0 is not None and t < .2:
             zs = z0 * (1 - t / .2) + zs * (t / .2)
         if z0 is None and t < .15:
@@ -168,16 +152,16 @@ def snake(name, a, L, thick, start, seed, wig=1.2, z0=None, arch=0.0):
     return tube(name, pts, radius=rad, flat=lambda t: 1.0 + .6 * max(0, 1 - t / .25) ** 2, seed=seed, rib=.22, twist=.07)
 
 
-for n in range(12):
+for n in range(20):
     a = strand_ang[n % NS] + math.pi / NS + R.uniform(-.25, .25) if n < NS else R.uniform(0, 2 * math.pi)
     L = R.uniform(20, 36)
     th = R.uniform(1.0, 2.0)
-    objs.append(snake(f'Root{n}', a, L, th, start=11.5, seed=300 + n, z0=1.2, arch=R.choice([0, .2, .45, .8])))
-    for f in range(1):
+    objs.append(snake(f'Root{n}', a, L, th, start=10.5, seed=300 + n, z0=3.2, arch=R.choice([0, .8, 1.6, 2.6])))
+    for f in range(2):
         st = 10.5 + L * R.uniform(.3, .6)
         fa = a + R.choice([-1, 1]) * R.uniform(.35, .8)
         objs.append(snake(f'Root{n}f{f}', fa, R.uniform(8, 15), th * R.uniform(.3, .45), start=st, seed=330 + n * 3 + f))
-for n in range(12):
+for n in range(40):
     a = R.uniform(0, 2 * math.pi)
     objs.append(snake(f'Small{n}', a, R.uniform(6, 13), R.uniform(.18, .4), start=R.uniform(12, 30), seed=400 + n))
 
@@ -234,7 +218,6 @@ print('TRIS', sum(len(o.data.polygons) * 2 for o in objs))
 tail = tail.replace("primitive_grid_add(x_subdivisions=300, y_subdivisions=300, size=90)", "primitive_grid_add(x_subdivisions=500, y_subdivisions=500, size=200)")
 tail = tail.replace("primitive_grid_add(x_subdivisions=400, y_subdivisions=400, size=130)", "primitive_grid_add(x_subdivisions=500, y_subdivisions=500, size=200)")
 tail = tail.replace("fog.scale = (160, 160, 50)", "fog.scale = (240, 240, 90)").replace("vol.inputs['Density'].default_value = .0055", "vol.inputs['Density'].default_value = .0013")
-tail = tail.replace('v.co.z = gh(p.x, p.y)', 'v.co.z = gh_ground(p.x, p.y)')
 cam_part = tail[tail.index('# 1.75 m 人形尺'):]
 tail = tail[:tail.index('# 1.75 m 人形尺')]
 exec(compile(tail, BASE, 'exec'))
