@@ -1,0 +1,17 @@
+Tool: Codex CLI image generation (no negative-prompt field, so 5.3 is appended after 'Avoid:').
+Aspect: landscape 3:2 (at least 1536 px wide)
+Layout block: single
+
+Three-view orthographic turnaround sheet (front, side, top) of a single mature Chinese mountain maple tree (acer, autumn) about 10 m tall: a sturdy grey-brown trunk about 0.4 m across with a slight lean and gentle S-curve, splitting at about 2.5 m into four to six unequal ascending limbs, asymmetric; many layers of fine twigs spreading in broad, slightly tiered horizontal sprays, the canopy wide and irregular with clear gaps where limbs and sky show through, not a ball; small five-lobed palmate leaves in subdued deep autumn colours: dark ochre red, rust red and brownish crimson, a few dull orange at the sunlit top, darker maroon inside and below; no bright scarlet. Rural southern Chinese mountain village by a clear stream; muted natural colours, realistic proportions, real-world scale. Show only this one tree with a small patch of ground; no shrine, no lanterns, no fence, no buildings, no writing. Layout: front view, side view and back view side by side in one image, all at the same scale and aligned on the same ground line, orthographic (no perspective), centred, full object visible with margin around it, plain light warm-grey background, even soft studio lighting so shapes and materials read clearly, no cast shadows on the background, one object only. Art direction: stylized hand-painted 3D game art for an Eastern xianxia fantasy world (Chinese immortal-cultivation setting), warm golden morning light from a low sun, soft warm rim light on edges and silhouettes, gentle blue-violet shadows (never pure black), layered soft white mist in the distance, painterly textures made of large soft colour gradients with a few visible brush strokes, rich but natural colour palette (sunlit warm yellow-greens, cool teal shade greens, warm grey stone, aged brown timber, blue-grey roof tiles, turquoise water), lived-in details: wear on edges, moss and soil in the joints, patched and repaired parts, small cracks, weathered wood grain, high level of detail with clear readable shapes and a strong silhouette, real-world scale and proportions, cohesive with a hand-painted xianxia valley village, game-ready asset look, high quality, masterpiece. Avoid: photorealistic, photograph, photo texture, scanned texture, realistic PBR, plastic, glossy, shiny, chrome, pure black shadows, harsh contrast, neon colours, oversaturated, flat lighting, noon lighting, modern objects, cars, wires, concrete, glass windows, text, letters, Chinese characters, signature, logo, UI, watermark, frame, border, anime screenshot, cel-shaded flat colour, Genshin Impact, Mihoyo, copy of an existing game asset, blocky low-poly, voxel, cartoon chibi, noisy texture, blurry, low resolution, cropped, cut off, duplicate objects, extra limbs, floating parts, distorted perspective, fisheye, Japanese garden style, bonsai, topiary, round ball-shaped crown, crown made of several balls, leaf clumps, flat leaf cards, symmetric mirrored branches, branches all the same thickness, straight vertical pole trunk, fluorescent neon green, glossy plastic leaves, cartoon lollipop tree, flowers, lettering, lanterns, people
+
+（Codex 一次出了 8 張，全部保留。）
+
+選用：option 3
+理由：
+- 樹冠寬而不規則，枝梢一層一層水平展開，層和層之間看得到枝和天空，符合工作包「細枝多層」和世界樹指南的負空間。
+- 樹幹微斜、在 2.5 m 左右分成幾支不等長的上升主枝，左右不對稱。
+- 顏色以暗赭紅、鏽紅為主，只有頂端受光處偏橘，最接近工作包「紅要沉」。
+建模時的差異：
+- 掌狀五裂葉在遊戲距離看不出裂片，模型用寬的五頂點葉（寬約等於長），輪廓點放在葉長 55% 處，看起來像寬掌形。
+- 顏色照工作包再壓暗一點：頂端的橘改成暗橘褐。
+- 地面的草和落葉不做。

@@ -66,11 +66,12 @@ for sid in args:
         s = Image.open(std).convert('RGB'); s = s.crop((int(s.width * .06), int(s.height * .28), int(s.width * .94), int(s.height * .56)))
         views = [crop_alpha_free(img(f'{main}_{v}')) for v in ('left35', 'front', 'right35')]
         stack([row([s], 620, ['標準：天空島世界樹']), row(views, 620, [f'{main} 左 35°', f'{main} 正面', f'{main} 右 35°'])]).save(PV / f'{sid}_vs_standard.jpg', quality=88)
-    ref = REF / sid / f'{sid}_option1.png'
+    pick = {'TR04': 3, 'TR06': 1, 'TR07': 2, 'TR08': 1, 'TR09': 5}.get(sid, 1)   # the picked three-view (art/references/<ID>/prompt.txt)
+    ref = REF / sid / f'{sid}_option{pick}.png'
     if ref.exists():
         r = Image.open(ref)
         views = [crop_alpha_free(img(f'{main}_{v}')) for v in ('front', 'side', 'right35')]
-        stack([row([r], 520, ['三視圖 option 1（正、側、背）']), row(views, 520, [f'{main} 正面', f'{main} 側面', f'{main} 右 35°'])]).save(PV / f'{sid}_ref_vs_model.jpg', quality=88)
+        stack([row([r], 520, [f'三視圖 option {pick}']), row(views, 520, [f'{main} 正面', f'{main} 側面', f'{main} 右 35°'])]).save(PV / f'{sid}_ref_vs_model.jpg', quality=88)
     stack([row([Image.open(PV / f'{v}_silhouette_{k}.png') for k in ('front', 'left35', 'right35')], 420, [f'{v} 正面', '左 35°', '右 35°']) for v in vs]).save(PV / f'{sid}_silhouettes.jpg', quality=88)
     row([crop_alpha_free(img(f'{v}_front')) for v in vs], 640, [f'{v}（正面）' for v in vs]).save(PV / f'{sid}_variants.jpg', quality=88)
     print(sid, 'sheets written for', vs)

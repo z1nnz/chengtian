@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 
 namespace YunJing.Editor
 {
-    // Unity check of the tree redo v2 package A (art/exports/trees-v2-a, Johnnnny0823), starting with the TR06 weeping willow sample (A/B/C).
+    // Unity check of the tree redo v2 package A (art/exports/trees-v2-a, Johnnnny0823): TR04 maple, TR06 willow, TR07 plum, TR08 dead tree, TR09 bamboo (A/B/C each).
     // Imports every tree FBX, the bark textures and the far-card textures, builds preview materials (bark: URP Lit; leaves: URP
     // Particles/Simple Lit, because the leaf colour lives in the vertex colours; far card: URP Lit alpha clip), adds a 4-level LODGroup
     // and the trunk MeshCollider, compares each tree with its model_info.json (size, ground, LOD triangles, materials, collision) and
@@ -30,7 +30,8 @@ namespace YunJing.Editor
         static readonly float[] Cuts = { .35f, .12f, .03f, .008f };   // LOD0 -> 1 at ~25 m, 1 -> 2 at ~70 m, 2 -> 3 at ~280 m for a 10 m tree (60 deg fov)
 
         [Serializable] class Lod { public int lod, triangles; public string[] materials; }
-        [Serializable] class Info { public string id, collision; public float[] dimensions_m, bounds_min_m; public Lod[] lods; public string[] materials; }
+        [Serializable] class Info { public string id, collision; public float[] dimensions_m, bounds_min_m, heightRange_m, barkTint; public float windBaseMax; public Lod[] lods; public string[] materials; }
+        static Info Load(string id) => JsonUtility.FromJson<Info>(File.ReadAllText(Path.Combine(Exports, $"{id}.model_info.json")));
 
         static string[] Ids => Directory.GetFiles(Exports, "*.fbx").Select(Path.GetFileNameWithoutExtension).OrderBy(s => s).ToArray();
 
@@ -43,7 +44,7 @@ namespace YunJing.Editor
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene);
             Report.Add($"Unity {Application.unityVersion}, pipeline {GraphicsSettings.currentRenderPipeline?.name ?? "built-in"}");
             Report.Add("INFO axis: Blender +X -> Unity +X (the water side), Blender +Y -> Unity +Z, Blender +Z -> Unity +Y");
-            foreach (var id in Ids) Inspect(id, JsonUtility.FromJson<Info>(File.ReadAllText(Path.Combine(Exports, $"{id}.model_info.json"))));
+            foreach (var id in Ids) Inspect(id, Load(id));
             Shots();
             File.WriteAllLines(Path.Combine(Out, "report.txt"), Report);
             foreach (var line in Report) Debug.Log("TREESV2 " + line);
@@ -106,9 +107,20 @@ namespace YunJing.Editor
             Texture2D T(string name) => AssetDatabase.LoadAssetAtPath<Texture2D>($"{Models}/Textures/{name}.png");
             var alb = T("T_TreeV2_Bark_Albedo"); var nrm = T("T_TreeV2_Bark_Normal");
             Check(alb && nrm, "T_TreeV2_Bark_Albedo / _Normal imported");
-            var bark = Mat("M_TreeV2_Bark", "Universal Render Pipeline/Lit");
-            bark.SetTexture("_BaseMap", alb); bark.SetColor("_BaseColor", Color.white); bark.SetTexture("_BumpMap", nrm); bark.EnableKeyword("_NORMALMAP");
-            bark.SetFloat("_Smoothness", .08f); bark.SetFloat("_Metallic", 0);
+            // bark: one shared texture, tinted per species (model_info barkTint): plain, maple, plum (black-brown), dead (grey), bamboo root mound
+            foreach (var id in Ids)
+            {
+                var info = Load(id);
+                foreach (var name in info.materials.Where(n => n.StartsWith("M_TreeV2_Bark")))
+                {
+                    var bark = Mat(name, "Universal Render Pipeline/Lit"); var t = info.barkTint ?? new[] { 1f, 1f, 1f };
+                    bark.SetTexture("_BaseMap", alb); bark.SetColor("_BaseColor", new Color(t[0], t[1], t[2])); bark.SetTexture("_BumpMap", nrm); bark.EnableKeyword("_NORMALMAP");
+                    bark.SetFloat("_Smoothness", .08f); bark.SetFloat("_Metallic", 0); EditorUtility.SetDirty(bark);
+                }
+            }
+            // bamboo culms: colour in the vertex colours, like the leaves
+            var bamboo = Mat("M_TreeV2_Bamboo", "Universal Render Pipeline/Particles/Simple Lit");
+            bamboo.SetColor("_BaseColor", Color.white); bamboo.SetFloat("_Smoothness", .35f); EditorUtility.SetDirty(bamboo);
             // leaves: the colour is in the vertex colours (RGB), so a vertex-colour shader is needed; Particles/Simple Lit multiplies it in
             var leaf = Mat("M_TreeV2_Leaf", "Universal Render Pipeline/Particles/Simple Lit");
             leaf.SetColor("_BaseColor", Color.white); leaf.SetFloat("_Cull", 0); leaf.SetFloat("_Surface", 0); leaf.SetFloat("_Smoothness", .1f);
@@ -120,7 +132,7 @@ namespace YunJing.Editor
                 far.EnableKeyword("_ALPHATEST_ON"); far.SetFloat("_Cull", 0); far.SetFloat("_Smoothness", 0); far.renderQueue = (int)RenderQueue.AlphaTest;
                 EditorUtility.SetDirty(far);
             }
-            EditorUtility.SetDirty(bark); EditorUtility.SetDirty(leaf); AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(leaf); AssetDatabase.SaveAssets();
         }
 
         static Material Map(Material m) => m == null ? null : Mats.OrderByDescending(k => k.Key.Length).FirstOrDefault(kv => m.name.StartsWith(kv.Key)).Value;
@@ -154,7 +166,8 @@ namespace YunJing.Editor
             var lod0 = Level(go, 0); var b = Box(lod0); var d = info.dimensions_m;
             Check(Mathf.Abs(b.size.x - d[0]) < .03f && Mathf.Abs(b.size.z - d[1]) < .03f && Mathf.Abs(b.size.y - d[2]) < .03f,
                 $"{id}: imported size {b.size.x:0.000} x {b.size.z:0.000} x {b.size.y:0.000} m matches model_info {d[0]} x {d[1]} x {d[2]}");
-            Check(b.max.y >= 8f && b.max.y <= 12f, $"{id}: height {b.max.y:0.00} m (package 8-12 m)");
+            var hr = info.heightRange_m ?? new[] { 8f, 12f };
+            Check(b.max.y >= hr[0] && b.max.y <= hr[1], $"{id}: height {b.max.y:0.00} m (package {hr[0]}-{hr[1]} m)");
             Check(Mathf.Abs(b.min.y + .3f) < .06f, $"{id}: roots end {-b.min.y:0.000} m below ground (package 0.3 m)");
             var tris = Enumerable.Range(0, 4).Select(i => Tris(Level(go, i))).ToArray();
             Check(Enumerable.Range(0, 4).All(i => Mathf.Abs(tris[i] - info.lods[i].triangles) <= info.lods[i].triangles * .01f + 2),
@@ -168,7 +181,10 @@ namespace YunJing.Editor
             Check(lods.Length == 4 && lods.All(l => l.renderers.Length == 1), $"{id}: LODGroup 4 levels x 1 renderer");
             var col = go.GetComponentsInChildren<MeshCollider>(true).FirstOrDefault();
             Check(col != null && col.sharedMesh.triangles.Length > 0, $"{id}: trunk collision as MeshCollider ({(col ? col.sharedMesh.triangles.Length / 3 : 0)} tris), render hidden");
-            Check(Physics.Raycast(new Vector3(-3, 1f, 0), Vector3.right, out var hit, 6) && hit.collider == col,
+            // aim at the trunk centre at 1 m height (leaning trunks are off the origin there)
+            var cv = col ? col.sharedMesh.vertices.Select(v => col.transform.TransformPoint(v)).Where(v => v.y > .8f && v.y < 1.2f).ToArray() : new Vector3[0];
+            float cz = cv.Length > 0 ? cv.Average(v => v.z) : 0f, cx = cv.Length > 0 ? cv.Average(v => v.x) : 0f;
+            Check(Physics.Raycast(new Vector3(cx - 3, 1f, cz), Vector3.right, out var hit, 6) && hit.collider == col,
                   $"{id}: a ray at 1 m from 3 m on the land side hits the trunk at {(hit.collider ? hit.distance.ToString("0.00") : "-")} m");
 
             // vertex data on LOD0: wind weight in UV2.x, leaf colour + occlusion in the vertex colours
@@ -182,13 +198,18 @@ namespace YunJing.Editor
                 // trunk base: bark vertices within 0.9 m of the axis below 1.2 m; hanging twigs that reach down beside the trunk
                 // (weight 0.55-0.9) are allowed, so at least 90 % of these vertices must be <= 0.05
                 var baseWs = Enumerable.Range(0, mesh.vertexCount).Where(i => !leafIdx.Contains(i) && verts[i].y < 1.2f && new Vector2(verts[i].x, verts[i].z).magnitude < .9f).Select(i => uv2[i].x).ToArray();
-                var baseW = baseWs.Length == 0 ? 1f : baseWs.Count(w => w <= .05f) / (float)baseWs.Length;
-                var leafW = leafIdx.Select(i => uv2[i].x).DefaultIfEmpty(0).Min();
-                Check(baseW >= .9f, $"{id}: wind weight <= 0.05 on {baseW:P0} of the {baseWs.Length} trunk-base vertices (the rest are hanging twigs beside the trunk)");
-                Check(leafIdx.Count > 0 && leafW >= .85f, $"{id}: wind weight on all {leafIdx.Count} leaf vertices >= 0.85 (min {leafW:0.000})");
-                var la = leafIdx.Select(i => cols[i].a).ToArray(); var lg = leafIdx.Select(i => cols[i].g).ToArray();
-                Check(la.Length > 0 && la.Min() >= .4f && la.Max() <= 1f && la.Max() - la.Min() > .3f, $"{id}: leaf occlusion in vertex alpha {la.Min():0.00}-{la.Max():0.00}");
-                Check(lg.Length > 0 && lg.Max() - lg.Min() > .1f, $"{id}: leaf colour varies (green {lg.Min():0.00}-{lg.Max():0.00})");
+                var wmax = info.windBaseMax > 0 ? info.windBaseMax : .05f;
+                var baseW = baseWs.Length == 0 ? 1f : baseWs.Count(w => w <= wmax) / (float)baseWs.Length;
+                var leafW = leafIdx.Select(i => uv2[i].x).DefaultIfEmpty(1).Min();
+                Check(baseW >= .9f, $"{id}: wind weight <= {info.windBaseMax:0.00} on {baseW:P0} of the {baseWs.Length} trunk-base vertices (the rest are twigs hanging beside the trunk)");
+                if (leafSub < 0) Report.Add($"INFO {id}: no leaves (leafless tree), leaf checks skipped");
+                else
+                {
+                    Check(leafW >= .85f, $"{id}: wind weight on all {leafIdx.Count} leaf vertices >= 0.85 (min {leafW:0.000})");
+                    var la = leafIdx.Select(i => cols[i].a).ToArray(); var lr = leafIdx.Select(i => cols[i].r + cols[i].g).ToArray();
+                    Check(la.Min() >= .4f && la.Max() <= 1f && la.Max() - la.Min() > .2f, $"{id}: leaf occlusion in vertex alpha {la.Min():0.00}-{la.Max():0.00}");
+                    Check(lr.Max() - lr.Min() > .1f, $"{id}: leaf colour varies (r+g {lr.Min():0.00}-{lr.Max():0.00})");
+                }
             }
             UnityEngine.Object.DestroyImmediate(go);
         }

@@ -1,0 +1,17 @@
+Tool: Codex CLI image generation (no negative-prompt field, so 5.3 is appended after 'Avoid:').
+Aspect: landscape 3:2 (at least 1536 px wide)
+Layout block: single
+
+Three-view orthographic turnaround sheet (front, side, top) of a single clump of Chinese bamboo about 7 m tall growing from one root base: nine to twelve green culms of uneven thickness (3 to 7 cm across) with clear node rings every 25 to 35 cm, the culms rising together and arching slightly outward, a few older culms yellow-green, thin side branches at the upper nodes carrying drooping sprays of narrow lance-shaped bamboo leaves hanging in layered clusters, foliage concentrated in the upper half, lower culms bare with a few dry sheaths at the base; muted natural greens. Rural southern Chinese mountain village by a clear stream; muted natural colours, realistic proportions, real-world scale. Show only this one clump with a small patch of ground; no fence, no buildings, no panda, no writing. Layout: front view, side view and back view side by side in one image, all at the same scale and aligned on the same ground line, orthographic (no perspective), centred, full object visible with margin around it, plain light warm-grey background, even soft studio lighting so shapes and materials read clearly, no cast shadows on the background, one object only. Art direction: stylized hand-painted 3D game art for an Eastern xianxia fantasy world (Chinese immortal-cultivation setting), warm golden morning light from a low sun, soft warm rim light on edges and silhouettes, gentle blue-violet shadows (never pure black), layered soft white mist in the distance, painterly textures made of large soft colour gradients with a few visible brush strokes, rich but natural colour palette (sunlit warm yellow-greens, cool teal shade greens, warm grey stone, aged brown timber, blue-grey roof tiles, turquoise water), lived-in details: wear on edges, moss and soil in the joints, patched and repaired parts, small cracks, weathered wood grain, high level of detail with clear readable shapes and a strong silhouette, real-world scale and proportions, cohesive with a hand-painted xianxia valley village, game-ready asset look, high quality, masterpiece. Avoid: photorealistic, photograph, photo texture, scanned texture, realistic PBR, plastic, glossy, shiny, chrome, pure black shadows, harsh contrast, neon colours, oversaturated, flat lighting, noon lighting, modern objects, cars, wires, concrete, glass windows, text, letters, Chinese characters, signature, logo, UI, watermark, frame, border, anime screenshot, cel-shaded flat colour, Genshin Impact, Mihoyo, copy of an existing game asset, blocky low-poly, voxel, cartoon chibi, noisy texture, blurry, low resolution, cropped, cut off, duplicate objects, extra limbs, floating parts, distorted perspective, fisheye, Japanese garden style, bonsai, topiary, round ball-shaped crown, crown made of several balls, leaf clumps, flat leaf cards, symmetric mirrored branches, branches all the same thickness, straight vertical pole trunk, fluorescent neon green, glossy plastic leaves, cartoon lollipop tree, flowers, lettering, lanterns, people
+
+（Codex 這次出了 7 張，全部保留。）
+
+選用：option 5
+理由：
+- 唯一有正、側、俯三張的，俯視看得出竹竿從一個根盤長出、葉子往外散。
+- 竹竿根部收緊、往上微微外散，粗細不一，有幾支偏黃的老竹，節很清楚。
+- 葉子集中在上半段，成串下垂，下半段竹竿光禿、根部有乾籜，符合工作包「葉子成串下垂」。
+建模時的差異：
+- 為了能密種，面數壓在約 4.3–5.1 萬（工作包上限 6 萬），碰撞只用一個包住根部的圓柱。
+- 乾籜用竹竿底部的黃褐頂點色表現，沒有另做籜片。
+- 地面的草和石頭不做。

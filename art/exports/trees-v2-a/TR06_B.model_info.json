@@ -6,7 +6,12 @@
  "status": "Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗",
  "block": "A1 溪邊、A3",
  "species": "垂柳",
- "waterSide": "+X（樹幹和長枝斜向 +X，擺放時 +X 朝水面）",
+ "heightRange_m": [
+  8,
+  12
+ ],
+ "windBaseMax": 0.05,
+ "leanSide": "+X（樹幹和長枝斜向 +X），擺放時 +X 朝水面",
  "dimensions_m": [
   8.78,
   8.253,
@@ -57,12 +62,14 @@
   }
  ],
  "structure": {
+  "culms": 0,
   "mainLimbs": 6,
   "canopyAnchors": 17,
   "anchorsFrontWaterSide": 9,
   "anchorsBack": 8,
   "twigStreams": 199,
   "leavesLOD0": 11853,
+  "blossomsLOD0": 0,
   "leafVertices": 5
  },
  "vertexData": {
@@ -70,9 +77,14 @@
   "uv2": "x = 風權重（主幹 0、主枝 0.05–0.3、次枝 0.3–0.55、垂枝 0.55–0.9、葉 0.9–1.0），y = 葉冠錨點相位"
  },
  "materials": [
+  "M_TR06_B_Far",
   "M_TreeV2_Bark",
-  "M_TreeV2_Leaf",
-  "M_TR06_B_Far"
+  "M_TreeV2_Leaf"
+ ],
+ "barkTint": [
+  1,
+  1,
+  1
  ],
  "textures": {
   "T_TreeV2_Bark_Albedo": "1024x1024",
