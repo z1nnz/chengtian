@@ -1,0 +1,198 @@
+{
+  "asset": "CO01_ExcavatedPit",
+  "version": "v002",
+  "minTier": "standard",
+  "detailObjects": [
+    "CO01_ExcavatedPit_Detail_Small"
+  ],
+  "name_zh": "被挖的坑",
+  "slot": "D2_AncientTree_DugPit",
+  "note": "Freshly dug pit by the D2 altar, about 4 m across and 1 m deep, spoil heap on +X+Y.",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 39672,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD1": {
+      "triangles": 19836,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD2": {
+      "triangles": 5949,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    }
+  },
+  "texture_resolution_px": {
+    "CO01_ExcavatedPit_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "CO01_ExcavatedPit_Metallic.png": [
+      2048,
+      2048
+    ],
+    "CO01_ExcavatedPit_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "CO01_ExcavatedPit_Normal.png": [
+      2048,
+      2048
+    ],
+    "CO01_ExcavatedPit_Roughness.png": [
+      2048,
+      2048
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "centre of the hole at ground level z = 0; edge of the apron at exactly z = 0",
+  "dimensions_m": [
+    6.6,
+    6.6,
+    1.6932
+  ],
+  "bounds_min_m": [
+    -3.3,
+    -3.3,
+    -1.0183
+  ],
+  "bounds_max_m": [
+    3.3,
+    3.3,
+    0.6749
+  ],
+  "size_limit_m": [
+    6.6,
+    6.6,
+    1.6
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        6.6,
+        6.6,
+        1.6932
+      ],
+      "min": [
+        -3.3,
+        -3.3,
+        -1.0183
+      ],
+      "max": [
+        3.3,
+        3.3,
+        0.6749
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        6.1468,
+        5.9653,
+        1.5892
+      ],
+      "min": [
+        -2.9898,
+        -3.1176,
+        -1.0109
+      ],
+      "max": [
+        3.157,
+        2.8477,
+        0.5783
+      ]
+    }
+  },
+  "lods": {
+    "Main": {
+      "LOD0": 30484,
+      "LOD1": 15242,
+      "LOD2": 4572
+    },
+    "Detail_Small": {
+      "LOD0": 9188,
+      "LOD1": 4594,
+      "LOD2": 1377
+    }
+  },
+  "lod_totals": {
+    "LOD0": 39672,
+    "LOD1": 19836,
+    "LOD2": 5949
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_CO01_ExcavatedPit_Main"
+  ],
+  "textures": [
+    "CO01_ExcavatedPit_BaseColor.png",
+    "CO01_ExcavatedPit_Metallic.png",
+    "CO01_ExcavatedPit_MetallicSmoothness.png",
+    "CO01_ExcavatedPit_Normal.png",
+    "CO01_ExcavatedPit_Roughness.png"
+  ],
+  "texture_size_px": 2048,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_CO01_ExcavatedPit_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "CO01_ExcavatedPit_BaseColor.png",
+        "Normal": "CO01_ExcavatedPit_Normal.png",
+        "MetallicSmoothness": "CO01_ExcavatedPit_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "CO01_ExcavatedPit_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "parts": {
+    "hole_diameter_m": 4.0,
+    "depth_m": 1.0,
+    "apron_radius_m": 3.3,
+    "edge_z": 0.0,
+    "placement": "set the origin at D2 ground level; cut a ~4 m hole in the terrain or let the apron cover it"
+  },
+  "sockets_blender_xyz": {},
+  "sockets_fbx_reimport_xyz": {},
+  "fbx_objects": [
+    "CO01_ExcavatedPit.001",
+    "CO01_ExcavatedPit_Collision.001",
+    "CO01_ExcavatedPit_Detail_Small_LOD0.001",
+    "CO01_ExcavatedPit_Detail_Small_LOD1.001",
+    "CO01_ExcavatedPit_Detail_Small_LOD2.001",
+    "CO01_ExcavatedPit_LOD0.001",
+    "CO01_ExcavatedPit_LOD1.001",
+    "CO01_ExcavatedPit_LOD2.001"
+  ],
+  "glb": "CO01_ExcavatedPit_v002.glb",
+  "interface": {},
+  "modeling_method": "procedural mesh construction (art/source/core-d2-v1/d2_ground.py with village-houses-b fr_parts / cr_mats, the AL01 method); procedural stone, earth, bark, moss and leaf shaders baked to one atlas",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 173.8,
+        "median": 181.1,
+        "p90": 187.5,
+        "area_m2": 56.8
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": null,
+  "reference": "art/references/core-d2-models-v1/ (AI three-view core-d2-models-v1/CO01/turnaround; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-houses-unity/ (local Unity batch check, not committed)",
+  "based_on": "Claude Code redo of Codex v001 (art/core-1113-co-ruins-v2), review docs/execution/2026-11-14/codex-v11-review-1.md"
+}

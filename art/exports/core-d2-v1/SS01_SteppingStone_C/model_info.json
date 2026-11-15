@@ -1,0 +1,200 @@
+{
+  "asset": "SS01_SteppingStone_C",
+  "version": "v002",
+  "minTier": "standard",
+  "detailObjects": [
+    "SS01_SteppingStone_C_Detail_Small"
+  ],
+  "name_zh": "半埋踏石 C",
+  "slot": "D2_AncientTree_SteppingStone",
+  "note": "Half-buried stepping stone C for the D2 mud paths; top 0.15 m above ground.",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 4838,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD1": {
+      "triangles": 2419,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD2": {
+      "triangles": 724,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    }
+  },
+  "texture_resolution_px": {
+    "SS01_SteppingStone_C_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "SS01_SteppingStone_C_Metallic.png": [
+      1024,
+      1024
+    ],
+    "SS01_SteppingStone_C_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "SS01_SteppingStone_C_Normal.png": [
+      1024,
+      1024
+    ],
+    "SS01_SteppingStone_C_Roughness.png": [
+      1024,
+      1024
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "centre of the stone at ground level z = 0; 15 cm buried below",
+  "dimensions_m": [
+    0.7568,
+    0.7085,
+    0.2998
+  ],
+  "bounds_min_m": [
+    -0.3568,
+    -0.3543,
+    -0.15
+  ],
+  "bounds_max_m": [
+    0.4,
+    0.3543,
+    0.1498
+  ],
+  "size_limit_m": [
+    1.18,
+    1.16,
+    0.55
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        0.7568,
+        0.7085,
+        0.2934
+      ],
+      "min": [
+        -0.3568,
+        -0.3543,
+        -0.15
+      ],
+      "max": [
+        0.4,
+        0.3543,
+        0.1434
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        0.6046,
+        0.6745,
+        0.1599
+      ],
+      "min": [
+        -0.2992,
+        -0.3266,
+        -0.0101
+      ],
+      "max": [
+        0.3054,
+        0.3479,
+        0.1498
+      ]
+    }
+  },
+  "lods": {
+    "Main": {
+      "LOD0": 3880,
+      "LOD1": 1940,
+      "LOD2": 581
+    },
+    "Detail_Small": {
+      "LOD0": 958,
+      "LOD1": 479,
+      "LOD2": 143
+    }
+  },
+  "lod_totals": {
+    "LOD0": 4838,
+    "LOD1": 2419,
+    "LOD2": 724
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_SS01_SteppingStone_C_Main"
+  ],
+  "textures": [
+    "SS01_SteppingStone_C_BaseColor.png",
+    "SS01_SteppingStone_C_Metallic.png",
+    "SS01_SteppingStone_C_MetallicSmoothness.png",
+    "SS01_SteppingStone_C_Normal.png",
+    "SS01_SteppingStone_C_Roughness.png"
+  ],
+  "texture_size_px": 1024,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_SS01_SteppingStone_C_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "SS01_SteppingStone_C_BaseColor.png",
+        "Normal": "SS01_SteppingStone_C_Normal.png",
+        "MetallicSmoothness": "SS01_SteppingStone_C_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "SS01_SteppingStone_C_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "parts": {
+    "stone_m": [
+      0.48,
+      0.46,
+      0.15
+    ],
+    "buried_m": 0.15,
+    "walk_top_z_m": 0.15
+  },
+  "sockets_blender_xyz": {},
+  "sockets_fbx_reimport_xyz": {},
+  "fbx_objects": [
+    "SS01_SteppingStone_C.001",
+    "SS01_SteppingStone_C_Collision.001",
+    "SS01_SteppingStone_C_Detail_Small_LOD0.001",
+    "SS01_SteppingStone_C_Detail_Small_LOD1.001",
+    "SS01_SteppingStone_C_Detail_Small_LOD2.001",
+    "SS01_SteppingStone_C_LOD0.001",
+    "SS01_SteppingStone_C_LOD1.001",
+    "SS01_SteppingStone_C_LOD2.001"
+  ],
+  "glb": "SS01_SteppingStone_C_v002.glb",
+  "interface": {},
+  "modeling_method": "procedural mesh construction (art/source/core-d2-v1/d2_ground.py with village-houses-b fr_parts / cr_mats, the AL01 method); procedural stone, earth, bark, moss and leaf shaders baked to one atlas",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 734.7,
+        "median": 778.8,
+        "p90": 801.4,
+        "area_m2": 1.0
+      },
+      "inside_or_covered": null,
+      "atlas_px": 1024,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": null,
+  "reference": "art/references/core-d2-models-v1/ (AI three-view core-d2-models-v1/SS01/turnaround; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-houses-unity/ (local Unity batch check, not committed)",
+  "based_on": "Claude Code redo of Codex v001 (art/core-1113-co-ruins-v2), review docs/execution/2026-11-14/codex-v11-review-1.md"
+}
