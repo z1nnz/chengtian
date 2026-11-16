@@ -247,3 +247,134 @@ def litter(name, R, count, place, mat):
         if n >= count:
             break
     return buf.build(name, mat), n
+
+
+# ---------------- 苔叢：在苔丘表面長滿一根根短苔（毛茸茸），不是光滑的丘 ----------------
+def moss_tufts(name, mounds, R, mat, fbfn, density=5200):
+    buf = LeafBuf()
+    for (i, cx, cy, rx, ry, hgt, z0) in mounds:
+        n = int(density * rx * ry * 4)
+        for k in range(n):
+            a = R.uniform(0, 2 * math.pi)
+            rr = math.sqrt(R.random()) * .98
+            px, py = math.cos(a) * rr, math.sin(a) * rr
+            pz = math.sqrt(max(0.0, 1 - rr * rr))
+            nn = fbfn((px * 2 + i, py * 2, pz * 2), 1, 2)
+            r = 1 + .18 * nn
+            tuft = .5 + .5 * fbfn((px * 14 + i, py * 14, 0), 1, 2)
+            p = Vector((cx + px * rx * r, cy + py * ry * r, z0 + (pz ** .7) * hgt * (1 + .25 * nn) + pz * .018 * tuft))
+            nrm = Vector((px / rx, py / ry, pz / max(hgt, .02) * .35 + .6)).normalized()
+            d = (nrm + Vector((R.uniform(-.5, .5), R.uniform(-.5, .5), R.uniform(0, .3)))).normalized()
+            d, side, up = _frame(d)
+            L = R.uniform(.012, .03) * (.6 + .8 * tuft)
+            g = R.uniform(.7, 1.15)
+            buf.leaf(p - d * .003, d, side, up, L, L * .2, shape=lambda u: (1 - u) ** .6, fold=.3, droop=R.uniform(0, .5),
+                     tint=(g * R.uniform(.85, 1.1), g, g * .8), nu=2, nv=1)
+    return buf.build(name, mat)
+
+
+# ---------------- 蕈：一叢 3–12 朵，傘面有弧度與中央深色，菌褶淺，柄微彎 ----------------
+def mushrooms(name, pos, R, count, size, mat, cap=(.30, .17, .08), ground=None):
+    V, F, C = [], [], []
+    seg = 14
+    for m in range(count):
+        a = R.uniform(0, 2 * math.pi)
+        d = R.uniform(0, .09) * size * math.sqrt(count)
+        bx, by = pos.x + math.cos(a) * d, pos.y + math.sin(a) * d
+        bz = (ground(bx, by) if ground else pos.z) - .004
+        h = size * R.uniform(.045, .11)
+        sr = size * R.uniform(.006, .011)
+        cr = size * R.uniform(.022, .055)
+        ch = cr * R.uniform(.45, .8)
+        lx, ly = R.uniform(-.35, .35), R.uniform(-.35, .35)
+        k = R.uniform(.75, 1.15)
+        capc = (cap[0] * k, cap[1] * k, cap[2] * k, 1)
+        capd = (capc[0] * .55, capc[1] * .5, capc[2] * .5, 1)
+        gill = (.55, .46, .34, 1)
+        stem = (.62, .56, .46, 1)
+        stemb = (.25, .19, .13, 1)
+        prof = [(sr * 1.5, 0, stemb), (sr * 1.05, h * .25, stem), (sr * .85, h * .9, stem),
+                (cr * .55, h * .93, gill), (cr * .98, h * 1.0 + ch * .05, gill), (cr, h + ch * .12, capc)]
+        for j in range(1, 7):
+            t = j / 6
+            ang = t * math.pi / 2
+            prof.append((cr * math.cos(ang) ** .9, h + ch * .12 + ch * math.sin(ang) ** .9, capc if t < .65 else capd))
+        base = len(V)
+        for (r, z, c) in prof:
+            ox, oy = lx * z * (z / max(h, 1e-4)) * .6, ly * z * (z / max(h, 1e-4)) * .6
+            wob = 1 + .06 * math.sin(m * 3 + z * 90)
+            for s in range(seg):
+                th = 2 * math.pi * s / seg
+                rr = r * wob * (1 + .05 * math.sin(th * 3 + m))
+                V.append((bx + ox + math.cos(th) * rr, by + oy + math.sin(th) * rr, bz + z))
+                C.append(c)
+        for i in range(len(prof) - 1):
+            for s in range(seg):
+                a0 = base + i * seg + s
+                a1 = base + i * seg + (s + 1) % seg
+                F.append((a0, a1, a1 + seg, a0 + seg))
+    me = bpy.data.meshes.new(name)
+    me.from_pydata(V, [], F)
+    ca = me.color_attributes.new('Tint', 'FLOAT_COLOR', 'POINT')
+    ca.data.foreach_set('color', np.array(C, np.float32).ravel())
+    for p in me.polygons:
+        p.use_smooth = True
+    me.materials.append(mat)
+    o = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(o)
+    return o
+
+
+def mushroom_material():
+    m = bpy.data.materials.new('UG_Mushroom')
+    m.use_nodes = True
+    N, L = m.node_tree.nodes, m.node_tree.links
+    b = next(n for n in N if n.type == 'BSDF_PRINCIPLED')
+    vc = N.new('ShaderNodeVertexColor'); vc.layer_name = 'Tint'
+    nz = N.new('ShaderNodeTexNoise'); nz.inputs['Scale'].default_value = 60; nz.inputs['Detail'].default_value = 5
+    rp = N.new('ShaderNodeMapRange'); rp.inputs['To Min'].default_value = .7; rp.inputs['To Max'].default_value = 1.1
+    L.new(nz.outputs['Fac'], rp.inputs['Value'])
+    mx = N.new('ShaderNodeMixRGB'); mx.blend_type = 'MULTIPLY'; mx.inputs[0].default_value = 1
+    L.new(vc.outputs[0], mx.inputs[1]); L.new(rp.outputs[0], mx.inputs[2])
+    L.new(mx.outputs[0], b.inputs['Base Color'])
+    b.inputs['Roughness'].default_value = .42
+    try:
+        b.inputs['Subsurface Weight'].default_value = .15
+    except Exception:
+        pass
+    return m
+
+
+# ---------------- 林下小白花：細莖、五瓣、基部幾片小葉 ----------------
+def white_flowers(name, pos, R, count, petal_mat, leaf_mat, ground=None):
+    pb, lb = LeafBuf(), LeafBuf()
+    for f in range(count):
+        a = R.uniform(0, 2 * math.pi)
+        d = R.uniform(0, .16)
+        x, y = pos.x + math.cos(a) * d, pos.y + math.sin(a) * d
+        z = ground(x, y) if ground else pos.z
+        h = R.uniform(.06, .13)
+        top = Vector((x + R.uniform(-.02, .02), y + R.uniform(-.02, .02), z + h))
+        tilt = Vector((R.uniform(-.3, .3), R.uniform(-.3, .3), 1)).normalized()
+        e1 = tilt.cross(Vector((1, 0, 0))).normalized()
+        e2 = tilt.cross(e1).normalized()
+        for k in range(5):
+            th = 2 * math.pi * k / 5 + f
+            pd = (e1 * math.cos(th) + e2 * math.sin(th) + tilt * .25).normalized()
+            pd, ps, pn = _frame(pd)
+            Lp = R.uniform(.013, .019)
+            pb.leaf(top, pd, ps, tilt, Lp, Lp * .42, shape=lambda u: math.sin(math.pi * (u * .9 + .1)) ** .7, fold=.15, curl=.1,
+                    droop=-.1, tint=(1, 1, 1), nu=5, nv=3)
+        # 莖（當成很窄的葉）
+        sd = (top - Vector((x, y, z)))
+        Ls = sd.length
+        sd, ss, sn = _frame(sd)
+        lb.leaf(Vector((x, y, z)), sd, ss, sn, Ls, .0018, shape=lambda u: 1.0, fold=0, tint=(.8, .9, .7), nu=3, nv=1)
+        for k in range(R.randint(2, 4)):
+            th = R.uniform(0, 2 * math.pi)
+            ld = Vector((math.cos(th), math.sin(th), R.uniform(.1, .5)))
+            ld, ls, ln = _frame(ld)
+            Ll = R.uniform(.03, .05)
+            lb.leaf(Vector((x, y, z + .005)), ld, ls, ln, Ll, Ll * .3, shape=lambda u: math.sin(math.pi * u) ** .8, fold=.2,
+                    droop=.3, tint=(1, 1, 1), nu=5, nv=2)
+    return pb.build(name + '_petals', petal_mat), lb.build(name + '_leaves', leaf_mat)

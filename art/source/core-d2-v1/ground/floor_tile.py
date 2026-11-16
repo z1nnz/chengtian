@@ -181,7 +181,7 @@ for i in range(R.randint(5, 8)):
     for p in o.data.polygons:
         p.use_smooth = True
     o.data.materials.append(mm)
-    objs_moss.append(o)
+    objs_moss.append((i, cx, cy, rx, ry, hgt, o.location.z))
 
 # ---------- 細根：半埋、蜿蜒，邊緣鑽進土裡（掃描樹皮） ----------
 for i in range(R.randint(3, 5)):
@@ -267,6 +267,20 @@ for i, (x, y, s_) in enumerate(spots_f):
 for i in range(9):
     x, y = R.uniform(-1.7, 1.7), R.uniform(-1.7, 1.7)
     heart_plant(f'UG02_Heart{i}', Vector((x, y, ground_z(x, y))), R, R.uniform(.8, 1.2), heart_mat, stem_mat)
+# 苔叢、蕈、小白花
+moss_mat = _leaf_material('DS01_MossTuft', (.030, .050, .012, 1), (.085, .12, .03, 1), (.10, .14, .04, 1), gloss=.8)
+moss_tufts('DS01_MossTufts', objs_moss, R, moss_mat, fb)
+mush_mat = mushroom_material()
+for i in range(7):
+    x, y = R.uniform(-1.6, 1.6), R.uniform(-1.6, 1.6)
+    mushrooms(f'UG_MushBrown{i}', Vector((x, y, 0)), R, R.randint(3, 9), R.uniform(.8, 1.3), mush_mat, ground=ground_z)
+for i in range(3):
+    x, y = R.uniform(-1.5, 1.5), R.uniform(-1.5, 1.5)
+    mushrooms(f'UG_MushWhite{i}', Vector((x, y, 0)), R, R.randint(4, 8), .7, mush_mat, cap=(.78, .74, .66), ground=ground_z)
+petal_mat = _leaf_material('UG04_Petal', (.80, .80, .76, 1), (.95, .95, .92, 1), (.85, .85, .8, 1), gloss=.5)
+for i in range(5):
+    x, y = R.uniform(-1.6, 1.6), R.uniform(-1.6, 1.6)
+    white_flowers(f'UG04_Flowers{i}', Vector((x, y, 0)), R, R.randint(4, 9), petal_mat, heart_mat, ground=ground_z)
 print('LEAVES', count, 'GROUND', len(me.polygons))
 
 # ---------- 燈光、霧、相機（照 D2 V6 的近景感覺） ----------
