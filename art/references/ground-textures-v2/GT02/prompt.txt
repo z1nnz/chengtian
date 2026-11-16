@@ -1,0 +1,1 @@
+Top-down seamless game terrain material, compacted grey-brown earth road with fine gravel, subtle intermittent worn wheel traces, neutral diffuse daylight, no bright yellow, no dramatic shadows, no hard path edges. Edited the first AI result to remove continuous long ruts. AI-generated source; postprocessed into exact seamless maps.
