@@ -42,47 +42,61 @@ for k in range(NSTR):
     r_off = [.8, .95, .9][k]
     thick = [1.2, .7, .92][k]
     pts = []
-    # 左腳的根：往外、往下鑽
-    fa = math.pi + (k - 1) * .75 + R.uniform(-.2, .2)
-    c0 = centre(0)
-    L = R.uniform(7, 11)
-    for f in (1.0, .7, .42, .2):
-        x = c0.x + math.cos(fa) * L * f
-        y = c0.y + math.sin(fa) * L * f
-        pts.append((x, y, gh(x, y) + (-1.3 if f == 1.0 else .25 * (1 - f))))
-    n = 16
-    for i in range(n + 1):
-        t = i / n
+    # 根腳像樹的根頸：拱腿往下時就開始往外撇，畫一個大弧接到地面的根，再慢慢鑽進土裡（不是直角轉彎）
+    FL = 3.2          # 根腳往外撇的距離
+    HB = .22          # 拱的兩端各有這麼長一段參與轉彎
+    faL = math.pi + (k - 1) * .75 + R.uniform(-.2, .2)
+    faR = (k - 1) * .75 + R.uniform(-.2, .2)
+    dL = Vector((math.cos(faL), math.sin(faL), 0))
+    dR = Vector((math.cos(faR), math.sin(faR), 0))
+    LL, LR = R.uniform(8, 12), R.uniform(8, 12)
+
+    def arch_pt(t):
         c = centre(t)
         d, side, nrm = frame(t)
         ph = ph0 + t * 2 * math.pi * 1.15
-        w = r_off * (.55 + .45 * math.sin(t * math.pi))       # 腳邊三股靠攏，拱頂分開一點看得出是絞的
-        p = c + side * math.cos(ph) * w + nrm * math.sin(ph) * w
-        pts.append((p.x, p.y, max(p.z, gh(p.x, p.y) + .2)))
-    fa = (k - 1) * .75 + R.uniform(-.2, .2)
-    c1 = centre(1)
-    L = R.uniform(7, 11)
-    for f in (.2, .42, .7, 1.0):
-        x = c1.x + math.cos(fa) * L * f
-        y = c1.y + math.sin(fa) * L * f
-        pts.append((x, y, gh(x, y) + (-1.3 if f == 1.0 else .25 * (1 - f))))
+        w = r_off * (.55 + .45 * math.sin(t * math.pi))
+        q = c + side * math.cos(ph) * w + nrm * math.sin(ph) * w
+        # 靠近兩腳時往根的方向撇出去（平方緩入）
+        if t < HB:
+            q = q + dL * FL * (1 - t / HB) ** 2
+        if t > 1 - HB:
+            q = q + dR * FL * (1 - (1 - t) / HB) ** 2
+        return q
+
+    footL = arch_pt(0.0)
+    footR = arch_pt(1.0)
+    # 左邊地面的根：從遠端（埋在土裡）到根腳，高度平滑升到拱腿起點
+    for f in (1.0, .78, .56, .36, .18):
+        q = footL + dL * LL * f
+        up = (1 - f) ** 2 * (footL.z - gh(q.x, q.y)) * .9
+        pts.append((q.x, q.y, gh(q.x, q.y) + up + (-1.4 if f == 1.0 else .12)))
+    n = 20
+    for i in range(n + 1):
+        q = arch_pt(i / n)
+        pts.append((q.x, q.y, max(q.z, gh(q.x, q.y) + .25)))
+    for f in (.18, .36, .56, .78, 1.0):
+        q = footR + dR * LR * f
+        up = (1 - f) ** 2 * (footR.z - gh(q.x, q.y)) * .9
+        pts.append((q.x, q.y, gh(q.x, q.y) + up + (-1.4 if f == 1.0 else .12)))
     objs.append(tube(f'Arch{k}', pts,
-                     radius=lambda t, th=thick: th * (.22 + .78 * min(1, min(t, 1 - t) / .22) ** .8) * (1 + .12 * math.sin(t * 23)),
+                     radius=lambda t, th=thick: th * (.18 + .82 * min(1, min(t, 1 - t) / .2) ** .7) * (1 + .22 * math.exp(-((min(t, 1 - t) - .3) / .07) ** 2)) * (1 + .1 * math.sin(t * 23)),
                      flat=lambda t: 1.0, seed=20 + k * 4.1, rib=.24, twist=.09))
 
 # 腳邊的小根
 for foot, c in ((0, centre(0)), (1, centre(1))):
-    for j in range(7):
-        a = (math.pi if foot == 0 else 0) + R.uniform(-1.5, 1.5)
+    for j in range(10):
+        a = (math.pi if foot == 0 else 0) + R.uniform(-1.7, 1.7)
         L = R.uniform(3, 7)
-        th = R.uniform(.18, .42)
+        th = R.uniform(.18, .5)
+        R0H = R.uniform(.8, 2.4)
         pts = []
-        for i in range(8):
-            t = i / 7
+        for i in range(12):
+            t = i / 11
             ww = math.sin(t * 5 + j) * .5 * t
             x = c.x + math.cos(a) * L * t - math.sin(a) * ww
             y = c.y + math.sin(a) * L * t + math.cos(a) * ww
-            z = gh(x, y) + th * .3 + (1.4 * (1 - t / .25) if t < .25 else 0) - (th * 2.5 * ((t - .8) / .2) ** 1.3 if t > .8 else 0)
+            z = gh(x, y) + th * .3 + R0H * max(0, 1 - t / .45) ** 2.2 - (th * 2.5 * ((t - .8) / .2) ** 1.3 if t > .8 else 0)
             pts.append((x, y, z))
         objs.append(tube(f'Foot{foot}_{j}', pts, radius=lambda t, th=th: th * (1 - .85 * t ** .7) + .04, flat=lambda t: 1.0,
                          seed=60 + foot * 10 + j, rib=.24, twist=.1))
