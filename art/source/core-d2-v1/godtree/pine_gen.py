@@ -37,13 +37,15 @@ _TG = 'C:/Users/User/AppData/Local/Temp/claude/5b1d5a1d6e0ced79/95010672-bf02-4e
 code = open(_TG, encoding='utf-8').read()
 lm_src = code[code.index('def leaf_material'):code.index('def scene_and_render')]
 code = code[:code.index('def bark_material')] + lm_src
+ROUND = os.environ.get('PINE_STYLE', 'round') == 'round'   # z1nnz 11/16 選定：圓團狀（p2）
 # 松：主枝近水平、梢端微翹；細枝往上翹成一簇簇
 code = code.replace("elif level == 1: trop = UP * (.20 - .36 * t)", "elif level == 1: trop = UP * (PINE_T1 + .10 * t)")
-code = code.replace("elif level == 2: trop = UP * (.10 - .2 * t)", "elif level == 2: trop = UP * (.02 + .03 * t)")
+code = code.replace("elif level == 2: trop = UP * (.10 - .2 * t)", "elif level == 2: trop = UP * (.12 + .12 * t)" if ROUND else "elif level == 2: trop = UP * (.02 + .03 * t)")
 code = code.replace("else: trop = UP * (-.05 - .22 * t)", "else: trop = UP * (.18 + .1 * t)")
 # 層狀松：子枝在水平面上展開（壓平 z），形成一片片平台
-code = code.replace("        if level >= 1 and cd.z < -.15: cd.z = -.15; cd.normalize()", "        if level >= 1: cd.z = cd.z * FLAT + .04; cd.normalize()")
-code = code.replace("        else: trop = UP * (.18 + .1 * t)", "        else: trop = UP * (.03 + .02 * t)")
+if not ROUND:
+    code = code.replace("        if level >= 1 and cd.z < -.15: cd.z = -.15; cd.normalize()", "        if level >= 1: cd.z = cd.z * FLAT + .04; cd.normalize()")
+    code = code.replace("        else: trop = UP * (.18 + .1 * t)", "        else: trop = UP * (.03 + .02 * t)")
 # 針葉：細長、間距密
 code = code.replace("half = R.uniform(*LEAF_LEN); w = half * R.uniform(.42, .56)", "half = R.uniform(*LEAF_LEN); w = half * R.uniform(*LEAF_W)")
 code = code.replace("(.02 if level == 4 else .045)", "(LEAF_SP4 if level == 4 else LEAF_SP3)")
@@ -55,25 +57,31 @@ sys.argv = sv
 TG['noise'].seed_set(SEED)
 TG['R'].seed(SEED)
 TG.update(FLAT=.12, PINE_T1=-.02, LEAF_LEN=(.10, .14), LEAF_W=(.06, .09), LEAF_SP3=.011, LEAF_SP4=.006)
+PINE_L0 = float(os.environ.get('PINE_L0', 5.6))
+PINE_L1 = float(os.environ.get('PINE_L1', 3.4))
+if ROUND:
+    TG.update(PINE_T1=-.03, LEAF_SP3=float(os.environ.get('PINE_SP3', .009)), LEAF_SP4=float(os.environ.get('PINE_SP4', .005)),
+              LEAF_LEN=(float(os.environ.get('PINE_LL', .13)), float(os.environ.get('PINE_LL', .13)) + .04))
 TG['RINGS'] = {0: 10, 1: 8, 2: 6, 3: 4, 4: 3}
 TG['PALETTE'] = ((.016, .036, .020), (.026, .055, .030), (.045, .080, .040), (.075, .110, .055), (.11, .14, .07))
 
 # 分層主枝：從 4.5 m 起，每層 2–3 根，層與層間隔 1.2–1.8 m，上層越短
-z = 6.0
+Z0 = 4.5 if ROUND else 6.0
+z = Z0
 k = 0
 while z < TH - 1.0:
-    f = (z - 6.0) / (TH - 7.0)
+    f = (z - Z0) / (TH - Z0 - 1.0)
     _o = 1.6 * math.sin(z / TH * 3.0 + SEED) * (z / TH) + 3.0 * (z / TH) ** 2
     tpos = Vector((lx * _o, ly * _o, z))
-    for j in range(R.choice([2, 3, 3])):
+    for j in range(R.choice([3, 3, 4] if ROUND else [2, 3, 3])):
         az = R.uniform(0, 2 * math.pi)
         # 往傾斜那一側的枝長一點（不對稱剪影）
         bias = 1 + .35 * math.cos(az - lean)
         d = Vector((math.cos(az), math.sin(az), R.uniform(-.05, .12))).normalized()
-        L = (9.5 - 6.0 * f) * bias * R.uniform(.8, 1.15)
+        L = ((PINE_L0 - PINE_L1 * f) if ROUND else (9.5 - 6.0 * f)) * bias * R.uniform(.85, 1.1)
         TG['grow'](tpos, d, L, .16 - .07 * f, 1, 100 + k)
         k += 1
-    z += R.uniform(1.7, 2.4)
+    z += R.uniform(.9, 1.4) if ROUND else R.uniform(1.7, 2.4)
 # 樹頂一叢
 TG['grow'](Vector(tp[-1]), Vector((lx * .3, ly * .3, 1)).normalized(), 2.5, .07, 2, 999)
 
