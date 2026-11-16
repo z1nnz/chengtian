@@ -219,6 +219,19 @@ for k, (p0, dv, rr) in enumerate([t for t in CENTER_TIPS if t[0].z >= _zcut]):
     for m in range(3):
         d = Vector((dv.x * .4 + R.uniform(-.4, .4), dv.y * .4 + R.uniform(-.4, .4), 1.0)).normalized()
         TG['grow'](p0, d, R.uniform(12, 17), .2, 1, 8000 + k * 7 + m)
+if 'gamecrown' in ARGS:
+    _full = list(TG['branches'])
+    _rings = dict(TG['RINGS'])
+    TG['RINGS'].update({0: 6, 1: 5, 2: 3, 3: 3, 4: 3})
+    for _lv, _mx in ((0, 2), (1, 1)):
+        TG['branches'][:] = [b for b in _full if b[0] <= _mx]
+        _gm = TG['tube_mesh']()
+        _go = bpy.data.objects.new(f'CrownWoodG{_lv}', _gm)
+        bpy.context.scene.collection.objects.link(_go)
+        print('GAMECROWN', _lv, len(_gm.polygons))
+    TG['branches'][:] = _full
+    TG['RINGS'].clear()
+    TG['RINGS'].update(_rings)
 wood = TG['tube_mesh']()
 wo = bpy.data.objects.new('CrownWood', wood)
 bpy.context.scene.collection.objects.link(wo)
@@ -250,6 +263,8 @@ for hx, hy in [(2.0, -17), (3.0, -17.4), (4.1, -17.1)]:
 
 
 def shot(n, loc, tgt, lens, res=(1536, 1024)):
+    if 'norender' in ARGS:
+        return
     bpy.ops.object.camera_add(location=loc)
     c = bpy.context.object
     c.data.lens = lens
@@ -262,3 +277,12 @@ def shot(n, loc, tgt, lens, res=(1536, 1024)):
 
 shot('full', (0, -115, 6), (0, 0, 30), 22)
 shot('base', (6, -40, 2.2), (0, 0, 9), 24)
+
+if 'nocrown' in ARGS:
+    for _n in ('CrownWood', 'CrownLeaves'):
+        if _n in bpy.data.objects:
+            bpy.data.objects.remove(bpy.data.objects[_n], do_unlink=True)
+    bpy.ops.outliner.orphans_purge(do_recursive=True)
+if 'save' in ARGS:
+    bpy.ops.wm.save_as_mainfile(filepath=OUT + f'godtree_{TAG}.blend')
+    print('SAVED', OUT + f'godtree_{TAG}.blend')

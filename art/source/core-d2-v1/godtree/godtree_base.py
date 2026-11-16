@@ -11,6 +11,9 @@ QUICK = 'quick' in ARGS
 TILE = 2.6          # 一張掃描圖覆蓋的實際尺寸 (m)
 AMP = 0.16          # 掃描凹凸做進幾何的深度 (m)
 STEP = 0.10 if QUICK else 0.05
+import os as _osb
+STEP = float(_osb.environ.get('GT_STEP', STEP))
+AMP = float(_osb.environ.get('GT_AMP', AMP))
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
 
@@ -76,7 +79,7 @@ def tube(name, pts, radius, flat, seed, rib=.22, twist=.12, NU=None, up_axis=Non
     NV = len(rings) - 1
     rmax = max((rpos(rings[k][0], k / NV) if rpos else radius(k / NV)) for k in range(0, NV + 1, max(1, NV // 20)))
     if NU is None:
-        NU = int(min(640, max(48, 2 * math.pi * rmax * max(1.0, (fpos(rings[0][0], 0) if fpos else flat(0))) / STEP * .8)))
+        NU = int(min(640, max(int(_osb.environ.get('GT_NUMIN', 48)), 2 * math.pi * rmax * max(1.0, (fpos(rings[0][0], 0) if fpos else flat(0))) / STEP * .8)))
     rep = max(1, round(2 * math.pi * rmax * .8 / TILE))
     bm = bmesh.new()
     uvl = bm.loops.layers.uv.new('UV')
