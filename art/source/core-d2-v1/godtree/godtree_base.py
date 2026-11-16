@@ -4,7 +4,7 @@ from mathutils import Vector, noise
 
 TEX = 'D:/chengtian/4-素材與快取/polyhaven-bark/'
 OUT = 'D:/chengtian/4-素材與快取/bark-sample/'
-SET = 'bark_brown_02'
+SET = __import__('os').environ.get('GT_BARK', 'bark_brown_02')
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 TAG = ARGS[0] if ARGS else 'v1'
 QUICK = 'quick' in ARGS
