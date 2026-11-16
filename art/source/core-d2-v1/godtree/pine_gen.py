@@ -74,7 +74,7 @@ TG['PALETTE'] = ((.016, .036, .020), (.026, .055, .030), (.045, .080, .040), (.0
 Z0 = 4.5 if ROUND else 6.0
 z = Z0
 k = 0
-AZ = R.uniform(0, 2 * math.pi)
+AZ = R.uniform(0, 2 * math.pi) if os.environ.get('PINE_SPIRAL') else 0.0
 while z < TH - 1.0:
     f = (z - Z0) / (TH - Z0 - 1.0)
     _o = (1 - .5 * TIDY) * (1.6 * math.sin(z / TH * 3.0 + SEED) * (z / TH) + 3.0 * (z / TH) ** 2)
@@ -89,7 +89,7 @@ while z < TH - 1.0:
         # 往傾斜那一側的枝長一點（不對稱剪影）
         bias = 1 + .35 * math.cos(az - lean)
         d = Vector((math.cos(az), math.sin(az), R.uniform(-.05, .12))).normalized()
-        L = ((PINE_L0 - PINE_L1 * f) if ROUND else (9.5 - 6.0 * f)) * bias * R.uniform(.85, 1.1)
+        L = ((PINE_L0 - PINE_L1 * f) if ROUND else (9.5 - 6.0 * f)) * bias * R.uniform(.8, 1.15)
         TG['grow'](tpos, d, L, .16 - .07 * f, 1, 100 + k)
         k += 1
     AZ += 2.39996
