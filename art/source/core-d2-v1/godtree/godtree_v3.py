@@ -23,7 +23,8 @@ def clamp(v, a=0.0, b=1.0):
 
 
 # ---------------- 六股主幹 ----------------
-NS = 6
+NS = int(_os.environ.get('GT_NS', 6))
+SCALE = float(_os.environ.get('GT_SCALE', 1))
 TW = .055          # 每公尺扭轉的弧度
 ZS = 30.0          # 分枝高度
 SR = 3.3           # 每股粗（半徑）
@@ -195,7 +196,7 @@ TG = {}
 exec(compile(_code, _TG, 'exec'), TG)
 TG['noise'].seed_set(NSEED)
 _sys.argv = _argv
-TG['LEAF_LEN'] = (.28, .40)
+TG['LEAF_LEN'] = (.28 / SCALE ** .5, .40 / SCALE ** .5)
 TG['GOLD'] = (.30, .22, .05)
 TG['LEAF_SP3'] = .14
 TG['LEAF_SP4'] = .07
@@ -245,11 +246,17 @@ print('LEAVES', nleaf, 'TWIGTRIS', len(wood.polygons) * 2)
 for o in objs:
     o.data.materials.append(MAT)
 print('TRIS', sum(len(o.data.polygons) * 2 for o in objs))
+if SCALE != 1:
+    from mathutils import Matrix as _M
+    for _o in bpy.data.objects:
+        if _o.type == 'MESH':
+            _o.data.transform(_M.Scale(SCALE, 4))
 
 # 地面、霧、光、相機：沿用 base 的設定，改相機與人
 tail = tail.replace("primitive_grid_add(x_subdivisions=300, y_subdivisions=300, size=90)", "primitive_grid_add(x_subdivisions=500, y_subdivisions=500, size=200)")
 tail = tail.replace("primitive_grid_add(x_subdivisions=400, y_subdivisions=400, size=130)", "primitive_grid_add(x_subdivisions=500, y_subdivisions=500, size=200)")
 tail = tail.replace("fog.scale = (160, 160, 50)", "fog.scale = (240, 240, 90)").replace("vol.inputs['Density'].default_value = .0055", "vol.inputs['Density'].default_value = .0013")
+tail = tail.replace('v.co.z = gh(p.x, p.y)', 'v.co.z = gh(p.x / SCALE, p.y / SCALE) * SCALE')
 cam_part = tail[tail.index('# 1.75 m 人形尺'):]
 tail = tail[:tail.index('# 1.75 m 人形尺')]
 exec(compile(tail, BASE, 'exec'))
@@ -258,7 +265,8 @@ hmat = bpy.data.materials.new('Human')
 hmat.use_nodes = True
 next(n for n in hmat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED').inputs['Base Color'].default_value = (.75, .72, .66, 1)
 for hx, hy in [(2.0, -17), (3.0, -17.4), (4.1, -17.1)]:
-    bpy.ops.mesh.primitive_cylinder_add(radius=.22, depth=1.75, location=(hx, hy, gh(hx, hy) + .875))
+    hx, hy = hx * SCALE, hy * SCALE
+    bpy.ops.mesh.primitive_cylinder_add(radius=.22, depth=1.75, location=(hx, hy, gh(hx / SCALE, hy / SCALE) * SCALE + .875))
     bpy.context.object.data.materials.append(hmat)
 
 
@@ -275,8 +283,8 @@ def shot(n, loc, tgt, lens, res=(1536, 1024)):
     bpy.ops.render.render(write_still=True)
 
 
-shot('full', (0, -115, 6), (0, 0, 30), 22)
-shot('base', (6, -40, 2.2), (0, 0, 9), 24)
+shot('full', (0, -115 * SCALE, 6 * SCALE), (0, 0, 30 * SCALE), 22)
+shot('base', (6 * SCALE, -40 * SCALE, 2.2), (0, 0, 9 * SCALE), 24)
 
 if 'nocrown' in ARGS:
     for _n in ('CrownWood', 'CrownLeaves'):

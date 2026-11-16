@@ -240,7 +240,7 @@ def bark_material():
 
 
 MAT = bark_material()
-R = random.Random(7)
+R = random.Random(int(_osb.environ.get('GT_RSEED', 7)))
 objs = []
 
 def gh(x, y):
