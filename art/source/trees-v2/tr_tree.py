@@ -57,15 +57,25 @@ def catmull(pts, per=6):
 
 
 def resample(br, step, nmin=3):
-    """Rings along the branch every ~step metres (at least 3): positions, radii, arc length."""
+    """Rings along the branch every ~step metres (at least 3): positions, radii, arc length.
+    A branch with .collar = (A, s0, lam, nr) gets a branch collar: the radius swells by up to (1 + A) inside its parent and
+    eases back to the plain radius as exp(-(s - s0) / lam) past the parent's surface s0; nr extra rings carry the curve."""
     dense = catmull(br.pts, 8)
     rd = np.interp(np.linspace(0, 1, len(dense)), np.linspace(0, 1, len(br.rads)), br.rads)
     seg = [0.] + [(dense[i] - dense[i - 1]).length for i in range(1, len(dense))]
     s = np.cumsum(seg); L = s[-1]
     n = max(nmin, int(math.ceil(L / step)) + 1)
     ss = np.linspace(0, L, n)
+    col = getattr(br, 'collar', None)
+    if col:
+        A, s0, lam, nr = col
+        add = [s0 + lam * f for f in (0., .6, 1.4, 2.6)[:nr] if s0 + lam * f < L * .6]
+        zone = add[-1] if add else 0.
+        ss = np.array(sorted(set([0.] + add + [float(x) for x in ss if x > zone + .5 * step or x == ss[-1]])))
     pts = [Vector(np.interp(x, s, [p[k] for p in dense]) for k in range(3)) for x in ss]
     rs = np.interp(ss, s, rd)
+    if col:
+        rs = rs * (1 + A * np.exp(-np.maximum(0., ss - s0) / lam))
     return pts, list(rs), list(ss), L
 
 
@@ -94,12 +104,31 @@ class Buf:
                 th = j / sides * 2 * math.pi
                 radial = Nn * math.cos(th) + Bn * math.sin(th)
                 m = br.section(th, ss[i], pts[i]) if br.section else 1.
+                bl = getattr(br, 'bulges', None)
+                if bl:      # the trunk swells toward each big limb just below the fork, so the limb grows out of the trunk
+                    azr = math.atan2(radial.y, radial.x)
+                    m *= 1 + sum(a * math.exp(-((pts[i].z - zf) / w) ** 2) * max(0., math.cos(azr - az)) ** 2 for zf, az, a, w in bl)
                 m *= 1 + .05 * noise.noise(Vector((math.cos(th) * 1.3 + seed, math.sin(th) * 1.3, ss[i] * .9)))
                 p = pts[i] + radial * rs[i] * m
                 if br.kind == 'trunk' and p.z < -.3: p.z = -.3       # the root flare stays inside the 0.3 m burial depth
                 self.v.append(p); self.nrm.append(radial)
                 t = ss[i] / max(L, 1e-6)
-                self.col.append(self.wind(br.w0 + (br.w1 - br.w0) * t, br.phase, p.z))
+                w_ = br.w0 + (br.w1 - br.w0) * t
+                lz = getattr(self, 'still_below', None)     # wood near the ground does not sway (a limb grown from low inside the trunk)
+                if lz: w_ *= min(1., max(0., (p.z - lz) / 1.))
+                self.col.append(self.wind(w_, br.phase, p.z))
+        if getattr(self, 'surface_normals', False):
+            # normals from the displaced surface (strands, burls, swellings shade), blended a little toward the radial
+            # direction so the low-poly facets do not read as hard creases
+            V = lambda i, j: self.v[base + i * cols + (j % sides)]
+            for i in range(n):
+                for j in range(cols):
+                    ts = V(min(i + 1, n - 1), j) - V(max(i - 1, 0), j); tt = V(i, j + 1) - V(i, j - 1)
+                    rad = self.nrm[base + i * cols + j]; nn = tt.cross(ts)
+                    if nn.length < 1e-9: continue
+                    nn = nn.normalized()
+                    if nn.dot(rad) < 0: nn = -nn
+                    self.nrm[base + i * cols + j] = (nn * .8 + rad * .2).normalized()
         tw = getattr(br, 'twist', 0.)       # turns per metre: the bark strips follow a spiralling trunk (u shifts with height)
         for i in range(n - 1):
             o0, o1 = k * tw * ss[i], k * tw * ss[i + 1]

@@ -1,64 +1,244 @@
-INFO species TR01; variants TR01_A_Pine, TR01_B_Pine, TR01_C_CliffPine
+INFO species TR01, TR02, TR03, TR05; variants TR01_A_Pine, TR01_B_Pine, TR01_C_CliffPine, TR02_A_Cypress, TR02_B_Cypress, TR02_C_Cypress, TR03_A_Camphor, TR03_B_Camphor, TR03_C_Camphor, TR05_A_Ginkgo, TR05_B_Ginkgo, TR05_C_Ginkgo
 PASS TR01_A_Pine: LODGroup with LOD0-LOD3, one renderer each (size 19.8 m, transition heights 0.980 / 0.606 / 0.248 / 0.045 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
 PASS TR01_A_Pine: LOD0 59100 triangles (model_info 59100, cap 60000)
-PASS TR01_A_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_A_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_A_Pine: LOD0 'Color' vertex colour on every vertex (129771/129771)
 PASS TR01_A_Pine: LOD0 wind UV1 on every vertex (129771/129771)
 PASS TR01_A_Pine: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.76
 PASS TR01_A_Pine: LOD1 14774 triangles (model_info 14774, cap 15000)
-PASS TR01_A_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_A_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_A_Pine: LOD1 'Color' vertex colour on every vertex (30867/30867)
 PASS TR01_A_Pine: LOD1 wind UV1 on every vertex (30867/30867)
 PASS TR01_A_Pine: LOD2 3772 triangles (model_info 3772, cap 4000)
-PASS TR01_A_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_A_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_A_Pine: LOD2 'Color' vertex colour on every vertex (8226/8226)
 PASS TR01_A_Pine: LOD2 wind UV1 on every vertex (8226/8226)
 PASS TR01_A_Pine: LOD3 4 triangles (model_info 4, cap 200)
-PASS TR01_A_Pine: LOD3 1 material(s), want 1 (M_TR01_Impostor 10)
+PASS TR01_A_Pine: LOD3 1 material(s), want 1 (M_TR01_Impostor 32)
 PASS TR01_A_Pine: height 16.92 m (model_info 16.93 m), roots down to -0.30 m
 PASS TR01_A_Pine: TR01_A_Pine_Collision is a MeshCollider with its renderer hidden
 PASS TR01_B_Pine: LODGroup with LOD0-LOD3, one renderer each (size 16.8 m, transition heights 0.980 / 0.511 / 0.209 / 0.038 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
 PASS TR01_B_Pine: LOD0 59100 triangles (model_info 59100, cap 60000)
-PASS TR01_B_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_B_Pine: LOD0 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_B_Pine: LOD0 'Color' vertex colour on every vertex (134227/134227)
 PASS TR01_B_Pine: LOD0 wind UV1 on every vertex (134227/134227)
 PASS TR01_B_Pine: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.76
 PASS TR01_B_Pine: LOD1 14774 triangles (model_info 14774, cap 15000)
-PASS TR01_B_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_B_Pine: LOD1 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_B_Pine: LOD1 'Color' vertex colour on every vertex (32232/32232)
 PASS TR01_B_Pine: LOD1 wind UV1 on every vertex (32232/32232)
 PASS TR01_B_Pine: LOD2 3940 triangles (model_info 3940, cap 4000)
-PASS TR01_B_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_B_Pine: LOD2 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_B_Pine: LOD2 'Color' vertex colour on every vertex (8946/8946)
 PASS TR01_B_Pine: LOD2 wind UV1 on every vertex (8946/8946)
 PASS TR01_B_Pine: LOD3 4 triangles (model_info 4, cap 200)
-PASS TR01_B_Pine: LOD3 1 material(s), want 1 (M_TR01_Impostor 10)
+PASS TR01_B_Pine: LOD3 1 material(s), want 1 (M_TR01_Impostor 32)
 PASS TR01_B_Pine: height 15.78 m (model_info 15.78 m), roots down to -0.30 m
 PASS TR01_B_Pine: TR01_B_Pine_Collision is a MeshCollider with its renderer hidden
 PASS TR01_C_CliffPine: LODGroup with LOD0-LOD3, one renderer each (size 15.5 m, transition heights 0.980 / 0.475 / 0.194 / 0.036 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
 PASS TR01_C_CliffPine: LOD0 48530 triangles (model_info 48530, cap 60000)
-PASS TR01_C_CliffPine: LOD0 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_C_CliffPine: LOD0 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_C_CliffPine: LOD0 'Color' vertex colour on every vertex (110615/110615)
 PASS TR01_C_CliffPine: LOD0 wind UV1 on every vertex (110615/110615)
 PASS TR01_C_CliffPine: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.76
 PASS TR01_C_CliffPine: LOD1 12260 triangles (model_info 12260, cap 15000)
-PASS TR01_C_CliffPine: LOD1 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_C_CliffPine: LOD1 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_C_CliffPine: LOD1 'Color' vertex colour on every vertex (27101/27101)
 PASS TR01_C_CliffPine: LOD1 wind UV1 on every vertex (27101/27101)
 PASS TR01_C_CliffPine: LOD2 3115 triangles (model_info 3115, cap 4000)
-PASS TR01_C_CliffPine: LOD2 2 material(s), want 2 (M_TR01_Bark 10, M_TR01_Leaves 10)
+PASS TR01_C_CliffPine: LOD2 2 material(s), want 2 (M_TR01_Bark 32, M_TR01_Leaves 32)
 PASS TR01_C_CliffPine: LOD2 'Color' vertex colour on every vertex (7121/7121)
 PASS TR01_C_CliffPine: LOD2 wind UV1 on every vertex (7121/7121)
 PASS TR01_C_CliffPine: LOD3 4 triangles (model_info 4, cap 200)
-PASS TR01_C_CliffPine: LOD3 1 material(s), want 1 (M_TR01_Impostor 10)
+PASS TR01_C_CliffPine: LOD3 1 material(s), want 1 (M_TR01_Impostor 32)
 PASS TR01_C_CliffPine: height 14.61 m (model_info 14.61 m), roots down to -0.30 m
 PASS TR01_C_CliffPine: TR01_C_CliffPine_Collision is a MeshCollider with its renderer hidden
+PASS TR02_A_Cypress: LODGroup with LOD0-LOD3, one renderer each (size 14.1 m, transition heights 0.980 / 0.430 / 0.176 / 0.032 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR02_A_Cypress: LOD0 118197 triangles (model_info 118197, cap 120000)
+PASS TR02_A_Cypress: LOD0 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_A_Cypress: LOD0 'Color' vertex colour on every vertex (144520/144520)
+PASS TR02_A_Cypress: LOD0 wind UV1 on every vertex (144520/144520)
+PASS TR02_A_Cypress: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.70
+PASS TR02_A_Cypress: LOD1 14772 triangles (model_info 14772, cap 15000)
+PASS TR02_A_Cypress: LOD1 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_A_Cypress: LOD1 'Color' vertex colour on every vertex (17144/17144)
+PASS TR02_A_Cypress: LOD1 wind UV1 on every vertex (17144/17144)
+PASS TR02_A_Cypress: LOD2 3940 triangles (model_info 3940, cap 4000)
+PASS TR02_A_Cypress: LOD2 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_A_Cypress: LOD2 'Color' vertex colour on every vertex (4714/4714)
+PASS TR02_A_Cypress: LOD2 wind UV1 on every vertex (4714/4714)
+PASS TR02_A_Cypress: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR02_A_Cypress: LOD3 1 material(s), want 1 (M_TR02_Impostor 21)
+PASS TR02_A_Cypress: height 13.69 m (model_info 13.69 m), roots down to -0.30 m
+PASS TR02_A_Cypress: TR02_A_Cypress_Collision is a MeshCollider with its renderer hidden
+PASS TR02_B_Cypress: LODGroup with LOD0-LOD3, one renderer each (size 13.0 m, transition heights 0.980 / 0.398 / 0.163 / 0.030 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR02_B_Cypress: LOD0 118192 triangles (model_info 118192, cap 120000)
+PASS TR02_B_Cypress: LOD0 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_B_Cypress: LOD0 'Color' vertex colour on every vertex (144786/144786)
+PASS TR02_B_Cypress: LOD0 wind UV1 on every vertex (144786/144786)
+PASS TR02_B_Cypress: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.69
+PASS TR02_B_Cypress: LOD1 14730 triangles (model_info 14730, cap 15000)
+PASS TR02_B_Cypress: LOD1 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_B_Cypress: LOD1 'Color' vertex colour on every vertex (17236/17236)
+PASS TR02_B_Cypress: LOD1 wind UV1 on every vertex (17236/17236)
+PASS TR02_B_Cypress: LOD2 3937 triangles (model_info 3937, cap 4000)
+PASS TR02_B_Cypress: LOD2 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_B_Cypress: LOD2 'Color' vertex colour on every vertex (4727/4727)
+PASS TR02_B_Cypress: LOD2 wind UV1 on every vertex (4727/4727)
+PASS TR02_B_Cypress: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR02_B_Cypress: LOD3 1 material(s), want 1 (M_TR02_Impostor 21)
+PASS TR02_B_Cypress: height 12.62 m (model_info 12.62 m), roots down to -0.30 m
+PASS TR02_B_Cypress: TR02_B_Cypress_Collision is a MeshCollider with its renderer hidden
+PASS TR02_C_Cypress: LODGroup with LOD0-LOD3, one renderer each (size 12.5 m, transition heights 0.980 / 0.381 / 0.156 / 0.029 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR02_C_Cypress: LOD0 117909 triangles (model_info 117909, cap 120000)
+PASS TR02_C_Cypress: LOD0 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_C_Cypress: LOD0 'Color' vertex colour on every vertex (144597/144597)
+PASS TR02_C_Cypress: LOD0 wind UV1 on every vertex (144597/144597)
+PASS TR02_C_Cypress: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.69
+PASS TR02_C_Cypress: LOD1 14772 triangles (model_info 14772, cap 15000)
+PASS TR02_C_Cypress: LOD1 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_C_Cypress: LOD1 'Color' vertex colour on every vertex (17284/17284)
+PASS TR02_C_Cypress: LOD1 wind UV1 on every vertex (17284/17284)
+PASS TR02_C_Cypress: LOD2 3817 triangles (model_info 3817, cap 4000)
+PASS TR02_C_Cypress: LOD2 2 material(s), want 2 (M_TR02_Bark 21, M_TR02_Leaves 21)
+PASS TR02_C_Cypress: LOD2 'Color' vertex colour on every vertex (4573/4573)
+PASS TR02_C_Cypress: LOD2 wind UV1 on every vertex (4573/4573)
+PASS TR02_C_Cypress: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR02_C_Cypress: LOD3 1 material(s), want 1 (M_TR02_Impostor 21)
+PASS TR02_C_Cypress: height 12.09 m (model_info 12.09 m), roots down to -0.30 m
+PASS TR02_C_Cypress: TR02_C_Cypress_Collision is a MeshCollider with its renderer hidden
+PASS TR03_A_Camphor: LODGroup with LOD0-LOD3, one renderer each (size 23.0 m, transition heights 0.980 / 0.703 / 0.287 / 0.053 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR03_A_Camphor: LOD0 118088 triangles (model_info 118088, cap 120000)
+PASS TR03_A_Camphor: LOD0 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_A_Camphor: LOD0 'Color' vertex colour on every vertex (135073/135073)
+PASS TR03_A_Camphor: LOD0 wind UV1 on every vertex (135073/135073)
+PASS TR03_A_Camphor: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.70
+PASS TR03_A_Camphor: LOD1 14682 triangles (model_info 14682, cap 15000)
+PASS TR03_A_Camphor: LOD1 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_A_Camphor: LOD1 'Color' vertex colour on every vertex (15337/15337)
+PASS TR03_A_Camphor: LOD1 wind UV1 on every vertex (15337/15337)
+PASS TR03_A_Camphor: LOD2 3835 triangles (model_info 3835, cap 4000)
+PASS TR03_A_Camphor: LOD2 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_A_Camphor: LOD2 'Color' vertex colour on every vertex (4464/4464)
+PASS TR03_A_Camphor: LOD2 wind UV1 on every vertex (4464/4464)
+PASS TR03_A_Camphor: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR03_A_Camphor: LOD3 1 material(s), want 1 (M_TR03_Impostor 21)
+PASS TR03_A_Camphor: height 15.94 m (model_info 15.94 m), roots down to -0.30 m
+PASS TR03_A_Camphor: TR03_A_Camphor_Collision is a MeshCollider with its renderer hidden
+PASS TR03_B_Camphor: LODGroup with LOD0-LOD3, one renderer each (size 21.8 m, transition heights 0.980 / 0.666 / 0.272 / 0.050 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR03_B_Camphor: LOD0 117938 triangles (model_info 117938, cap 120000)
+PASS TR03_B_Camphor: LOD0 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_B_Camphor: LOD0 'Color' vertex colour on every vertex (135085/135085)
+PASS TR03_B_Camphor: LOD0 wind UV1 on every vertex (135085/135085)
+PASS TR03_B_Camphor: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.70
+PASS TR03_B_Camphor: LOD1 14606 triangles (model_info 14606, cap 15000)
+PASS TR03_B_Camphor: LOD1 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_B_Camphor: LOD1 'Color' vertex colour on every vertex (15589/15589)
+PASS TR03_B_Camphor: LOD1 wind UV1 on every vertex (15589/15589)
+PASS TR03_B_Camphor: LOD2 3710 triangles (model_info 3710, cap 4000)
+PASS TR03_B_Camphor: LOD2 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_B_Camphor: LOD2 'Color' vertex colour on every vertex (4366/4366)
+PASS TR03_B_Camphor: LOD2 wind UV1 on every vertex (4366/4366)
+PASS TR03_B_Camphor: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR03_B_Camphor: LOD3 1 material(s), want 1 (M_TR03_Impostor 21)
+PASS TR03_B_Camphor: height 14.95 m (model_info 14.95 m), roots down to -0.30 m
+PASS TR03_B_Camphor: TR03_B_Camphor_Collision is a MeshCollider with its renderer hidden
+PASS TR03_C_Camphor: LODGroup with LOD0-LOD3, one renderer each (size 22.4 m, transition heights 0.980 / 0.684 / 0.280 / 0.051 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR03_C_Camphor: LOD0 117814 triangles (model_info 117814, cap 120000)
+PASS TR03_C_Camphor: LOD0 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_C_Camphor: LOD0 'Color' vertex colour on every vertex (135091/135091)
+PASS TR03_C_Camphor: LOD0 wind UV1 on every vertex (135091/135091)
+PASS TR03_C_Camphor: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.70
+PASS TR03_C_Camphor: LOD1 14772 triangles (model_info 14772, cap 15000)
+PASS TR03_C_Camphor: LOD1 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_C_Camphor: LOD1 'Color' vertex colour on every vertex (15840/15840)
+PASS TR03_C_Camphor: LOD1 wind UV1 on every vertex (15840/15840)
+PASS TR03_C_Camphor: LOD2 3939 triangles (model_info 3939, cap 4000)
+PASS TR03_C_Camphor: LOD2 2 material(s), want 2 (M_TR03_Bark 21, M_TR03_Leaves 21)
+PASS TR03_C_Camphor: LOD2 'Color' vertex colour on every vertex (4674/4674)
+PASS TR03_C_Camphor: LOD2 wind UV1 on every vertex (4674/4674)
+PASS TR03_C_Camphor: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR03_C_Camphor: LOD3 1 material(s), want 1 (M_TR03_Impostor 21)
+PASS TR03_C_Camphor: height 15.17 m (model_info 15.17 m), roots down to -0.30 m
+PASS TR03_C_Camphor: TR03_C_Camphor_Collision is a MeshCollider with its renderer hidden
+PASS TR05_A_Ginkgo: LODGroup with LOD0-LOD3, one renderer each (size 15.5 m, transition heights 0.980 / 0.472 / 0.193 / 0.035 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR05_A_Ginkgo: LOD0 79616 triangles (model_info 79616, cap 120000)
+PASS TR05_A_Ginkgo: LOD0 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_A_Ginkgo: LOD0 'Color' vertex colour on every vertex (90902/90902)
+PASS TR05_A_Ginkgo: LOD0 wind UV1 on every vertex (90902/90902)
+PASS TR05_A_Ginkgo: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.67
+PASS TR05_A_Ginkgo: LOD1 10508 triangles (model_info 10508, cap 15000)
+PASS TR05_A_Ginkgo: LOD1 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_A_Ginkgo: LOD1 'Color' vertex colour on every vertex (11980/11980)
+PASS TR05_A_Ginkgo: LOD1 wind UV1 on every vertex (11980/11980)
+PASS TR05_A_Ginkgo: LOD2 2774 triangles (model_info 2774, cap 4000)
+PASS TR05_A_Ginkgo: LOD2 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_A_Ginkgo: LOD2 'Color' vertex colour on every vertex (3244/3244)
+PASS TR05_A_Ginkgo: LOD2 wind UV1 on every vertex (3244/3244)
+PASS TR05_A_Ginkgo: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR05_A_Ginkgo: LOD3 1 material(s), want 1 (M_TR05_Impostor 21)
+PASS TR05_A_Ginkgo: height 15.01 m (model_info 15.01 m), roots down to -0.30 m
+PASS TR05_A_Ginkgo: TR05_A_Ginkgo_Collision is a MeshCollider with its renderer hidden
+PASS TR05_B_Ginkgo: LODGroup with LOD0-LOD3, one renderer each (size 13.7 m, transition heights 0.980 / 0.417 / 0.171 / 0.031 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR05_B_Ginkgo: LOD0 79786 triangles (model_info 79786, cap 120000)
+PASS TR05_B_Ginkgo: LOD0 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_B_Ginkgo: LOD0 'Color' vertex colour on every vertex (91425/91425)
+PASS TR05_B_Ginkgo: LOD0 wind UV1 on every vertex (91425/91425)
+PASS TR05_B_Ginkgo: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.67
+PASS TR05_B_Ginkgo: LOD1 10410 triangles (model_info 10410, cap 15000)
+PASS TR05_B_Ginkgo: LOD1 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_B_Ginkgo: LOD1 'Color' vertex colour on every vertex (11944/11944)
+PASS TR05_B_Ginkgo: LOD1 wind UV1 on every vertex (11944/11944)
+PASS TR05_B_Ginkgo: LOD2 2751 triangles (model_info 2751, cap 4000)
+PASS TR05_B_Ginkgo: LOD2 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_B_Ginkgo: LOD2 'Color' vertex colour on every vertex (3235/3235)
+PASS TR05_B_Ginkgo: LOD2 wind UV1 on every vertex (3235/3235)
+PASS TR05_B_Ginkgo: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR05_B_Ginkgo: LOD3 1 material(s), want 1 (M_TR05_Impostor 21)
+PASS TR05_B_Ginkgo: height 13.26 m (model_info 13.26 m), roots down to -0.30 m
+PASS TR05_B_Ginkgo: TR05_B_Ginkgo_Collision is a MeshCollider with its renderer hidden
+PASS TR05_C_Ginkgo: LODGroup with LOD0-LOD3, one renderer each (size 16.3 m, transition heights 0.980 / 0.496 / 0.203 / 0.037 for 35 / 90 / 220 / 1200 m at LOD bias 2.0)
+PASS TR05_C_Ginkgo: LOD0 79490 triangles (model_info 79490, cap 120000)
+PASS TR05_C_Ginkgo: LOD0 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_C_Ginkgo: LOD0 'Color' vertex colour on every vertex (90760/90760)
+PASS TR05_C_Ginkgo: LOD0 wind UV1 on every vertex (90760/90760)
+PASS TR05_C_Ginkgo: wind weight (UV1 u): bark below 2 m <= 0.00 (trunk 0), leaves >= 0.67
+PASS TR05_C_Ginkgo: LOD1 10446 triangles (model_info 10446, cap 15000)
+PASS TR05_C_Ginkgo: LOD1 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_C_Ginkgo: LOD1 'Color' vertex colour on every vertex (11949/11949)
+PASS TR05_C_Ginkgo: LOD1 wind UV1 on every vertex (11949/11949)
+PASS TR05_C_Ginkgo: LOD2 2786 triangles (model_info 2786, cap 4000)
+PASS TR05_C_Ginkgo: LOD2 2 material(s), want 2 (M_TR05_Bark 21, M_TR05_Leaves 21)
+PASS TR05_C_Ginkgo: LOD2 'Color' vertex colour on every vertex (3251/3251)
+PASS TR05_C_Ginkgo: LOD2 wind UV1 on every vertex (3251/3251)
+PASS TR05_C_Ginkgo: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR05_C_Ginkgo: LOD3 1 material(s), want 1 (M_TR05_Impostor 21)
+PASS TR05_C_Ginkgo: height 15.70 m (model_info 15.70 m), roots down to -0.30 m
+PASS TR05_C_Ginkgo: TR05_C_Ginkgo_Collision is a MeshCollider with its renderer hidden
 PASS TR01_A_Pine: a walker heading at the trunk stops at it (1.04 m from the trunk axis, trunk collider radius 0.77 m)
 PASS TR01_A_Pine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
 PASS TR01_B_Pine: a walker heading at the trunk stops at it (0.85 m from the trunk axis, trunk collider radius 0.58 m)
 PASS TR01_B_Pine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
 PASS TR01_C_CliffPine: a walker heading at the trunk stops at it (0.67 m from the trunk axis, trunk collider radius 0.40 m)
 PASS TR01_C_CliffPine: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR02_A_Cypress: a walker heading at the trunk stops at it (1.01 m from the trunk axis, trunk collider radius 0.74 m)
+PASS TR02_A_Cypress: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR02_B_Cypress: a walker heading at the trunk stops at it (0.90 m from the trunk axis, trunk collider radius 0.63 m)
+PASS TR02_B_Cypress: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR02_C_Cypress: a walker heading at the trunk stops at it (1.13 m from the trunk axis, trunk collider radius 0.86 m)
+PASS TR02_C_Cypress: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR03_A_Camphor: a walker heading at the trunk stops at it (1.38 m from the trunk axis, trunk collider radius 1.11 m)
+PASS TR03_A_Camphor: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR03_B_Camphor: a walker heading at the trunk stops at it (1.32 m from the trunk axis, trunk collider radius 1.05 m)
+PASS TR03_B_Camphor: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR03_C_Camphor: a walker heading at the trunk stops at it (1.35 m from the trunk axis, trunk collider radius 1.08 m)
+PASS TR03_C_Camphor: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR05_A_Ginkgo: a walker heading at the trunk stops at it (0.76 m from the trunk axis, trunk collider radius 0.49 m)
+PASS TR05_A_Ginkgo: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR05_B_Ginkgo: a walker heading at the trunk stops at it (0.76 m from the trunk axis, trunk collider radius 0.49 m)
+PASS TR05_B_Ginkgo: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR05_C_Ginkgo: a walker heading at the trunk stops at it (0.71 m from the trunk axis, trunk collider radius 0.44 m)
+PASS TR05_C_Ginkgo: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
 SHOT TR01_A_Pine_front
 SHOT TR01_A_Pine_three_quarter
 SHOT TR01_A_Pine_under_crown_eye_1p7
@@ -92,6 +272,108 @@ SHOT TR01_C_CliffPine_far_20m
 INFO TR01_C_CliffPine: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
 SHOT TR01_C_CliffPine_far_60m
 INFO TR01_C_CliffPine: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR02_A_Cypress_front
+SHOT TR02_A_Cypress_three_quarter
+SHOT TR02_A_Cypress_under_crown_eye_1p7
+SHOT TR02_A_Cypress_LOD0
+SHOT TR02_A_Cypress_LOD1
+SHOT TR02_A_Cypress_LOD2
+SHOT TR02_A_Cypress_LOD3
+SHOT TR02_A_Cypress_far_20m
+INFO TR02_A_Cypress: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR02_A_Cypress_far_60m
+INFO TR02_A_Cypress: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR02_B_Cypress_front
+SHOT TR02_B_Cypress_three_quarter
+SHOT TR02_B_Cypress_under_crown_eye_1p7
+SHOT TR02_B_Cypress_LOD0
+SHOT TR02_B_Cypress_LOD1
+SHOT TR02_B_Cypress_LOD2
+SHOT TR02_B_Cypress_LOD3
+SHOT TR02_B_Cypress_far_20m
+INFO TR02_B_Cypress: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR02_B_Cypress_far_60m
+INFO TR02_B_Cypress: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR02_C_Cypress_front
+SHOT TR02_C_Cypress_three_quarter
+SHOT TR02_C_Cypress_under_crown_eye_1p7
+SHOT TR02_C_Cypress_LOD0
+SHOT TR02_C_Cypress_LOD1
+SHOT TR02_C_Cypress_LOD2
+SHOT TR02_C_Cypress_LOD3
+SHOT TR02_C_Cypress_far_20m
+INFO TR02_C_Cypress: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR02_C_Cypress_far_60m
+INFO TR02_C_Cypress: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR03_A_Camphor_front
+SHOT TR03_A_Camphor_three_quarter
+SHOT TR03_A_Camphor_under_crown_eye_1p7
+SHOT TR03_A_Camphor_LOD0
+SHOT TR03_A_Camphor_LOD1
+SHOT TR03_A_Camphor_LOD2
+SHOT TR03_A_Camphor_LOD3
+SHOT TR03_A_Camphor_far_20m
+INFO TR03_A_Camphor: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_A_Camphor_far_60m
+INFO TR03_A_Camphor: at 60 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_B_Camphor_front
+SHOT TR03_B_Camphor_three_quarter
+SHOT TR03_B_Camphor_under_crown_eye_1p7
+SHOT TR03_B_Camphor_LOD0
+SHOT TR03_B_Camphor_LOD1
+SHOT TR03_B_Camphor_LOD2
+SHOT TR03_B_Camphor_LOD3
+SHOT TR03_B_Camphor_far_20m
+INFO TR03_B_Camphor: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_B_Camphor_far_60m
+INFO TR03_B_Camphor: at 60 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_C_Camphor_front
+SHOT TR03_C_Camphor_three_quarter
+SHOT TR03_C_Camphor_under_crown_eye_1p7
+SHOT TR03_C_Camphor_LOD0
+SHOT TR03_C_Camphor_LOD1
+SHOT TR03_C_Camphor_LOD2
+SHOT TR03_C_Camphor_LOD3
+SHOT TR03_C_Camphor_far_20m
+INFO TR03_C_Camphor: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR03_C_Camphor_far_60m
+INFO TR03_C_Camphor: at 60 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_A_Ginkgo_front
+SHOT TR05_A_Ginkgo_three_quarter
+SHOT TR05_A_Ginkgo_under_crown_eye_1p7
+SHOT TR05_A_Ginkgo_LOD0
+SHOT TR05_A_Ginkgo_LOD1
+SHOT TR05_A_Ginkgo_LOD2
+SHOT TR05_A_Ginkgo_LOD3
+SHOT TR05_A_Ginkgo_far_20m
+INFO TR05_A_Ginkgo: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_A_Ginkgo_far_60m
+INFO TR05_A_Ginkgo: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR05_B_Ginkgo_front
+SHOT TR05_B_Ginkgo_three_quarter
+SHOT TR05_B_Ginkgo_under_crown_eye_1p7
+SHOT TR05_B_Ginkgo_LOD0
+SHOT TR05_B_Ginkgo_LOD1
+SHOT TR05_B_Ginkgo_LOD2
+SHOT TR05_B_Ginkgo_LOD3
+SHOT TR05_B_Ginkgo_far_20m
+INFO TR05_B_Ginkgo: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_B_Ginkgo_far_60m
+INFO TR05_B_Ginkgo: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR05_C_Ginkgo_front
+SHOT TR05_C_Ginkgo_three_quarter
+SHOT TR05_C_Ginkgo_under_crown_eye_1p7
+SHOT TR05_C_Ginkgo_LOD0
+SHOT TR05_C_Ginkgo_LOD1
+SHOT TR05_C_Ginkgo_LOD2
+SHOT TR05_C_Ginkgo_LOD3
+SHOT TR05_C_Ginkgo_far_20m
+INFO TR05_C_Ginkgo: at 20 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_C_Ginkgo_far_60m
+INFO TR05_C_Ginkgo: at 60 m the LODGroup shows LOD1 (LOD bias 2.00)
 SHOT TR01_lineup_with_1p75m
+SHOT TR02_lineup_with_1p75m
+SHOT TR03_lineup_with_1p75m
+SHOT TR05_lineup_with_1p75m
 
 Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

@@ -1,7 +1,7 @@
 """trees-v2 review renders (Cycles). Same sun and sky for every view, so versions compare like for like.
 
   blender --background <blend> --python art/source/trees-v2/preview_trees_v2.py -- <out_dir> <asset id> [view ...]
-views: front l35 r35 sil_front sil_r35 sil_top grey wire under far20 far60 lods scale  (default: all)
+views: front l35 r35 sil_front sil_r35 sil_top grey wire under joint far20 far60 lods scale  (default: all)
 """
 import bpy, sys, math
 from pathlib import Path
@@ -9,7 +9,7 @@ from mathutils import Vector
 
 argv = sys.argv[sys.argv.index('--') + 1:]
 OUT = Path(argv[0]); OUT.mkdir(parents=True, exist_ok=True); AID = argv[1]
-VIEWS = argv[2:] or ['front', 'l35', 'r35', 'sil_front', 'sil_r35', 'sil_top', 'grey', 'wire', 'under', 'far20', 'far60', 'lods', 'scale']
+VIEWS = argv[2:] or ['front', 'l35', 'r35', 'sil_front', 'sil_r35', 'sil_top', 'grey', 'wire', 'under', 'joint', 'far20', 'far60', 'lods', 'scale']
 sc = bpy.context.scene
 
 
@@ -150,6 +150,9 @@ for v in VIEWS:
     elif v == 'under':
         ground(True); a = lo.z
         loc = (ctr.x + 1.6, ctr.y - 2.4, 1.6); camera(loc, (ctr.x - .5, ctr.y + .5, Ht * .75), 18); setup((1500, 1200)); render(f'{AID}_under_crown')
+    elif v == 'joint':      # where the limbs leave the trunk: textured and grey, 40 deg off the front, about a third up the tree
+        zj = Ht * .3; loc, tg = orbit(40, max(5., Ht * .42), zj * .8, zj + .6); camera(loc, tg, 35); setup((1500, 1200))
+        render(f'{AID}_joint'); override('grey'); render(f'{AID}_joint_grey')
     elif v in ('far20', 'far60'):
         d = 20 if v == 'far20' else 60; k = 0 if d < 35 else 1; obj = lod(k) or L0; only([obj]); ground(True)
         camera((ctr.x, ctr.y - d, 1.7), (ctr.x, ctr.y, Ht * (.5 if d < 35 else .4)), 35); setup((1920, 1080), 64)

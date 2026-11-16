@@ -80,7 +80,7 @@ namespace YunJing.Editor
             var gm = new Material(Shader.Find("Universal Render Pipeline/Lit")); gm.SetColor("_BaseColor", new Color(.34f, .36f, .24f)); gm.SetFloat("_Smoothness", .05f);
             ground.GetComponent<Renderer>().sharedMaterial = gm;
             var placed = new Dictionary<string, GameObject>();
-            for (int i = 0; i < ids.Length; i++) { var go = Place(ids[i], new Vector3(100 + i * 150, 0, 400)); placed[ids[i]] = go; Verify(ids[i], go); }
+            for (int i = 0; i < ids.Length; i++) { var go = Place(ids[i], new Vector3(-500 + i * 90, 0, 400)); placed[ids[i]] = go; Verify(ids[i], go); }
             Physics.SyncTransforms();
             foreach (var id in ids) Walks(id, placed[id]);
             foreach (var id in ids) Shots(id, placed[id]);

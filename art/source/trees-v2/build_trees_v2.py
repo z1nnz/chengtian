@@ -34,6 +34,12 @@ LOD_SWITCH_M = [35, 90, 220, 1200]      # suggested: LOD0->1, 1->2, 2->3, 3->cul
 SPECIES = {
     'TR01': dict(module='tv2_pine', zh='松', half=False, height=(12., 18.),
                  slot={'A': 'D2 外圈主林、A1、A4', 'B': 'D2 外圈主林、A1、A4', 'C': 'B1 崖邊'}),
+    'TR02': dict(module='tv2_cypress', zh='柏', half=False, height=(10., 14.),
+                 slot={'A': 'D1、D2、D4 古林', 'B': 'D1、D2、D4 古林', 'C': 'D1、D2、D4 古林'}),
+    'TR03': dict(module='tv2_camphor', zh='樟', half=False, height=(12., 16.),
+                 slot={'A': 'A1 院子、林緣', 'B': 'A1 院子、林緣', 'C': 'A1 院子、林緣'}),
+    'TR05': dict(module='tv2_ginkgo', zh='銀杏', half=False, height=(12., 18.),
+                 slot={'A': 'A1 院子一棵、D3', 'B': 'A1 院子一棵、D3', 'C': 'A1 院子一棵、D3'}),
 }
 WORK_PACK = '2026-11-14 樹木重做 v2：照天空島世界樹的做法（B：針葉和大喬木）'
 
@@ -243,7 +249,8 @@ def main():
         lo0 = b['lods'][0]; ws = [Vector(c) for c in lo0.bound_box]
         lo = Vector([min(v[i] for v in ws) for i in range(3)]); hi = Vector([max(v[i] for v in ws) for i in range(3)])
         co, rc = b['coll']; st = b['stats']
-        budget = {f'LOD{l}': dict(triangles=st[l]['tris'], cap=CAPS[l], objects=1, materials=len([m for m in b['lods'][l].data.materials if m]),
+        caps = {**CAPS, **getattr(mod, 'LOD_CAP', {})}
+        budget = {f'LOD{l}': dict(triangles=st[l]['tris'], cap=caps[l], objects=1, materials=len([m for m in b['lods'][l].data.materials if m]),
                                   wood_triangles=st[l].get('wood', 0), leaf_blades=st[l].get('leaves', 0)) for l in range(4)}
         sk = b['sk']
         info = dict(asset=aid, version=VER, minTier='low', name_zh=mod.ZH[var], species=sp, species_zh=spc['zh'], slot=spc['slot'][var],
@@ -266,7 +273,7 @@ def main():
                     status=dict(Exported=True, Imported='未驗', Visually_Verified='未驗', In_game_Verified='未驗'))
         (d / 'model_info.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
         checks = {
-            'lod_caps': all(budget[f'LOD{l}']['triangles'] <= CAPS[l] for l in range(4)),
+            'lod_caps': all(budget[f'LOD{l}']['triangles'] <= caps[l] for l in range(4)),
             'height_in_range': spc['height'][0] <= hi.z <= spc['height'][1],
             'origin_ground': abs(lo.z + .3) < .05,
             'anchors_12_20': 12 <= st[0]['anchors'] <= 20,

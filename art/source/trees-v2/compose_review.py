@@ -44,7 +44,8 @@ def main():
     fronts = []
     for aid in ids:
         s = src / aid; o = out / aid; o.mkdir(parents=True, exist_ok=True)
-        for f in s.glob('*.png'): shutil.copy2(f, o / f.name)
+        if s.resolve() != o.resolve():
+            for f in s.glob('*.png'): shutil.copy2(f, o / f.name)
         views = [Image.open(s / f'{aid}_{v}.png') for v in ('front', 'l35', 'r35')]
         std = trim_black(Image.open(STD))
         sheet = row([std] + views, 900)

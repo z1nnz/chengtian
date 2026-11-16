@@ -1,0 +1,141 @@
+{
+  "asset": "TR05_C_Ginkgo",
+  "version": "v002",
+  "built": "2026-11-16 18:07",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "anchors_12_20": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0005,
+    "fbx_vertex_colour": true,
+    "fbx_wind_uv": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR05_C_Ginkgo",
+      "TR05_C_Ginkgo_Collision",
+      "TR05_C_Ginkgo_LOD0",
+      "TR05_C_Ginkgo_LOD1",
+      "TR05_C_Ginkgo_LOD2",
+      "TR05_C_Ginkgo_LOD3"
+    ],
+    "TR05_C_Ginkgo_Collision": {
+      "tris": 28,
+      "min": [
+        -0.423,
+        -0.432,
+        -0.0
+      ],
+      "max": [
+        0.458,
+        0.449,
+        3.0
+      ],
+      "colour_layers": [],
+      "uv_layers": [],
+      "materials": []
+    },
+    "TR05_C_Ginkgo_LOD0": {
+      "tris": 79490,
+      "min": [
+        -3.452,
+        -3.338,
+        -0.3
+      ],
+      "max": [
+        3.469,
+        3.635,
+        15.703
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR05_Bark.003",
+        "M_TR05_Leaves.003"
+      ]
+    },
+    "TR05_C_Ginkgo_LOD1": {
+      "tris": 10446,
+      "min": [
+        -3.536,
+        -3.294,
+        -0.3
+      ],
+      "max": [
+        3.677,
+        3.721,
+        15.756
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR05_Bark.003",
+        "M_TR05_Leaves.003"
+      ]
+    },
+    "TR05_C_Ginkgo_LOD2": {
+      "tris": 2786,
+      "min": [
+        -3.881,
+        -3.498,
+        -0.3
+      ],
+      "max": [
+        4.035,
+        3.966,
+        15.958
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR05_Bark.003",
+        "M_TR05_Leaves.003"
+      ]
+    },
+    "TR05_C_Ginkgo_LOD3": {
+      "tris": 4,
+      "min": [
+        -8.042,
+        -8.051,
+        -0.3
+      ],
+      "max": [
+        8.06,
+        8.051,
+        15.803
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR05_Impostor.003"
+      ]
+    }
+  },
+  "files": {
+    "TR05_C_Ginkgo_v002.fbx": "491c67f69bcdcd7d200466c019b70ae8c4cd5a5273f801a42a453c7f68e3f184",
+    "TR05_C_Ginkgo_v002.glb": "3c67bfa55cf6409778571fb4a1ff4644514bea6de5db4ec8efd17899c0620108"
+  }
+}

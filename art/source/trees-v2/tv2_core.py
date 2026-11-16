@@ -57,20 +57,26 @@ class Buf2(Buf):
     def __init__(self, H):
         super().__init__(H); self.vc = {}
 
-    def leaf(self, center, frame, length, width, rib, colour, occl, tone, wind, phase, nrm_bias=None, bias=0., widest=-.06, rib_at=0.):
+    def leaf(self, center, frame, length, width, rib, colour, occl, tone, wind, phase, nrm_bias=None, bias=0., widest=-.06, rib_at=0., shape=None, tip=.5):
         """One five-vertex solid leaf. frame = (along, side, normal) unit vectors. Outline base, right, tip, left; centre = midrib
         lifted along the normal. `widest` places the side points along the leaf (-0.5 base .. 0.5 tip): about -0.06 for a broad
         leaf, about +0.25 for a needle fan (narrow at the twig, opening toward the tip). Normals: the leaf's own normal bent toward
         nrm_bias (the crown's outward direction) by `bias`, so thousands of leaves shade as one canopy and do not sparkle far away."""
         a, s, n = frame
-        pts = (center - a * length * .5, center + s * width * .5 - n * rib * .4 + a * length * widest,
-               center + a * length * .5, center - s * width * .5 - n * rib * .4 + a * length * widest, center + n * rib + a * length * rib_at)
+        if shape:   # 2026-11-16 (rules relaxed for TR02/03/05): outline base, right side points [(along, half-width share)], tip, left mirror
+            right = [center + s * width * .5 * w - n * rib * .4 * w + a * length * y for y, w in shape]
+            left = [center - s * width * .5 * w - n * rib * .4 * w + a * length * y for y, w in reversed(shape)]
+            pts = (center - a * length * .5, *right, center + a * length * tip, *left, center + n * rib + a * length * rib_at)
+        else:
+            pts = (center - a * length * .5, center + s * width * .5 - n * rib * .4 + a * length * widest,
+                   center + a * length * .5, center - s * width * .5 - n * rib * .4 + a * length * widest, center + n * rib + a * length * rib_at)
+        no = len(pts) - 1
         nn = n if nrm_bias is None else (n * (1 - bias) + nrm_bias * bias).normalized()
         base = len(self.v); u = (tone + .5) / 1.0; uv = (min(.995, max(.005, tone)), min(.98, max(.02, occl)))
         for p in pts:
             self.v.append(p); self.nrm.append(nn); self.col.append(self.wind(wind, phase, p.z)); self.vc[len(self.v) - 1] = (*colour, occl)
-        for k in range(4):
-            self.f.append((base + 4, base + k, base + (k + 1) % 4)); self.fmat.append(1); self.fuv.append((uv, uv, uv))
+        for k in range(no):
+            self.f.append((base + no, base + k, base + (k + 1) % no)); self.fmat.append(1); self.fuv.append((uv, uv, uv))
 
     def needle_pair(self, base, d1, d2, length, width, colour, occl, tone, wind, phase, nrm_bias, bias=.55):
         """One pine fascicle: five vertices, two triangles. Two needles leave a shared base (b) along d1 and d2 (a V, open in 3D);
