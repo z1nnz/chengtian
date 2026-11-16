@@ -39,8 +39,8 @@ NSTR = 3
 objs = []
 for k in range(NSTR):
     ph0 = k * 2 * math.pi / NSTR + .4
-    r_off = [.85, .7, .95][k]
-    thick = [1.0, .8, .9][k]
+    r_off = [.8, .95, .9][k]
+    thick = [1.2, .7, .92][k]
     pts = []
     # 左腳的根：往外、往下鑽
     fa = math.pi + (k - 1) * .75 + R.uniform(-.2, .2)
@@ -86,20 +86,43 @@ for foot, c in ((0, centre(0)), (1, centre(1))):
             pts.append((x, y, z))
         objs.append(tube(f'Foot{foot}_{j}', pts, radius=lambda t, th=th: th * (1 - .85 * t ** .7) + .04, flat=lambda t: 1.0,
                          seed=60 + foot * 10 + j, rib=.24, twist=.1))
-# 繞在拱上的細藤根
-for j in range(3):
-    ph0 = R.uniform(0, 6.3)
+# 嵌在三股之間凹溝裡的小根（跟著大根一起扭），以及半埋在樹皮上斜繞的中等根；兩頭都鑽進木頭裡
+def _fac(t):
+    return .55 + .45 * math.sin(t * math.pi)
+
+
+for k in range(NSTR):
+    ph0 = k * 2 * math.pi / NSTR + .4 + math.pi / NSTR      # 兩股之間
+    r0 = R.uniform(.2, .34)
     pts = []
-    for i in range(22):
-        t = .06 + .88 * i / 21
+    for i in range(26):
+        t = .05 + .9 * i / 25
         c = centre(t)
         d, side, nrm = frame(t)
-        ph = ph0 + t * 2 * math.pi * 1.4
-        w = 1.62
-        p = c + side * math.cos(ph) * w * .8 + nrm * math.sin(ph) * w
-        pts.append(tuple(p))
-    objs.append(tube(f'Liana{j}', pts, radius=lambda t, r0=R.uniform(.07, .14): r0 * (1 - .4 * abs(t - .5)), flat=lambda t: 1.0,
-                     seed=90 + j, rib=.15, twist=.2, NU=14))
+        ph = ph0 + t * 2 * math.pi * 1.15 + .12 * math.sin(i * .9 + k)
+        e = min(1, min(i, 25 - i) / 3)                       # 兩端收進木頭
+        w = (1.18 * _fac(t) + .12) * (.45 + .55 * e)
+        q = c + side * math.cos(ph) * w + nrm * math.sin(ph) * w
+        pts.append(tuple(q))
+    objs.append(tube(f'Groove{k}', pts, radius=lambda t, r0=r0: r0 * (.7 + .3 * math.sin(t * math.pi)) * (1 + .15 * math.sin(t * 31)),
+                     flat=lambda t: 1.0, seed=90 + k, rib=.22, twist=.12))
+for j in range(2):
+    ph0 = R.uniform(0, 6.3)
+    r0 = R.uniform(.32, .46)
+    sgn = -1 if j else 1
+    t0, t1 = (.12, .62) if j == 0 else (.4, .9)
+    pts = []
+    for i in range(22):
+        t = t0 + (t1 - t0) * i / 21
+        c = centre(t)
+        d, side, nrm = frame(t)
+        ph = ph0 + sgn * (i / 21) * 2 * math.pi * .8
+        e = min(1, min(i, 21 - i) / 3)
+        w = (1.5 * _fac(t) + .2) * (.4 + .6 * e)
+        q = c + side * math.cos(ph) * w + nrm * math.sin(ph) * w
+        pts.append(tuple(q))
+    objs.append(tube(f'Wrap{j}', pts, radius=lambda t, r0=r0: r0 * (.6 + .4 * math.sin(t * math.pi)) * (1 + .12 * math.sin(t * 19)),
+                     flat=lambda t: 1.0, seed=96 + j, rib=.24, twist=.1))
 for o in objs:
     o.data.materials.append(MAT)
 print('TRIS', sum(len(o.data.polygons) * 2 for o in objs))
