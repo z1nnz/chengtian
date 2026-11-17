@@ -208,6 +208,8 @@ bpy.ops.mesh.primitive_cylinder_add(radius=.22, depth=1.75, location=(1.2, 1.0, 
 
 
 def shot(n, loc, tgt, lens, res=(1536, 1024)):
+    if 'norender' in ARGS:
+        return
     bpy.ops.object.camera_add(location=loc)
     c = bpy.context.object
     c.data.lens = lens
@@ -220,3 +222,7 @@ def shot(n, loc, tgt, lens, res=(1536, 1024)):
 
 shot('V2', (.5, -15, 1.7), (0, 0, 3.4), 22)
 shot('tq', (-13, -13, 4), (0, 0, 3.2), 28)
+
+if 'save' in ARGS:
+    bpy.ops.wm.save_as_mainfile(filepath=OUT + 'root_arch_' + TAG + '.blend')
+    print('SAVED')

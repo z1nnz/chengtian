@@ -239,6 +239,8 @@ for hx, hy in ((0, -1), (-13, 5.5), (13.5, -2), (12, 5.5)):
 
 
 def shot(n, loc, tgt, lens, res=(1536, 1024)):
+    if 'norender' in ARGS:
+        return
     bpy.ops.object.camera_add(location=loc)
     c = bpy.context.object
     c.data.lens = lens
@@ -254,3 +256,7 @@ shot('wallA', (-11, -1, 1.7), (-17, 9, 2.0), 24)
 shot('log', (-4, -17, 1.7), (-8, -6, 1.0), 26)
 shot('stump', (15, -13, 1.7), (10, -5, 1.2), 28)
 shot('wallC', (11, -2, 1.7), (15, 9, 1.5), 24)
+
+if 'save' in ARGS:
+    bpy.ops.wm.save_as_mainfile(filepath=OUT + 'd2_wood_' + TAG + '.blend')
+    print('SAVED')
