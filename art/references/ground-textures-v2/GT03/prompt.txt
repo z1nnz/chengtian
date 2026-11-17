@@ -1,0 +1,1 @@
+Top-down orthographic fantasy forest-floor terrain material. Dark muted brown woodland soil, small ochre/tan fallen leaves, tiny muted moss patches, fine threadlike roots, very small pebbles; uniform neutral diffuse lighting, no obvious focal point or hard path edge. AI-generated source, then converted into exact seamless maps.
