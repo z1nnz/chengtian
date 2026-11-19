@@ -1,0 +1,1 @@
+Top-down orthographic terrain material: warm-grey exposed bedrock for a fantasy river valley; faint taupe and beige mineral grain, shallow weathered fissures, irregular low-relief planes, tiny moss flecks. No boulders, paving, path edge or directional shadows. AI source then converted to exact seamless Albedo/Normal/MaskURP maps.
