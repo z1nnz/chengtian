@@ -49,7 +49,17 @@ def append(path, want, offset=(0, 0, 0), dz=0.0):
 
 SKIP = lambda n: n in ('Grid', 'Cube') or n.startswith(('Cylinder', 'Camera', 'Sun'))
 # 根拱（原點）
-append(S_ + 'root_arch_lib.blend', lambda n: not SKIP(n), dz=-.25)
+import os as _os
+JOSH = _os.environ.get('ARCH', 'josh') == 'josh'
+if JOSH:   # z1nnz 11/20：入口用 Josh 的 DR01 v006（PR #122）
+    _before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath='D:/chengtian/4-素材與快取/josh-dr01/DR01_RootArch_v006.glb')
+    for _o in set(bpy.data.objects) - _before:
+        if _o.type == 'MESH':
+            _o.location.z += gh(0, 0) - .15
+            _o.location.y += float(_os.environ.get('ARCH_DY', 0))
+else:
+    append(S_ + 'root_arch_lib.blend', lambda n: not SKIP(n), dz=-.25)
 # 神木遊戲版 LOD0
 append(S_ + 'GT01_out/GT01_GodTree_v003.blend', lambda n: n.endswith('_LOD0'), offset=(2, TREE_Y, 0), dz=gh(2, TREE_Y) - .6)
 # 板根牆：A 放左後、C 放右後、B 放左前；倒木放右遠處；樹樁放左遠處
@@ -236,13 +246,13 @@ litter('Litter', R, 1500 if QK else 3000, _place, litter_mat)
 
 # ---------------- 補強：地面苔毯、根腳邊的蕨與成排的蕈、背景古林、苔換亮 ----------------
 gmoss = LeafBuf()
-for i in range(140000 if QK else 220000):
-    x, y = R.uniform(-16, 16), R.uniform(-14, 24)
-    if pmask(x, y) > .35 or fb((x, y, 5), .45, 2) < .02:
+for i in range(420000 if QK else 650000):
+    x, y = R.uniform(-13, 13), R.uniform(-14, 8)
+    if pmask(x, y) > .35 or fb((x, y, 5), .45, 2) < .05:
         continue
     dd = (Vector((0, 0, 1)) + Vector((R.uniform(-.6, .6), R.uniform(-.6, .6), 0))).normalized()
     dd, s2, u2 = _frame(dd)
-    Lm = R.uniform(.06, .14)
+    Lm = R.uniform(.02, .045)
     g = R.uniform(.7, 1.15)
     gmoss.leaf(Vector((x, y, gh(x, y) - .005)), dd, s2, u2, Lm, Lm * .25, shape=lambda u: (1 - u) ** .6, fold=.3, droop=R.uniform(0, .6),
                tint=(g, g, g * .8), nu=2, nv=1)
@@ -262,7 +272,7 @@ for sx_ in (-1, 1):
 spots = [(-30, 28, .42), (-44, 50, .5), (-26, 62, .36), (-52, 78, .5), (-34, 92, .45), (30, 26, .4), (46, 46, .5), (27, 66, .36),
          (54, 80, .5), (36, 96, .44), (-60, 30, .45), (62, 28, .45), (-14, 100, .4), (16, 104, .4), (-22, 44, .3), (24, 44, .3)]
 for k, (x, y, sc_) in enumerate(spots):
-    lod = '_LOD1' if math.hypot(x, y + 15) < 75 else '_LOD2'
+    lod = '_LOD0' if math.hypot(x, y + 15) < 62 else ('_LOD1' if math.hypot(x, y + 15) < 95 else '_LOD2')
     for o in append(S_ + 'GT01_out/GT01_GodTree_v003.blend', lambda n, lod=lod: n.endswith(lod)):
         o.scale = (sc_, sc_, sc_ * R.uniform(.9, 1.15))
         o.rotation_euler.z = R.uniform(0, 6.3)
@@ -271,6 +281,72 @@ for k, (x, y, sc_) in enumerate(spots):
 for o in bpy.data.objects:
     if o.type == 'MESH' and ('moss' in o.name.lower()) and o.data.materials:
         o.data.materials[0] = moss_mat
+
+
+# ---------------- 第三輪：根腳多條小根、拱身苔與葉、泥路水窪與落葉、林隙光束 ----------------
+# 3a 根腳的小根（左右各十條，從拱腿落地處散開，弧線落地再鑽土）
+for sx_ in ((-1, 1) if not JOSH else ()):
+    fx = sx_ * 8.6
+    for j in range(10):
+        a = (math.pi if sx_ < 0 else 0) + R.uniform(-1.9, 1.9)
+        Lr = R.uniform(2.5, 6.5)
+        th = R.uniform(.14, .38)
+        h0 = R.uniform(.5, 1.8)
+        pts = []
+        for i in range(12):
+            t = i / 11
+            ww = math.sin(t * 5 + j) * .5 * t
+            x = fx + math.cos(a) * (.6 + Lr * t) - math.sin(a) * ww
+            y = -.3 + math.sin(a) * (.6 + Lr * t) + math.cos(a) * ww
+            z = gh(x, y) + th * .3 + h0 * max(0, 1 - t / .45) ** 2.2 - (th * 2.5 * ((t - .8) / .2) ** 1.3 if t > .8 else 0)
+            pts.append((x, y, z))
+        o = tube(f'XFoot{sx_}{j}', pts, radius=lambda t, th=th: th * (1 - .85 * t ** .7) + .03, flat=lambda t: 1.0, seed=700 + j + sx_, rib=.24, twist=.1)
+        o.data.materials.append(MAT)
+# 3b 拱身上成片的心形葉（沿拱頂與兩肩）
+AXc, AZc = 5.4, 6.3
+vb2 = LeafBuf()
+for i in range(900 if not JOSH else 0):
+    t = R.uniform(.1, .9)
+    a = math.pi * (1 - t)
+    cx = AXc * math.cos(a) + .5 * math.sin(a * 2)
+    cz = AZc * math.sin(a) ** .85 * (1 - .10 * t) + .3 - .25
+    cy = .9 * math.sin(t * math.pi * 1.3) - .3
+    out = Vector((math.cos(a), 0, math.sin(a))).normalized()
+    side = Vector((0, 1, 0))
+    ang = R.gauss(0, .7)
+    o3 = (out * math.cos(ang) + side * math.sin(ang)).normalized()
+    if o3.z < .05:
+        continue
+    p = Vector((cx, cy, cz)) + o3 * R.uniform(1.75, 2.0)
+    ld = (o3 * .4 + Vector((R.uniform(-1, 1), R.uniform(-1, 1), -.3))).normalized()
+    ld, ls, ln_ = _frame(ld)
+    Ll = R.uniform(.10, .2)
+    g = R.uniform(.8, 1.15)
+    vb2.leaf(p, ld, ls, ln_, Ll, Ll * .5, shape=lambda u: (.55 + .45 * math.sin(math.pi * min(1, u / .5))) * (1 - u) ** .8, fold=.12, curl=.15,
+             droop=.25, tint=(g, g, g), nu=6, nv=4)
+vb2.build('ArchIvy', heart_mat)
+# 4 泥路：水窪（深色、很亮的反光）與路上的落葉
+wm = bpy.data.materials.new('Puddle'); wm.use_nodes = True
+wb = next(n for n in wm.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+wb.inputs['Base Color'].default_value = (.02, .022, .022, 1); wb.inputs['Roughness'].default_value = .03
+for (py_, r1, r2) in [(-12.5, .9, .6), (-7.5, .7, .45), (-3, 1.0, .5), (4, .8, .5)]:
+    px_ = path_x(py_) + R.uniform(-.4, .4)
+    bpy.ops.mesh.primitive_circle_add(vertices=28, radius=1, fill_type='NGON', location=(px_, py_, gh(px_, py_) + .035))
+    o = bpy.context.object
+    for v in o.data.vertices:
+        k = 1 + .25 * fb((v.co.x * 2 + py_, v.co.y * 2, 0), 1, 2)
+        v.co.x *= r1 * k; v.co.y *= r2 * k
+    o.rotation_euler.z = R.uniform(0, 3)
+    o.data.materials.append(wm)
+
+
+def _place2():
+    y = R.uniform(-15, 12)
+    x = path_x(y) + R.uniform(-2.2, 2.2)
+    return (x, y), gh(x, y)
+
+
+litter('PathLitter', R, 500 if QK else 900, _place2, litter_mat)
 
 # ---------------- 光、霧、相機 ----------------
 exec(compile(tail.replace("fog.scale = (160, 160, 50)", "fog.scale = (260, 260, 110)").replace("vol.inputs['Density'].default_value = .0055", "vol.inputs['Density'].default_value = .0026"), BASE, 'exec'))
@@ -286,8 +362,13 @@ for nd in list(FN):
 v2 = FN.new('ShaderNodeVolumePrincipled'); v2.inputs['Density'].default_value = .0045; v2.inputs['Color'].default_value = (.8, .84, .88, 1)
 fm2.node_tree.links.new(v2.outputs[0], next(n for n in FN if n.type == 'OUTPUT_MATERIAL').inputs['Volume'])
 lf.data.materials.append(fm2)
-sc.cycles.samples = 64 if QK else 192
+sc.cycles.samples = 96 if QK else 256
 sc.view_settings.exposure = 1.0
+for o in bpy.data.objects:
+    if o.type == 'LIGHT' and o.data.type == 'SUN':
+        o.data.angle = math.radians(4)
+        o.data.energy = 4.5
+        o.rotation_euler = (math.radians(52), 0, math.radians(215))
 
 
 def shot(nm_, loc, tgt, lens, res=(1820, 1024)):
