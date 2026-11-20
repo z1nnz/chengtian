@@ -12,8 +12,9 @@ SEED = int([a for a in ARGS if a.isdigit()][0]) if any(a.isdigit() for a in ARGS
 R = random.Random(SEED)
 noise.seed_set(SEED)
 tail = src[src.index('# ---------------- 地面'):]
-TH = float(os.environ.get('UP_H', 30.0))          # 樹高
-CR = float(os.environ.get('UP_CR', .30))          # 樹冠佔樹高比例（頂上這一段才有枝）
+TH = float(os.environ.get('UP_H', 25.0))          # 樹高（z1nnz 11/21：30 m 有一點點太高 → 25 m）
+CS = float(os.environ.get('UP_CS', 1.0))          # 樹冠與枝幹的絕對尺寸倍率（1＝v4 的大小，樹變矮時樹冠不跟著縮）
+CR = float(os.environ.get('UP_CR', .36))          # 樹冠佔樹高比例（頂上這一段才有枝）
 PAD = float(os.environ.get('UP_PAD', 1.35))        # 枝長倍率（樹冠寬）
 UP = Vector((0, 0, 1))
 
@@ -37,7 +38,7 @@ for k in range(13):
     z = -0.6 + k * (TH + .6) / 12
     o = toff(z)
     tp.append((lx * o, ly * o, z))
-RB = .55 * TH / 30
+RB = .55 * CS
 trunk = tube('Trunk', tp, radius=lambda t: RB * (1 - .82 * t) + .05 + RB * .9 * max(0, .06 - t) * 10,
              flat=lambda t: 1.0, seed=SEED * 1.7, rib=.08, twist=.04)
 objs.append(trunk)
@@ -77,7 +78,7 @@ def pad(c, hd, rp, kk):
         a = math.atan2(v, u) + R.uniform(-.9, .9)
         out = Vector((math.cos(a), math.sin(a), 0))
         dd = (out * .8 + hd * .2 + UP * R.uniform(.05, .45)).normalized()
-        TG['grow'](p, dd, R.uniform(.55, 1.0) * TH / 30, .014, 4, 20000 + kk * 300 + m)
+        TG['grow'](p, dd, R.uniform(.55, 1.0) * CS, .014, 4, 20000 + kk * 300 + m)
     # 雲片內幾根細枝當骨架
     for m in range(5):
         a = R.uniform(0, 6.283)
@@ -96,7 +97,7 @@ while z < TH - 1.2:
     for j in range(nb):
         az = AZ + j * 2 * math.pi / nb + R.uniform(-.35, .35)
         bias = 1 + .3 * math.cos(az - lean)
-        L = (5.2 - 2.8 * f) * PAD * TH / 30 * bias * R.uniform(.8, 1.15)
+        L = (5.2 - 2.8 * f) * PAD * CS * bias * R.uniform(.8, 1.15)
         hd = Vector((math.cos(az), math.sin(az), 0))
         sd = Vector((-hd.y, hd.x, 0))
         # 主枝：近水平伸出、中段微垂、末端微翹（自己畫，不交給 tree_gen 往上長）
@@ -105,16 +106,16 @@ while z < TH - 1.2:
             t = i / 6
             p = tpos + hd * (L * t) + sd * (math.sin(t * 3 + k) * .35 * t) + UP * (L * (.08 * t - .10 * math.sin(t * math.pi) + .03 * t * t))
             pts.append(tuple(p))
-        r0 = (.20 - .07 * f) * TH / 30
+        r0 = (.20 - .07 * f) * CS
         objs.append(tube(f'Limb{k}', pts, radius=lambda t, r0=r0: r0 * (1 - .75 * t) + .02, flat=lambda t: 1.0, seed=k * 1.3, rib=.04, twist=.02))
         # 枝梢一片平展的雲片：後 45% 段落往水平四周長出短枝與針葉
-        pad(Vector(pts[4]).lerp(Vector(pts[6]), .6), hd, R.uniform(2.4, 3.2) * PAD * TH / 30 * (1 - .25 * f), k)
+        pad(Vector(pts[4]).lerp(Vector(pts[6]), .6), hd, R.uniform(2.4, 3.2) * PAD * CS * (1 - .25 * f), k)
         k += 1
     AZ += 2.39996
     tier += 1
-    z += R.uniform(1.7, 2.5) * TH / 30
+    z += R.uniform(1.7, 2.5) * CS
 # 樹頂：一片平頂雲片，不留尖梢
-pad(Vector(tp[-1]) - UP * .3, Vector((lx, ly, 0)), 2.6 * PAD * TH / 30, 999)
+pad(Vector(tp[-1]) - UP * .3, Vector((lx, ly, 0)), 2.6 * PAD * CS, 999)
 # 下段幾根枯枝殘樁（設定圖裡光幹上的斷枝）
 for i in range(R.randint(3, 5)):
     zz = R.uniform(TH * .35, Z0 - 1)
