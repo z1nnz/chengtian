@@ -15,7 +15,7 @@ noise.seed_set(4)
 for o in list(bpy.data.objects):
     bpy.data.objects.remove(o, do_unlink=True)
 sc = bpy.context.scene
-RW, DEP, OUTR = 2.3, 1.35, 4.6     # 坑口半徑、深度、模型外緣
+RW, DEP, OUTR = 3.4, 1.7, 6.2     # 坑口半徑、深度、模型外緣（z1nnz 11/21：坑不夠大 → 加大）
 
 
 def nz(x, y, s, z=0.0):
@@ -207,7 +207,7 @@ _nt.links.new(_mx.outputs[0], _b.inputs['Base Color'])
 _b.inputs['Roughness'].default_value = .85
 
 clods = bmesh.new()
-for i in range(110):
+for i in range(170):
     a = R.uniform(0, 6.283)
     side = .5 + .5 * math.cos(a - 2.2)
     if R.random() > .35 + .65 * side:
@@ -253,7 +253,7 @@ _mx.inputs[0].default_value = 1
 _mx.inputs[2].default_value = (.55, .42, .30, 1)
 _nt.links.new(_t.outputs['Color'], _mx.inputs[1])
 _nt.links.new(_mx.outputs[0], _b.inputs['Base Color'])
-for i in range(14):
+for i in range(22):
     a = R.uniform(0, 6.283)
     rw = rim(a)
     zz = -R.uniform(.15, .9) * DEP
@@ -288,7 +288,7 @@ cv = bw.verts.new((0, 0, 0))
 ring = []
 for k in range(36):
     a = k / 36 * 6.283
-    rr = .5 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))
+    rr = .75 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))
     ring.append(bw.verts.new((math.cos(a) * rr * 1.3 + .25, math.sin(a) * rr * .85 - .1, 0)))
 for k in range(36):
     bw.faces.new((cv, ring[k], ring[(k + 1) % 36]))

@@ -36,8 +36,14 @@ def seg_d(px, py, a, b):
     return math.hypot(px - ax - t * dx, py - ay - t * dy)
 
 
+# 支路：神木根旁 → 祭壇西側 → 接回主路（設定圖 V5 從神木旁往南看的那條路）
+PATH2 = [(-16, 26), (-8, 15), (-1, 3), (3, -5)]
+
+
 def path_d(x, y):
-    return min(seg_d(x, y, PATH[i], PATH[i + 1]) for i in range(len(PATH) - 1))
+    d1 = min(seg_d(x, y, PATH[i], PATH[i + 1]) for i in range(len(PATH) - 1))
+    d2 = min(seg_d(x, y, PATH2[i], PATH2[i + 1]) for i in range(len(PATH2) - 1)) + .35   # 支路窄一點
+    return min(d1, d2)
 
 
 def fb(x, y, s, o=3):
@@ -58,7 +64,7 @@ def gh(x, y):
     h = gh0(x, y)
     rp = math.hypot(x - PIT[0], y - PIT[1])
     if REAL:   # 坑是獨立模型（CO02）；坑周圍 6 m 內地面整平，讓坑模型平平地鋪上去
-        w = max(0.0, min(1.0, (9.0 - rp) / 3.5))
+        w = max(0.0, min(1.0, (11.5 - rp) / 4.0))
         h = h * (1 - w) + gh0(*PIT) * w
     h -= max(0.0, 1 - path_d(x, y) / 2.2) * .18
     if not REAL:
@@ -244,7 +250,7 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     # 坑（CO02 獨立模型）底下的主地面壓低，不要蓋住坑洞
     _bm = bmesh.new()   # 坑模型底下的主地面挖掉（不能只壓低，斜面會穿進坑裡）
     _bm.from_mesh(me)
-    bmesh.ops.delete(_bm, geom=[f_ for f_ in _bm.faces if math.hypot(f_.calc_center_median().x - PIT[0], f_.calc_center_median().y - PIT[1]) < 3.9], context='FACES')
+    bmesh.ops.delete(_bm, geom=[f_ for f_ in _bm.faces if math.hypot(f_.calc_center_median().x - PIT[0], f_.calc_center_median().y - PIT[1]) < 5.3], context='FACES')
     _bm.to_mesh(me)
     _bm.free()
     with bpy.data.libraries.load(S_ + 'pit_lib.blend', link=False) as (_s, _d):
@@ -252,6 +258,12 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     for o in _d.objects:
         sc.collection.objects.link(o)
         o.location = (PIT[0], PIT[1], o.location.z + gh0(*PIT) + .012)
+        if o.name == 'CO02_Pit':   # 坑外圈沒土的地方改用林床材質，交界才看不出接縫；坑內與鬆土保留坑自己的泥土材質
+            o.data.materials.append(GM)
+            _mk = o.data.color_attributes['Mask'].data
+            for p_ in o.data.polygons:
+                if max(_mk[v_].color[0] for v_ in p_.vertices) < .02:
+                    p_.material_index = 1
 g = bpy.data.objects.new('Ground', me)
 sc.collection.objects.link(g)
 
@@ -424,7 +436,7 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
                 mossify(sl.material, .8, 1.5)
-    mossify(M_BARKR, 1.3, 1.6)
+    mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
 def root_ridge(a, b, r0, r1, m=M_ROOT):
@@ -584,7 +596,7 @@ while len(TREES) < (260 if not QUICK else 120) and tries < 60000:
     if any(math.hypot(x - tx, y - ty) < max(GAP[k], GAP[tk]) * R.uniform(.85, 1.1) for tx, ty, tk, _ in TREES):
         continue
     TREES.append((x, y, k, R.uniform(.85, 1.15)))
-_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-6, 12), (1, 91)]
+_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-9, 17), (1, 91)]
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
@@ -641,41 +653,73 @@ if 'real' in argv:
     stem_mat = bpy.data.materials.new('UG_Stem')
     stem_mat.use_nodes = True
     next(x for x in stem_mat.node_tree.nodes if x.type == 'BSDF_PRINCIPLED').inputs['Base Color'].default_value = (.05, .07, .02, 1)
+    exec(compile(open(S_ + 'weeds.py', encoding='utf-8').read(), S_ + 'weeds.py', 'exec'))
+    WM = weed_materials()
     PR = random.Random(17)
-    UG = []
-    for i in range(8):
-        before = set(bpy.data.objects)
-        if i < 5:
-            fern(f'UGF{i}', Vector((0, 0, 0)), PR, 1.0, fern_mat, stem_mat)
-        else:
-            heart_plant(f'UGH{i}', Vector((0, 0, 0)), PR, 1.0, heart_mat, stem_mat)
-        col = bpy.data.collections.new(f'UG{i}')
-        for o in set(bpy.data.objects) - before:
-            for c_ in list(o.users_collection):
-                c_.objects.unlink(o)
-            col.objects.link(o)
-        UG.append(col)
+    # 樣板：各種雜草多個隨機變體（z1nnz 11/21：重複率太高 → 種類、變體都加多）
+    SPEC_UG = [   # (類別, 建造函式, 變體數, 權重)
+        ('fern', lambda nm, R_: fern(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), fern_mat, stem_mat), 5, .14),
+        ('heart', lambda nm, R_: heart_plant(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), heart_mat, stem_mat), 3, .07),
+        ('grass', lambda nm, R_: grass_tuft(nm, Vector((0, 0, 0)), R_, R_.uniform(.7, 1.3), WM['grass'], dry=R_.choice([0, .3, .7])), 6, .30),
+        ('sedge', lambda nm, R_: sedge(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['sedge']), 3, .10),
+        ('clover', lambda nm, R_: clover(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['clover']), 4, .17),
+        ('rosette', lambda nm, R_: rosette(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['rosette']), 3, .09),
+        ('sapling', lambda nm, R_: sapling(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['sapling'], stem_mat), 3, .03),
+    ]
+    UG = {}
+    for cat, fn, nv_, w_ in SPEC_UG:
+        UG[cat] = []
+        for v_ in range(nv_):
+            before = set(bpy.data.objects)
+            fn(f'UG_{cat}{v_}', random.Random(sum(map(ord, cat)) * 31 + v_))
+            col = bpy.data.collections.new(f'UG_{cat}{v_}')
+            for o in set(bpy.data.objects) - before:
+                for c_ in list(o.users_collection):
+                    c_.objects.unlink(o)
+                col.objects.link(o)
+            UG[cat].append(col)
+    CATS = [c for c, *_ in SPEC_UG]
+    WTS = [w for *_, w in SPEC_UG]
     nug = 0
-    for i in range(60000):
+    for i in range(90000):
         x, y = PR.uniform(-70, 70), PR.uniform(-105, 125)
         pdist = path_d(x, y)
         near = min([math.hypot(x - cx, y - cy) for cx, cy in _CAMS] + [math.hypot(x - ARCH_N[0], y - ARCH_N[1]) * .8, math.hypot(x - ARCH_S[0], y - ARCH_S[1]) * .8])
-        if pdist < 2.2 or math.hypot(x - PIT[0], y - PIT[1]) < 5.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
+        if pdist < 2.6 or math.hypot(x - PIT[0], y - PIT[1]) < 6.5 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
-        # 鏡頭附近、路旁最密，往外變稀
-        p = max(.9 * math.exp(-near / 18), .5 * math.exp(-(pdist - 2) / 6), .06)
+        # 密度降低、成叢成片：用低頻雜訊做出有草的區塊和空地
+        patch = .5 + .5 * noise.noise(Vector((x * .09, y * .09, 4.4)))
+        p = min(1.0, 2.2 * max(.45 * math.exp(-near / 16), .25 * math.exp(-(pdist - 2.6) / 5), .03) * (.15 + 1.2 * max(0.0, patch - .35)))
         if PR.random() > p:
             continue
+        # 每一區偏某幾種草（同種成片，不同區不同），再混一點別的
+        zone = .5 + .5 * noise.noise(Vector((x * .05, y * .05, 8.8)))
+        w2 = [w * (1.8 if (k / len(CATS) <= zone < (k + 2) / len(CATS)) else .6) for k, w in enumerate(WTS)]
+        cat = PR.choices(CATS, w2)[0]
         e = bpy.data.objects.new('UG', None)
         e.instance_type = 'COLLECTION'
-        e.instance_collection = PR.choice(UG)
-        s_ = PR.uniform(.7, 1.6) * (1.25 if pdist < 6 else 1.0)
-        e.scale = (s_, s_, s_)
-        e.rotation_euler.z = PR.uniform(0, 6.283)
-        e.location = (x, y, gh(x, y) - .04)
+        e.instance_collection = PR.choice(UG[cat])
+        s_ = PR.uniform(.65, 1.45)
+        e.scale = (s_ * PR.uniform(.85, 1.15), s_ * PR.uniform(.85, 1.15), s_ * PR.uniform(.8, 1.25))
+        e.rotation_euler = (PR.uniform(-.08, .08), PR.uniform(-.08, .08), PR.uniform(0, 6.283))
+        e.location = (x, y, gh(x, y) - .03)
         sc.collection.objects.link(e)
         nug += 1
-        if nug >= 11000:
+        if cat in ('grass', 'clover', 'sedge'):   # 小草成小片：旁邊再長 1–4 叢同種不同變體
+            for _ in range(PR.randint(1, 4)):
+                x2, y2 = x + PR.uniform(-.7, .7), y + PR.uniform(-.7, .7)
+                if path_d(x2, y2) < 2.4:
+                    continue
+                e2 = bpy.data.objects.new('UG', None)
+                e2.instance_type = 'COLLECTION'
+                e2.instance_collection = PR.choice(UG[cat])
+                s2 = PR.uniform(.6, 1.3)
+                e2.scale = (s2, s2, s2 * PR.uniform(.8, 1.2))
+                e2.rotation_euler.z = PR.uniform(0, 6.283)
+                e2.location = (x2, y2, gh(x2, y2) - .03)
+                sc.collection.objects.link(e2)
+                nug += 1
+        if nug >= 14000:
             break
     print('UNDERGROWTH', nug)
 
@@ -736,7 +780,7 @@ SHOTS = {
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
     'V3': ((6, -13, 1.9), (1, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
     'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
-    'V5': ((-6, 12, 2.4), (12, -30, 2.0), 20, '神木根旁回頭看（往南看祭壇與小路）'),
+    'V5': ((-9, 17, 2.0), (4, -30, 1.5), 20, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
 }
 for k, (loc, tgt, lens, _) in SHOTS.items():
