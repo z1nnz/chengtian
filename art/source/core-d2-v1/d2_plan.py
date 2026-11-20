@@ -54,6 +54,9 @@ def gh0(x, y):
     # z1nnz 11/21：空地裡沒那麼上坡 → 空地中心起伏壓小，往外才慢慢恢復
     dc = math.hypot(x - CLEAR[0], y - CLEAR[1])
     k = .3 + .7 * max(0.0, min(1.0, (dc - 25) / 35)) if REAL else 1.0
+    if REAL:   # 神木根的範圍保留原本地形，不然樹根底下的地被壓低、根會懸空翹起來
+        dt = math.hypot(x - TREE[0], y - TREE[1])
+        k = max(k, max(0.0, min(1.0, (30 - dt) / 8)))
     h = (fb(x, y, .02) * 2.2 + fb(x, y, .12) * .25) * k
     h += max(0.0, x - 40) * -.06                       # 東側往下斜，看出去是谷地
     h += max(0.0, -x - 50) * .05 + max(0.0, y - 60) * .03   # 西、北緩升
@@ -687,7 +690,7 @@ while len(TREES) < (260 if not QUICK else 120) and tries < 60000:
     if any(math.hypot(x - tx, y - ty) < max(GAP[k], GAP[tk]) * R.uniform(.85, 1.1) for tx, ty, tk, _ in TREES):
         continue
     TREES.append((x, y, k, R.uniform(.85, 1.15)))
-_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-5, 10.5), (1, 91)]
+_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-6, 12), (1, 91)]
 _CR = random.Random(31)
 if 'real' in argv:   # 設定圖 V1：松樹比例高、樹冠之間看得到樹幹 → 外圍一部分圓冠樹換成傘頂松
     TREES = [(x, y, ('P' if (k == 'M' and math.hypot(x - CLEAR[0], y - CLEAR[1]) > CLEAR[2] + 8 and _CR.random() < .5) else k), s) for x, y, k, s in TREES]
@@ -934,7 +937,7 @@ SHOTS = {
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
     'V3': ((6, -13, 1.9), (1, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
     'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
-    'V5': ((-5, 10.5, 1.9), (6, -30, 1.5), 20, '神木根旁回頭看（往南看祭壇與小路）'),
+    'V5': ((-6, 12, 2.2), (6, -30, 1.8), 20, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
 }
 for k, (loc, tgt, lens, _) in SHOTS.items():
