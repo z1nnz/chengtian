@@ -79,7 +79,7 @@ for _g, _p, _dz in (('AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.glb', ALT
         _o.location.z += (gh(_p[0], _p[1]) if _g.startswith('AL') else 0) + _dz
 # 板根牆：A 放左後、C 放右後、B 放左前；倒木放右遠處；樹樁放左遠處
 append(S_ + 'd2_wood_lib.blend', lambda n: n.startswith('DR02_A'), offset=(24, 6, 0), dz=gh(7, 15) - .1)
-append(S_ + 'd2_wood_lib.blend', lambda n: n.startswith('DR02_C'), offset=(9, 8, 0), dz=gh(24, 17) - .1)
+pass
 pass
 pass
 
@@ -283,16 +283,11 @@ for sx_ in (-1, 1):
     for j in range(9):
         x, y = sx_ * R.uniform(4.8, 9.5), R.uniform(-5.5, -1.5)
         mushrooms(f'FootM{sx_}{j}', Vector((x, y, 0)), R, R.randint(5, 11), R.uniform(1.3, 2.2), mush_mat, ground=gh)
-spots_override = True
-# 背景古林：用神木的遠景版縮小、轉向，當外圈的古林巨木與中型老樹（同一種樹）
-spots = [(-52, 92, .42), (-10, 104, .5), (18, 96, .36), (40, 80, .42), (58, 58, .5), (70, 30, .44),
-         (52, 108, .44)]
-for k, (x, y, sc_) in enumerate(spots):
-    lod = '_LOD0' if math.hypot(x, y + 15) < 110 else '_LOD1'
-    for o in append(S_ + 'GT01_out/GT01_GodTree_v003.blend', lambda n, lod=lod: n.endswith(lod)):
-        o.scale = (sc_, sc_, sc_ * R.uniform(.9, 1.15))
-        o.rotation_euler.z = R.uniform(0, 6.3)
-        o.location = (x, y, gh(x, y) - .4 * sc_)
+# 外圈古林：六種不同的老樹，隨機散開、前後錯落（不排成一排）；近處留空地給神木、祭壇、坑與路
+exec(compile(open(S_ + 'forest_scatter.py', encoding='utf-8').read(), S_ + 'forest_scatter.py', 'exec'))
+scatter_forest(lambda x, y: (y > 38 or abs(x) > 34) and not (x > 20 and 10 < y < 70 and x < 70),
+               [(TREE_X, TREE_Y, 36), (ALT[0], ALT[1], 22), (PIT[0], PIT[1], 14), (2, -18, 34)],
+               n_target=48, min_gap=13.0, seed=11)
 # 之前做的苔（根拱、板根牆上）換成亮一點的苔
 for o in bpy.data.objects:
     if o.type == 'MESH' and ('moss' in o.name.lower()) and o.data.materials:
@@ -393,7 +388,7 @@ v2 = FN.new('ShaderNodeVolumePrincipled'); v2.inputs['Density'].default_value = 
 fm2.node_tree.links.new(v2.outputs[0], next(n for n in FN if n.type == 'OUTPUT_MATERIAL').inputs['Volume'])
 lf.data.materials.append(fm2)
 sc.cycles.samples = 96 if QK else 256
-sc.view_settings.exposure = 1.0
+sc.view_settings.exposure = 1.35
 for o in bpy.data.objects:
     if o.type == 'LIGHT' and o.data.type == 'SUN':
         o.data.angle = math.radians(4)
