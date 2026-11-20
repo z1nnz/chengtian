@@ -210,11 +210,11 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     mz.inputs['Detail'].default_value = 4
     nt.links.new(tc.outputs['Object'], mz.inputs['Vector'])
     mrz = nt.nodes.new('ShaderNodeMapRange')
-    mrz.inputs['From Min'].default_value, mrz.inputs['From Max'].default_value = .42, .62
+    mrz.inputs['From Min'].default_value, mrz.inputs['From Max'].default_value = .36, .58
     nt.links.new(mz.outputs['Fac'], mrz.inputs['Value'])
     tintA = nt.nodes.new('ShaderNodeMixRGB')
-    tintA.inputs[1].default_value = (.62, .62, .46, 1)    # 濕腐葉（壓暗、去橘）
-    tintA.inputs[2].default_value = (.30, .48, .16, 1)    # 苔綠
+    tintA.inputs[1].default_value = (.40, .40, .30, 1)    # 濕腐葉（深、偏褐，森林地面，不是枯草原）
+    tintA.inputs[2].default_value = (.20, .34, .10, 1)    # 苔綠
     nt.links.new(mrz.outputs[0], tintA.inputs[0])
     lf = nt.nodes.new('ShaderNodeMixRGB')
     lf.blend_type = 'MULTIPLY'
@@ -447,6 +447,19 @@ for o in list(bpy.data.objects):     # 根拱庫裡若有非網格物件就拿�
     if o.type not in ('MESH', 'EMPTY'):
         bpy.data.objects.remove(o, do_unlink=True)
 if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰帶苔）
+    for o in _GTO:   # 神木樹冠在霧裡太淡 → 壓暗加飽和
+        if o.type == 'MESH' and any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Crown')):
+            for sl in o.material_slots:
+                m_ = sl.material
+                if m_ and m_.use_nodes:
+                    b_ = next((x_ for x_ in m_.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED'), None)
+                    if b_ and b_.inputs['Base Color'].links:
+                        s_ = b_.inputs['Base Color'].links[0].from_socket
+                        hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation')
+                        hs_.inputs['Saturation'].default_value = 1.3
+                        hs_.inputs['Value'].default_value = .7
+                        m_.node_tree.links.new(s_, hs_.inputs['Color'])
+                        m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
     for o in _GTO:
         if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
             print('MOSS', o.name)
@@ -591,6 +604,21 @@ if 'real' in argv:     # 換成真的樹模型（collection instance）
             sc.collection.objects.link(e)
         return f
     KIND = {k: _inst(k) for k in KIND}
+    # 古林巨木的葉子在霧裡偏奶白 → 壓暗、加飽和（設定圖 V1 是深綠帶黃綠）
+    for _c in _COLS['G']:
+        for _o in _c.objects:
+            for _sl in _o.material_slots:
+                _m = _sl.material
+                if _m and 'Leaf' in _m.name and _m.use_nodes and not _m.get('tinted'):
+                    _m['tinted'] = 1
+                    _b = next((x_ for x_ in _m.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED'), None)
+                    if _b and _b.inputs['Base Color'].links:
+                        _src = _b.inputs['Base Color'].links[0].from_socket
+                        _hs = _m.node_tree.nodes.new('ShaderNodeHueSaturation')
+                        _hs.inputs['Saturation'].default_value = 1.35
+                        _hs.inputs['Value'].default_value = .62
+                        _m.node_tree.links.new(_src, _hs.inputs['Color'])
+                        _m.node_tree.links.new(_hs.outputs[0], _b.inputs['Base Color'])
 GAP = {'P': 9.0, 'B': 9.0, 'M': 6.5, 'G': 14.0}
 
 
@@ -631,7 +659,7 @@ while len(TREES) < (260 if not QUICK else 120) and tries < 60000:
     if any(math.hypot(x - tx, y - ty) < max(GAP[k], GAP[tk]) * R.uniform(.85, 1.1) for tx, ty, tk, _ in TREES):
         continue
     TREES.append((x, y, k, R.uniform(.85, 1.15)))
-_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-9, 17), (1, 91)]
+_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-5, 10.5), (1, 91)]
 _CR = random.Random(31)
 if 'real' in argv:   # 設定圖 V1：松樹比例高、樹冠之間看得到樹幹 → 外圍一部分圓冠樹換成傘頂松
     TREES = [(x, y, ('P' if (k == 'M' and math.hypot(x - CLEAR[0], y - CLEAR[1]) > CLEAR[2] + 8 and _CR.random() < .5) else k), s) for x, y, k, s in TREES]
@@ -696,13 +724,13 @@ if 'real' in argv:
     PR = random.Random(17)
     # 樣板：各種雜草多個隨機變體（z1nnz 11/21：重複率太高 → 種類、變體都加多）
     SPEC_UG = [   # (類別, 建造函式, 變體數, 權重)
-        ('fern', lambda nm, R_: fern(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), fern_mat, stem_mat), 6, .50),
-        ('heart', lambda nm, R_: heart_plant(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), heart_mat, stem_mat), 3, .14),
-        ('grass', lambda nm, R_: grass_tuft(nm, Vector((0, 0, 0)), R_, R_.uniform(.7, 1.3), WM['grass'], dry=R_.choice([0, .3, .7])), 6, .12),
-        ('sedge', lambda nm, R_: sedge(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['sedge']), 3, .05),
-        ('clover', lambda nm, R_: clover(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['clover']), 4, .09),
-        ('rosette', lambda nm, R_: rosette(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['rosette']), 3, .07),
-        ('sapling', lambda nm, R_: sapling(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['sapling'], stem_mat), 3, .03),
+        ('fern', lambda nm, R_: fern(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), fern_mat, stem_mat), 6, .64),
+        ('heart', lambda nm, R_: heart_plant(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), heart_mat, stem_mat), 3, .12),
+        ('grass', lambda nm, R_: grass_tuft(nm, Vector((0, 0, 0)), R_, R_.uniform(.7, 1.3), WM['grass'], dry=R_.choice([0, .3])), 6, .08),
+        ('sedge', lambda nm, R_: sedge(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['sedge']), 3, .03),
+        ('clover', lambda nm, R_: clover(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['clover']), 4, .07),
+        ('rosette', lambda nm, R_: rosette(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['rosette']), 3, .04),
+        ('sapling', lambda nm, R_: sapling(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['sapling'], stem_mat), 3, .02),
     ]
     UG = {}
     for cat, fn, nv_, w_ in SPEC_UG:
@@ -738,14 +766,18 @@ if 'real' in argv:
         e.instance_type = 'COLLECTION'
         e.instance_collection = PR.choice(UG[cat])
         s_ = PR.choice([PR.uniform(.35, .65), PR.uniform(.35, .65), PR.uniform(.6, .95), PR.uniform(.6, .95), PR.uniform(.9, 1.5)])
-        if cat == 'fern':
-            s_ = max(s_, PR.uniform(.5, .75))   # 蕨保持原本的份量，只是大小不一
+        if cat == 'fern':   # 蕨＝原本那種大蕨叢（z1nnz：原本的草很好看），大小有高有低
+            s_ = PR.choice([PR.uniform(.5, .8), PR.uniform(.8, 1.2), PR.uniform(.8, 1.2), PR.uniform(1.1, 1.6)]) * (1.2 if pdist < 6 else 1.0)
+        elif cat == 'heart':
+            s_ = PR.uniform(.7, 1.4)
+        else:   # 其他雜草當點綴、偏小
+            s_ = s_ * .7
         e.scale = (s_ * PR.uniform(.85, 1.15), s_ * PR.uniform(.85, 1.15), s_ * PR.uniform(.8, 1.25))
         e.rotation_euler = (PR.uniform(-.08, .08), PR.uniform(-.08, .08), PR.uniform(0, 6.283))
         e.location = (x, y, gh(x, y) - .03)
         sc.collection.objects.link(e)
         nug += 1
-        if cat in ('grass', 'clover', 'sedge'):   # 小草成小片：旁邊再長 1–4 叢同種不同變體
+        if cat in ('clover',):   # 小草成小片：旁邊再長 1–4 叢同種不同變體
             for _ in range(PR.randint(0, 2)):
                 x2, y2 = x + PR.uniform(-.7, .7), y + PR.uniform(-.7, .7)
                 if path_d(x2, y2) < 2.4:
@@ -874,7 +906,7 @@ SHOTS = {
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
     'V3': ((6, -13, 1.9), (1, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
     'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
-    'V5': ((-9, 17, 2.0), (4, -30, 1.5), 20, '神木根旁回頭看（往南看祭壇與小路）'),
+    'V5': ((-5, 10.5, 1.9), (6, -30, 1.5), 20, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
 }
 for k, (loc, tgt, lens, _) in SHOTS.items():
