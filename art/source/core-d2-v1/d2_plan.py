@@ -1,7 +1,7 @@
 # D2 古樹區域 總平面＋六角度方塊模型（給 ChatGPT 照著畫設定圖用）
 #   blender -b --factory-startup -P d2_plan.py -- [only=V1,V3] [quick]
 #   座標：x 東、y 北，單位公尺；區塊 200×200（x,y ∈ -100..100）
-import bpy, sys, math, random, json
+import bpy, bmesh, sys, math, random, json
 import numpy as np
 from mathutils import Vector, noise
 
@@ -20,7 +20,7 @@ for o in list(bpy.data.objects):
 # ---------------- 平面配置（總圖，所有角度都照這個） ----------------
 TREE = (-24.0, 30.0)          # 神木
 ALT = (7.0, 7.0)              # 祭壇
-PIT = (11.0, -4.5)            # 被挖的坑
+PIT = (14.5, -3.0)            # 被挖的坑（z1nnz 11/21：離走道遠一點）
 ARCH_S = (2.0, -84.0)         # 南入口（Josh 的根拱）
 ARCH_N = (-4.0, 108.0)         # 北入口（核心組根拱）
 CLEAR = (-4.0, 10.0, 38.0)    # 林中空地：中心、半徑
@@ -44,15 +44,24 @@ def fb(x, y, s, o=3):
     return noise.fractal(Vector((x * s, y * s, 0)), .5, 2.0, o)
 
 
-def gh(x, y):
-    h = fb(x, y, .02) * 2.2 + fb(x, y, .12) * .25
+def gh0(x, y):
+    # z1nnz 11/21：空地裡沒那麼上坡 → 空地中心起伏壓小，往外才慢慢恢復
+    dc = math.hypot(x - CLEAR[0], y - CLEAR[1])
+    k = .3 + .7 * max(0.0, min(1.0, (dc - 25) / 35)) if REAL else 1.0
+    h = (fb(x, y, .02) * 2.2 + fb(x, y, .12) * .25) * k
     h += max(0.0, x - 40) * -.06                       # 東側往下斜，看出去是谷地
     h += max(0.0, -x - 50) * .05 + max(0.0, y - 60) * .03   # 西、北緩升
-    h -= max(0.0, 1 - path_d(x, y) / 2.2) * .18
+    return h
+
+
+def gh(x, y):
+    h = gh0(x, y)
     rp = math.hypot(x - PIT[0], y - PIT[1])
-    if REAL:
-        h += pit_h(x - PIT[0], y - PIT[1], rp)
-    else:
+    if REAL:   # 坑是獨立模型（CO02）；坑周圍 6 m 內地面整平，讓坑模型平平地鋪上去
+        w = max(0.0, min(1.0, (9.0 - rp) / 3.5))
+        h = h * (1 - w) + gh0(*PIT) * w
+    h -= max(0.0, 1 - path_d(x, y) / 2.2) * .18
+    if not REAL:
         h -= 1.1 * max(0.0, 1 - rp / 2.7) ** .6
     return h
 
@@ -232,31 +241,17 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     rmx.inputs['To Min'].default_value, rmx.inputs['To Max'].default_value = .85, .45   # 泥路濕、反光
     nt.links.new(rmx.outputs[0], b.inputs['Roughness'])
     me.materials[0] = GM
-    # 坑：主地面在坑周圍壓低藏起來，另外疊一塊 8 cm 細網格的地面（同材質），坑壁土堆才有細節
-    for v in me.vertices:
-        if math.hypot(v.co.x - PIT[0], v.co.y - PIT[1]) < 6.0:
-            v.co.z -= 1.6
-    PS, PRs = 7.5, .08
-    pn = int(2 * PS / PRs)
-    pxs = np.linspace(-PS, PS, pn + 1)
-    PV = [(PIT[0] + x, PIT[1] + y, gh(PIT[0] + x, PIT[1] + y) + (.015 if math.hypot(x, y) > 5.5 else 0)) for y in pxs for x in pxs]
-    PF = [(j * (pn + 1) + i, j * (pn + 1) + i + 1, (j + 1) * (pn + 1) + i + 1, (j + 1) * (pn + 1) + i) for j in range(pn) for i in range(pn)]
-    pme = bpy.data.meshes.new('PitGround')
-    pme.from_pydata(PV, [], PF)
-    soil = []
-    for vx, vy, vz in PV:
-        rr_ = math.hypot(vx - PIT[0], vy - PIT[1])
-        s1 = max(0.0, min(1.0, (4.4 - rr_) / 1.2))                       # 坑與土堆：泥土
-        s2 = max(0.0, min(1.0, 1 - (path_d(vx, vy) - (1.3 + .4 * math.sin(vy * .3))) / 1.1))
-        soil.append(max(s1, s2))
-    sa = np.array(soil, np.float32)
-    pca = pme.color_attributes.new('Mask', 'FLOAT_COLOR', 'POINT')
-    pca.data.foreach_set('color', np.stack([sa, sa, sa, np.ones_like(sa)], 1).ravel())
-    for p in pme.polygons:
-        p.use_smooth = True
-    pme.materials.append(GM)
-    po = bpy.data.objects.new('PitGround', pme)
-    sc.collection.objects.link(po)
+    # 坑（CO02 獨立模型）底下的主地面壓低，不要蓋住坑洞
+    _bm = bmesh.new()   # 坑模型底下的主地面挖掉（不能只壓低，斜面會穿進坑裡）
+    _bm.from_mesh(me)
+    bmesh.ops.delete(_bm, geom=[f_ for f_ in _bm.faces if math.hypot(f_.calc_center_median().x - PIT[0], f_.calc_center_median().y - PIT[1]) < 3.9], context='FACES')
+    _bm.to_mesh(me)
+    _bm.free()
+    with bpy.data.libraries.load(S_ + 'pit_lib.blend', link=False) as (_s, _d):
+        _d.objects = [nm for nm in _s.objects if nm.startswith('CO02')]
+    for o in _d.objects:
+        sc.collection.objects.link(o)
+        o.location = (PIT[0], PIT[1], o.location.z + gh0(*PIT) + .012)
 g = bpy.data.objects.new('Ground', me)
 sc.collection.objects.link(g)
 
@@ -302,6 +297,88 @@ def append(path, want, offset, dz):
     for o in got:
         if o.parent is None or o.parent not in got:
             o.location = Vector(o.location) + Vector((offset[0], offset[1], dz))
+    return got
+
+
+_MOSSED = set()
+
+
+def mossify(m, amount=1.0, lift=1.0):
+    """照拱門的做法給樹皮加苔（z1nnz 11/21）：朝上的面、凹處長一片片青苔，凸處帶灰白地衣；樹皮整體提亮成棕灰。
+    只改材質節點，接在原本的 Base Color 後面。"""
+    if m is None or m.name in _MOSSED or not m.use_nodes:
+        return
+    _MOSSED.add(m.name)
+    nt = m.node_tree
+    b = next((x for x in nt.nodes if x.type == 'BSDF_PRINCIPLED'), None)
+    if b is None:
+        return
+    src = b.inputs['Base Color'].links[0].from_socket if b.inputs['Base Color'].links else None
+    base_rgb = nt.nodes.new('ShaderNodeRGB')
+    base_rgb.outputs[0].default_value = b.inputs['Base Color'].default_value
+    hs = nt.nodes.new('ShaderNodeHueSaturation')
+    hs.inputs['Value'].default_value = lift
+    hs.inputs['Saturation'].default_value = .85
+    nt.links.new(src if src else base_rgb.outputs[0], hs.inputs['Color'])
+    wt = nt.nodes.new('ShaderNodeMixRGB')   # 偏暖的棕灰（設定圖的樹皮色）
+    wt.blend_type = 'MULTIPLY'
+    wt.inputs[0].default_value = 1
+    wt.inputs[2].default_value = (1.12, .96, .80, 1)
+    nt.links.new(hs.outputs[0], wt.inputs[1])
+    hs = wt
+    geo = nt.nodes.new('ShaderNodeNewGeometry')
+    sep = nt.nodes.new('ShaderNodeSeparateXYZ')
+    nt.links.new(geo.outputs['Normal'], sep.inputs[0])
+    up = nt.nodes.new('ShaderNodeMapRange')
+    up.inputs['From Min'].default_value, up.inputs['From Max'].default_value = .15, .75
+    nt.links.new(sep.outputs['Z'], up.inputs['Value'])
+    nz = nt.nodes.new('ShaderNodeTexNoise')
+    nz.inputs['Scale'].default_value = .9
+    nz.inputs['Detail'].default_value = 9
+    nz.inputs['Roughness'].default_value = .65
+    nt.links.new(geo.outputs['Position'], nz.inputs['Vector'])
+    pm = nt.nodes.new('ShaderNodeMath')
+    pm.operation = 'MULTIPLY_ADD'
+    nt.links.new(up.outputs[0], pm.inputs[0])
+    pm.inputs[1].default_value = .5 * amount
+    nt.links.new(nz.outputs['Fac'], pm.inputs[2])
+    mr = nt.nodes.new('ShaderNodeMapRange')
+    mr.inputs['From Min'].default_value, mr.inputs['From Max'].default_value = .78, 1.0
+    nt.links.new(pm.outputs[0], mr.inputs['Value'])
+    # 苔色：深綠到黃綠，細碎的苔絨顆粒
+    mn = nt.nodes.new('ShaderNodeTexNoise')
+    mn.inputs['Scale'].default_value = 60
+    mn.inputs['Detail'].default_value = 6
+    nt.links.new(geo.outputs['Position'], mn.inputs['Vector'])
+    mc = nt.nodes.new('ShaderNodeValToRGB')
+    mc.color_ramp.elements[0].position, mc.color_ramp.elements[1].position = .3, .75
+    mc.color_ramp.elements[0].color = (.030, .042, .012, 1)   # 橄欖色、斑駁（不要像綠漆）
+    mc.color_ramp.elements[1].color = (.11, .13, .045, 1)
+    nt.links.new(mn.outputs['Fac'], mc.inputs[0])
+    mx = nt.nodes.new('ShaderNodeMixRGB')
+    nt.links.new(mr.outputs[0], mx.inputs[0])
+    nt.links.new(hs.outputs[0], mx.inputs[1])
+    nt.links.new(mc.outputs[0], mx.inputs[2])
+    # 地衣：灰白小斑，長在沒苔的地方
+    ln = nt.nodes.new('ShaderNodeTexNoise')
+    ln.inputs['Scale'].default_value = 4.5
+    ln.inputs['Detail'].default_value = 10
+    nt.links.new(geo.outputs['Position'], ln.inputs['Vector'])
+    lr = nt.nodes.new('ShaderNodeMapRange')
+    lr.inputs['From Min'].default_value, lr.inputs['From Max'].default_value = .62, .70
+    nt.links.new(ln.outputs['Fac'], lr.inputs['Value'])
+    lmx = nt.nodes.new('ShaderNodeMixRGB')
+    lmx.inputs[2].default_value = (.42, .44, .38, 1)
+    lf = nt.nodes.new('ShaderNodeMath')
+    lf.operation = 'MULTIPLY'
+    lf.inputs[1].default_value = .6
+    nt.links.new(lr.outputs[0], lf.inputs[0])
+    nt.links.new(lf.outputs[0], lmx.inputs[0])
+    nt.links.new(mx.outputs[0], lmx.inputs[1])
+    nt.links.new(lmx.outputs[0], b.inputs['Base Color'])
+    # 苔的地方比較霧面、凸一點
+    if not b.inputs['Roughness'].links:
+        b.inputs['Roughness'].default_value = max(b.inputs['Roughness'].default_value, .8)
 
 
 def glb(path, at, dz, rotz=0.0):
@@ -323,19 +400,31 @@ def glb(path, at, dz, rotz=0.0):
     for o in keep:
         o.location = Vector((o.location.x + at[0], o.location.y + at[1], o.location.z + gh(*at) + dz))
     print('GLB', path.split('/')[-1], len(keep))
+    return keep
 
 
-append(S_ + 'GT01_out/GT01_GodTree_v003.blend', lambda nm: nm.endswith('_LOD0' if 'real' in argv else '_LOD1'), TREE, gh(*TREE) - .6)
+_GTO = append(S_ + 'GT01_out/GT01_GodTree_v003.blend', lambda nm: nm.endswith('_LOD0' if 'real' in argv else '_LOD1'), TREE, gh(*TREE) - .6)
 glb(EXP + 'AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.glb', ALT, -.05)
 _rim = sum(gh(PIT[0] + 3.3 * math.cos(a_), PIT[1] + 3.3 * math.sin(a_)) for a_ in (0, 1.57, 3.14, 4.71)) / 4
 if not REAL:   # 真模型模式的坑直接挖在地形裡（CO01 v002 是平板狀，不像設定圖）
     glb(EXP + 'CO01_ExcavatedPit/CO01_ExcavatedPit_v002.glb', PIT, _rim - gh(*PIT) - .05)
-glb('D:/chengtian/4-素材與快取/josh-dr01/DR01_RootArch_v006.glb', ARCH_S, -.15)
-append(S_ + 'root_arch_lib.blend', lambda nm: not (nm in ('Grid', 'Cube') or nm.startswith(('Cylinder', 'Camera', 'Sun', 'Ground', 'Floor'))),
+_ARS = glb('D:/chengtian/4-素材與快取/josh-dr01/DR01_RootArch_v006.glb', ARCH_S, -.15)
+_ARN = append(S_ + 'root_arch_lib.blend', lambda nm: not (nm in ('Grid', 'Cube') or nm.startswith(('Cylinder', 'Camera', 'Sun', 'Ground', 'Floor'))),
        ARCH_N, gh(*ARCH_N) - .15)
 for o in list(bpy.data.objects):     # 根拱庫裡若有非網格物件就拿掉
     if o.type not in ('MESH', 'EMPTY'):
         bpy.data.objects.remove(o, do_unlink=True)
+if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰帶苔）
+    for o in _GTO:
+        if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
+            print('MOSS', o.name)
+            for sl in o.material_slots:
+                mossify(sl.material, 1.0, 1.45)
+    for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
+        for sl in o.material_slots:
+            if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
+                mossify(sl.material, .8, 1.5)
+    mossify(M_BARKR, 1.3, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
 def root_ridge(a, b, r0, r1, m=M_ROOT):
@@ -495,9 +584,9 @@ while len(TREES) < (260 if not QUICK else 120) and tries < 60000:
     if any(math.hypot(x - tx, y - ty) < max(GAP[k], GAP[tk]) * R.uniform(.85, 1.1) for tx, ty, tk, _ in TREES):
         continue
     TREES.append((x, y, k, R.uniform(.85, 1.15)))
-_CAMS = [(2.5, -97), (6, -13), (15, -10.5), (-6, 12), (1, 91)]
+_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-6, 12), (1, 91)]
 for x, y, k, s in TREES:
-    if 'real' in argv and any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS):
+    if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
     KIND[k](x, y, s)
 if 'real' in argv:   # 區塊外（鄰近區塊）的林子也種上，遠景才不會空掉；用另一個亂數，不動區塊內的樹
@@ -505,7 +594,7 @@ if 'real' in argv:   # 區塊外（鄰近區塊）的林子也種上，遠景才
     extra = []
     for _ in range(40000):
         x, y = FR.uniform(-172, 172), FR.uniform(-172, 172)
-        if max(abs(x), abs(y)) < 126 or path_d(x, y) < 5 or (x > 40 and -10 < y < 50):
+        if max(abs(x), abs(y)) < 126 or path_d(x, y) < 5 or (x > 40 and -10 < y < 50) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < 20:
             continue
         if any(math.hypot(x - a_, y - b_) < 10 for a_, b_ in extra):
             continue
@@ -568,10 +657,10 @@ if 'real' in argv:
         UG.append(col)
     nug = 0
     for i in range(60000):
-        x, y = PR.uniform(-70, 70), PR.uniform(-105, 95)
+        x, y = PR.uniform(-70, 70), PR.uniform(-105, 125)
         pdist = path_d(x, y)
-        near = min(math.hypot(x - cx, y - cy) for cx, cy in _CAMS)
-        if pdist < 2.2 or math.hypot(x - PIT[0], y - PIT[1]) < 4.2 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
+        near = min([math.hypot(x - cx, y - cy) for cx, cy in _CAMS] + [math.hypot(x - ARCH_N[0], y - ARCH_N[1]) * .8, math.hypot(x - ARCH_S[0], y - ARCH_S[1]) * .8])
+        if pdist < 2.2 or math.hypot(x - PIT[0], y - PIT[1]) < 5.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
         # 鏡頭附近、路旁最密，往外變稀
         p = max(.9 * math.exp(-near / 18), .5 * math.exp(-(pdist - 2) / 6), .06)
@@ -586,50 +675,9 @@ if 'real' in argv:
         e.location = (x, y, gh(x, y) - .04)
         sc.collection.objects.link(e)
         nug += 1
-        if nug >= 9000:
+        if nug >= 11000:
             break
     print('UNDERGROWTH', nug)
-    # 坑：土塊、被挖斷的細根、坑底積水
-    CR_ = random.Random(23)
-    for i in range(70):
-        a = CR_.uniform(0, 6.283)
-        rr_ = CR_.uniform(1.8, 4.6)
-        x, y = PIT[0] + math.cos(a) * rr_, PIT[1] + math.sin(a) * rr_
-        r_ = CR_.uniform(.06, .22)
-        bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2, radius=r_, location=(x, y, gh(x, y) + r_ * .3))
-        o = bpy.context.object
-        o.scale = (CR_.uniform(1.0, 1.6), CR_.uniform(.8, 1.3), CR_.uniform(.35, .55))
-        o.rotation_euler = (CR_.uniform(0, 3), CR_.uniform(0, 3), CR_.uniform(0, 6))
-        o.data.materials.append(M_DIRT)
-    for i in range(9):   # 斷根：從坑壁伸出來
-        a = CR_.uniform(-1.2, 2.4)
-        p0 = Vector((PIT[0] + math.cos(a) * 2.9, PIT[1] + math.sin(a) * 2.9, 0))
-        p0.z = gh(p0.x, p0.y) - .25
-        d = Vector((-math.cos(a), -math.sin(a), CR_.uniform(-.3, .2))).normalized()
-        L = CR_.uniform(.5, 1.3)
-        pts = [p0, p0 + d * L * .5 + Vector((0, 0, CR_.uniform(-.1, .1))), p0 + d * L]
-        cu = bpy.data.curves.new(f'PitRoot{i}', 'CURVE')
-        cu.dimensions = '3D'
-        cu.bevel_depth = CR_.uniform(.025, .06)
-        cu.bevel_resolution = 3
-        sp = cu.splines.new('NURBS')
-        sp.points.add(len(pts) - 1)
-        for j, pp in enumerate(pts):
-            sp.points[j].co = (pp.x, pp.y, pp.z, 1)
-        sp.use_endpoint_u = True
-        co_ = bpy.data.objects.new(f'PitRoot{i}', cu)
-        sc.collection.objects.link(co_)
-        cu.materials.append(M_ROOT)
-    wm = bpy.data.materials.new('PuddleWater')
-    wm.use_nodes = True
-    wb = next(x for x in wm.node_tree.nodes if x.type == 'BSDF_PRINCIPLED')
-    wb.inputs['Base Color'].default_value = (.03, .025, .02, 1)
-    wb.inputs['Roughness'].default_value = .04
-    bpy.ops.mesh.primitive_circle_add(vertices=40, radius=1.0, fill_type='NGON',
-                                      location=(PIT[0] + .3, PIT[1] - .2, gh(PIT[0] + .3, PIT[1] - .2) + .12))
-    pu = bpy.context.object
-    pu.scale = (1.2, .8, 1)
-    pu.data.materials.append(wm)
 
 # 1.75 m 人形尺（祭壇前）
 cyl((4, -6, gh(4, -6)), .22, .18, 1.75, mat('human', (.8, .1, .1))).hide_render = True
@@ -678,15 +726,16 @@ sc.cycles.samples = 24 if QUICK else 64
 sc.cycles.use_denoising = True
 sc.cycles.volume_step_rate = 4
 sc.view_settings.view_transform = 'AgX'
-if 'real' in argv:
-    sc.view_settings.exposure = 1.1
-    bg.inputs['Strength'].default_value = 2.4
+if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光，不要逆光剪影）
+    sc.view_settings.exposure = 1.0
+    bg.inputs['Strength'].default_value = 3.4
+    sun.energy = 1.2
 sc.render.resolution_x, sc.render.resolution_y = 1536, 1024
 SHOTS = {
     'V1': ((70, -105, 62), (-6, 18, 0), 24, '俯瞰全景（東南高處）'),
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
     'V3': ((6, -13, 1.9), (1, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
-    'V4': ((15, -10.5, 2.4), (10, -3, -.6), 24, '坑邊近景'),
+    'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
     'V5': ((-6, 12, 2.4), (12, -30, 2.0), 20, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
 }
