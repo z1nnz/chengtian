@@ -44,13 +44,22 @@ TG['R'].seed(SEED)
 TG.update(HEIGHT=TH, TRUNK_R=SPEC['TR'], LEAF_LEN=SPEC['LL'], PALETTE=SPEC['PAL'])
 TG['grow'](Vector((0, 0, -.3)), Vector((.08, .03, 1)), TH * (.5 if KIND == 'B' else .42), SPEC['TR'], 0, SEED)
 # 根：短、粗、很快鑽進土裡（不要尖刺狀長根）
+# z1nnz 11/21「樹根要調整一下」：根改成貼著樹幹往下展開的板根，直立扁平、順順地沒入土裡，不再像爪子
 _rr = random.Random(SEED + 5)
-for _k in range(6):
-    _a = _k / 6 * 6.283 + _rr.uniform(-.3, .3)
+ROOTS = []
+_n = _rr.choice([5, 6, 7])
+for _k in range(_n):
+    _a = _k / _n * 6.283 + _rr.uniform(-.35, .35)
     _d = Vector((math.cos(_a), math.sin(_a), 0))
-    _L = _rr.uniform(1.0, 1.8) * SPEC['TR'] / .5
-    _pts = [_d * (SPEC['TR'] * .3) + Vector((0, 0, .9 * SPEC['TR'] / .5)), _d * (SPEC['TR'] + _L * .45) + Vector((0, 0, .15)), _d * (SPEC['TR'] + _L) + Vector((0, 0, -.35))]
-    TG['branches'].append((1, _pts, [SPEC['TR'] * .55, SPEC['TR'] * .35, .06]))
+    _sd = Vector((-_d.y, _d.x, 0)) * _rr.uniform(-.25, .25)
+    TRr = SPEC['TR']
+    _L = _rr.uniform(.8, 1.5) * TRr / .5
+    _h = _rr.uniform(.9, 1.4) * TRr / .5
+    _pts = [_d * (TRr * .35) + Vector((0, 0, _h)),
+            _d * (TRr * .85) + Vector((0, 0, _h * .45)),
+            _d * (TRr + _L * .45) + _sd * .5 + Vector((0, 0, .06)),
+            _d * (TRr + _L) + _sd + Vector((0, 0, -.25))]
+    ROOTS.append((_pts, [TRr * .42, TRr * .34, TRr * .18, .04]))
 # 主幹、主枝、根：用掃描樹皮推進幾何的 tube（有 UV、有凹凸）；細枝留 tree_gen 的網格
 big = [b for b in TG['branches'] if b[0] <= 1]
 TG['branches'][:] = [b for b in TG['branches'] if b[0] > 1]
@@ -64,12 +73,22 @@ def interp(rad, t):
 
 os.environ['GT_NUMIN'] = '16'
 for i, (lev, pts, rad) in enumerate(big):
+    rf = lambda t, rad=rad: interp(rad, t)
+    ex = None
     if lev == 0:
-        rf = lambda t, rad=rad: interp(rad, t) * (1 + 1.0 * max(0.0, .10 - t) * 10)
-    else:
-        rf = lambda t, rad=rad: interp(rad, t)
+        # 樹幹底部長出 5–7 道板根稜，往下越寬，順順地鋪進土裡（z1nnz 11/21：樹根要調整）
+        _ph = [(_a, _rr.uniform(.7, 1.2)) for _a in [k_ / _n * 6.283 + _rr.uniform(-.3, .3) for k_ in range(_n)]]
+        _H = 2.1 * SPEC['TR'] / .5
+
+        def ex(ang, z, _ph=_ph, _H=_H):
+            u = max(0.0, 1 - (z + .3) / _H)
+            if u <= 0:
+                return 0.0
+            lobe = max(max(0.0, math.cos((ang - a) * 2.6)) ** 2.2 * w for a, w in _ph)
+            return SPEC['TR'] * (2.4 * lobe * u ** 2.0 + .25 * u ** 2)
+    os.environ['GT_NUMIN'] = '56' if lev == 0 else '16'
     objs.append(tube(f'Limb{i}', [tuple(p) for p in pts], radius=rf, flat=lambda t: 1.0, seed=i * 1.7 + SEED,
-                     rib=.10 if lev == 0 else .05, twist=.04))
+                     rib=.10 if lev == 0 else .05, twist=.04, extra=ex))
 wood = TG['tube_mesh']()
 uvw = wood.uv_layers.new(name='UV')
 _lv = [wood.vertices[l.vertex_index].co for l in wood.loops]
@@ -118,3 +137,4 @@ def shot(n, loc, tgt, lens, res=(1200, 1200)):
 s = TH / 16
 shot('full', (0, -40 * s, 5 * s), (0, 0, 8 * s), 32)
 shot('crown', (14 * s, -16 * s, 6 * s), (0, 0, 10 * s), 30)
+shot('base', (3.2 * s, -5.0 * s, 1.3), (0, 0, .9), 28, (1200, 900))
