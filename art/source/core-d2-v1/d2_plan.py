@@ -435,7 +435,7 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
-                mossify(sl.material, .8, 1.5)
+                mossify(sl.material, .95, 2.3 if o in _ARS else 1.6)
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
@@ -461,8 +461,23 @@ def root_ridge(a, b, r0, r1, m=M_ROOT):
         sp.order_u = 3
         o = bpy.data.objects.new('RootRidge', cu)
         sc.collection.objects.link(o)
-        o.scale.z = 1.0
+        cu.resolution_u = 24
+        cu.bevel_resolution = 6
+        _tx = bpy.data.textures.get('RootLumps') or bpy.data.textures.new('RootLumps', 'CLOUDS')
+        _tx.noise_scale = .35
         cu.materials.append(M_BARKR)
+        bpy.context.view_layer.update()
+        _me = bpy.data.meshes.new_from_object(o.evaluated_get(bpy.context.evaluated_depsgraph_get()))
+        bpy.data.objects.remove(o, do_unlink=True)
+        o = bpy.data.objects.new('RootRidge', _me)   # 曲線轉成網格才能加凹凸
+        sc.collection.objects.link(o)
+        _sub = o.modifiers.new('Sub', 'SUBSURF')
+        _sub.levels = _sub.render_levels = 1
+        _dm = o.modifiers.new('Lumps', 'DISPLACE')   # 樹根表面不規則的瘤與起伏
+        _dm.texture = _tx
+        _dm.strength = r0 * .35
+        _dm.mid_level = .5
+        _dm.texture_coords = 'GLOBAL'
         return
     for i in range(N + 1):
         t = i / N
@@ -658,12 +673,12 @@ if 'real' in argv:
     PR = random.Random(17)
     # 樣板：各種雜草多個隨機變體（z1nnz 11/21：重複率太高 → 種類、變體都加多）
     SPEC_UG = [   # (類別, 建造函式, 變體數, 權重)
-        ('fern', lambda nm, R_: fern(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), fern_mat, stem_mat), 5, .14),
-        ('heart', lambda nm, R_: heart_plant(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), heart_mat, stem_mat), 3, .07),
-        ('grass', lambda nm, R_: grass_tuft(nm, Vector((0, 0, 0)), R_, R_.uniform(.7, 1.3), WM['grass'], dry=R_.choice([0, .3, .7])), 6, .30),
-        ('sedge', lambda nm, R_: sedge(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['sedge']), 3, .10),
-        ('clover', lambda nm, R_: clover(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['clover']), 4, .17),
-        ('rosette', lambda nm, R_: rosette(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['rosette']), 3, .09),
+        ('fern', lambda nm, R_: fern(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), fern_mat, stem_mat), 6, .50),
+        ('heart', lambda nm, R_: heart_plant(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), heart_mat, stem_mat), 3, .14),
+        ('grass', lambda nm, R_: grass_tuft(nm, Vector((0, 0, 0)), R_, R_.uniform(.7, 1.3), WM['grass'], dry=R_.choice([0, .3, .7])), 6, .12),
+        ('sedge', lambda nm, R_: sedge(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['sedge']), 3, .05),
+        ('clover', lambda nm, R_: clover(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['clover']), 4, .09),
+        ('rosette', lambda nm, R_: rosette(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.2), WM['rosette']), 3, .07),
         ('sapling', lambda nm, R_: sapling(nm, Vector((0, 0, 0)), R_, R_.uniform(.8, 1.3), WM['sapling'], stem_mat), 3, .03),
     ]
     UG = {}
@@ -681,45 +696,47 @@ if 'real' in argv:
     CATS = [c for c, *_ in SPEC_UG]
     WTS = [w for *_, w in SPEC_UG]
     nug = 0
-    for i in range(90000):
+    for i in range(300000):
         x, y = PR.uniform(-70, 70), PR.uniform(-105, 125)
         pdist = path_d(x, y)
         near = min([math.hypot(x - cx, y - cy) for cx, cy in _CAMS] + [math.hypot(x - ARCH_N[0], y - ARCH_N[1]) * .8, math.hypot(x - ARCH_S[0], y - ARCH_S[1]) * .8])
-        if pdist < 2.6 or math.hypot(x - PIT[0], y - PIT[1]) < 6.5 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
+        if pdist < 2.6 or math.hypot(x - PIT[0], y - PIT[1]) < 5.4 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
         # 密度降低、成叢成片：用低頻雜訊做出有草的區塊和空地
         patch = .5 + .5 * noise.noise(Vector((x * .09, y * .09, 4.4)))
-        p = min(1.0, 2.2 * max(.45 * math.exp(-near / 16), .25 * math.exp(-(pdist - 2.6) / 5), .03) * (.15 + 1.2 * max(0.0, patch - .35)))
+        p = min(1.0, max(1.0 * math.exp(-near / 20), .6 * math.exp(-(pdist - 2.6) / 7), .08) * (.55 + .8 * patch))
         if PR.random() > p:
             continue
         # 每一區偏某幾種草（同種成片，不同區不同），再混一點別的
         zone = .5 + .5 * noise.noise(Vector((x * .05, y * .05, 8.8)))
-        w2 = [w * (1.8 if (k / len(CATS) <= zone < (k + 2) / len(CATS)) else .6) for k, w in enumerate(WTS)]
+        w2 = [w * (1.5 if (k / len(CATS) <= zone < (k + 2) / len(CATS)) else .8) for k, w in enumerate(WTS)]
         cat = PR.choices(CATS, w2)[0]
         e = bpy.data.objects.new('UG', None)
         e.instance_type = 'COLLECTION'
         e.instance_collection = PR.choice(UG[cat])
-        s_ = PR.uniform(.65, 1.45)
+        s_ = PR.choice([PR.uniform(.35, .65), PR.uniform(.35, .65), PR.uniform(.6, .95), PR.uniform(.6, .95), PR.uniform(.9, 1.5)])
+        if cat == 'fern':
+            s_ = max(s_, PR.uniform(.5, .75))   # 蕨保持原本的份量，只是大小不一
         e.scale = (s_ * PR.uniform(.85, 1.15), s_ * PR.uniform(.85, 1.15), s_ * PR.uniform(.8, 1.25))
         e.rotation_euler = (PR.uniform(-.08, .08), PR.uniform(-.08, .08), PR.uniform(0, 6.283))
         e.location = (x, y, gh(x, y) - .03)
         sc.collection.objects.link(e)
         nug += 1
         if cat in ('grass', 'clover', 'sedge'):   # 小草成小片：旁邊再長 1–4 叢同種不同變體
-            for _ in range(PR.randint(1, 4)):
+            for _ in range(PR.randint(0, 2)):
                 x2, y2 = x + PR.uniform(-.7, .7), y + PR.uniform(-.7, .7)
                 if path_d(x2, y2) < 2.4:
                     continue
                 e2 = bpy.data.objects.new('UG', None)
                 e2.instance_type = 'COLLECTION'
                 e2.instance_collection = PR.choice(UG[cat])
-                s2 = PR.uniform(.6, 1.3)
+                s2 = PR.uniform(.35, 1.0)
                 e2.scale = (s2, s2, s2 * PR.uniform(.8, 1.2))
                 e2.rotation_euler.z = PR.uniform(0, 6.283)
                 e2.location = (x2, y2, gh(x2, y2) - .03)
                 sc.collection.objects.link(e2)
                 nug += 1
-        if nug >= 14000:
+        if nug >= 40000:
             break
     print('UNDERGROWTH', nug)
 
