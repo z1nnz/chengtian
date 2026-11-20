@@ -408,6 +408,34 @@ def mossify(m, amount=1.0, lift=1.0):
     nt.links.new(lf.outputs[0], lmx.inputs[0])
     nt.links.new(mx.outputs[0], lmx.inputs[1])
     nt.links.new(lmx.outputs[0], b.inputs['Base Color'])
+    if amount >= 1.0:   # 粗樹皮溝紋：沿著樹幹往上拉長的深溝（設定圖神木的樹皮）
+        fv = nt.nodes.new('ShaderNodeMapping')
+        fv.inputs['Scale'].default_value = (2.2, 2.2, .35)
+        nt.links.new(geo.outputs['Position'], fv.inputs['Vector'])
+        vo = nt.nodes.new('ShaderNodeTexVoronoi')
+        vo.feature = 'DISTANCE_TO_EDGE'
+        vo.inputs['Scale'].default_value = 1.0
+        nt.links.new(fv.outputs['Vector'], vo.inputs['Vector'])
+        fr = nt.nodes.new('ShaderNodeMapRange')
+        fr.inputs['From Min'].default_value, fr.inputs['From Max'].default_value = .0, .12
+        nt.links.new(vo.outputs['Distance'], fr.inputs['Value'])
+        bp2 = nt.nodes.new('ShaderNodeBump')
+        bp2.inputs['Strength'].default_value = .8
+        bp2.inputs['Distance'].default_value = .08
+        nt.links.new(fr.outputs[0], bp2.inputs['Height'])
+        if b.inputs['Normal'].links:
+            nt.links.new(b.inputs['Normal'].links[0].from_socket, bp2.inputs['Normal'])
+        nt.links.new(bp2.outputs['Normal'], b.inputs['Normal'])
+        gd = nt.nodes.new('ShaderNodeMixRGB')   # 溝裡較暗
+        gd.blend_type = 'MULTIPLY'
+        ginv = nt.nodes.new('ShaderNodeMapRange')
+        nt.links.new(vo.outputs['Distance'], ginv.inputs['Value'])
+        ginv.inputs['From Min'].default_value, ginv.inputs['From Max'].default_value = .0, .06
+        ginv.inputs['To Min'].default_value, ginv.inputs['To Max'].default_value = .55, 1.0
+        nt.links.new(ginv.outputs[0], gd.inputs[2])
+        gd.inputs[0].default_value = 1
+        nt.links.new(lmx.outputs[0], gd.inputs[1])
+        nt.links.new(gd.outputs[0], b.inputs['Base Color'])
     # 苔的地方比較霧面、凸一點
     if not b.inputs['Roughness'].links:
         b.inputs['Roughness'].default_value = max(b.inputs['Roughness'].default_value, .8)
@@ -468,7 +496,7 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
-                mossify(sl.material, .95 if o in _ARS else 1.3, 2.3 if o in _ARS else 2.2)
+                mossify(sl.material, .95 if o in _ARS else 1.3, 3.0 if o in _ARS else 2.2)
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
@@ -865,7 +893,7 @@ if 'real' in argv:   # 林間低霧層：貼地一層較濃的霧（設定圖 V1
     _nt.links.new(_tc.outputs['Object'], _nz.inputs['Vector'])
     _mr = _nt.nodes.new('ShaderNodeMapRange')
     _mr.inputs['From Min'].default_value, _mr.inputs['From Max'].default_value = .45, .7
-    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .014
+    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .007
     _nt.links.new(_nz.outputs['Fac'], _mr.inputs['Value'])
     _nt.links.new(_mr.outputs[0], _vs.inputs['Density'])
     _nt.links.new(_vs.outputs['Volume'], next(_nd for _nd in _nt.nodes if _nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
