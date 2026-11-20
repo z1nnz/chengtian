@@ -16,7 +16,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'village-houses-b'))
 sys.path.insert(0, str(HERE))
 import build_village_houses_b as B
-import we_well, cw_wall, cw_gate, xb_bridge
+import we_well, cw_wall, cw_gate, xb_bridge, gn_granary, an_shed
 
 KIT = 'village-yards-b'
 ART = HERE.parents[1]
@@ -30,7 +30,11 @@ B.gate_checks = cw_gate.gate_checks
 xb_bridge.register(B.ASSETS)
 B.slabbridge_checks = xb_bridge.slabbridge_checks
 B.steppingstones_checks = xb_bridge.steppingstones_checks
-OURS = ('WE01', 'CW01', 'CW02', 'XB01')
+gn_granary.register(B.ASSETS)
+B.granary_checks = gn_granary.granary_checks
+an_shed.register(B.ASSETS)
+B.shed_checks = an_shed.shed_checks
+OURS = ('WE01', 'CW01', 'CW02', 'XB01', 'GN01', 'AN01')
 
 
 def wire(objs, path):

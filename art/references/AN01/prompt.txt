@@ -1,0 +1,20 @@
+AN01 三視圖提示詞與選圖
+工作包：2026-11-11 B｜40 小時（院牆院門、水井、石板橋、穀倉、牛棚）B 段 AN01。
+
+選用：AN01-cand-2.png。備選：AN01-cand-3.png。
+選用理由：單坡稻草頂，高的一邊在後、低的一邊在前；粗圓木柱立在石礎上，柱頂有斜撐；三道橫欄；一條長木板食槽靠後放、槽裡有乾草；地面夯土散稻草；脊木壓草、麻繩綁。沒有牛。
+沒選的原因：
+- cand-1：可用；但草頂上蓋一大塊木板補丁，前面欄杆擋住大半入口。
+- cand-3：可用；作備選。草頂上的木條補丁較大，地面鋪了一圈石板。
+- cand-4：前後都排滿欄杆，入口只剩一小段；草頂長了較多雜草。
+建模時注意：前 -Y 敞開，只在左邊一間放欄杆，讓 1.75 m 人物能直接走進去到食槽前；後面（+Y）改用直木板牆擋風（三面開敞、一面封），兩側三道橫欄；不放牛、不寫字。整體高不超過 3.2 m。
+
+工具與張數：
+- Codex CLI，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen；共 4 張（AN01-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-11。
+- 提示詞組法：物件句＋建築用 Layout 段（一張 3/4 俯視加前、側、背正視，同一比例）＋美術方向；Codex 沒有負面欄，所以把負面提示加上本包那句（not Japanese machiya … no glossy plastic look），以「Avoid:」接在最後。全部原文，一字未改。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of a rural Chinese cattle shed, about 6 m wide, 4 m deep and 3.2 m tall, open on three sides, rough timber posts and rails, a thatched lean-to roof, one long wooden feeding trough, dry straw on a packed earth floor, old weathered wood, no animals, no people, no writing.
+
+== 實際送出的完整提示詞（每張相同）==
+Three-view orthographic turnaround sheet of a rural Chinese cattle shed, about 6 m wide, 4 m deep and 3.2 m tall, open on three sides, rough timber posts and rails, a thatched lean-to roof, one long wooden feeding trough, dry straw on a packed earth floor, old weathered wood, no animals, no people, no writing. Layout: one three-quarter view from slightly above at eye height of a person, plus front, side and back orthographic views on the same sheet at the same scale, plain light warm-grey background, even soft lighting, building only (no landscape around it except a small ground patch). Art direction: stylized hand-painted 3D game art for an Eastern xianxia fantasy world (Chinese immortal-cultivation setting), warm golden morning light from a low sun, soft warm rim light on edges and silhouettes, gentle blue-violet shadows (never pure black), layered soft white mist in the distance, painterly textures made of large soft colour gradients with a few visible brush strokes, rich but natural colour palette (sunlit warm yellow-greens, cool teal shade greens, warm grey stone, aged brown timber, blue-grey roof tiles, turquoise water), lived-in details: wear on edges, moss and soil in the joints, patched and repaired parts, small cracks, weathered wood grain, high level of detail with clear readable shapes and a strong silhouette, real-world scale and proportions, cohesive with a hand-painted xianxia valley village, game-ready asset look, high quality, masterpiece. Avoid: photorealistic, photograph, photo texture, scanned texture, realistic PBR, plastic, glossy, shiny, chrome, pure black shadows, harsh contrast, neon colours, oversaturated, flat lighting, noon lighting, modern objects, cars, wires, concrete, glass windows, text, letters, Chinese characters, signature, logo, UI, watermark, frame, border, anime screenshot, cel-shaded flat colour, Genshin Impact, Mihoyo, copy of an existing game asset, blocky low-poly, voxel, cartoon chibi, noisy texture, blurry, low resolution, cropped, cut off, duplicate objects, extra limbs, floating parts, distorted perspective, fisheye, not Japanese machiya, no noren, no round paper lanterns, not Tudor half-timbering, no bright teal roof, no glossy plastic look

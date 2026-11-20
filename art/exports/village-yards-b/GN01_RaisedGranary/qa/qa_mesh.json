@@ -1,0 +1,186 @@
+{
+ "GN01_RaisedGranary_Detail_Small_LOD0": {
+  "tris": 11062,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 65,
+  "open_pieces": 251,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_Detail_Small_LOD1": {
+  "tris": 5530,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 65,
+  "open_pieces": 227,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_Detail_Small_LOD2": {
+  "tris": 1659,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 8,
+  "open_pieces": 341,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_LOD0": {
+  "tris": 49360,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 17,
+  "coplanar_two_sides": 33,
+  "closed_pieces": 207,
+  "open_pieces": 0,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [
+   [
+    [
+     -1.15,
+     -1.12,
+     3.42
+    ],
+    1
+   ],
+   [
+    [
+     -1.09,
+     -1.12,
+     3.42
+    ],
+    1
+   ],
+   [
+    [
+     1.09,
+     -1.11,
+     3.43
+    ],
+    1
+   ],
+   [
+    [
+     1.16,
+     -1.11,
+     3.42
+    ],
+    1
+   ],
+   [
+    [
+     -1.09,
+     -1.08,
+     3.43
+    ],
+    1
+   ],
+   [
+    [
+     -1.15,
+     -1.08,
+     3.44
+    ],
+    1
+   ]
+  ],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_LOD1": {
+  "tris": 24680,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 207,
+  "open_pieces": 0,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_LOD2": {
+  "tris": 7400,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 207,
+  "open_pieces": 0,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_Tiles_LOD0": {
+  "tris": 27780,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 20,
+  "closed_pieces": 90,
+  "open_pieces": 0,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_Tiles_LOD1": {
+  "tris": 13890,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 90,
+  "open_pieces": 0,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ },
+ "GN01_RaisedGranary_Tiles_LOD2": {
+  "tris": 4166,
+  "degenerate": 0,
+  "zero_uv": 0,
+  "coplanar_same_facing": 0,
+  "coplanar_two_sides": 0,
+  "closed_pieces": 90,
+  "open_pieces": 0,
+  "inverted_closed": 0,
+  "black_faces": 0,
+  "black_m2": 0.0,
+  "zero_at": [],
+  "same_at": [],
+  "inverted_at": []
+ }
+}

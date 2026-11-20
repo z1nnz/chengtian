@@ -1,0 +1,333 @@
+{
+  "asset": "AN01_CattleShed",
+  "version": "v001",
+  "minTier": "standard",
+  "detailObjects": [
+    "AN01_CattleShed_Detail_Small"
+  ],
+  "name_zh": "牛棚與食槽（不含牛）",
+  "slot": "A1_VillageEdge_or_A6_Granary",
+  "note": "牛棚與食槽（三視圖 AN01-cand-2，備選 cand-3）：粗圓木搭的單坡棚，東西 6 m、進深 4 m。八根木柱立在粗石礎上，前後各一根橫樑木，七根椽木從高的後簷斜到低的前簷，上面橫掛條、鋪厚稻草頂，前簷草尾參差下垂；草頂上壓一根脊木和兩根壓草杆，用麻繩綁在椽上，一處補了新草。後面（迎風面）是直木板牆；兩側在角柱和中間短柱之間各三道橫欄；前面敞開，只在左邊一間有欄杆。棚內沿後牆放一條木板長食槽，下墊三副木架，槽裡有乾草；地面是夯土，散著稻草。舊木發灰，草頂長青苔。不放牛，不寫字。",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 98786,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 3
+    },
+    "LOD1": {
+      "triangles": 49393,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 3
+    },
+    "LOD2": {
+      "triangles": 14815,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 3
+    }
+  },
+  "texture_resolution_px": {
+    "AN01_CattleShed_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Metallic.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Normal.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Roughness.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Stone_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Stone_Metallic.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Stone_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Stone_Normal.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Stone_Roughness.png": [
+      2048,
+      2048
+    ],
+    "AN01_CattleShed_Wood_BaseColor.png": [
+      4096,
+      4096
+    ],
+    "AN01_CattleShed_Wood_Metallic.png": [
+      4096,
+      4096
+    ],
+    "AN01_CattleShed_Wood_MetallicSmoothness.png": [
+      4096,
+      4096
+    ],
+    "AN01_CattleShed_Wood_Normal.png": [
+      4096,
+      4096
+    ],
+    "AN01_CattleShed_Wood_Roughness.png": [
+      4096,
+      4096
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "centre of the footprint on the ground, open front -Y, roof falls from +Y to -Y",
+  "dimensions_m": [
+    5.9072,
+    3.8853,
+    3.1666
+  ],
+  "bounds_min_m": [
+    -2.9531,
+    -1.9664,
+    0.0
+  ],
+  "bounds_max_m": [
+    2.9541,
+    1.9189,
+    3.1666
+  ],
+  "size_limit_m": [
+    6.0,
+    4.0,
+    3.2
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        5.9072,
+        3.8853,
+        3.1552
+      ],
+      "min": [
+        -2.9531,
+        -1.9664,
+        0.0
+      ],
+      "max": [
+        2.9541,
+        1.9189,
+        3.1552
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        5.8043,
+        3.7238,
+        3.1666
+      ],
+      "min": [
+        -2.8921,
+        -1.9226,
+        0.0
+      ],
+      "max": [
+        2.9122,
+        1.8012,
+        3.1666
+      ]
+    }
+  },
+  "lods": {
+    "Stone": {
+      "LOD0": 6848,
+      "LOD1": 3424,
+      "LOD2": 1026
+    },
+    "Wood": {
+      "LOD0": 35080,
+      "LOD1": 17540,
+      "LOD2": 5262
+    },
+    "Detail_Small": {
+      "LOD0": 45534,
+      "LOD1": 22767,
+      "LOD2": 6829
+    },
+    "Main": {
+      "LOD0": 11324,
+      "LOD1": 5662,
+      "LOD2": 1698
+    }
+  },
+  "lod_totals": {
+    "LOD0": 98786,
+    "LOD1": 49393,
+    "LOD2": 14815
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_AN01_CattleShed_Main",
+    "M_AN01_CattleShed_Stone",
+    "M_AN01_CattleShed_Wood"
+  ],
+  "textures": [
+    "AN01_CattleShed_BaseColor.png",
+    "AN01_CattleShed_Metallic.png",
+    "AN01_CattleShed_MetallicSmoothness.png",
+    "AN01_CattleShed_Normal.png",
+    "AN01_CattleShed_Roughness.png",
+    "AN01_CattleShed_Stone_BaseColor.png",
+    "AN01_CattleShed_Stone_Metallic.png",
+    "AN01_CattleShed_Stone_MetallicSmoothness.png",
+    "AN01_CattleShed_Stone_Normal.png",
+    "AN01_CattleShed_Stone_Roughness.png",
+    "AN01_CattleShed_Wood_BaseColor.png",
+    "AN01_CattleShed_Wood_Metallic.png",
+    "AN01_CattleShed_Wood_MetallicSmoothness.png",
+    "AN01_CattleShed_Wood_Normal.png",
+    "AN01_CattleShed_Wood_Roughness.png"
+  ],
+  "texture_size_px": 2048,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_AN01_CattleShed_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "AN01_CattleShed_BaseColor.png",
+        "Normal": "AN01_CattleShed_Normal.png",
+        "MetallicSmoothness": "AN01_CattleShed_MetallicSmoothness.png"
+      },
+      "M_AN01_CattleShed_Stone": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "AN01_CattleShed_Stone_BaseColor.png",
+        "Normal": "AN01_CattleShed_Stone_Normal.png",
+        "MetallicSmoothness": "AN01_CattleShed_Stone_MetallicSmoothness.png"
+      },
+      "M_AN01_CattleShed_Wood": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "AN01_CattleShed_Wood_BaseColor.png",
+        "Normal": "AN01_CattleShed_Wood_Normal.png",
+        "MetallicSmoothness": "AN01_CattleShed_Wood_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "AN01_CattleShed_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "parts": {
+    "front_plate_underside_m": 1.863,
+    "back_plate_m": 2.592,
+    "roof_slope": 0.22,
+    "thatch_m": {
+      "x": 5.84,
+      "y": [
+        -1.8,
+        1.84
+      ]
+    },
+    "posts": 8,
+    "trough": {
+      "x": 2.1,
+      "y": 1.0,
+      "w": 0.62,
+      "top": 0.52
+    },
+    "animals": "none (the pack forbids them)"
+  },
+  "sockets_blender_xyz": {
+    "Socket_Trough": [
+      0.0,
+      1.0,
+      0.52
+    ],
+    "Socket_Entrance": [
+      0.0,
+      -1.75,
+      0.0
+    ]
+  },
+  "sockets_fbx_reimport_xyz": {
+    "Socket_Entrance.001": [
+      0.0,
+      -1.75,
+      0.0
+    ],
+    "Socket_Trough.001": [
+      0.0,
+      1.0,
+      0.52
+    ]
+  },
+  "fbx_objects": [
+    "AN01_CattleShed.001",
+    "AN01_CattleShed_Collision.001",
+    "AN01_CattleShed_Detail_Small_LOD0.001",
+    "AN01_CattleShed_Detail_Small_LOD1.001",
+    "AN01_CattleShed_Detail_Small_LOD2.001",
+    "AN01_CattleShed_LOD0.001",
+    "AN01_CattleShed_LOD1.001",
+    "AN01_CattleShed_LOD2.001",
+    "Socket_Entrance.001",
+    "Socket_Trough.001"
+  ],
+  "glb": "AN01_CattleShed_v001.glb",
+  "interface": {
+    "first_hit_y_m": 0.626
+  },
+  "modeling_method": "procedural mesh construction (art/source/village-yards-b/an_shed.py, cw_parts.py, gn_granary.plank_wall); procedural shaders baked to three atlases (Main, Stone 2048; Wood 4096)",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 189.9,
+        "median": 199.2,
+        "p90": 203.5,
+        "area_m2": 64.3
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Stone": {
+      "visible": {
+        "p10": 263.5,
+        "median": 264.0,
+        "p90": 264.1,
+        "area_m2": 45.7
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Wood": {
+      "visible": {
+        "p10": 332.9,
+        "median": 335.2,
+        "p90": 337.8,
+        "area_m2": 92.7
+      },
+      "inside_or_covered": null,
+      "atlas_px": 4096,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": null,
+  "reference": "art/references/AN01/ (AI three-view AN01/AN01-cand-2; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-yards-unity/ (local Unity batch check VillageYardsModelCheck, not committed)",
+  "based_on": "art/incoming/dondon/StarterHouse/v004 (outline and sizes; the original files are not changed)"
+}

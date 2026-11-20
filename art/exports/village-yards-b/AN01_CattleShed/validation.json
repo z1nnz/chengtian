@@ -1,0 +1,203 @@
+{
+  "asset": "AN01_CattleShed",
+  "checks": [
+    {
+      "check": "footprint_within_limit",
+      "pass": true,
+      "detail": {
+        "min": [
+          -2.9531,
+          -1.9664,
+          0.0
+        ],
+        "max": [
+          2.9541,
+          1.9189,
+          3.1666
+        ],
+        "box_m": [
+          [
+            -3.0,
+            -2.0,
+            0.0
+          ],
+          [
+            3.0,
+            2.0,
+            3.2
+          ]
+        ]
+      }
+    },
+    {
+      "check": "base_at_z0",
+      "pass": true,
+      "detail": {
+        "min_z": 0.0,
+        "design_min_z": 0.0,
+        "largest_clamp_m": 0.02315
+      }
+    },
+    {
+      "check": "lean_to_roof_falls_to_the_front",
+      "pass": true,
+      "detail": {
+        "roof_z_back_front_m": [
+          2.962,
+          2.471
+        ]
+      }
+    },
+    {
+      "check": "front_headroom_over_1.8m",
+      "pass": true,
+      "detail": {
+        "underside_z_m": [
+          1.86,
+          1.863,
+          1.864
+        ]
+      }
+    },
+    {
+      "check": "walk_in_1.75m_capsule_to_the_trough",
+      "pass": true,
+      "detail": {
+        "first_hit_y_m": 0.626,
+        "trough_front_y_m": 0.69
+      }
+    },
+    {
+      "check": "trough_with_hay_along_the_back",
+      "pass": true,
+      "detail": {
+        "hay_top_z_m": 0.512
+      }
+    },
+    {
+      "check": "sides_open_above_the_rails",
+      "pass": true,
+      "detail": {
+        "hits": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "check": "back_closed_by_the_plank_wall",
+      "pass": true,
+      "detail": {
+        "first_hit_y_m": 1.653
+      }
+    },
+    {
+      "check": "lod_ratios_50_15",
+      "pass": true,
+      "detail": {
+        "triangles": {
+          "LOD0": 98786,
+          "LOD1": 49393,
+          "LOD2": 14815
+        },
+        "LOD1": 0.5,
+        "LOD2": 0.15,
+        "per_group": {
+          "Stone": {
+            "LOD0": 6848,
+            "LOD1": 3424,
+            "LOD2": 1026
+          },
+          "Wood": {
+            "LOD0": 35080,
+            "LOD1": 17540,
+            "LOD2": 5262
+          },
+          "Detail_Small": {
+            "LOD0": 45534,
+            "LOD1": 22767,
+            "LOD2": 6829
+          },
+          "Main": {
+            "LOD0": 11324,
+            "LOD1": 5662,
+            "LOD2": 1698
+          }
+        }
+      }
+    },
+    {
+      "check": "fbx_reimport_dimensions",
+      "pass": true,
+      "detail": {
+        "fbx_lod0_dims_m": [
+          5.9072,
+          3.8853,
+          3.1666
+        ],
+        "blend_dims_m": [
+          5.9072,
+          3.8853,
+          3.1666
+        ],
+        "tolerance_m": 0.02,
+        "max_error_m": 4e-05
+      }
+    },
+    {
+      "check": "fbx_has_lod0_1_2",
+      "pass": true,
+      "detail": [
+        "AN01_CattleShed.001",
+        "AN01_CattleShed_Collision.001",
+        "AN01_CattleShed_Detail_Small_LOD0.001",
+        "AN01_CattleShed_Detail_Small_LOD1.001",
+        "AN01_CattleShed_Detail_Small_LOD2.001",
+        "AN01_CattleShed_LOD0.001",
+        "AN01_CattleShed_LOD1.001",
+        "AN01_CattleShed_LOD2.001",
+        "Socket_Entrance.001",
+        "Socket_Trough.001"
+      ]
+    },
+    {
+      "check": "fbx_sockets",
+      "pass": true,
+      "detail": {
+        "Socket_Entrance.001": [
+          0.0,
+          -1.75,
+          0.0
+        ],
+        "Socket_Trough.001": [
+          0.0,
+          1.0,
+          0.52
+        ]
+      }
+    },
+    {
+      "check": "fbx_collision",
+      "pass": true,
+      "detail": "collision mesh present"
+    },
+    {
+      "check": "glb_written",
+      "pass": true,
+      "detail": {
+        "bytes": 12526300
+      }
+    },
+    {
+      "check": "ten_views_rendered",
+      "pass": true,
+      "detail": "orthographic, framing asserted per view"
+    }
+  ],
+  "all_pass": true,
+  "seconds": 469,
+  "not_checked": [
+    "in-engine lighting and walking (see the Unity report)",
+    "mobile frame rate (not measured)"
+  ]
+}

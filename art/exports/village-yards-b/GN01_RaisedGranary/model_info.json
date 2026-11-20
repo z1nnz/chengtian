@@ -1,0 +1,408 @@
+{
+  "asset": "GN01_RaisedGranary",
+  "version": "v001",
+  "minTier": "standard",
+  "detailObjects": [
+    "GN01_RaisedGranary_Detail_Small"
+  ],
+  "name_zh": "穀倉（架高的糧囤）",
+  "slot": "A1_VillageEdge_or_A6_Granary",
+  "note": "穀倉（三視圖 GN01-cand-2，備選 cand-3）：六根短木柱立在粗石礎上，每根柱頂墊一塊平石板（防鼠石板），上面是地檩和地板，地板底離地 0.6 m；板牆夾在方木角柱、門柱之間，外面兩道橫帶；前山牆開一扇小木板門，門上一根橫閂、鐵扣和門環，門前地板外伸 0.3 m 當踏台，斜靠一把短木梯；兩面山尖各一塊竹編通風窗。懸山瓦頂，瓦和 CW01／CW02 同一種黛瓦 #3A4048，兩側深出簷，檁條、椽子、博風板、角上斜撐。舊木發灰，牆上釘兩塊補板、一面掛一張草蓆。不寫字。架高、有梯、方而高，遠看和民居的輪廓不同。",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 88202,
+      "objects": 3,
+      "objects_without_detail": 2,
+      "materials": 4
+    },
+    "LOD1": {
+      "triangles": 44100,
+      "objects": 3,
+      "objects_without_detail": 2,
+      "materials": 4
+    },
+    "LOD2": {
+      "triangles": 13225,
+      "objects": 3,
+      "objects_without_detail": 2,
+      "materials": 4
+    }
+  },
+  "texture_resolution_px": {
+    "GN01_RaisedGranary_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Metallic.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Normal.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Roughness.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Stone_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Stone_Metallic.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Stone_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Stone_Normal.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Stone_Roughness.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Tiles_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Tiles_Metallic.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Tiles_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Tiles_Normal.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Tiles_Roughness.png": [
+      2048,
+      2048
+    ],
+    "GN01_RaisedGranary_Wood_BaseColor.png": [
+      4096,
+      4096
+    ],
+    "GN01_RaisedGranary_Wood_Metallic.png": [
+      4096,
+      4096
+    ],
+    "GN01_RaisedGranary_Wood_MetallicSmoothness.png": [
+      4096,
+      4096
+    ],
+    "GN01_RaisedGranary_Wood_Normal.png": [
+      4096,
+      4096
+    ],
+    "GN01_RaisedGranary_Wood_Roughness.png": [
+      4096,
+      4096
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "centre of the footprint on the ground, front (door, ladder) -Y, ridge along y",
+  "dimensions_m": [
+    3.932,
+    3.755,
+    4.7586
+  ],
+  "bounds_min_m": [
+    -1.966,
+    -1.95,
+    0.0
+  ],
+  "bounds_max_m": [
+    1.966,
+    1.805,
+    4.7586
+  ],
+  "size_limit_m": [
+    4.0,
+    4.0,
+    5.0
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        3.8351,
+        3.755,
+        4.58
+      ],
+      "min": [
+        -1.9175,
+        -1.95,
+        0.0
+      ],
+      "max": [
+        1.9175,
+        1.805,
+        4.58
+      ]
+    },
+    "Tiles": {
+      "dims_m": [
+        3.932,
+        3.57,
+        1.7956
+      ],
+      "min": [
+        -1.966,
+        -1.785,
+        2.963
+      ],
+      "max": [
+        1.966,
+        1.785,
+        4.7586
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        3.5498,
+        3.6308,
+        3.3903
+      ],
+      "min": [
+        -1.7072,
+        -1.8916,
+        0.0
+      ],
+      "max": [
+        1.8426,
+        1.7393,
+        3.3903
+      ]
+    }
+  },
+  "lods": {
+    "Stone": {
+      "LOD0": 8724,
+      "LOD1": 4362,
+      "LOD2": 1308
+    },
+    "Wood": {
+      "LOD0": 39292,
+      "LOD1": 19646,
+      "LOD2": 5892
+    },
+    "Main": {
+      "LOD0": 1344,
+      "LOD1": 672,
+      "LOD2": 200
+    },
+    "Tiles": {
+      "LOD0": 27780,
+      "LOD1": 13890,
+      "LOD2": 4166
+    },
+    "Detail_Small": {
+      "LOD0": 11062,
+      "LOD1": 5530,
+      "LOD2": 1659
+    }
+  },
+  "lod_totals": {
+    "LOD0": 88202,
+    "LOD1": 44100,
+    "LOD2": 13225
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_GN01_RaisedGranary_Main",
+    "M_GN01_RaisedGranary_Stone",
+    "M_GN01_RaisedGranary_Tiles",
+    "M_GN01_RaisedGranary_Wood"
+  ],
+  "textures": [
+    "GN01_RaisedGranary_BaseColor.png",
+    "GN01_RaisedGranary_Metallic.png",
+    "GN01_RaisedGranary_MetallicSmoothness.png",
+    "GN01_RaisedGranary_Normal.png",
+    "GN01_RaisedGranary_Roughness.png",
+    "GN01_RaisedGranary_Stone_BaseColor.png",
+    "GN01_RaisedGranary_Stone_Metallic.png",
+    "GN01_RaisedGranary_Stone_MetallicSmoothness.png",
+    "GN01_RaisedGranary_Stone_Normal.png",
+    "GN01_RaisedGranary_Stone_Roughness.png",
+    "GN01_RaisedGranary_Tiles_BaseColor.png",
+    "GN01_RaisedGranary_Tiles_Metallic.png",
+    "GN01_RaisedGranary_Tiles_MetallicSmoothness.png",
+    "GN01_RaisedGranary_Tiles_Normal.png",
+    "GN01_RaisedGranary_Tiles_Roughness.png",
+    "GN01_RaisedGranary_Wood_BaseColor.png",
+    "GN01_RaisedGranary_Wood_Metallic.png",
+    "GN01_RaisedGranary_Wood_MetallicSmoothness.png",
+    "GN01_RaisedGranary_Wood_Normal.png",
+    "GN01_RaisedGranary_Wood_Roughness.png"
+  ],
+  "texture_size_px": 2048,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_GN01_RaisedGranary_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "GN01_RaisedGranary_BaseColor.png",
+        "Normal": "GN01_RaisedGranary_Normal.png",
+        "MetallicSmoothness": "GN01_RaisedGranary_MetallicSmoothness.png"
+      },
+      "M_GN01_RaisedGranary_Stone": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "GN01_RaisedGranary_Stone_BaseColor.png",
+        "Normal": "GN01_RaisedGranary_Stone_Normal.png",
+        "MetallicSmoothness": "GN01_RaisedGranary_Stone_MetallicSmoothness.png"
+      },
+      "M_GN01_RaisedGranary_Tiles": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "GN01_RaisedGranary_Tiles_BaseColor.png",
+        "Normal": "GN01_RaisedGranary_Tiles_Normal.png",
+        "MetallicSmoothness": "GN01_RaisedGranary_Tiles_MetallicSmoothness.png"
+      },
+      "M_GN01_RaisedGranary_Wood": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "GN01_RaisedGranary_Wood_BaseColor.png",
+        "Normal": "GN01_RaisedGranary_Wood_Normal.png",
+        "MetallicSmoothness": "GN01_RaisedGranary_Wood_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "GN01_RaisedGranary_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "parts": {
+    "floor_underside_m": 0.6,
+    "floor_top_m": 0.98,
+    "wall_plate_top_m": 3.4,
+    "roof": {
+      "half": 1.92,
+      "z_eave": 3.02,
+      "z_ridge": 4.56
+    },
+    "roof_along_y_m": 1.74,
+    "walls_m": {
+      "x": 2.48,
+      "y": 2.28
+    },
+    "door": {
+      "half": 0.37,
+      "z0": 1.0,
+      "z1": 2.36
+    },
+    "stilts": 6,
+    "rat_guard": "flat stone slab on every post top, under the sills (防鼠石板)"
+  },
+  "sockets_blender_xyz": {
+    "Socket_Door": [
+      0.0,
+      -1.36,
+      0.98
+    ],
+    "Socket_LadderFoot": [
+      0.0,
+      -1.9,
+      0.0
+    ]
+  },
+  "sockets_fbx_reimport_xyz": {
+    "Socket_Door.001": [
+      0.0,
+      -1.36,
+      0.98
+    ],
+    "Socket_LadderFoot.001": [
+      0.0,
+      -1.9,
+      0.0
+    ]
+  },
+  "fbx_objects": [
+    "GN01_RaisedGranary.001",
+    "GN01_RaisedGranary_Collision.001",
+    "GN01_RaisedGranary_Detail_Small_LOD0.001",
+    "GN01_RaisedGranary_Detail_Small_LOD1.001",
+    "GN01_RaisedGranary_Detail_Small_LOD2.001",
+    "GN01_RaisedGranary_LOD0.001",
+    "GN01_RaisedGranary_LOD1.001",
+    "GN01_RaisedGranary_LOD2.001",
+    "GN01_RaisedGranary_Tiles_LOD0.001",
+    "GN01_RaisedGranary_Tiles_LOD1.001",
+    "GN01_RaisedGranary_Tiles_LOD2.001",
+    "Socket_Door.001",
+    "Socket_LadderFoot.001"
+  ],
+  "glb": "GN01_RaisedGranary_v001.glb",
+  "interface": {
+    "underside_z_m": [
+      0.61,
+      0.599,
+      0.602,
+      0.6
+    ]
+  },
+  "modeling_method": "procedural mesh construction (art/source/village-yards-b/gn_granary.py, cw_parts.py); procedural shaders baked to four atlases (Main, Stone, Tiles 2048; Wood 4096)",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 951.8,
+        "median": 964.9,
+        "p90": 978.6,
+        "area_m2": 2.8
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Stone": {
+      "visible": {
+        "p10": 538.5,
+        "median": 551.2,
+        "p90": 558.3,
+        "area_m2": 9.2
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Wood": {
+      "visible": {
+        "p10": 248.2,
+        "median": 252.9,
+        "p90": 258.0,
+        "area_m2": 162.3
+      },
+      "inside_or_covered": null,
+      "atlas_px": 4096,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Tiles": {
+      "visible": {
+        "p10": 139.0,
+        "median": 145.2,
+        "p90": 151.4,
+        "area_m2": 64.7
+      },
+      "inside_or_covered": null,
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": null,
+  "reference": "art/references/GN01/ (AI three-view GN01/GN01-cand-2; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-yards-unity/ (local Unity batch check VillageYardsModelCheck, not committed)",
+  "based_on": "art/incoming/dondon/StarterHouse/v004 (outline and sizes; the original files are not changed)"
+}
