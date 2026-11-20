@@ -245,7 +245,27 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     rmx = nt.nodes.new('ShaderNodeMapRange')
     nt.links.new(mr.outputs[0], rmx.inputs['Value'])
     rmx.inputs['To Min'].default_value, rmx.inputs['To Max'].default_value = .85, .45   # 泥路濕、反光
-    nt.links.new(rmx.outputs[0], b.inputs['Roughness'])
+    pn = nt.nodes.new('ShaderNodeTexNoise')   # 積水小窪：路上一塊塊
+    pn.inputs['Scale'].default_value = .45
+    pn.inputs['Detail'].default_value = 4
+    nt.links.new(tc.outputs['Object'], pn.inputs['Vector'])
+    pmr = nt.nodes.new('ShaderNodeMapRange')
+    pmr.inputs['From Min'].default_value, pmr.inputs['From Max'].default_value = .60, .64
+    nt.links.new(pn.outputs['Fac'], pmr.inputs['Value'])
+    pmul = nt.nodes.new('ShaderNodeMath')
+    pmul.operation = 'MULTIPLY'
+    nt.links.new(pmr.outputs[0], pmul.inputs[0])
+    nt.links.new(mr.outputs[0], pmul.inputs[1])
+    rfin = nt.nodes.new('ShaderNodeMix')
+    nt.links.new(pmul.outputs[0], rfin.inputs['Factor'])
+    nt.links.new(rmx.outputs[0], rfin.inputs['A'])
+    rfin.inputs['B'].default_value = .04
+    nt.links.new(rfin.outputs['Result'], b.inputs['Roughness'])
+    cdk = nt.nodes.new('ShaderNodeMixRGB')
+    nt.links.new(pmul.outputs[0], cdk.inputs[0])
+    nt.links.new(cm.outputs[0], cdk.inputs[1])
+    cdk.inputs[2].default_value = (.035, .03, .025, 1)
+    nt.links.new(cdk.outputs[0], b.inputs['Base Color'])
     me.materials[0] = GM
     # 坑（CO02 獨立模型）底下的主地面壓低，不要蓋住坑洞
     _bm = bmesh.new()   # 坑模型底下的主地面挖掉（不能只壓低，斜面會穿進坑裡）
@@ -612,6 +632,9 @@ while len(TREES) < (260 if not QUICK else 120) and tries < 60000:
         continue
     TREES.append((x, y, k, R.uniform(.85, 1.15)))
 _CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-9, 17), (1, 91)]
+_CR = random.Random(31)
+if 'real' in argv:   # 設定圖 V1：松樹比例高、樹冠之間看得到樹幹 → 外圍一部分圓冠樹換成傘頂松
+    TREES = [(x, y, ('P' if (k == 'M' and math.hypot(x - CLEAR[0], y - CLEAR[1]) > CLEAR[2] + 8 and _CR.random() < .5) else k), s) for x, y, k, s in TREES]
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
@@ -739,6 +762,36 @@ if 'real' in argv:
         if nug >= 40000:
             break
     print('UNDERGROWTH', nug)
+    # 路上的積水小窪、落葉（設定圖每一張路面都有）
+    litter_mat = _leaf_material('Litter', (.55, .5, .45, 1), (.85, .8, .72, 1), (.9, .85, .7, 1), gloss=.6)
+    LR = random.Random(41)
+
+    def _lit_place():
+        cx, cy = LR.choice(_CAMS + [ARCH_S, ARCH_N, PIT, ALT])
+        a_, r_ = LR.uniform(0, 6.283), 14 * LR.random() ** .7
+        x, y = cx + math.cos(a_) * r_, cy + math.sin(a_) * r_
+        if math.hypot(x - PIT[0], y - PIT[1]) < 3.6:
+            return None
+        return (x, y), gh(x, y)
+    litter('PathLitter', LR, 30000, _lit_place, litter_mat)
+    pw = bpy.data.materials.new('Puddle')
+    pw.use_nodes = True
+    _pb = next(x_ for x_ in pw.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _pb.inputs['Base Color'].default_value = (.03, .028, .025, 1)
+    _pb.inputs['Roughness'].default_value = .03
+    npd = 0
+    for i in range(4000):
+        x, y = LR.uniform(-30, 30), LR.uniform(-100, 110)
+        if True:   # 改用路面材質的濕窪（模型窪會浮起來、像鏡子）
+            continue
+        r_ = LR.uniform(.15, .55)
+        bpy.ops.mesh.primitive_circle_add(vertices=20, radius=r_, fill_type='NGON', location=(x, y, gh(x, y) + .012))
+        pu = bpy.context.object
+        pu.scale = (LR.uniform(1, 1.8), LR.uniform(.6, 1), 1)
+        pu.rotation_euler.z = LR.uniform(0, 3.14)
+        pu.data.materials.append(pw)
+        npd += 1
+    print('PUDDLES', npd)
 
 # 1.75 m 人形尺（祭壇前）
 cyl((4, -6, gh(4, -6)), .22, .18, 1.75, mat('human', (.8, .1, .1))).hide_render = True
@@ -760,7 +813,31 @@ bpy.ops.mesh.primitive_cube_add(size=1, location=(200, 50, 40))
 fog = bpy.context.object
 fog.name = 'Fog'
 fog.scale = (1200, 1200, 140)
-if 'real' in argv:   # 霧壓低：林間一層低霧，樹冠露出來（設定圖 V1）
+if 'real' in argv:   # 林間低霧層：貼地一層較濃的霧（設定圖 V1 樹冠間的白霧）
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 10, 6))
+    _lf = bpy.context.object
+    _lf.name = 'LowFog'
+    _lf.scale = (420, 420, 10)
+    _lfm = bpy.data.materials.new('lowfog')
+    _lfm.use_nodes = True
+    _nt = _lfm.node_tree
+    for _nd in list(_nt.nodes):
+        if _nd.type == 'BSDF_PRINCIPLED':
+            _nt.nodes.remove(_nd)
+    _vs = _nt.nodes.new('ShaderNodeVolumePrincipled')
+    _vs.inputs['Color'].default_value = (.9, .92, .94, 1)
+    _nz = _nt.nodes.new('ShaderNodeTexNoise')
+    _nz.inputs['Scale'].default_value = .015
+    _nz.inputs['Detail'].default_value = 3
+    _tc = _nt.nodes.new('ShaderNodeTexCoord')
+    _nt.links.new(_tc.outputs['Object'], _nz.inputs['Vector'])
+    _mr = _nt.nodes.new('ShaderNodeMapRange')
+    _mr.inputs['From Min'].default_value, _mr.inputs['From Max'].default_value = .45, .7
+    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .014
+    _nt.links.new(_nz.outputs['Fac'], _mr.inputs['Value'])
+    _nt.links.new(_mr.outputs[0], _vs.inputs['Density'])
+    _nt.links.new(_vs.outputs['Volume'], next(_nd for _nd in _nt.nodes if _nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
+    _lf.data.materials.append(_lfm)
     fog.location.z, fog.scale.z = 4, 26
 fm = bpy.data.materials.new('fog')
 fm.use_nodes = True
