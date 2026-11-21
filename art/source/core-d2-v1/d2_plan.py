@@ -507,10 +507,24 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
-def root_ridge(a, b, r0, r1, m=M_ROOT):
+def root_ridge(a, b, r0, r1, m=M_ROOT, force=False):
     ax, ay = a; bx, by = b
     L = math.hypot(bx - ax, by - ay)
     N = max(3, int(L / 1.2))
+    if REAL and not globals().get('_ROOTCOLS') is None:   # RT01 掃描樹皮長根（roots_lib.blend）
+        rc = globals()['_ROOTCOLS']
+        L = math.hypot(bx - ax, by - ay)
+        if not force and any(path_d(ax + (bx - ax) * s, ay + (by - ay) * s) < 2.2 for s in (.3, .5, .7, .9)):
+            return   # 長根不橫跨走道（設定圖的根都沿著路邊）
+        e = bpy.data.objects.new('Root', None)
+        e.instance_type = 'COLLECTION'
+        e.instance_collection = rc[int(abs(ax * 7 + by * 3)) % len(rc)]
+        th = r0 / .65
+        e.scale = (L / 10.0, th * (1 if (int(ax + by) % 2) else -1), th)
+        e.rotation_euler.z = math.atan2(by - ay, bx - ax)
+        e.location = (ax, ay, gh(ax, ay) - .1 * th)
+        sc.collection.objects.link(e)
+        return
     if REAL:   # 真模型模式：一整條漸細、半埋在土裡的樹根（掃描樹皮），不是一顆顆石頭
         cu = bpy.data.curves.new('RootRidge', 'CURVE')
         cu.dimensions = '3D'
@@ -555,6 +569,22 @@ def root_ridge(a, b, r0, r1, m=M_ROOT):
         blob((x, y, gh(x, y) + r * .1), r, m, sq=(1, 1, .55), sub=1)
 
 
+if REAL:
+    _ROOTCOLS = []
+    with bpy.data.libraries.load(S_ + 'roots_lib.blend', link=False) as (_s, _d):
+        _d.objects = [nm for nm in _s.objects if nm.startswith('RT01')]
+    for _v in 'ABCD':
+        _c = bpy.data.collections.new('RT01_' + _v)
+        for _o in _d.objects:
+            if _o is not None and _o.name.startswith('RT01_Root_' + _v):
+                _c.objects.link(_o)
+        _ROOTCOLS.append(_c)
+    for _o in _d.objects:   # 長根：樹皮為主、頂上一條條苔（不要整條綠）
+        if _o is not None:
+            for _sl in _o.material_slots:
+                mossify(_sl.material, .55, 1.2)
+else:
+    _ROOTCOLS = None
 ROOTS = []
 for k in range(9):
     ang = -1.25 + k * .55 + R.uniform(-.15, .15)
@@ -564,6 +594,9 @@ ROOTS.append(((TREE[0] + 6, TREE[1] - 5), (ALT[0] - 4, ALT[1] + 2)))           #
 ROOTS.append(((TREE[0] + 4, TREE[1] - 7), (ALT[0] - 2, ALT[1] - 4)))
 for a, b in ROOTS:
     root_ridge(a, b, 1.5, .45)
+if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
+    for a, b, r in [((-1.5, 13), (5.5, -1), 1.1), ((-10, 11), (-5.5, -5), 1.2), ((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
+        root_ridge(a, b, r, .4, force=True)
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
@@ -745,7 +778,8 @@ if REAL:   # RK01 大苔石（真模型）；另外在路邊、根旁多擺一�
         s_ = r / 1.2
         e.scale = (s_, s_, s_ * _RR.uniform(.8, 1.1))
         e.rotation_euler.z = _RR.uniform(0, 6.283)
-        e.location = (x, y, gh(x, y) - .12 * s_)
+        e.location = (x, y, gh(x, y) - .06 * s_)
+        globals().setdefault('_ALLROCK', []).append((x, y, r))
         sc.collection.objects.link(e)
         _nrk = globals().get('_nrk', 0) + 1
         globals()['_nrk'] = _nrk
@@ -758,7 +792,7 @@ if REAL:   # RK01 大苔石（真模型）；另外在路邊、根旁多擺一�
         e.instance_collection = _rkc[ci]
         e.scale = (r / 1.2,) * 3
         e.rotation_euler.z = _RR.uniform(0, 6.283)
-        e.location = (x, y, gh(x, y) - .35 * r / 1.2)
+        e.location = (x, y, gh(x, y) - .12 * r / 1.2)
         sc.collection.objects.link(e)
     globals()['_HERO'] = HERO
 else:
@@ -829,7 +863,7 @@ if 'real' in argv:
         x, y = PR.uniform(-70, 70), PR.uniform(-105, 125)
         pdist = path_d(x, y)
         near = min([math.hypot(x - cx, y - cy) for cx, cy in _CAMS] + [math.hypot(x - ARCH_N[0], y - ARCH_N[1]) * .8, math.hypot(x - ARCH_S[0], y - ARCH_S[1]) * .8])
-        if any(math.hypot(x - hx, y - hy) < hr * .9 for hx, hy, hr, _ in globals().get('_HERO', [])):
+        if any(math.hypot(x - hx, y - hy) < hr * 1.3 for hx, hy, hr, _ in globals().get('_HERO', [])) or any(math.hypot(x - hx, y - hy) < hr * 1.1 for hx, hy, hr in globals().get('_ALLROCK', [])):
             continue
         if pdist < 2.6 or math.hypot(x - PIT[0], y - PIT[1]) < 5.4 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
@@ -1004,6 +1038,11 @@ if 'real' in argv:   # 神木樹冠底下太暗：從南邊打一盞大面積的
     _flo = bpy.data.objects.new('TrunkFill', _fl)
     sc.collection.objects.link(_flo)
     _flo.visible_volume_scatter = False   # 不要把霧照白
+    _rc = bpy.data.collections.new('TrunkFillReceivers')   # 只照神木（光源連結），路面、近景不被照白
+    for _o in _GTO:
+        if _o.type == 'MESH':
+            _rc.objects.link(_o)
+    _flo.light_linking.receiver_collection = _rc
     _flo.location = (TREE[0] + 18, TREE[1] - 40, gh(*TREE) + 14)
     _flo.rotation_euler = (Vector((TREE[0], TREE[1], gh(*TREE) + 12)) - _flo.location).to_track_quat('-Z', 'Y').to_euler()
 if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光，不要逆光剪影）

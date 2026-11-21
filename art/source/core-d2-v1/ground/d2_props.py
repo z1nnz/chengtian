@@ -181,7 +181,7 @@ bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
 print('ALTAR tris', sum(len(p.vertices) - 2 for p in alt.data.polygons), 'height', round(z + .2, 2))
 
 # ---------------- RK01 大苔石 A–E ----------------
-RK_MAT = stone_material('RK01_Stone', (.55, .56, .52), .8)
+RK_MAT = stone_material('RK01_Stone', (.55, .56, .52), .45)
 # 大石頭不能用碎石堆的掃描貼圖（會變一堆碎石）：底色、法線改成整塊岩面的雜訊
 _nt = RK_MAT.node_tree
 _b = next(x for x in _nt.nodes if x.type == 'BSDF_PRINCIPLED')
@@ -193,8 +193,8 @@ _n1.inputs['Detail'].default_value = 10
 _n1.inputs['Roughness'].default_value = .6
 _nt.links.new(_geo.outputs['Position'], _n1.inputs['Vector'])
 _cr = _nt.nodes.new('ShaderNodeValToRGB')
-_cr.color_ramp.elements[0].color = (.13, .13, .12, 1)
-_cr.color_ramp.elements[1].color = (.34, .34, .31, 1)
+_cr.color_ramp.elements[0].color = (.07, .065, .055, 1)
+_cr.color_ramp.elements[1].color = (.22, .21, .18, 1)
 _nt.links.new(_n1.outputs['Fac'], _cr.inputs[0])
 _nt.links.new(_cr.outputs[0], _tint.inputs[1])
 _bp = _nt.nodes.new('ShaderNodeBump')
