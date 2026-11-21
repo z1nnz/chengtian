@@ -609,7 +609,7 @@ def giant(x, y, s):
 
 KIND = {'P': pine, 'B': broad, 'M': roundt, 'G': giant}
 if 'real' in argv:     # 換成真的樹模型（collection instance）
-    _LIB = {'P': ['umbrella_pine_lib'], 'B': ['broadleaf_B_lib'], 'M': ['broadleaf_M_lib'], 'G': ['godtree_t10a', 'godtree_t10b', 'godtree_t10c']}
+    _LIB = {'P': ['umbrella_pine_lib', 'umbrella_pine_lib2', 'umbrella_pine_lib3'], 'B': ['broadleaf_B_lib'], 'M': ['broadleaf_M_lib'], 'G': ['godtree_t10a', 'godtree_t10b', 'godtree_t10c']}
     _SK = lambda nm: nm in ('Grid', 'Cube') or nm.startswith(('Cylinder', 'Camera', 'Sun', 'Human'))
     _COLS = {}
     for _k, _fs in _LIB.items():
@@ -630,7 +630,9 @@ if 'real' in argv:     # 換成真的樹模型（collection instance）
             e.instance_collection = R.choice(_COLS[k])
             s = s * (.62 if k == 'G' else 1.0)    # 巨木庫是神木做法、樹冠很寬；縮到設定圖裡的比例
             e.scale = (s, s, s * R.uniform(.94, 1.06))
-            e.rotation_euler.z = R.uniform(0, 6.283)
+            e.rotation_euler = (R.uniform(-.05, .05), R.uniform(-.05, .05), R.uniform(0, 6.283)) if k == 'P' else (0, 0, R.uniform(0, 6.283))   # 松樹微微傾斜、不整齊
+            if k == 'P':
+                e.scale = (s, s, s * R.uniform(.82, 1.15))
             e.location = (x, y, gh(x, y) - .25)
             sc.collection.objects.link(e)
         return f
