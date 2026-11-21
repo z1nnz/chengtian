@@ -338,7 +338,7 @@ def append(path, want, offset, dz):
 _MOSSED = set()
 
 
-def mossify(m, amount=1.0, lift=1.0):
+def mossify(m, amount=1.0, lift=1.0, furrow=False):
     """照拱門的做法給樹皮加苔（z1nnz 11/21）：朝上的面、凹處長一片片青苔，凸處帶灰白地衣；樹皮整體提亮成棕灰。
     只改材質節點，接在原本的 Base Color 後面。"""
     if m is None or m.name in _MOSSED or not m.use_nodes:
@@ -411,7 +411,7 @@ def mossify(m, amount=1.0, lift=1.0):
     nt.links.new(lf.outputs[0], lmx.inputs[0])
     nt.links.new(mx.outputs[0], lmx.inputs[1])
     nt.links.new(lmx.outputs[0], b.inputs['Base Color'])
-    if amount >= 1.0:   # 粗樹皮溝紋：沿著樹幹往上拉長的深溝（設定圖神木的樹皮）
+    if furrow:   # 粗樹皮溝紋（只給神木；拱門用了會變成一格格蛇皮）：沿著樹幹往上拉長的深溝（設定圖神木的樹皮）
         fv = nt.nodes.new('ShaderNodeMapping')
         fv.inputs['Scale'].default_value = (2.2, 2.2, .35)
         nt.links.new(geo.outputs['Position'], fv.inputs['Vector'])
@@ -423,7 +423,7 @@ def mossify(m, amount=1.0, lift=1.0):
         fr.inputs['From Min'].default_value, fr.inputs['From Max'].default_value = .0, .12
         nt.links.new(vo.outputs['Distance'], fr.inputs['Value'])
         bp2 = nt.nodes.new('ShaderNodeBump')
-        bp2.inputs['Strength'].default_value = .8
+        bp2.inputs['Strength'].default_value = 1.4
         bp2.inputs['Distance'].default_value = .08
         nt.links.new(fr.outputs[0], bp2.inputs['Height'])
         if b.inputs['Normal'].links:
@@ -499,11 +499,11 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
         if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
             print('MOSS', o.name)
             for sl in o.material_slots:
-                mossify(sl.material, 1.15, 1.6)
+                mossify(sl.material, 1.6, 1.6, furrow=True)   # 設定圖 v2：苔是厚厚一層
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
-                mossify(sl.material, .95 if o in _ARS else 1.3, 3.0)
+                mossify(sl.material, 1.4 if o in _ARS else 1.6, 3.0)
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
@@ -865,7 +865,7 @@ if 'real' in argv:
         near = min([math.hypot(x - cx, y - cy) for cx, cy in _CAMS] + [math.hypot(x - ARCH_N[0], y - ARCH_N[1]) * .8, math.hypot(x - ARCH_S[0], y - ARCH_S[1]) * .8])
         if any(math.hypot(x - hx, y - hy) < hr * 1.3 for hx, hy, hr, _ in globals().get('_HERO', [])) or any(math.hypot(x - hx, y - hy) < hr * 1.1 for hx, hy, hr in globals().get('_ALLROCK', [])):
             continue
-        if pdist < 2.6 or math.hypot(x - PIT[0], y - PIT[1]) < 5.4 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
+        if pdist < 3.0 or math.hypot(x - PIT[0], y - PIT[1]) < 5.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
         # 密度降低、成叢成片：用低頻雜訊做出有草的區塊和空地
         patch = .5 + .5 * noise.noise(Vector((x * .09, y * .09, 4.4)))
@@ -916,7 +916,7 @@ if 'real' in argv:
         for i in range(1500):
             a_, r_ = GR.uniform(0, 6.283), 32 * GR.random() ** .6
             x, y = cx + math.cos(a_) * r_, cy + math.sin(a_) * r_
-            if path_d(x, y) < 1.9 or math.hypot(x - PIT[0], y - PIT[1]) < 4.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.0:
+            if path_d(x, y) < 3.0 or math.hypot(x - PIT[0], y - PIT[1]) < 4.6 or math.hypot(x - ALT[0], y - ALT[1]) < 6.0:
                 continue
             e = bpy.data.objects.new('GC', None)
             e.instance_type = 'COLLECTION'
@@ -1090,7 +1090,7 @@ w = bpy.data.worlds.new('W')
 sc.world = w
 w.use_nodes = True
 bg = next(n for n in w.node_tree.nodes if n.type == 'BACKGROUND')
-bg.inputs['Color'].default_value = (.55, .6, .65, 1)
+bg.inputs['Color'].default_value = (.66, .70, .74, 1)   # 設定圖 v2：霧白、透
 bg.inputs['Strength'].default_value = 1.6
 sun = bpy.data.lights.new('Sun', 'SUN')
 sun.energy = 3.2
@@ -1114,7 +1114,7 @@ if 'real' in argv:   # 林間低霧層：貼地一層較濃的霧（設定圖 V1
         if _nd.type == 'BSDF_PRINCIPLED':
             _nt.nodes.remove(_nd)
     _vs = _nt.nodes.new('ShaderNodeVolumePrincipled')
-    _vs.inputs['Color'].default_value = (.9, .92, .94, 1)
+    _vs.inputs['Color'].default_value = (.97, .98, 1.0, 1)
     _nz = _nt.nodes.new('ShaderNodeTexNoise')
     _nz.inputs['Scale'].default_value = .015
     _nz.inputs['Detail'].default_value = 3
@@ -1122,7 +1122,7 @@ if 'real' in argv:   # 林間低霧層：貼地一層較濃的霧（設定圖 V1
     _nt.links.new(_tc.outputs['Object'], _nz.inputs['Vector'])
     _mr = _nt.nodes.new('ShaderNodeMapRange')
     _mr.inputs['From Min'].default_value, _mr.inputs['From Max'].default_value = .45, .7
-    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .007
+    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .005
     _nt.links.new(_nz.outputs['Fac'], _mr.inputs['Value'])
     _nt.links.new(_mr.outputs[0], _vs.inputs['Density'])
     _nt.links.new(_vs.outputs['Volume'], next(_nd for _nd in _nt.nodes if _nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
@@ -1135,8 +1135,8 @@ for nd in list(nt.nodes):
     if nd.type == 'BSDF_PRINCIPLED':
         nt.nodes.remove(nd)
 vs = nt.nodes.new('ShaderNodeVolumePrincipled')
-vs.inputs['Density'].default_value = .0045 if 'real' in argv else .005
-vs.inputs['Color'].default_value = (.85, .88, .9, 1)
+vs.inputs['Density'].default_value = .003 if 'real' in argv else .005
+vs.inputs['Color'].default_value = (.95, .96, .98, 1)
 nt.links.new(vs.outputs['Volume'], next(nd for nd in nt.nodes if nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
 fog.data.materials.append(fm)
 
