@@ -1,0 +1,19 @@
+Tool: Codex CLI image generation (no negative-prompt field, so 5.3 is appended after 'Avoid:').
+Aspect: landscape 3:2 (at least 1536 px wide)
+Layout block: single
+
+Three-view orthographic turnaround sheet (front, side, top) of a single mature weeping willow tree about 10 m tall growing on a stream bank: a stout gnarled trunk about 0.5 m across that leans clearly to one side over the water in a gentle S-curve, rough grey-brown furrowed bark with a swollen root flare and one burl; five to seven unequal main limbs arching up and out, asymmetric, one long limb reaching far over the water; from every limb many thin flexible twigs arch over and hang straight down in long fine curtains of streamers 2 to 5 m long, some nearly touching the ground, with gaps between the curtains where the limbs and sky show through; each streamer carries many small narrow lance-shaped leaves; muted willow green, lighter yellow-green at the outer tops, darker cool green inside and below. Rural southern Chinese mountain village by a clear stream; muted natural colours, realistic proportions, real-world scale. Show only this one tree with a small patch of bank; no water plants, no fence, no buildings, no writing. Layout: front view, side view and back view side by side in one image, all at the same scale and aligned on the same ground line, orthographic (no perspective), centred, full object visible with margin around it, plain light warm-grey background, even soft studio lighting so shapes and materials read clearly, no cast shadows on the background, one object only. Art direction: stylized hand-painted 3D game art for an Eastern xianxia fantasy world (Chinese immortal-cultivation setting), warm golden morning light from a low sun, soft warm rim light on edges and silhouettes, gentle blue-violet shadows (never pure black), layered soft white mist in the distance, painterly textures made of large soft colour gradients with a few visible brush strokes, rich but natural colour palette (sunlit warm yellow-greens, cool teal shade greens, warm grey stone, aged brown timber, blue-grey roof tiles, turquoise water), lived-in details: wear on edges, moss and soil in the joints, patched and repaired parts, small cracks, weathered wood grain, high level of detail with clear readable shapes and a strong silhouette, real-world scale and proportions, cohesive with a hand-painted xianxia valley village, game-ready asset look, high quality, masterpiece. Avoid: photorealistic, photograph, photo texture, scanned texture, realistic PBR, plastic, glossy, shiny, chrome, pure black shadows, harsh contrast, neon colours, oversaturated, flat lighting, noon lighting, modern objects, cars, wires, concrete, glass windows, text, letters, Chinese characters, signature, logo, UI, watermark, frame, border, anime screenshot, cel-shaded flat colour, Genshin Impact, Mihoyo, copy of an existing game asset, blocky low-poly, voxel, cartoon chibi, noisy texture, blurry, low resolution, cropped, cut off, duplicate objects, extra limbs, floating parts, distorted perspective, fisheye, Japanese garden style, bonsai, topiary, round ball-shaped crown, crown made of several balls, leaf clumps, flat leaf cards, symmetric mirrored branches, branches all the same thickness, straight vertical pole trunk, fluorescent neon green, glossy plastic leaves, cartoon lollipop tree, flowers, lettering, lanterns, people
+
+（這次 Codex 一次出了 8 張，option 1–4 是 2172×724、option 5–8 是 1536×1024，八張都是同一段提示產生的，全部保留。）
+
+選用：option 1
+理由：
+- 樹幹在根部先往一側承重，再往水面那側斜出，S 形受力最清楚，符合工作包「樹幹斜向水面」和 A1 設定圖 V5 的溪邊柳樹。
+- 一支長主枝伸到水面上，負責最大跨度；另一側較短、留出空洞，左右不鏡像，符合世界樹指南第五步「三條剪影主枝」。
+- 垂枝一束一束分開，束與束之間看得到主枝和天空；有些垂到接近地面，有些停在半空，下緣不齊。
+- 低處有一個樹瘤、根頸膨大、表面根爬進地面，指南要求的中尺度細節都有。
+建模時的差異：
+- 顏色照工作包「沉穩、不要螢光綠」壓暗：參考圖的黃綠偏亮，模型用五階柳綠（上外暖亮、下內冷暗）。
+- 參考圖是正、側、背三張，沒有俯視；俯視照模型自己的主枝分布。
+- 水邊石塊和草地不做，只做樹（樹根埋入地面 0.3 m）。
+- 水面方向：正視圖裡樹往右（+X）斜，模型的水面側也定在 +X。
