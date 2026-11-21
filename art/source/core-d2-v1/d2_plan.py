@@ -495,11 +495,11 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
         if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
             print('MOSS', o.name)
             for sl in o.material_slots:
-                mossify(sl.material, 1.0, 1.45)
+                mossify(sl.material, 1.15, 1.6)
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
-                mossify(sl.material, .95 if o in _ARS else 1.3, 3.0 if o in _ARS else 2.2)
+                mossify(sl.material, .95 if o in _ARS else 1.3, 3.0)
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
@@ -698,6 +698,9 @@ for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
     KIND[k](x, y, s)
+if 'real' in argv:   # V6 北入口兩側的近景大樹
+    for (x_, y_, k_, s_) in [(-21, 99, 'B', 1.15), (11, 106, 'P', 1.05), (17, 113, 'P', .95), (-11, 120, 'B', 1.0), (6, 124, 'B', .9)]:
+        KIND[k_](x_, y_, s_)
 if 'real' in argv:   # 區塊外（鄰近區塊）的林子也種上，遠景才不會空掉；用另一個亂數，不動區塊內的樹
     FR = random.Random(99)
     extra = []
@@ -822,7 +825,7 @@ if 'real' in argv:
                 e2.location = (x2, y2, gh(x2, y2) - .03)
                 sc.collection.objects.link(e2)
                 nug += 1
-        if nug >= 40000:
+        if nug >= 20000:
             break
     print('UNDERGROWTH', nug)
     GC = UG['clover'] + UG['rosette'] + UG['heart'][:1] + UG['grass'][:2]
@@ -830,7 +833,7 @@ if 'real' in argv:
     GR = random.Random(57)
     ngc = 0
     for cx, cy in _CAMS + [ARCH_S, ARCH_N, PIT, ALT, TREE]:
-        for i in range(5200):
+        for i in range(1500):
             a_, r_ = GR.uniform(0, 6.283), 32 * GR.random() ** .6
             x, y = cx + math.cos(a_) * r_, cy + math.sin(a_) * r_
             if path_d(x, y) < 1.9 or math.hypot(x - PIT[0], y - PIT[1]) < 4.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.0:
@@ -856,7 +859,7 @@ if 'real' in argv:
         if math.hypot(x - PIT[0], y - PIT[1]) < 3.6:
             return None
         return (x, y), gh(x, y)
-    litter('PathLitter', LR, 70000, _lit_place, litter_mat)
+    litter('PathLitter', LR, 110000, _lit_place, litter_mat)
     pw = bpy.data.materials.new('Puddle')
     pw.use_nodes = True
     _pb = next(x_ for x_ in pw.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED')
@@ -947,6 +950,16 @@ sc.cycles.samples = 24 if QUICK else 64
 sc.cycles.use_denoising = True
 sc.cycles.volume_step_rate = 4
 sc.view_settings.view_transform = 'AgX'
+if 'real' in argv:   # 神木樹冠底下太暗：從南邊打一盞大面積的柔光，像霧裡反射回來的天光
+    _fl = bpy.data.lights.new('TrunkFill', 'AREA')
+    _fl.energy = 6000
+    _fl.size = 50
+    _fl.color = (1.0, .96, .9)
+    _flo = bpy.data.objects.new('TrunkFill', _fl)
+    sc.collection.objects.link(_flo)
+    _flo.visible_volume_scatter = False   # 不要把霧照白
+    _flo.location = (TREE[0] + 18, TREE[1] - 40, gh(*TREE) + 14)
+    _flo.rotation_euler = (Vector((TREE[0], TREE[1], gh(*TREE) + 12)) - _flo.location).to_track_quat('-Z', 'Y').to_euler()
 if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光，不要逆光剪影）
     sc.view_settings.exposure = 1.0
     bg.inputs['Strength'].default_value = 3.4
