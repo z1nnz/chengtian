@@ -245,6 +245,7 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     nmn = nt.nodes.new('ShaderNodeNormalMap')
     nt.links.new(nmx.outputs[0], nmn.inputs['Color'])
     nt.links.new(nmn.outputs['Normal'], b.inputs['Normal'])
+    _PUD_N = nmn   # 積水窪裡法線要平（水面），下面接 1-pmul 到強度
     rmx = nt.nodes.new('ShaderNodeMapRange')
     nt.links.new(mr.outputs[0], rmx.inputs['Value'])
     rmx.inputs['To Min'].default_value, rmx.inputs['To Max'].default_value = .85, .45   # 泥路濕、反光
@@ -269,6 +270,11 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     nt.links.new(cm.outputs[0], cdk.inputs[1])
     cdk.inputs[2].default_value = (.035, .03, .025, 1)
     nt.links.new(cdk.outputs[0], b.inputs['Base Color'])
+    # 11/22 水窪要像設定圖那樣反光：水面法線平、不帶泥土凹凸（原本整片凹凸 → 看起來像灰色濕斑）
+    _pinv = nt.nodes.new('ShaderNodeMath'); _pinv.operation = 'SUBTRACT'; _pinv.inputs[0].default_value = 1.0
+    nt.links.new(pmul.outputs[0], _pinv.inputs[1])
+    nt.links.new(_pinv.outputs[0], _PUD_N.inputs['Strength'])
+    b.inputs['IOR'].default_value = 1.33
     me.materials[0] = GM
     # 坑（CO02 獨立模型）底下的主地面壓低，不要蓋住坑洞
     _bm = bmesh.new()   # 坑模型底下的主地面挖掉（不能只壓低，斜面會穿進坑裡）
@@ -357,11 +363,11 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     _l3 = nt.nodes.new('ShaderNodeMath'); _l3.operation = 'MULTIPLY_ADD'   # 土埂 .2·m(1-m)·... + 前面
     nt.links.new(_l2.outputs[0], _l3.inputs[0]); _l3.inputs[1].default_value = .2
     nt.links.new(_dh.outputs[0], _l3.inputs[2])
-    _pd = nt.nodes.new('ShaderNodeMath'); _pd.operation = 'MULTIPLY_ADD'   # 積水窪凹下
-    nt.links.new(pmul.outputs[0], _pd.inputs[0]); _pd.inputs[1].default_value = -.05
-    nt.links.new(_l3.outputs[0], _pd.inputs[2])
+    _pd = nt.nodes.new('ShaderNodeMix')   # 積水窪：水面是平的（不跟著泥土凹凸），比周圍低 5 cm
+    nt.links.new(pmul.outputs[0], _pd.inputs['Factor'])
+    nt.links.new(_l3.outputs[0], _pd.inputs['A']); _pd.inputs['B'].default_value = -.06
     _dwm = nt.nodes.new('ShaderNodeMath'); _dwm.operation = 'MULTIPLY'
-    nt.links.new(_pd.outputs[0], _dwm.inputs[0]); nt.links.new(_dw.outputs['Fac'], _dwm.inputs[1])
+    nt.links.new(_pd.outputs['Result'], _dwm.inputs[0]); nt.links.new(_dw.outputs['Fac'], _dwm.inputs[1])
     _dsp = nt.nodes.new('ShaderNodeDisplacement')
     _dsp.inputs['Midlevel'].default_value = 0.0
     _dsp.inputs['Scale'].default_value = 1.0
@@ -433,7 +439,7 @@ def append(path, want, offset, dz):
 _MOSSED = set()
 
 
-def mossify(m, amount=1.0, lift=1.0, furrow=False):
+def mossify(m, amount=1.0, lift=1.0, furrow=False, reach=0.0):   # reach：苔往側面爬多少（0 = 只長在朝上的面）
     """照拱門的做法給樹皮加苔（z1nnz 11/21）：朝上的面、凹處長一片片青苔，凸處帶灰白地衣；樹皮整體提亮成棕灰。
     只改材質節點，接在原本的 Base Color 後面。"""
     if m is None or m.name in _MOSSED or not m.use_nodes:
@@ -460,7 +466,7 @@ def mossify(m, amount=1.0, lift=1.0, furrow=False):
     sep = nt.nodes.new('ShaderNodeSeparateXYZ')
     nt.links.new(geo.outputs['Normal'], sep.inputs[0])
     up = nt.nodes.new('ShaderNodeMapRange')
-    up.inputs['From Min'].default_value, up.inputs['From Max'].default_value = .15, .75
+    up.inputs['From Min'].default_value, up.inputs['From Max'].default_value = .15 - reach, .75 - reach * .6
     nt.links.new(sep.outputs['Z'], up.inputs['Value'])
     nz = nt.nodes.new('ShaderNodeTexNoise')
     nz.inputs['Scale'].default_value = .9
@@ -598,7 +604,7 @@ def glb(path, at, dz, rotz=0.0):
     return keep
 
 
-_GTO = append(S_ + ('GT01_out/GT01_GodTree_v004_fused.blend' if 'real' in argv else 'GT01_out/GT01_GodTree_v003.blend'),
+_GTO = append(S_ + ('GT01_out/GT01_GodTree_v005_braid.blend' if 'real' in argv else 'GT01_out/GT01_GodTree_v003.blend'),
               lambda nm: nm.endswith('_LOD0' if 'real' in argv else '_LOD1'), TREE, gh(*TREE) - .6)
 if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11/21「樹幹不連貫」）；熔接後沒有 UV → 樹皮改用盒投影掃描樹皮
     _BK = 'D:/chengtian/4-素材與快取/polyhaven-bark/'
@@ -606,21 +612,53 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
     _bkm.use_nodes = True
     _bn = _bkm.node_tree
     _bb = next(x for x in _bn.nodes if x.type == 'BSDF_PRINCIPLED')
-    _btc = _bn.nodes.new('ShaderNodeTexCoord')
+    # v005（11/22「很像蜘蛛腳」）：樹幹下半段重做成 22 股扭轉樹筋流成樹根；UV「Flow」順著每一股 → 樹皮紋路跟著股走
+    _btc = _bn.nodes.new('ShaderNodeUVMap')
+    _btc.uv_map = 'Flow'
     _bmp = _bn.nodes.new('ShaderNodeMapping')
-    _bmp.inputs['Scale'].default_value = (1 / 1.1, 1 / 1.1, 1 / 2.0)   # 樹皮片沿樹幹拉長
-    _bn.links.new(_btc.outputs['Object'], _bmp.inputs['Vector'])
+    _bmp.inputs['Scale'].default_value = (1 / 1.9, 1 / 3.0, 1)   # 樹皮板大一點（設定圖的板塊比較大）   # 樹皮片沿股拉長
+    _bn.links.new(_btc.outputs['UV'], _bmp.inputs['Vector'])
 
     def _bim(fn, cs):
         t = _bn.nodes.new('ShaderNodeTexImage')
         t.image = bpy.data.images.load(_BK + fn)
         t.image.colorspace_settings.name = cs
-        t.projection, t.projection_blend = 'BOX', .35
         _bn.links.new(_bmp.outputs['Vector'], t.inputs['Vector'])
         return t
-    _bn.links.new(_bim('bark_brown_02_diff_2k.png', 'sRGB').outputs[0], _bb.inputs['Base Color'])
+    # 樹皮加深（設定圖是深的樹皮板、溝很暗）：整體壓暗 + 股與股之間的溝用 AO 再壓暗
+    _bao = _bn.nodes.new('ShaderNodeAmbientOcclusion'); _bao.inputs['Distance'].default_value = 1.2
+    # 11/22「你看這兩款材質的差異」：設定圖樹皮是灰褐、凸起的樹皮板偏灰白（地衣）、溝很深很暗 → 去黃、凸處提灰白、真位移
+    _bhs = _bn.nodes.new('ShaderNodeHueSaturation'); _bhs.inputs['Saturation'].default_value = .95; _bhs.inputs['Value'].default_value = .7
+    _bn.links.new(_bim('bark_brown_02_diff_2k.png', 'sRGB').outputs[0], _bhs.inputs['Color'])
+    _bgeo = _bn.nodes.new('ShaderNodeNewGeometry')
+    _bpt = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bgeo.outputs['Pointiness'], _bpt.inputs['Value'])
+    _bpt.inputs['From Min'].default_value, _bpt.inputs['From Max'].default_value = .54, .62
+    _bdsp0 = _bim('bark_brown_02_disp_2k.png', 'Non-Color')   # 樹皮板的高處也提亮
+    _bph = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bdsp0.outputs[0], _bph.inputs['Value'])
+    _bph.inputs['From Min'].default_value, _bph.inputs['From Max'].default_value = .7, .95
+    _bmax = _bn.nodes.new('ShaderNodeMath'); _bmax.operation = 'MAXIMUM'
+    _bn.links.new(_bpt.outputs[0], _bmax.inputs[0]); _bn.links.new(_bph.outputs[0], _bmax.inputs[1])
+    _blc = _bn.nodes.new('ShaderNodeMixRGB'); _blc.inputs[2].default_value = (.36, .35, .32, 1)   # 灰白地衣色
+    _bmul = _bn.nodes.new('ShaderNodeMath'); _bmul.operation = 'MULTIPLY'; _bmul.inputs[1].default_value = .4
+    _bn.links.new(_bmax.outputs[0], _bmul.inputs[0]); _bn.links.new(_bmul.outputs[0], _blc.inputs[0])
+    _bn.links.new(_bhs.outputs[0], _blc.inputs[1])
+    _bn.links.new(_blc.outputs[0], _bao.inputs['Color'])
+    _bdv = _bn.nodes.new('ShaderNodeDisplacement'); _bdv.inputs['Midlevel'].default_value = .5; _bdv.inputs['Scale'].default_value = .3
+    _bn.links.new(_bdsp0.outputs[0], _bdv.inputs['Height'])
+    _bn.links.new(_bdv.outputs[0], next(x_ for x_ in _bn.nodes if x_.type == 'OUTPUT_MATERIAL').inputs['Displacement'])
+    try:
+        _bkm.displacement_method = 'BOTH'
+    except Exception:
+        _bkm.cycles.displacement_method = 'BOTH'
+    _bdk = _bn.nodes.new('ShaderNodeMixRGB'); _bdk.blend_type = 'MULTIPLY'; _bdk.inputs[0].default_value = 1
+    _bn.links.new(_bao.outputs['Color'], _bdk.inputs[1])
+    _bao2 = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bao.outputs['AO'], _bao2.inputs['Value'])
+    _bao2.inputs['To Min'].default_value, _bao2.inputs['To Max'].default_value = .18, .85
+    _bn.links.new(_bao2.outputs[0], _bdk.inputs[2])
+    _bn.links.new(_bdk.outputs[0], _bb.inputs['Base Color'])
     _bnm = _bn.nodes.new('ShaderNodeNormalMap')
-    _bnm.inputs['Strength'].default_value = 1.5
+    _bnm.uv_map = 'Flow'
+    _bnm.inputs['Strength'].default_value = 3.0
     _bn.links.new(_bim('bark_brown_02_nor_gl_2k.png', 'Non-Color').outputs[0], _bnm.inputs['Color'])
     _bn.links.new(_bnm.outputs[0], _bb.inputs['Normal'])
     _bb.inputs['Roughness'].default_value = .85
@@ -676,11 +714,11 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
         if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
             print('MOSS', o.name)
             for sl in o.material_slots:
-                mossify(sl.material, 1.0, 1.0, furrow=True)   # 厚苔改用真的苔墊；樹皮本身維持深棕（V3 原本整片發灰綠）
+                mossify(sl.material, 1.0, 1.0, furrow=False)   # v005 紋路由順股 UV 的樹皮負責；位置雜訊的直溝在扭轉的股上會打架   # 厚苔改用真的苔墊；樹皮本身維持深棕（V3 原本整片發灰綠）
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
-                mossify(sl.material, 1.4 if o in _ARS else 1.6, 3.0)
+                mossify(sl.material, 1.4 if o in _ARS else 1.6, 3.0, reach=.15)   # 11/22 設定圖 V2、V6 拱門側面也有一條條苔
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
@@ -759,7 +797,7 @@ if REAL:
     for _o in _d.objects:   # 長根：樹皮為主、頂上一條條苔（不要整條綠）
         if _o is not None:
             for _sl in _o.material_slots:
-                mossify(_sl.material, .55, 1.2)
+                mossify(_sl.material, .9, 1.2, reach=.25)   # 11/22 V5 右邊長根：設定圖頂上整條厚苔
 else:
     _ROOTCOLS = None
 ROOTS = []
