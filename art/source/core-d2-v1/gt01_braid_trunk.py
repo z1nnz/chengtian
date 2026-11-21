@@ -9,7 +9,7 @@ try:
     VS = float(sys.argv[-1])
 except ValueError:
     VS = .1
-ZCUT = 16.0
+ZCUT = 26.0   # 11/22：切在 16 m 會留一圈淺溝 → 切到分枝附近，下面整段都是新的股
 R = random.Random(11)
 t0 = time.time()
 with bpy.data.libraries.load(S + 'GT01_GodTree_v004_fused.blend', link=False) as (s, d):
@@ -33,72 +33,140 @@ def smooth(t): return t * t * (3 - 2 * t)
 STR = []   # 每股：[(point, radius, zsquash)]
 
 
-def main_strand(th0, Rg, Rend, rA, twist, seed):
+def R_OLD(z):   # 原本樹幹在各高度的半徑（gt_probe2 量的中位數）
+    zs = [14, 16, 20, 24, 28, 32, 40]
+    rs = [8.6, 8.0, 7.8, 7.4, 6.9, 6.6, 6.2]
+    return float(np.interp(z, zs, rs))
+
+
+def main_strand(th0, Rg, Rend, rA, twist, seed, arch=0.0, ride=0.0):
+    # v006（11/22 z1nnz「你講的都要改」）：粗細差三倍的粗繩、股之間留深縫、中段收腰、大根拱離地面
     pts = []
-    n = 160
-    # s 0→.45 樹幹段（z 24→6），.45→.7 外擴下彎（z 6→.4），.7→1 貼地延伸變細
+    n = 170
     for k in range(n + 1):
         s_ = k / n
         if s_ < .45:
             u = s_ / .45
-            z = lerp(24, 9, u)
-            rad = lerp(1.6, rA, smooth(min(1, u * 1.4)))
-            # z≥16：股的外緣貼著原本樹幹（半徑約 8.3）→ 接縫處不會凸出一圈；16 以下才慢慢鼓出來
-            r = lerp(8.3 - rad * .9, 8.8 - rA * .5, smooth(min(1, max(0, (16 - z) / 7))))
+            z = lerp(32, 9, u)
+            rad = lerp(.6 * rA, rA, smooth(u))
+            inset = lerp(1.0, .3, smooth(min(1, max(0, (32 - z) / 6))))
+            c_top = R_OLD(z) - rad * inset
+            waist = 5.4 + rad * .4 + ride
+            r9 = 6.4 + rA * .35 + ride
+            if z >= 24:   # 上段股貼著原本樹幹（切口在 26 m）→ 不會在交界留一圈屋簷
+                r = c_top
+            elif z >= 13:
+                r = lerp(waist, c_top, smooth(max(0, (z - 19) / 5)))
+            else:
+                r = lerp(r9, waist, smooth((z - 9) / 4))
             th = th0 + twist * u
             sq = 1.0
-        elif s_ < .7:
-            u = (s_ - .45) / .25
+        elif s_ < .68:
+            u = (s_ - .45) / .23
             z = 9 - 8.1 * math.sin(u * math.pi / 2)
-            r9 = 8.8 - rA * .5
+            r9 = 6.4 + rA * .35 + ride
             r = r9 + (Rg - r9) * (1 - math.cos(u * math.pi / 2))
-            rad = lerp(rA, rA * .55, u)
-            th = th0 + twist + twist * .35 * u
-            sq = lerp(1.0, .75, u)
+            rad = lerp(rA, rA * .6, u)
+            th = th0 + twist + twist * .3 * u
+            sq = lerp(1.0, .85, u)
         else:
-            u = (s_ - .7) / .3
-            z = .9 - .5 * u if u < .7 else .55 - 1.6 * ((u - .7) / .3) ** 1.5
+            u = (s_ - .68) / .32
+            hump = arch * math.sin(math.pi * min(1, u / .6))   # 大根拱起來離開地面，看得到下面的陰影
+            z = (.9 + hump) if u < .75 else (.9 - 2.2 * ((u - .75) / .25) ** 1.5)
             r = lerp(Rg, Rend, u)
-            rad = rA * .55 * (1 - .85 * u ** 1.2)
-            th = th0 + twist * 1.35 + twist * .25 * u
-            sq = .7
-        wob = Vector((noise.noise(Vector((s_ * 6, seed, 0))), noise.noise(Vector((s_ * 6, seed, 7))), 0)) * (.6 if s_ > .4 else .25)
+            rad = rA * .6 * (1 - .85 * u ** 1.2)
+            th = th0 + twist * 1.3 + twist * .2 * u
+            sq = .85
+        wob = Vector((noise.noise(Vector((s_ * 6, seed, 0))), noise.noise(Vector((s_ * 6, seed, 7))), 0)) * (.6 if s_ > .4 else .3)
         pts.append((Vector((math.cos(th) * r, math.sin(th) * r, z)) + wob, rad, sq))
     return pts
 
 
-N = 16   # 11/22：股少一點、粗細差大一點，地面的根才分得開（22 股會黏成一整圈裙子）
-TW = 1.0
+N = 8
+TW = 1.1
 roots = []
+RADS = [3.6, 3.3, 3.0, 2.6, 2.2, 1.9, 1.6, 1.4]
+R.shuffle(RADS)
 for i in range(N):
-    th0 = 2 * math.pi * i / N + R.uniform(-.08, .08)
-    long_ = R.random() < .55
-    Rg = R.uniform(16, 21) if long_ else R.uniform(13, 16)
-    Rend = Rg + (R.uniform(14, 24) if long_ else R.uniform(5, 10))
-    big = R.random() < .55
-    pts = main_strand(th0, Rg + (2 if big else -1), Rend, R.uniform(2.4, 2.9) if big else R.uniform(1.4, 1.9), TW * R.uniform(.8, 1.15), i * 3.1)
+    th0 = 2 * math.pi * i / N + R.uniform(-.12, .12)
+    rA = RADS[i]
+    big = rA > 2.4
+    Rg = R.uniform(15, 19) if big else R.uniform(12, 15)
+    Rend = Rg + (R.uniform(16, 26) if big else R.uniform(8, 14))
+    pts = main_strand(th0, Rg, Rend, rA, TW * R.uniform(.85, 1.15), i * 3.1, arch=R.uniform(.9, 1.6) if big else R.uniform(.2, .6))
+    STR.append(pts)
+    roots.append(pts)
+# 兩股反向扭的細繩：跨過別的股（設定圖有一股壓過另一股）
+for i, (th0, rA) in enumerate(((.9, 1.4), (3.6, 1.2))):
+    pts = main_strand(th0, 13, 24, rA, -1.0, 50 + i, arch=.4, ride=1.9)
     STR.append(pts)
     roots.append(pts)
 
+# 兩條長根一路爬到祭壇邊（設定圖 V3、V4）
+_ALT = math.atan2(7.0 - 30.0, 7.0 + 24.0)
+for dth, Rend_, rA_ in ((-.07, 33, 2.4), (.09, 29, 2.0)):
+    pts = main_strand(_ALT + dth - .24, 17, Rend_, rA_, .15, 77 + dth * 10, arch=1.0)
+    STR.append(pts)
+    roots.append(pts)
+
+# 右邊低分叉：一根大枝在 7 m 高就從樹幹分出去往右上走，中間留空看得到天空（V3 右側；相機在 (+28,-45) 往北看 → 右邊是 +x）
+_fk = [(5.5, 5), (7.5, 10), (10.0, 14.5), (13.5, 19), (16.0, 24.5), (19.5, 29), (21.5, 34)]
+_fth = -.15
+pts = []
+for k in range(101):
+    u = k / 100
+    rr = float(np.interp(u * 6, range(7), [a for a, b in _fk])); zz = float(np.interp(u * 6, range(7), [b for a, b in _fk]))
+    th = _fth + .25 * u + .12 * math.sin(u * 7)   # 彎彎曲曲，不要一根直棍
+    pts.append((Vector((math.cos(th) * rr, math.sin(th) * rr, zz + .8 * math.sin(u * 9))), lerp(3.4, .9, u ** .8), 1.0))
+STR.append(pts)
+
+# 樹瘤：幾顆短胖的瘤長在股上
+for i in range(0):   # 樹瘤拿掉：看起來像繩結
+    th = R.uniform(0, 6.28); zc = R.uniform(4, 15)
+    rc = 4.6 + 3.0 + (2.0 if zc < 9 else 0)
+    c = Vector((math.cos(th) * rc, math.sin(th) * rc, zc))
+    dv = Vector((-math.sin(th), math.cos(th), .6)).normalized()
+    pts = [(c + dv * lerp(-1.0, 1.0, k / 10), 1.3 * math.sin(math.pi * k / 10) ** .5 + .05, 1.0) for k in range(11)]
+    STR.append(pts)
+
 # 支根：從主根外擴段分岔出去
 for i, pts in enumerate(roots):
-    for _ in range(R.choice((1, 1, 2))):
-        k0 = R.randint(95, 125)
+    for _ in range(R.choice((2, 3, 3))):   # 11/22 根要更多（設定圖往四面八方爬）
+        k0 = R.randint(100, 130)
         p0, r0, _s = pts[k0]
         dirv = pts[k0 + 6][0] - p0
         dirv.z = 0
         dirv.normalize()
         side = Vector((-dirv.y, dirv.x, 0)) * R.choice((-1, 1))
-        L = R.uniform(6, 14)
+        L = R.uniform(8, 20)
         sub = []
         n = 60
         for k in range(n + 1):
             u = k / n
             q = p0 + dirv * (L * u) + side * (L * .45 * u ** .8)
-            q.z = lerp(p0.z, -.8, u ** 1.3)
+            q.z = lerp(p0.z, .55, min(1, u * 3)) if u < .75 else .55 - 1.4 * ((u - .75) / .25) ** 1.5   # 貼地爬、最後才鑽進土裡
             q += Vector((noise.noise(Vector((u * 5, i, 3))), noise.noise(Vector((u * 5, i, 9))), 0)) * .4
-            sub.append((q, r0 * .55 * (1 - .85 * u), .7))
+            sub.append((q, r0 * .6 * (1 - .85 * u), .7))
         STR.append(sub)
+
+# 細根：從主根之間的樹幹底部冒出來、彎彎曲曲貼地爬出去（根與根之間不要只是平滑的面）
+for i in range(20):
+    th = 2 * math.pi * (i + .5) / 20 + R.uniform(-.1, .1)
+    L = R.uniform(9, 24)
+    r0 = R.uniform(.7, 1.2)
+    p0 = Vector((math.cos(th) * 7.0, math.sin(th) * 7.0, 2.2))
+    dirv = Vector((math.cos(th), math.sin(th), 0))
+    side = Vector((-dirv.y, dirv.x, 0))
+    sub = []
+    n = 70
+    curl = R.uniform(-.35, .35)
+    for k in range(n + 1):
+        u = k / n
+        q = p0 + dirv * (L * u) + side * (L * curl * u * u)
+        q += side * noise.noise(Vector((u * 4, i * 1.7, 5))) * 1.2
+        q.z = lerp(2.2, .5, min(1, u * 4) ** .7) if u < .8 else .5 - 1.3 * ((u - .8) / .2) ** 1.5
+        sub.append((q, r0 * (1 - .8 * u) + .08, .75))
+    STR.append(sub)
 
 # 樹幹表面細筋：主筋之間的溝裡，像一束束扭在一起
 for i in range(0):   # 11/22 表面細筋拿掉：頂端變成一顆顆香腸頭
@@ -116,6 +184,21 @@ for i in range(0):   # 11/22 表面細筋拿掉：頂端變成一顆顆香腸頭
         rad = 1.1 * math.sin(math.pi * u) ** .6 + .05
         pts.append((Vector((math.cos(th) * r, math.sin(th) * r, z)), rad, 1.0))
     STR.append(pts)
+# 11/22：場景地面在神木四周比 0 高 0.3–2 m → 根全被埋掉。照場景地形（樹的區域座標）把低處的點往上抬，根貼著實際地面爬
+_GH = np.load(S + 'GT01_ground_rel.npy')
+
+
+def gz(x, y):
+    fx = min(99.999, max(0, x + 50)); fy = min(99.999, max(0, y + 50))
+    ix, iy = int(fx), int(fy); tx, ty = fx - ix, fy - iy
+    return (_GH[iy, ix] * (1 - tx) * (1 - ty) + _GH[iy, ix + 1] * tx * (1 - ty) + _GH[iy + 1, ix] * (1 - tx) * ty + _GH[iy + 1, ix + 1] * tx * ty)
+
+
+for pts in STR:
+    for k, (p, rad, sq) in enumerate(pts):
+        wl = min(1.0, max(0.0, (7 - p.z) / 5))
+        if wl > 0:
+            pts[k] = (Vector((p.x, p.y, p.z + (gz(p.x, p.y) - .3) * wl)), rad, sq)
 print('STRANDS', len(STR))
 
 SEG = 20
@@ -161,8 +244,8 @@ def tube(bm_, pts):
 
 
 FR = [tube(bm, pts) for pts in STR]
-core = bmesh.ops.create_cone(bm, cap_ends=True, segments=32, radius1=7.4, radius2=6.0, depth=21)
-bmesh.ops.translate(bm, verts=core['verts'], vec=Vector((0, 0, 8.5)))
+core = bmesh.ops.create_cone(bm, cap_ends=True, segments=32, radius1=5.5, radius2=4.2, depth=31)   # 核心細一點：股之間的縫要深、要暗
+bmesh.ops.translate(bm, verts=core['verts'], vec=Vector((0, 0, 13.5)))
 bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
 bm.to_mesh(w.data)
 bm.free()
@@ -227,7 +310,7 @@ U = np.zeros(nv); V = np.zeros(nv)
 for i in range(nv):
     x, y, z = co[i]
     best = None
-    if z < ZCUT + 9:
+    if z < 36:
         pv = Vector((x, y, z))
         for (q, idx, dist) in kd.find_n(pv, 6):
             sd = dist - meta[idx][1]

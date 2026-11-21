@@ -616,7 +616,7 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
     _btc = _bn.nodes.new('ShaderNodeUVMap')
     _btc.uv_map = 'Flow'
     _bmp = _bn.nodes.new('ShaderNodeMapping')
-    _bmp.inputs['Scale'].default_value = (1 / 1.9, 1 / 3.0, 1)   # 樹皮板大一點（設定圖的板塊比較大）   # 樹皮片沿股拉長
+    _bmp.inputs['Scale'].default_value = (1 / 5.0, 1 / 7.0, 1)   # 神木比拱門遠很多（V3 約 45 m）：樹皮板放大約三倍才讀得出來   # 樹皮板大一點（設定圖的板塊比較大）   # 樹皮片沿股拉長
     _bn.links.new(_btc.outputs['UV'], _bmp.inputs['Vector'])
 
     def _bim(fn, cs):
@@ -628,22 +628,31 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
     # 樹皮加深（設定圖是深的樹皮板、溝很暗）：整體壓暗 + 股與股之間的溝用 AO 再壓暗
     _bao = _bn.nodes.new('ShaderNodeAmbientOcclusion'); _bao.inputs['Distance'].default_value = 1.2
     # 11/22「你看這兩款材質的差異」：設定圖樹皮是灰褐、凸起的樹皮板偏灰白（地衣）、溝很深很暗 → 去黃、凸處提灰白、真位移
-    _bhs = _bn.nodes.new('ShaderNodeHueSaturation'); _bhs.inputs['Saturation'].default_value = .95; _bhs.inputs['Value'].default_value = .7
+    _bhs = _bn.nodes.new('ShaderNodeHueSaturation'); _bhs.inputs['Saturation'].default_value = .85; _bhs.inputs['Value'].default_value = .52   # 11/22 學拱門：樹皮壓深、偏冷
     _bn.links.new(_bim('bark_brown_02_diff_2k.png', 'sRGB').outputs[0], _bhs.inputs['Color'])
     _bgeo = _bn.nodes.new('ShaderNodeNewGeometry')
     _bpt = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bgeo.outputs['Pointiness'], _bpt.inputs['Value'])
     _bpt.inputs['From Min'].default_value, _bpt.inputs['From Max'].default_value = .54, .62
     _bdsp0 = _bim('bark_brown_02_disp_2k.png', 'Non-Color')   # 樹皮板的高處也提亮
     _bph = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bdsp0.outputs[0], _bph.inputs['Value'])
-    _bph.inputs['From Min'].default_value, _bph.inputs['From Max'].default_value = .7, .95
+    _bph.inputs['From Min'].default_value, _bph.inputs['From Max'].default_value = .5, .7
     _bmax = _bn.nodes.new('ShaderNodeMath'); _bmax.operation = 'MAXIMUM'
     _bn.links.new(_bpt.outputs[0], _bmax.inputs[0]); _bn.links.new(_bph.outputs[0], _bmax.inputs[1])
     _blc = _bn.nodes.new('ShaderNodeMixRGB'); _blc.inputs[2].default_value = (.36, .35, .32, 1)   # 灰白地衣色
-    _bmul = _bn.nodes.new('ShaderNodeMath'); _bmul.operation = 'MULTIPLY'; _bmul.inputs[1].default_value = .4
+    _bmul = _bn.nodes.new('ShaderNodeMath'); _bmul.operation = 'MULTIPLY'; _bmul.inputs[1].default_value = .12
     _bn.links.new(_bmax.outputs[0], _bmul.inputs[0]); _bn.links.new(_bmul.outputs[0], _blc.inputs[0])
     _bn.links.new(_bhs.outputs[0], _blc.inputs[1])
-    _bn.links.new(_blc.outputs[0], _bao.inputs['Color'])
-    _bdv = _bn.nodes.new('ShaderNodeDisplacement'); _bdv.inputs['Midlevel'].default_value = .5; _bdv.inputs['Scale'].default_value = .3
+    # 拱門（Josh DR01）的樹皮：深色、溝很深、樹皮板上一點一點灰白地衣
+    _bfn = _bn.nodes.new('ShaderNodeTexNoise'); _bfn.inputs['Scale'].default_value = 7.0; _bfn.inputs['Detail'].default_value = 3
+    _bn.links.new(_bmp.outputs['Vector'], _bfn.inputs['Vector'])
+    _bfr = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bfn.outputs['Fac'], _bfr.inputs['Value'])
+    _bfr.inputs['From Min'].default_value, _bfr.inputs['From Max'].default_value = .66, .70
+    _bfm = _bn.nodes.new('ShaderNodeMath'); _bfm.operation = 'MULTIPLY'
+    _bn.links.new(_bfr.outputs[0], _bfm.inputs[0]); _bn.links.new(_bph.outputs[0], _bfm.inputs[1])
+    _bfl = _bn.nodes.new('ShaderNodeMixRGB'); _bfl.inputs[2].default_value = (.42, .43, .39, 1)
+    _bn.links.new(_bfm.outputs[0], _bfl.inputs[0]); _bn.links.new(_blc.outputs[0], _bfl.inputs[1])
+    _bn.links.new(_bfl.outputs[0], _bao.inputs['Color'])
+    _bdv = _bn.nodes.new('ShaderNodeDisplacement'); _bdv.inputs['Midlevel'].default_value = .5; _bdv.inputs['Scale'].default_value = .45
     _bn.links.new(_bdsp0.outputs[0], _bdv.inputs['Height'])
     _bn.links.new(_bdv.outputs[0], next(x_ for x_ in _bn.nodes if x_.type == 'OUTPUT_MATERIAL').inputs['Displacement'])
     try:
@@ -655,7 +664,34 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
     _bao2 = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bao.outputs['AO'], _bao2.inputs['Value'])
     _bao2.inputs['To Min'].default_value, _bao2.inputs['To Max'].default_value = .18, .85
     _bn.links.new(_bao2.outputs[0], _bdk.inputs[2])
-    _bn.links.new(_bdk.outputs[0], _bb.inputs['Base Color'])
+    # 背上的長條苔（設定圖：每股朝外、朝上的稜上一長條黃橄欖色厚苔；溝裡不長）
+    #   稜 = AO 高的地方；長條 = 沿著股方向（UV 的 V）拉長的雜訊；越往上越少；朝下的面不長
+    _mvp = _bn.nodes.new('ShaderNodeMapping'); _mvp.inputs['Scale'].default_value = (2.6, .35, 1)
+    _bn.links.new(_bmp.outputs['Vector'], _mvp.inputs['Vector'])
+    _mns = _bn.nodes.new('ShaderNodeTexNoise'); _mns.inputs['Scale'].default_value = 2.0; _mns.inputs['Detail'].default_value = 4
+    _bn.links.new(_mvp.outputs['Vector'], _mns.inputs['Vector'])
+    _mst = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_mns.outputs['Fac'], _mst.inputs['Value'])
+    _mst.inputs['From Min'].default_value, _mst.inputs['From Max'].default_value = .44, .54
+    _mrg = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_bao.outputs['AO'], _mrg.inputs['Value'])
+    _mrg.inputs['From Min'].default_value, _mrg.inputs['From Max'].default_value = .62, .88
+    _mtc = _bn.nodes.new('ShaderNodeTexCoord'); _msz = _bn.nodes.new('ShaderNodeSeparateXYZ'); _bn.links.new(_mtc.outputs['Object'], _msz.inputs[0])
+    _mhz = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_msz.outputs['Z'], _mhz.inputs['Value'])
+    _mhz.inputs['From Min'].default_value, _mhz.inputs['From Max'].default_value = 24, 8
+    _mgn = _bn.nodes.new('ShaderNodeNewGeometry'); _mnz = _bn.nodes.new('ShaderNodeSeparateXYZ'); _bn.links.new(_mgn.outputs['Normal'], _mnz.inputs[0])
+    _mdn = _bn.nodes.new('ShaderNodeMapRange'); _bn.links.new(_mnz.outputs['Z'], _mdn.inputs['Value'])
+    _mdn.inputs['From Min'].default_value, _mdn.inputs['From Max'].default_value = -.35, .15
+    _mf = _mst.outputs[0]
+    for _x in (_mrg, _mhz, _mdn):
+        _mm = _bn.nodes.new('ShaderNodeMath'); _mm.operation = 'MULTIPLY'
+        _bn.links.new(_mf, _mm.inputs[0]); _bn.links.new(_x.outputs[0], _mm.inputs[1]); _mf = _mm.outputs[0]
+    _mcn = _bn.nodes.new('ShaderNodeTexNoise'); _mcn.inputs['Scale'].default_value = 3.0; _mcn.inputs['Detail'].default_value = 6
+    _bn.links.new(_mtc.outputs['Object'], _mcn.inputs['Vector'])
+    _mcr = _bn.nodes.new('ShaderNodeValToRGB')
+    _mcr.color_ramp.elements[0].color = (.06, .07, .018, 1); _mcr.color_ramp.elements[1].color = (.24, .23, .06, 1)
+    _bn.links.new(_mcn.outputs['Fac'], _mcr.inputs[0])
+    _mmx = _bn.nodes.new('ShaderNodeMixRGB'); _bn.links.new(_mf, _mmx.inputs[0])
+    _bn.links.new(_bdk.outputs[0], _mmx.inputs[1]); _bn.links.new(_mcr.outputs[0], _mmx.inputs[2])
+    _bn.links.new(_mmx.outputs[0], _bb.inputs['Base Color'])
     _bnm = _bn.nodes.new('ShaderNodeNormalMap')
     _bnm.uv_map = 'Flow'
     _bnm.inputs['Strength'].default_value = 3.0
@@ -666,6 +702,7 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
         if 'Wood' in _o.name:
             _o.data.materials.clear()
             _o.data.materials.append(_bkm)
+            # 試過細分一次再真位移（學拱門把凹凸推進幾何）：600 萬面 Blender 直接當掉 → 先用 10 cm 網格的位移 + 法線 + AO
 if REAL:   # AL02 重做的三層石砌祭壇（正面石階朝南、朝主路）
     for _o in append(S_ + 'props_lib.blend', lambda nm: nm == 'AL02_Altar', ALT, gh(*ALT) - .12):
         _o.rotation_euler.z = .35
@@ -714,7 +751,7 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
         if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
             print('MOSS', o.name)
             for sl in o.material_slots:
-                mossify(sl.material, 1.0, 1.0, furrow=False)   # v005 紋路由順股 UV 的樹皮負責；位置雜訊的直溝在扭轉的股上會打架   # 厚苔改用真的苔墊；樹皮本身維持深棕（V3 原本整片發灰綠）
+                mossify(sl.material, 1.0, 1.0, furrow=False)   # 樹幹上的苔改由樹皮材質的「背上長條苔」負責；這裡只管朝上的面   # 跟拱門同一套苔   # v005 紋路由順股 UV 的樹皮負責；位置雜訊的直溝在扭轉的股上會打架   # 厚苔改用真的苔墊；樹皮本身維持深棕（V3 原本整片發灰綠）
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
@@ -722,11 +759,11 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
-def root_ridge(a, b, r0, r1, m=M_ROOT, force=False):
+def root_ridge(a, b, r0, r1, m=M_ROOT, force=False, tube=False):
     ax, ay = a; bx, by = b
     L = math.hypot(bx - ax, by - ay)
     N = max(3, int(L / 1.2))
-    if REAL and not globals().get('_ROOTCOLS') is None:   # RT01 掃描樹皮長根（roots_lib.blend）
+    if REAL and not tube and not globals().get('_ROOTCOLS') is None:   # RT01 掃描樹皮長根（roots_lib.blend）
         rc = globals()['_ROOTCOLS']
         L = math.hypot(bx - ax, by - ay)
         if not force and any(path_d(ax + (bx - ax) * s, ay + (by - ay) * s) < 2.2 for s in (.3, .5, .7, .9)):
@@ -801,17 +838,18 @@ if REAL:
 else:
     _ROOTCOLS = None
 ROOTS = []
-for k in range(9):
+for k in (range(0) if REAL else range(9)):   # 11/22 神木 v005 自己長出一圈樹根 → 實算不再放這 9 條扁平長根（頂面整片苔、看起來像蜘蛛腳）
     ang = -1.25 + k * .55 + R.uniform(-.15, .15)
     L = R.uniform(14, 24)
     ROOTS.append(((TREE[0] + math.cos(ang) * 6, TREE[1] - math.sin(ang) * 6), (TREE[0] + math.cos(ang) * L, TREE[1] - math.sin(ang) * L)))
-ROOTS.append(((TREE[0] + 6, TREE[1] - 5), (ALT[0] - 4, ALT[1] + 2)))           # 兩條長根延伸到祭壇邊
-ROOTS.append(((TREE[0] + 4, TREE[1] - 7), (ALT[0] - 2, ALT[1] - 4)))
+if not REAL:   # 實算：這兩條改由神木 v005 自己長出去（gt01_braid_trunk.py）
+    ROOTS.append(((TREE[0] + 6, TREE[1] - 5), (ALT[0] - 4, ALT[1] + 2)))           # 兩條長根延伸到祭壇邊
+    ROOTS.append(((TREE[0] + 4, TREE[1] - 7), (ALT[0] - 2, ALT[1] - 4)))
 for a, b in ROOTS:
     root_ridge(a, b, 1.5, .45)
 if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     for a, b, r in [((-1.5, 13), (5.5, -1), 1.1), ((-10, 11), (-5.5, -5), 1.2), ((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
-        root_ridge(a, b, r, .4, force=True)
+        root_ridge(a, b, r, .4, force=True, tube=True)   # 11/22 改成整條漸細的根：RT01 掃描根頭尾是切面、頂上一片平苔，像蜘蛛腳
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
@@ -1534,6 +1572,13 @@ if 'real' in argv:   # 神木樹冠底下太暗：從南邊打一盞大面積的
     _flo.light_linking.receiver_collection = _rc
     _flo.location = (TREE[0] + 18, TREE[1] - 40, gh(*TREE) + 14)
     _flo.rotation_euler = (Vector((TREE[0], TREE[1], gh(*TREE) + 12)) - _flo.location).to_track_quat('-Z', 'Y').to_euler()
+    # 11/22 主光：設定圖 V3 神木左邊受光、溝裡很暗 → 從西南高處打一盞暖色主光，只照神木
+    _kl = bpy.data.lights.new('TrunkKey', 'AREA'); _kl.energy = 30000; _kl.size = 12; _kl.color = (1.0, .86, .68)
+    _klo = bpy.data.objects.new('TrunkKey', _kl); sc.collection.objects.link(_klo)
+    _klo.visible_volume_scatter = False
+    _klo.light_linking.receiver_collection = _rc
+    _klo.location = (TREE[0] - 30, TREE[1] - 38, gh(*TREE) + 34)
+    _klo.rotation_euler = (Vector((TREE[0], TREE[1], gh(*TREE) + 8)) - _klo.location).to_track_quat('-Z', 'Y').to_euler()
 if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光，不要逆光剪影）
     sc.view_settings.exposure = 1.0
     bg.inputs['Strength'].default_value = 3.4
