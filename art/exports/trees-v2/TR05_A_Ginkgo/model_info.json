@@ -1,0 +1,146 @@
+{
+  "asset": "TR05_A_Ginkgo",
+  "version": "v002",
+  "minTier": "low",
+  "name_zh": "銀杏（直幹、2.5 m 起冠、勻稱錐形）",
+  "species": "TR05",
+  "species_zh": "銀杏",
+  "slot": "A1 院子一棵、D3",
+  "work_pack": "2026-11-14 樹木重做 v2：照天空島世界樹的做法（B：針葉和大喬木）",
+  "method": "docs/execution/2026-11-14/tree-method（天空島世界樹）：S 形主幹、不對稱主枝、三級枝、葉冠錨點＋枝梢流、五頂點立體葉、頂點色",
+  "reference": "art/references/TR05/v002-r3/TR05-cand-4.png（prompt.txt 同資料夾）",
+  "height_m": 15.008,
+  "dimensions_m": [
+    7.565,
+    7.353,
+    15.308
+  ],
+  "bounds_min_m": [
+    -3.776,
+    -3.751,
+    -0.3
+  ],
+  "bounds_max_m": [
+    3.789,
+    3.602,
+    15.008
+  ],
+  "ground_z_m": 0.0,
+  "root_depth_m": 0.3,
+  "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
+  "front": "-Y (Blender) = +Z (Unity)",
+  "crown_anchors": 16,
+  "main_limbs": 28,
+  "seed": 601,
+  "collision": true,
+  "collision_note": "TR05_A_Ginkgo_Collision: 8-sided prism round the trunk (radius 0.49 m, z 0-3 m); hide its renderer, use it as a MeshCollider or a CapsuleCollider of the same size. The crown does not block.",
+  "collision_capsule": {
+    "radius": 0.485,
+    "height": 3.0,
+    "centre": [
+      0.016,
+      0.008,
+      1.5
+    ]
+  },
+  "objects_per_lod": 1,
+  "materials": [
+    "M_TR05_Bark",
+    "M_TR05_Leaves",
+    "M_TR05_Impostor"
+  ],
+  "material_slots": {
+    "LOD0-2": [
+      "M_TR05_Bark",
+      "M_TR05_Leaves"
+    ],
+    "LOD3": [
+      "M_TR05_Impostor"
+    ]
+  },
+  "shared_textures": "art/exports/trees-v2/TR05_Shared/Textures",
+  "texture_resolution_px": {
+    "TR05_Bark_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "TR05_Bark_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "TR05_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "TR05_Impostor_BaseColor.png": [
+      1536,
+      512
+    ],
+    "TR05_Impostor_Normal.png": [
+      1536,
+      512
+    ],
+    "TR05_Leaves_Palette.png": [
+      256,
+      64
+    ]
+  },
+  "leaf_geometry": "fan leaves: seven-vertex solid leaves (6 outline points: narrow stalk end, widest near the tip, truncated tip edge + a raised midrib, 6 triangles; rules relaxed 2026-11-16 with LOD0 up to 120,000), 0.20-0.24 m long, about as wide, at LOD0 (0.65 x the leaf budget, so the branches show); 3-5 on a short spur shoot along each tip twig from 10 % of its length; LOD1 0.40-0.50 m five-vertex, 3-4 per spur; LOD2 0.75-0.95 m, 2-3; LOD3 impostor",
+  "leaf_material": "opaque (no alpha), both faces drawn, roughness about 0.9, metallic 0; BaseColor = the palette texture on UV0 (or multiply the vertex colour instead)",
+  "vertex_colour": "Color (FBX vertex colour, linear): leaves RGB = leaf colour from height / inside-outside, A = canopy occlusion (not transparency); wood RGB 1, A 1",
+  "wind": "UV1 \"Wind\": u = sway weight (trunk 0, limbs 0.03-0.3, secondaries 0.3-0.5, tips 0.5-0.8, leaves 0.62-1), v = phase 0..1",
+  "lod_switch_distance_m": [
+    35,
+    90,
+    220,
+    1200
+  ],
+  "lod3": "two crossed cards with a front impostor of LOD0 (impostor atlas column 0)",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 79616,
+      "cap": 120000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 7976,
+      "leaf_blades": 11940
+    },
+    "LOD1": {
+      "triangles": 10508,
+      "cap": 15000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 2588,
+      "leaf_blades": 1980
+    },
+    "LOD2": {
+      "triangles": 2774,
+      "cap": 4000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 610,
+      "leaf_blades": 541
+    },
+    "LOD3": {
+      "triangles": 4,
+      "cap": 200,
+      "objects": 1,
+      "materials": 1,
+      "wood_triangles": 0,
+      "leaf_blades": 0
+    }
+  },
+  "lod_totals": {
+    "LOD0": 79616,
+    "LOD1": 10508,
+    "LOD2": 2774,
+    "LOD3": 4
+  },
+  "texture_naming": "BaseColor = Albedo; MetallicSmoothness = URP mask (R metallic 0, A smoothness), same naming as village-houses-b (VL)",
+  "status": {
+    "Exported": true,
+    "Imported": "未驗",
+    "Visually_Verified": "未驗",
+    "In_game_Verified": "未驗"
+  }
+}

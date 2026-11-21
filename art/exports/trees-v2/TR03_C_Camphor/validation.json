@@ -1,0 +1,141 @@
+{
+  "asset": "TR03_C_Camphor",
+  "version": "v002",
+  "built": "2026-11-16 18:57",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "anchors_12_20": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0002,
+    "fbx_vertex_colour": true,
+    "fbx_wind_uv": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR03_C_Camphor",
+      "TR03_C_Camphor_Collision",
+      "TR03_C_Camphor_LOD0",
+      "TR03_C_Camphor_LOD1",
+      "TR03_C_Camphor_LOD2",
+      "TR03_C_Camphor_LOD3"
+    ],
+    "TR03_C_Camphor_Collision": {
+      "tris": 28,
+      "min": [
+        -1.113,
+        -1.054,
+        -0.0
+      ],
+      "max": [
+        1.042,
+        1.101,
+        3.0
+      ],
+      "colour_layers": [],
+      "uv_layers": [],
+      "materials": []
+    },
+    "TR03_C_Camphor_LOD0": {
+      "tris": 117814,
+      "min": [
+        -10.783,
+        -7.983,
+        -0.3
+      ],
+      "max": [
+        11.171,
+        8.627,
+        15.173
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR03_Bark.003",
+        "M_TR03_Leaves.003"
+      ]
+    },
+    "TR03_C_Camphor_LOD1": {
+      "tris": 14772,
+      "min": [
+        -10.738,
+        -8.179,
+        -0.3
+      ],
+      "max": [
+        11.235,
+        8.811,
+        15.231
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR03_Bark.003",
+        "M_TR03_Leaves.003"
+      ]
+    },
+    "TR03_C_Camphor_LOD2": {
+      "tris": 3939,
+      "min": [
+        -10.724,
+        -8.408,
+        -0.3
+      ],
+      "max": [
+        11.247,
+        8.602,
+        15.182
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR03_Bark.003",
+        "M_TR03_Leaves.003"
+      ]
+    },
+    "TR03_C_Camphor_LOD3": {
+      "tris": 4,
+      "min": [
+        -11.003,
+        -11.196,
+        -0.3
+      ],
+      "max": [
+        11.39,
+        11.196,
+        22.093
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR03_Impostor.003"
+      ]
+    }
+  },
+  "files": {
+    "TR03_C_Camphor_v002.fbx": "4ef56d134b249c6ad281ed560c226c97f2fcf660c0311fca84c118f29983c0d6",
+    "TR03_C_Camphor_v002.glb": "ca4f275e32c409da9ac1e6a13e9caedbe2d4e61327244f85037cb90d5b7eb6cb"
+  }
+}

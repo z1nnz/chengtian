@@ -1,0 +1,146 @@
+{
+  "asset": "TR02_A_Cypress",
+  "version": "v002",
+  "minTier": "low",
+  "name_zh": "柏（扭幹、冠往上收、左側一枝枯杈）",
+  "species": "TR02",
+  "species_zh": "柏",
+  "slot": "D1、D2、D4 古林",
+  "work_pack": "2026-11-14 樹木重做 v2：照天空島世界樹的做法（B：針葉和大喬木）",
+  "method": "docs/execution/2026-11-14/tree-method（天空島世界樹）：S 形主幹、不對稱主枝、三級枝、葉冠錨點＋枝梢流、五頂點立體葉、頂點色",
+  "reference": "art/references/TR02/v002-r3/TR02-cand-3.png（prompt.txt 同資料夾）",
+  "height_m": 13.687,
+  "dimensions_m": [
+    8.114,
+    7.567,
+    13.987
+  ],
+  "bounds_min_m": [
+    -4.175,
+    -3.556,
+    -0.3
+  ],
+  "bounds_max_m": [
+    3.939,
+    4.011,
+    13.687
+  ],
+  "ground_z_m": 0.0,
+  "root_depth_m": 0.3,
+  "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
+  "front": "-Y (Blender) = +Z (Unity)",
+  "crown_anchors": 16,
+  "main_limbs": 22,
+  "seed": 401,
+  "collision": true,
+  "collision_note": "TR02_A_Cypress_Collision: 8-sided prism round the trunk (radius 0.74 m, z 0-3 m); hide its renderer, use it as a MeshCollider or a CapsuleCollider of the same size. The crown does not block.",
+  "collision_capsule": {
+    "radius": 0.739,
+    "height": 3.0,
+    "centre": [
+      0.121,
+      0.042,
+      1.5
+    ]
+  },
+  "objects_per_lod": 1,
+  "materials": [
+    "M_TR02_Bark",
+    "M_TR02_Leaves",
+    "M_TR02_Impostor"
+  ],
+  "material_slots": {
+    "LOD0-2": [
+      "M_TR02_Bark",
+      "M_TR02_Leaves"
+    ],
+    "LOD3": [
+      "M_TR02_Impostor"
+    ]
+  },
+  "shared_textures": "art/exports/trees-v2/TR02_Shared/Textures",
+  "texture_resolution_px": {
+    "TR02_Bark_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "TR02_Bark_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "TR02_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "TR02_Impostor_BaseColor.png": [
+      1536,
+      512
+    ],
+    "TR02_Impostor_Normal.png": [
+      1536,
+      512
+    ],
+    "TR02_Leaves_Palette.png": [
+      256,
+      64
+    ]
+  },
+  "leaf_geometry": "flat scale-leaf sprays (feather mode): five-vertex solid leaves (4 outline points + a raised midrib, 4 triangles), 0.44-0.56 m x 0.19-0.24 m at LOD0 (LOD0 up to 120,000 from 2026-11-16, about 27,000 leaves), 9-12 per spray set alternately along a 0.3-0.55 m spray axis, shrinking and swinging forward toward the spray tip, the spray rolled about its axis and drooping, along each tip twig from 15 % of its length; LOD1 0.80-1.0 m, 5-6 per point (star frond); LOD2 1.0-1.3 m, 3-4; LOD3 impostor",
+  "leaf_material": "opaque (no alpha), both faces drawn, roughness about 0.9, metallic 0; BaseColor = the palette texture on UV0 (or multiply the vertex colour instead)",
+  "vertex_colour": "Color (FBX vertex colour, linear): leaves RGB = leaf colour from height / inside-outside, A = canopy occlusion (not transparency); wood RGB 1, A 1",
+  "wind": "UV1 \"Wind\": u = sway weight (trunk 0, limbs 0.03-0.3, secondaries 0.3-0.5, tips 0.5-0.8, leaves 0.62-1), v = phase 0..1",
+  "lod_switch_distance_m": [
+    35,
+    90,
+    220,
+    1200
+  ],
+  "lod3": "two crossed cards with a front impostor of LOD0 (impostor atlas column 0)",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 118197,
+      "cap": 120000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 9297,
+      "leaf_blades": 27225
+    },
+    "LOD1": {
+      "triangles": 14772,
+      "cap": 15000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 3160,
+      "leaf_blades": 2903
+    },
+    "LOD2": {
+      "triangles": 3940,
+      "cap": 4000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 540,
+      "leaf_blades": 850
+    },
+    "LOD3": {
+      "triangles": 4,
+      "cap": 200,
+      "objects": 1,
+      "materials": 1,
+      "wood_triangles": 0,
+      "leaf_blades": 0
+    }
+  },
+  "lod_totals": {
+    "LOD0": 118197,
+    "LOD1": 14772,
+    "LOD2": 3940,
+    "LOD3": 4
+  },
+  "texture_naming": "BaseColor = Albedo; MetallicSmoothness = URP mask (R metallic 0, A smoothness), same naming as village-houses-b (VL)",
+  "status": {
+    "Exported": true,
+    "Imported": "未驗",
+    "Visually_Verified": "未驗",
+    "In_game_Verified": "未驗"
+  }
+}
