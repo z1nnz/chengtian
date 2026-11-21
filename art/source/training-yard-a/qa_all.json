@@ -1,0 +1,45 @@
+{
+ "TG01": {
+  "objects": {
+   "TG01_Detail_Moss_LOD0": {
+    "tris": 32,
+    "errors": [
+     "floating/detached part in TG01_Detail_Moss_LOD0 (3 verts at [0.314, 0.037, 0.066])",
+     "floating/detached part in TG01_Detail_Moss_LOD0 (3 verts at [0.288, 0.033, 0.081])",
+     "floating/detached part in TG01_Detail_Moss_LOD0 (3 verts at [0.283, 0.041, 0.07])"
+    ],
+    "warnings": [
+     "TG01_Detail_Moss_LOD0: ~80.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "asset lowest point z=0.04 (not resting on ground plane z=0)"
+    ],
+    "sec": 0.0
+   },
+   "TG01_LOD0": {
+    "tris": 6728,
+    "errors": [],
+    "warnings": [
+     "TG01_LOD0: ~95.73% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+     "TG01_LOD0: 30 n-gons",
+     "asset lowest point z=-0.0033 (not resting on ground plane z=0)"
+    ],
+    "sec": 0.3
+   },
+   "JOINED_TG01_Detail_Moss_LOD0+TG01_LOD0": {
+    "tris": 6760,
+    "floating_errors": [],
+    "note": "joined check: floating only"
+   }
+  },
+  "reimport_dims": [
+   0.694,
+   0.878,
+   1.747
+  ],
+  "built_dims": [
+   0.694,
+   0.878,
+   1.747
+  ],
+  "reimport_error_m": 0.0
+ }
+}

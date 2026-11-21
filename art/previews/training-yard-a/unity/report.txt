@@ -1,0 +1,17 @@
+PASS T_TrainingYard_*: Albedo / Normal / MetallicSmoothness / Emission imported
+PASS T_TrainingYard_Albedo: source 2048, imported 1024 x 1024 (QingxiImportBudget caps model textures at 1024)
+Unity 6000.3.28f1, pipeline URP
+INFO axis: Blender +X -> Unity +X, Blender +Y -> Unity +Z, Blender +Z -> Unity +Y (checked on TG01 Socket_Front below)
+PASS TG01: imported size 0.694 x 0.878 x 1.747 m matches model_info 0.694 x 0.878 x 1.747
+PASS TG01: lowest point y = -0.003 (model_info -0.003)
+PASS TG01: triangles LOD0/1/2 = 6760 / 3380 / 1020, model_info 6760 / 3380 / 1020
+PASS TG01: 2 LOD0 objects (model_info 2)
+PASS TG01: every FBX material slot mapped to a shared URP material
+PASS TG01: materials M_TrainingYard_Trim (model_info M_TrainingYard_Trim)
+PASS TG01: Socket_Front at (0.00, 0.00, -0.60) (Blender 0, -0.6, 0)
+PASS TG01: LODGroup 3 levels x 2 renderers
+PASS TG01: collision imported as MeshCollider (24 tris), render hidden
+PASS TG01 Socket_Front at (0.00, 0.00, -0.60) (the trainee side is -Z)
+PASS TG01 collision: a ray at 1.2 m from 1 m in front hits the post at 0.83 m (post radius 0.16)
+PASS TG01 arms reach to z = -0.52 m on the trainee side (-Z)
+INFO renders written to art/previews/training-yard-a/unity

@@ -1,0 +1,84 @@
+{
+ "id": "TG01",
+ "package": "docs/execution/2026-11-14/A-120h-roads-yard-and-mountain-street.md",
+ "author": "A (Johnnnny0823)",
+ "version": "v001",
+ "status": "Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗",
+ "block": "A1 演武場（設定圖 V1、V3）",
+ "dimensions_m": [
+  0.694,
+  0.878,
+  1.747
+ ],
+ "bounds_min_m": [
+  -0.35,
+  -0.521,
+  -0.003
+ ],
+ "bounds_max_m": [
+  0.344,
+  0.356,
+  1.744
+ ],
+ "limit_m": [
+  1.0,
+  1.0,
+  2.0
+ ],
+ "origin": "origin at the post centre, z = 0 on the ground; the arms point to -Y (the trainee stands there, Socket_Front)",
+ "minTier": "low",
+ "lods": [
+  {
+   "lod": 0,
+   "triangles": 6760,
+   "objects": 2,
+   "materials": 1
+  },
+  {
+   "lod": 1,
+   "triangles": 3380,
+   "objects": 2,
+   "materials": 1
+  },
+  {
+   "lod": 2,
+   "triangles": 1020,
+   "objects": 2,
+   "materials": 1
+  }
+ ],
+ "objectsLOD0": [
+  "TG01_LOD0",
+  "TG01_Detail_Moss_LOD0"
+ ],
+ "detailObjects": [
+  "TG01_Detail_Moss_LOD0"
+ ],
+ "materials": [
+  "M_TrainingYard_Trim"
+ ],
+ "textures": {
+  "T_TrainingYard_Albedo": "2048x2048",
+  "T_TrainingYard_Normal": "2048x2048",
+  "T_TrainingYard_MetallicSmoothness": "2048x2048",
+  "T_TrainingYard_Emission": "2048x2048"
+ },
+ "textureNote": "one training-yard trim sheet shared by TG01-TG06 (art/textures/training-yard-a, MC01 strip layout), 256 px/m",
+ "sockets": [
+  {
+   "name": "Socket_Front",
+   "location_m": [
+    0.0,
+    -0.6,
+    0.0
+   ]
+  }
+ ],
+ "collision": "TG01_Collision (2 boxes)",
+ "extra": {
+  "postHeight_m": 1.74,
+  "postDiameter_m": 0.31
+ },
+ "fbx": "art/exports/training-yard-a/TG01.fbx",
+ "fps": "不寫（手機未實測）"
+}
