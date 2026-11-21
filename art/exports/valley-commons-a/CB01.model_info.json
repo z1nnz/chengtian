@@ -1,0 +1,93 @@
+{
+ "id": "CB01",
+ "package": "docs/execution/2026-11-11/A-40h-village-gathering-buildings.md",
+ "author": "A (Johnnnny0823)",
+ "version": "v002",
+ "status": "Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗",
+ "dimensions_m": [
+  15.99,
+  4.48,
+  6.458
+ ],
+ "bounds_min_m": [
+  -7.995,
+  -2.24,
+  0.0
+ ],
+ "bounds_max_m": [
+  7.995,
+  2.24,
+  6.458
+ ],
+ "limit_m": [
+  16.0,
+  4.5,
+  6.5
+ ],
+ "origin": "origin at the footprint centre, z = 0 at the pier bottoms (river bed); the deck is level at +1.914 m and runs along X; Socket_EndA / Socket_EndB are the deck ends (x = -8 / +8) for the river banks",
+ "minTier": "low",
+ "lods": [
+  {
+   "lod": 0,
+   "triangles": 69527,
+   "objects": 2,
+   "materials": 1
+  },
+  {
+   "lod": 1,
+   "triangles": 33399,
+   "objects": 2,
+   "materials": 1
+  },
+  {
+   "lod": 2,
+   "triangles": 10019,
+   "objects": 2,
+   "materials": 1
+  }
+ ],
+ "objectsLOD0": [
+  "CB01_LOD0",
+  "CB01_Detail_Moss_LOD0"
+ ],
+ "detailObjects": [
+  "CB01_Detail_Moss_LOD0"
+ ],
+ "materials": [
+  "M_ValleyCommons_Trim"
+ ],
+ "textures": {
+  "T_ValleyCommons_Albedo": "2048x2048",
+  "T_ValleyCommons_Normal": "2048x2048",
+  "T_ValleyCommons_MetallicSmoothness": "2048x2048",
+  "T_ValleyCommons_Emission": "2048x2048"
+ },
+ "textureNote": "one valley trim sheet shared by every 11/11 module (art/textures/valley-commons-a, same strip layout as the MC01 sheet), 256 px/m",
+ "sockets": [
+  {
+   "name": "Socket_EndA",
+   "location_m": [
+    -8.0,
+    0.0,
+    1.914
+   ]
+  },
+  {
+   "name": "Socket_EndB",
+   "location_m": [
+    8.0,
+    0.0,
+    1.914
+   ]
+  }
+ ],
+ "collision": "CB01_Collision (26 boxes)",
+ "extra": {
+  "deckTop_m": 1.914,
+  "ridgeTop_m": 6.344,
+  "clearWidth_m": 2.58,
+  "clearHeight_m": 2.62
+ },
+ "fbx": "art/exports/valley-commons-a/CB01.fbx",
+ "fps": "不寫（手機未實測）"
+}
