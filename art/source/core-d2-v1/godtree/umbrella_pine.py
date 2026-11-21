@@ -13,7 +13,8 @@ R = random.Random(SEED)
 noise.seed_set(SEED)
 tail = src[src.index('# ---------------- 地面'):]
 TH = float(os.environ.get('UP_H', 25.0))          # 樹高（z1nnz 11/21：30 m 有一點點太高 → 25 m）
-CS = float(os.environ.get('UP_CS', 1.0))          # 樹冠與枝幹的絕對尺寸倍率（1＝v4 的大小，樹變矮時樹冠不跟著縮）
+CS = float(os.environ.get('UP_CS', 1.0))
+BEND = float(os.environ.get('UP_BEND', 1.0))       # 0＝11/21 打勾版的直枝；1＝枝幹彎曲（場景用）          # 樹冠與枝幹的絕對尺寸倍率（1＝v4 的大小，樹變矮時樹冠不跟著縮）
 CR = float(os.environ.get('UP_CR', .36))          # 樹冠佔樹高比例（頂上這一段才有枝）
 PAD = float(os.environ.get('UP_PAD', 1.35))        # 枝長倍率（樹冠寬）
 UP = Vector((0, 0, 1))
@@ -102,14 +103,17 @@ while z < TH - 1.2:
         sd = Vector((-hd.y, hd.x, 0))
         # 主枝：近水平伸出、中段微垂、末端微翹（自己畫，不交給 tree_gen 往上長）
         pts = []
-        for i in range(7):
-            t = i / 6
+        for i in range(13):
+            t = i / 12
             p = tpos + hd * (L * t) + sd * (math.sin(t * 3 + k) * .35 * t) + UP * (L * (.08 * t - .10 * math.sin(t * math.pi) + .03 * t * t))
+            if BEND:   # z1nnz 11/21：樹枝太僵硬 → 枝幹左右擺、上下起伏，像真的松枝一段段轉折
+                p += sd * (BEND * L * .10 * (math.sin(t * 7.0 + k * 1.7) * t + .6 * math.sin(t * 13 + k) * t * t))
+                p += UP * (BEND * L * .06 * math.sin(t * 9.0 + k * 2.3) * t)
             pts.append(tuple(p))
         r0 = (.20 - .07 * f) * CS
         objs.append(tube(f'Limb{k}', pts, radius=lambda t, r0=r0: r0 * (1 - .75 * t) + .02, flat=lambda t: 1.0, seed=k * 1.3, rib=.04, twist=.02))
         # 枝梢一片平展的雲片：後 45% 段落往水平四周長出短枝與針葉
-        pad(Vector(pts[4]).lerp(Vector(pts[6]), .6), hd, R.uniform(2.4, 3.2) * PAD * CS * (1 - .25 * f), k)
+        pad(Vector(pts[8]).lerp(Vector(pts[12]), .6), hd, R.uniform(2.4, 3.2) * PAD * CS * (1 - .25 * f), k)
         k += 1
     AZ += 2.39996
     tier += 1
@@ -123,7 +127,7 @@ for i in range(R.randint(3, 5)):
     a = R.uniform(0, 6.283)
     p0 = Vector((lx * o, ly * o, zz))
     d = Vector((math.cos(a), math.sin(a), R.uniform(-.1, .2))).normalized()
-    L = R.uniform(.5, 1.6)
+    L = R.uniform(.5, 1.6) * (.45 if BEND else 1.0)   # 斷枝短一點，不像插著的木棍
     objs.append(tube(f'Stub{i}', [tuple(p0), tuple(p0 + d * L * .5), tuple(p0 + d * L)],
                      radius=lambda t: .09 * (1 - .7 * t) + .02, flat=lambda t: 1.0, seed=i * 3.1, rib=.0, twist=.0))
 
