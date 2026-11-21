@@ -1,0 +1,40 @@
+{
+  "id": "GT01",
+  "name": "神木",
+  "version": "v003",
+  "source": "art/source/core-d2-v1/godtree/godtree_v3.py (GT_NSEED=1)",
+  "bake": {
+    "texture_px": 4096,
+    "maps": [
+      "BaseColor",
+      "Normal (OpenGL)",
+      "AO"
+    ],
+    "uv": "BakeUV"
+  },
+  "triangles": {
+    "LOD0": {
+      "wood": 142960,
+      "leaves": 674876,
+      "twigs": 475406,
+      "total": 1293242
+    },
+    "LOD1": {
+      "wood": 41330,
+      "leaves": 179966,
+      "twigs": 127250,
+      "total": 348546
+    },
+    "LOD2": {
+      "wood": 11624,
+      "leaves": 40492,
+      "twigs": 0,
+      "total": 52116
+    }
+  },
+  "collision": "UCX_GT01_GodTree",
+  "origin": "樹幹底部中心，z=0 在地面",
+  "size_m": {
+    "height": 77.5
+  }
+}
