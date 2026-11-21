@@ -1,0 +1,95 @@
+INFO species TR02; variants TR02_A_Cypress, TR02_B_Cypress, TR02_C_OldCypress
+PASS TR02_A_Cypress: LODGroup with LOD0-LOD3, one renderer each (size 14.9 m, transition heights 0.684 / 0.410 / 0.158 / 0.027 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR02_A_Cypress: LOD0 22231 triangles (model_info 22231, cap 25000)
+PASS TR02_A_Cypress: LOD0 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_A_Cypress: LOD0 has the Wind vertex colour on every vertex (34643/34643)
+PASS TR02_A_Cypress: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 1125 (wind 0, top 1.97 m)
+PASS TR02_A_Cypress: LOD1 4604 triangles (model_info 4604, cap 8000)
+PASS TR02_A_Cypress: LOD1 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_A_Cypress: LOD1 has the Wind vertex colour on every vertex (6381/6381)
+PASS TR02_A_Cypress: LOD2 2190 triangles (model_info 2190, cap 2500)
+PASS TR02_A_Cypress: LOD2 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_A_Cypress: LOD2 has the Wind vertex colour on every vertex (3686/3686)
+PASS TR02_A_Cypress: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR02_A_Cypress: LOD3 1 material(s), want 1 (M_TR02_Leaves 28)
+PASS TR02_A_Cypress: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR02_A_Cypress: height 10.22 m (model_info 10.22 m), roots down to -0.27 m
+PASS TR02_A_Cypress: TR02_A_Cypress_Collision is a MeshCollider with its renderer hidden
+PASS TR02_A_Cypress: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR02_B_Cypress: LODGroup with LOD0-LOD3, one renderer each (size 18.1 m, transition heights 0.829 / 0.497 / 0.191 / 0.033 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR02_B_Cypress: LOD0 22359 triangles (model_info 22359, cap 25000)
+PASS TR02_B_Cypress: LOD0 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_B_Cypress: LOD0 has the Wind vertex colour on every vertex (34969/34969)
+PASS TR02_B_Cypress: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 1125 (wind 0, top 1.91 m)
+PASS TR02_B_Cypress: LOD1 4520 triangles (model_info 4520, cap 8000)
+PASS TR02_B_Cypress: LOD1 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_B_Cypress: LOD1 has the Wind vertex colour on every vertex (6091/6091)
+PASS TR02_B_Cypress: LOD2 2190 triangles (model_info 2190, cap 2500)
+PASS TR02_B_Cypress: LOD2 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_B_Cypress: LOD2 has the Wind vertex colour on every vertex (3695/3695)
+PASS TR02_B_Cypress: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR02_B_Cypress: LOD3 1 material(s), want 1 (M_TR02_Leaves 28)
+PASS TR02_B_Cypress: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR02_B_Cypress: height 10.44 m (model_info 10.45 m), roots down to -0.28 m
+PASS TR02_B_Cypress: TR02_B_Cypress_Collision is a MeshCollider with its renderer hidden
+PASS TR02_B_Cypress: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR02_C_OldCypress: LODGroup with LOD0-LOD3, one renderer each (size 13.2 m, transition heights 0.603 / 0.362 / 0.139 / 0.024 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR02_C_OldCypress: LOD0 20722 triangles (model_info 20722, cap 25000)
+PASS TR02_C_OldCypress: LOD0 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_C_OldCypress: LOD0 has the Wind vertex colour on every vertex (29965/29965)
+PASS TR02_C_OldCypress: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 1125 (wind 0, top 1.99 m)
+PASS TR02_C_OldCypress: LOD1 3793 triangles (model_info 3793, cap 8000)
+PASS TR02_C_OldCypress: LOD1 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_C_OldCypress: LOD1 has the Wind vertex colour on every vertex (4473/4473)
+PASS TR02_C_OldCypress: LOD2 1592 triangles (model_info 1592, cap 2500)
+PASS TR02_C_OldCypress: LOD2 2 material(s), want 2 (M_TR02_Bark 28, M_TR02_Leaves 28)
+PASS TR02_C_OldCypress: LOD2 has the Wind vertex colour on every vertex (2376/2376)
+PASS TR02_C_OldCypress: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR02_C_OldCypress: LOD3 1 material(s), want 1 (M_TR02_Leaves 28)
+PASS TR02_C_OldCypress: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR02_C_OldCypress: height 10.82 m (model_info 10.82 m), roots down to -0.29 m
+PASS TR02_C_OldCypress: TR02_C_OldCypress_Collision is a MeshCollider with its renderer hidden
+PASS TR02_C_OldCypress: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR02_A_Cypress: a walker heading at the trunk stops at it (0.78 m from the trunk axis, trunk collider radius 0.51 m)
+PASS TR02_A_Cypress: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR02_B_Cypress: a walker heading at the trunk stops at it (0.82 m from the trunk axis, trunk collider radius 0.55 m)
+PASS TR02_B_Cypress: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR02_C_OldCypress: a walker heading at the trunk stops at it (0.78 m from the trunk axis, trunk collider radius 0.51 m)
+PASS TR02_C_OldCypress: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR02_A_Cypress_three_quarter
+SHOT TR02_A_Cypress_under_crown_eye_1p7
+SHOT TR02_A_Cypress_front
+SHOT TR02_A_Cypress_LOD0
+SHOT TR02_A_Cypress_LOD1
+SHOT TR02_A_Cypress_LOD2
+SHOT TR02_A_Cypress_LOD3
+SHOT TR02_A_Cypress_far_50m
+INFO TR02_A_Cypress: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR02_A_Cypress_far_100m
+INFO TR02_A_Cypress: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR02_B_Cypress_three_quarter
+SHOT TR02_B_Cypress_under_crown_eye_1p7
+SHOT TR02_B_Cypress_front
+SHOT TR02_B_Cypress_LOD0
+SHOT TR02_B_Cypress_LOD1
+SHOT TR02_B_Cypress_LOD2
+SHOT TR02_B_Cypress_LOD3
+SHOT TR02_B_Cypress_far_50m
+INFO TR02_B_Cypress: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR02_B_Cypress_far_100m
+INFO TR02_B_Cypress: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR02_C_OldCypress_three_quarter
+SHOT TR02_C_OldCypress_under_crown_eye_1p7
+SHOT TR02_C_OldCypress_front
+SHOT TR02_C_OldCypress_LOD0
+SHOT TR02_C_OldCypress_LOD1
+SHOT TR02_C_OldCypress_LOD2
+SHOT TR02_C_OldCypress_LOD3
+SHOT TR02_C_OldCypress_far_50m
+INFO TR02_C_OldCypress: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR02_C_OldCypress_far_100m
+INFO TR02_C_OldCypress: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR02_lineup_with_VL02_and_1p75m
+SHOT TR02_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

@@ -1,0 +1,95 @@
+INFO species TR07; variants TR07_A_Plum, TR07_B_OldPlum, TR07_C_Plum
+PASS TR07_A_Plum: LODGroup with LOD0-LOD3, one renderer each (size 13.0 m, transition heights 0.594 / 0.356 / 0.137 / 0.024 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR07_A_Plum: LOD0 10206 triangles (model_info 10206, cap 12500)
+PASS TR07_A_Plum: LOD0 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_A_Plum: LOD0 has the Wind vertex colour on every vertex (14108/14108)
+PASS TR07_A_Plum: wind weights: bark below 2 m <= 0.03 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR07_A_Plum: LOD1 2891 triangles (model_info 2891, cap 4000)
+PASS TR07_A_Plum: LOD1 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_A_Plum: LOD1 has the Wind vertex colour on every vertex (3675/3675)
+PASS TR07_A_Plum: LOD2 1099 triangles (model_info 1099, cap 1250)
+PASS TR07_A_Plum: LOD2 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_A_Plum: LOD2 has the Wind vertex colour on every vertex (1419/1419)
+PASS TR07_A_Plum: LOD3 4 triangles (model_info 4, cap 100)
+PASS TR07_A_Plum: LOD3 1 material(s), want 1 (M_TR07_Leaves 7)
+PASS TR07_A_Plum: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR07_A_Plum: height 7.86 m (model_info 7.86 m), roots down to -0.28 m
+PASS TR07_A_Plum: TR07_A_Plum_Collision is a MeshCollider with its renderer hidden
+PASS TR07_A_Plum: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR07_B_OldPlum: LODGroup with LOD0-LOD3, one renderer each (size 18.0 m, transition heights 0.825 / 0.495 / 0.190 / 0.033 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR07_B_OldPlum: LOD0 10210 triangles (model_info 10210, cap 12500)
+PASS TR07_B_OldPlum: LOD0 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_B_OldPlum: LOD0 has the Wind vertex colour on every vertex (13863/13863)
+PASS TR07_B_OldPlum: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR07_B_OldPlum: LOD1 2874 triangles (model_info 2874, cap 4000)
+PASS TR07_B_OldPlum: LOD1 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_B_OldPlum: LOD1 has the Wind vertex colour on every vertex (3499/3499)
+PASS TR07_B_OldPlum: LOD2 1100 triangles (model_info 1100, cap 1250)
+PASS TR07_B_OldPlum: LOD2 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_B_OldPlum: LOD2 has the Wind vertex colour on every vertex (1377/1377)
+PASS TR07_B_OldPlum: LOD3 4 triangles (model_info 4, cap 100)
+PASS TR07_B_OldPlum: LOD3 1 material(s), want 1 (M_TR07_Leaves 7)
+PASS TR07_B_OldPlum: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR07_B_OldPlum: height 7.09 m (model_info 7.09 m), roots down to -0.28 m
+PASS TR07_B_OldPlum: TR07_B_OldPlum_Collision is a MeshCollider with its renderer hidden
+PASS TR07_B_OldPlum: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR07_C_Plum: LODGroup with LOD0-LOD3, one renderer each (size 11.4 m, transition heights 0.522 / 0.313 / 0.120 / 0.021 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR07_C_Plum: LOD0 10219 triangles (model_info 10219, cap 12500)
+PASS TR07_C_Plum: LOD0 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_C_Plum: LOD0 has the Wind vertex colour on every vertex (14112/14112)
+PASS TR07_C_Plum: wind weights: bark below 2 m <= 0.03 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR07_C_Plum: LOD1 2876 triangles (model_info 2876, cap 4000)
+PASS TR07_C_Plum: LOD1 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_C_Plum: LOD1 has the Wind vertex colour on every vertex (3563/3563)
+PASS TR07_C_Plum: LOD2 1100 triangles (model_info 1100, cap 1250)
+PASS TR07_C_Plum: LOD2 2 material(s), want 2 (M_TR07_Bark 7, M_TR07_Leaves 7)
+PASS TR07_C_Plum: LOD2 has the Wind vertex colour on every vertex (1474/1474)
+PASS TR07_C_Plum: LOD3 4 triangles (model_info 4, cap 100)
+PASS TR07_C_Plum: LOD3 1 material(s), want 1 (M_TR07_Leaves 7)
+PASS TR07_C_Plum: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR07_C_Plum: height 7.67 m (model_info 7.67 m), roots down to -0.28 m
+PASS TR07_C_Plum: TR07_C_Plum_Collision is a MeshCollider with its renderer hidden
+PASS TR07_C_Plum: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR07_A_Plum: a walker heading at the trunk stops at it (0.51 m from the trunk axis, trunk collider radius 0.24 m)
+PASS TR07_A_Plum: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR07_B_OldPlum: a walker heading at the trunk stops at it (0.54 m from the trunk axis, trunk collider radius 0.27 m)
+PASS TR07_B_OldPlum: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR07_C_Plum: a walker heading at the trunk stops at it (0.50 m from the trunk axis, trunk collider radius 0.23 m)
+PASS TR07_C_Plum: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR07_A_Plum_three_quarter
+SHOT TR07_A_Plum_under_crown_eye_1p7
+SHOT TR07_A_Plum_front
+SHOT TR07_A_Plum_LOD0
+SHOT TR07_A_Plum_LOD1
+SHOT TR07_A_Plum_LOD2
+SHOT TR07_A_Plum_LOD3
+SHOT TR07_A_Plum_far_50m
+INFO TR07_A_Plum: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR07_A_Plum_far_100m
+INFO TR07_A_Plum: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR07_B_OldPlum_three_quarter
+SHOT TR07_B_OldPlum_under_crown_eye_1p7
+SHOT TR07_B_OldPlum_front
+SHOT TR07_B_OldPlum_LOD0
+SHOT TR07_B_OldPlum_LOD1
+SHOT TR07_B_OldPlum_LOD2
+SHOT TR07_B_OldPlum_LOD3
+SHOT TR07_B_OldPlum_far_50m
+INFO TR07_B_OldPlum: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR07_B_OldPlum_far_100m
+INFO TR07_B_OldPlum: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR07_C_Plum_three_quarter
+SHOT TR07_C_Plum_under_crown_eye_1p7
+SHOT TR07_C_Plum_front
+SHOT TR07_C_Plum_LOD0
+SHOT TR07_C_Plum_LOD1
+SHOT TR07_C_Plum_LOD2
+SHOT TR07_C_Plum_LOD3
+SHOT TR07_C_Plum_far_50m
+INFO TR07_C_Plum: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR07_C_Plum_far_100m
+INFO TR07_C_Plum: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR07_lineup_with_VL02_and_1p75m
+SHOT TR07_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

@@ -1,0 +1,24 @@
+TR05 銀杏：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），B 批 TR05。
+
+選用：TR05-cand-3.png。備選：TR05-cand-1.png。
+選用理由：
+- 主幹最直、最高，灰色樹皮有長直裂紋，一路穿進樹冠當主軸，正是「樹形高直」。
+- 大枝往上斜伸，樹冠是高橢圓形，由一團團扇形葉簇組成，團與團之間看得到枝條。
+- 葉色是暖金偏黃褐，三個方向的輪廓不同。
+沒選的原因：
+- cand-1：可用，留作備選；但樹冠上半部偏寬、偏圓，比較像一般闊葉樹。
+- cand-2：主幹下段太粗、根盤太寬，童話比例；樹幹上還有菌菇。
+- cand-4：樹幹基部外擴太寬、根盤誇張；樹冠一層層往上收成塔形，輪廓像針葉樹。
+四張共同的問題（建模時不照做）：
+- 受光面偏亮黃，接近檸檬黃。工作包要「金要舊（暗金、黃褐）」：建模時整組色階壓暗、往黃褐偏，四分之一葉團改用更褐的舊金；以 Unity 畫面為準調色（Unity 比 Blender 亮且暖）。
+- 根部的落葉、石頭和草不建（地面歸地形）。
+- 根盤外擴太寬；18 m 的銀杏，胸徑取約 0.9–1.1 m（C 款老樹約 1.3 m）。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen。
+- 共 4 張（TR05-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-13。
+- 提示詞組法和 TR01–TR04 相同：物件句＋單件 Layout 段＋5.2 美術方向＋「Avoid:」接 5.3 與本包那句。全部用原文，完整內容在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of an old ginkgo tree about 18 m tall in autumn, a tall straight grey trunk, upward-reaching limbs, fan-shaped leaf clusters in antique gold and brownish yellow, soft and aged rather than bright, a few fallen leaves at the base, a hand-painted stylized game tree.

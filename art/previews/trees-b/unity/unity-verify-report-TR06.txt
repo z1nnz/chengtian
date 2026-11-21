@@ -1,0 +1,95 @@
+INFO species TR06; variants TR06_A_Willow, TR06_B_Willow, TR06_C_OldWillow
+PASS TR06_A_Willow: LODGroup with LOD0-LOD3, one renderer each (size 28.5 m, transition heights 0.980 / 0.784 / 0.301 / 0.052 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR06_A_Willow: LOD0 22182 triangles (model_info 22182, cap 25000)
+PASS TR06_A_Willow: LOD0 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_A_Willow: LOD0 has the Wind vertex colour on every vertex (37563/37563)
+PASS TR06_A_Willow: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.56, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR06_A_Willow: LOD1 6350 triangles (model_info 6350, cap 8000)
+PASS TR06_A_Willow: LOD1 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_A_Willow: LOD1 has the Wind vertex colour on every vertex (10594/10594)
+PASS TR06_A_Willow: LOD2 2401 triangles (model_info 2401, cap 2500)
+PASS TR06_A_Willow: LOD2 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_A_Willow: LOD2 has the Wind vertex colour on every vertex (3968/3968)
+PASS TR06_A_Willow: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR06_A_Willow: LOD3 1 material(s), want 1 (M_TR06_Leaves 2)
+PASS TR06_A_Willow: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR06_A_Willow: height 12.90 m (model_info 12.90 m), roots down to -0.26 m
+PASS TR06_A_Willow: TR06_A_Willow_Collision is a MeshCollider with its renderer hidden
+PASS TR06_A_Willow: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR06_B_Willow: LODGroup with LOD0-LOD3, one renderer each (size 33.5 m, transition heights 0.980 / 0.921 / 0.354 / 0.061 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR06_B_Willow: LOD0 19136 triangles (model_info 19136, cap 25000)
+PASS TR06_B_Willow: LOD0 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_B_Willow: LOD0 has the Wind vertex colour on every vertex (32101/32101)
+PASS TR06_B_Willow: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.56, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR06_B_Willow: LOD1 5504 triangles (model_info 5504, cap 8000)
+PASS TR06_B_Willow: LOD1 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_B_Willow: LOD1 has the Wind vertex colour on every vertex (9075/9075)
+PASS TR06_B_Willow: LOD2 2064 triangles (model_info 2064, cap 2500)
+PASS TR06_B_Willow: LOD2 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_B_Willow: LOD2 has the Wind vertex colour on every vertex (3332/3332)
+PASS TR06_B_Willow: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR06_B_Willow: LOD3 1 material(s), want 1 (M_TR06_Leaves 2)
+PASS TR06_B_Willow: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR06_B_Willow: height 12.11 m (model_info 12.11 m), roots down to -0.30 m
+PASS TR06_B_Willow: TR06_B_Willow_Collision is a MeshCollider with its renderer hidden
+PASS TR06_B_Willow: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR06_C_OldWillow: LODGroup with LOD0-LOD3, one renderer each (size 27.1 m, transition heights 0.980 / 0.743 / 0.286 / 0.050 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR06_C_OldWillow: LOD0 22158 triangles (model_info 22158, cap 25000)
+PASS TR06_C_OldWillow: LOD0 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_C_OldWillow: LOD0 has the Wind vertex colour on every vertex (38396/38396)
+PASS TR06_C_OldWillow: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.56, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR06_C_OldWillow: LOD1 6387 triangles (model_info 6387, cap 8000)
+PASS TR06_C_OldWillow: LOD1 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_C_OldWillow: LOD1 has the Wind vertex colour on every vertex (10781/10781)
+PASS TR06_C_OldWillow: LOD2 2402 triangles (model_info 2402, cap 2500)
+PASS TR06_C_OldWillow: LOD2 2 material(s), want 2 (M_TR06_Bark 2, M_TR06_Leaves 2)
+PASS TR06_C_OldWillow: LOD2 has the Wind vertex colour on every vertex (4022/4022)
+PASS TR06_C_OldWillow: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR06_C_OldWillow: LOD3 1 material(s), want 1 (M_TR06_Leaves 2)
+PASS TR06_C_OldWillow: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR06_C_OldWillow: height 12.74 m (model_info 12.74 m), roots down to -0.27 m
+PASS TR06_C_OldWillow: TR06_C_OldWillow_Collision is a MeshCollider with its renderer hidden
+PASS TR06_C_OldWillow: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR06_A_Willow: a walker heading at the trunk stops at it (0.80 m from the trunk axis, trunk collider radius 0.53 m)
+PASS TR06_A_Willow: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR06_B_Willow: a walker heading at the trunk stops at it (0.83 m from the trunk axis, trunk collider radius 0.56 m)
+PASS TR06_B_Willow: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR06_C_OldWillow: a walker heading at the trunk stops at it (0.94 m from the trunk axis, trunk collider radius 0.67 m)
+PASS TR06_C_OldWillow: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR06_A_Willow_three_quarter
+SHOT TR06_A_Willow_under_crown_eye_1p7
+SHOT TR06_A_Willow_front
+SHOT TR06_A_Willow_LOD0
+SHOT TR06_A_Willow_LOD1
+SHOT TR06_A_Willow_LOD2
+SHOT TR06_A_Willow_LOD3
+SHOT TR06_A_Willow_far_50m
+INFO TR06_A_Willow: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR06_A_Willow_far_100m
+INFO TR06_A_Willow: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR06_B_Willow_three_quarter
+SHOT TR06_B_Willow_under_crown_eye_1p7
+SHOT TR06_B_Willow_front
+SHOT TR06_B_Willow_LOD0
+SHOT TR06_B_Willow_LOD1
+SHOT TR06_B_Willow_LOD2
+SHOT TR06_B_Willow_LOD3
+SHOT TR06_B_Willow_far_50m
+INFO TR06_B_Willow: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR06_B_Willow_far_100m
+INFO TR06_B_Willow: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR06_C_OldWillow_three_quarter
+SHOT TR06_C_OldWillow_under_crown_eye_1p7
+SHOT TR06_C_OldWillow_front
+SHOT TR06_C_OldWillow_LOD0
+SHOT TR06_C_OldWillow_LOD1
+SHOT TR06_C_OldWillow_LOD2
+SHOT TR06_C_OldWillow_LOD3
+SHOT TR06_C_OldWillow_far_50m
+INFO TR06_C_OldWillow: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR06_C_OldWillow_far_100m
+INFO TR06_C_OldWillow: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR06_lineup_with_VL02_and_1p75m
+SHOT TR06_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

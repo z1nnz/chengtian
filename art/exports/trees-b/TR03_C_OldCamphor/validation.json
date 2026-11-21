@@ -1,0 +1,122 @@
+{
+  "asset": "TR03_C_OldCamphor",
+  "version": "v001",
+  "built": "2026-11-13 02:55",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0003,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR03_C_OldCamphor",
+      "TR03_C_OldCamphor_Collision",
+      "TR03_C_OldCamphor_LOD0",
+      "TR03_C_OldCamphor_LOD1",
+      "TR03_C_OldCamphor_LOD2",
+      "TR03_C_OldCamphor_LOD3"
+    ],
+    "TR03_C_OldCamphor_Collision": {
+      "tris": 28,
+      "min": [
+        -0.781,
+        -0.797,
+        -0.0
+      ],
+      "max": [
+        0.798,
+        0.783,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR03_C_OldCamphor_LOD0": {
+      "tris": 22804,
+      "min": [
+        -9.389,
+        -8.367,
+        -0.272
+      ],
+      "max": [
+        8.662,
+        8.977,
+        14.557
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR03_Bark.003",
+        "M_TR03_Leaves.003"
+      ]
+    },
+    "TR03_C_OldCamphor_LOD1": {
+      "tris": 5355,
+      "min": [
+        -9.766,
+        -8.586,
+        -0.25
+      ],
+      "max": [
+        9.004,
+        9.043,
+        14.668
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR03_Bark.003",
+        "M_TR03_Leaves.003"
+      ]
+    },
+    "TR03_C_OldCamphor_LOD2": {
+      "tris": 2329,
+      "min": [
+        -9.507,
+        -8.675,
+        -0.25
+      ],
+      "max": [
+        9.156,
+        9.324,
+        14.905
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR03_Bark.003",
+        "M_TR03_Leaves.003"
+      ]
+    },
+    "TR03_C_OldCamphor_LOD3": {
+      "tris": 4,
+      "min": [
+        -9.577,
+        -9.577,
+        -0.3
+      ],
+      "max": [
+        9.577,
+        9.577,
+        28.458
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR03_Leaves.003"
+      ]
+    }
+  },
+  "files": {
+    "TR03_C_OldCamphor_v001.fbx": "13238fe9dd3a2f9d2b98cddc357ad0ddda9bf7548b078de603cc11463bee2525",
+    "TR03_C_OldCamphor_v001.glb": "b16d9dc0875e44ee48cc3af25a180060e7e62eba0c647670d0816ffb21b699f4"
+  }
+}

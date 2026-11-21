@@ -1,0 +1,95 @@
+INFO species TR05; variants TR05_A_Ginkgo, TR05_B_Ginkgo, TR05_C_OldGinkgo
+PASS TR05_A_Ginkgo: LODGroup with LOD0-LOD3, one renderer each (size 19.8 m, transition heights 0.908 / 0.545 / 0.209 / 0.036 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR05_A_Ginkgo: LOD0 23702 triangles (model_info 23702, cap 25000)
+PASS TR05_A_Ginkgo: LOD0 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_A_Ginkgo: LOD0 has the Wind vertex colour on every vertex (41527/41527)
+PASS TR05_A_Ginkgo: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR05_A_Ginkgo: LOD1 5156 triangles (model_info 5156, cap 8000)
+PASS TR05_A_Ginkgo: LOD1 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_A_Ginkgo: LOD1 has the Wind vertex colour on every vertex (8692/8692)
+PASS TR05_A_Ginkgo: LOD2 2329 triangles (model_info 2329, cap 2500)
+PASS TR05_A_Ginkgo: LOD2 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_A_Ginkgo: LOD2 has the Wind vertex colour on every vertex (3874/3874)
+PASS TR05_A_Ginkgo: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR05_A_Ginkgo: LOD3 1 material(s), want 1 (M_TR05_Leaves 1)
+PASS TR05_A_Ginkgo: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR05_A_Ginkgo: height 18.80 m (model_info 18.80 m), roots down to -0.27 m
+PASS TR05_A_Ginkgo: TR05_A_Ginkgo_Collision is a MeshCollider with its renderer hidden
+PASS TR05_A_Ginkgo: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR05_B_Ginkgo: LODGroup with LOD0-LOD3, one renderer each (size 24.4 m, transition heights 0.980 / 0.669 / 0.257 / 0.045 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR05_B_Ginkgo: LOD0 23759 triangles (model_info 23759, cap 25000)
+PASS TR05_B_Ginkgo: LOD0 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_B_Ginkgo: LOD0 has the Wind vertex colour on every vertex (41630/41630)
+PASS TR05_B_Ginkgo: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.60, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR05_B_Ginkgo: LOD1 4864 triangles (model_info 4864, cap 8000)
+PASS TR05_B_Ginkgo: LOD1 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_B_Ginkgo: LOD1 has the Wind vertex colour on every vertex (7923/7923)
+PASS TR05_B_Ginkgo: LOD2 2327 triangles (model_info 2327, cap 2500)
+PASS TR05_B_Ginkgo: LOD2 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_B_Ginkgo: LOD2 has the Wind vertex colour on every vertex (3910/3910)
+PASS TR05_B_Ginkgo: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR05_B_Ginkgo: LOD3 1 material(s), want 1 (M_TR05_Leaves 1)
+PASS TR05_B_Ginkgo: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR05_B_Ginkgo: height 17.64 m (model_info 17.64 m), roots down to -0.27 m
+PASS TR05_B_Ginkgo: TR05_B_Ginkgo_Collision is a MeshCollider with its renderer hidden
+PASS TR05_B_Ginkgo: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR05_C_OldGinkgo: LODGroup with LOD0-LOD3, one renderer each (size 23.0 m, transition heights 0.980 / 0.632 / 0.243 / 0.042 for 60 / 100 / 260 / 1500 m at LOD bias 2.0)
+PASS TR05_C_OldGinkgo: LOD0 24444 triangles (model_info 24444, cap 25000)
+PASS TR05_C_OldGinkgo: LOD0 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_C_OldGinkgo: LOD0 has the Wind vertex colour on every vertex (43726/43726)
+PASS TR05_C_OldGinkgo: wind weights: bark below 2 m <= 0.00 (trunk 0), leaf cards >= 0.61, trunk moss vertices 0 (wind 0, top 0.00 m)
+PASS TR05_C_OldGinkgo: LOD1 5542 triangles (model_info 5542, cap 8000)
+PASS TR05_C_OldGinkgo: LOD1 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_C_OldGinkgo: LOD1 has the Wind vertex colour on every vertex (9598/9598)
+PASS TR05_C_OldGinkgo: LOD2 2329 triangles (model_info 2329, cap 2500)
+PASS TR05_C_OldGinkgo: LOD2 2 material(s), want 2 (M_TR05_Bark 1, M_TR05_Leaves 1)
+PASS TR05_C_OldGinkgo: LOD2 has the Wind vertex colour on every vertex (3971/3971)
+PASS TR05_C_OldGinkgo: LOD3 4 triangles (model_info 4, cap 200)
+PASS TR05_C_OldGinkgo: LOD3 1 material(s), want 1 (M_TR05_Leaves 1)
+PASS TR05_C_OldGinkgo: LOD3 has the Wind vertex colour on every vertex (8/8)
+PASS TR05_C_OldGinkgo: height 18.07 m (model_info 18.08 m), roots down to -0.26 m
+PASS TR05_C_OldGinkgo: TR05_C_OldGinkgo_Collision is a MeshCollider with its renderer hidden
+PASS TR05_C_OldGinkgo: leaves BaseColor imported with Mip Maps Preserve Coverage at 0.5
+PASS TR05_A_Ginkgo: a walker heading at the trunk stops at it (0.74 m from the trunk axis, trunk collider radius 0.47 m)
+PASS TR05_A_Ginkgo: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR05_B_Ginkgo: a walker heading at the trunk stops at it (0.72 m from the trunk axis, trunk collider radius 0.45 m)
+PASS TR05_B_Ginkgo: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+PASS TR05_C_OldGinkgo: a walker heading at the trunk stops at it (0.86 m from the trunk axis, trunk collider radius 0.59 m)
+PASS TR05_C_OldGinkgo: a walker passing 1.5 m beside the trunk under the crown goes on (4.40 m past it): the crown does not block
+SHOT TR05_A_Ginkgo_three_quarter
+SHOT TR05_A_Ginkgo_under_crown_eye_1p7
+SHOT TR05_A_Ginkgo_front
+SHOT TR05_A_Ginkgo_LOD0
+SHOT TR05_A_Ginkgo_LOD1
+SHOT TR05_A_Ginkgo_LOD2
+SHOT TR05_A_Ginkgo_LOD3
+SHOT TR05_A_Ginkgo_far_50m
+INFO TR05_A_Ginkgo: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_A_Ginkgo_far_100m
+INFO TR05_A_Ginkgo: at 100 m the LODGroup shows LOD2 (LOD bias 2.00)
+SHOT TR05_B_Ginkgo_three_quarter
+SHOT TR05_B_Ginkgo_under_crown_eye_1p7
+SHOT TR05_B_Ginkgo_front
+SHOT TR05_B_Ginkgo_LOD0
+SHOT TR05_B_Ginkgo_LOD1
+SHOT TR05_B_Ginkgo_LOD2
+SHOT TR05_B_Ginkgo_LOD3
+SHOT TR05_B_Ginkgo_far_50m
+INFO TR05_B_Ginkgo: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_B_Ginkgo_far_100m
+INFO TR05_B_Ginkgo: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR05_C_OldGinkgo_three_quarter
+SHOT TR05_C_OldGinkgo_under_crown_eye_1p7
+SHOT TR05_C_OldGinkgo_front
+SHOT TR05_C_OldGinkgo_LOD0
+SHOT TR05_C_OldGinkgo_LOD1
+SHOT TR05_C_OldGinkgo_LOD2
+SHOT TR05_C_OldGinkgo_LOD3
+SHOT TR05_C_OldGinkgo_far_50m
+INFO TR05_C_OldGinkgo: at 50 m the LODGroup shows LOD0 (LOD bias 2.00)
+SHOT TR05_C_OldGinkgo_far_100m
+INFO TR05_C_OldGinkgo: at 100 m the LODGroup shows LOD1 (LOD bias 2.00)
+SHOT TR05_lineup_with_VL02_and_1p75m
+SHOT TR05_lineup_far_100m
+
+Unity 6000.3.28f1; failed checks: 0; walking is a scripted CharacterController, not a person; screenshots are editor renders with a placeholder ground, not the game scene

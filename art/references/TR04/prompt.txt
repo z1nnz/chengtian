@@ -1,0 +1,24 @@
+TR04 楓：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），B 批 TR04。
+
+選用：TR04-cand-1.png。備選：TR04-cand-3.png。
+選用理由：
+- 主幹細、顏色深，一路往上當主軸，枝條細，符合「枝條細」。
+- 葉子分成好幾層，層與層之間透得到天空，正是「樹冠分成幾層」。
+- 紅色與赭色葉團交錯，正面、側面輪廓不同。
+沒選的原因：
+- cand-2：主幹扭轉、下段偏粗；上半部葉層黏成一大團，分層不如 cand-1 清楚。
+- cand-3：可用，留作備選（主幹 S 形，可參考 B 款）；但上半部葉團連成一大片，層次比 cand-1 弱。
+- cand-4：主幹 S 形扭轉較大、枝條偏粗；上半部葉層連成一片，分層比 cand-1 弱。
+四張共同的問題（建模時不照做）：
+- 紅色偏亮、偏橘紅，受光面接近珊瑚色。工作包要「紅要沉（暗赭紅、鏽紅）」：建模時紅色整組壓暗、降飽和，約三分之一葉團改用暗赭黃；以 Unity 畫面為準調色（Unity 比 Blender 亮且暖）。
+- 根部的石頭、苔和草不建（地面歸地形）。
+- 根盤外擴太寬；8.5 m 的楓，胸徑取約 0.45–0.5 m。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen。
+- 共 4 張（TR04-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-13。
+- 提示詞組法和 TR01–TR03 相同：物件句＋單件 Layout 段＋5.2 美術方向＋「Avoid:」接 5.3 與本包那句。全部用原文，完整內容在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of a Chinese maple tree about 8.5 m tall in autumn, a slim dark trunk with fine branching, the crown in several separate layered leaf masses of deep rust red and dark ochre, muted and earthy rather than bright, a hand-painted stylized game tree.

@@ -1,0 +1,122 @@
+{
+  "asset": "TR07_C_Plum",
+  "version": "v001",
+  "built": "2026-11-13 04:52",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0001,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR07_C_Plum",
+      "TR07_C_Plum_Collision",
+      "TR07_C_Plum_LOD0",
+      "TR07_C_Plum_LOD1",
+      "TR07_C_Plum_LOD2",
+      "TR07_C_Plum_LOD3"
+    ],
+    "TR07_C_Plum_Collision": {
+      "tris": 28,
+      "min": [
+        -0.231,
+        -0.231,
+        -0.0
+      ],
+      "max": [
+        0.231,
+        0.231,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR07_C_Plum_LOD0": {
+      "tris": 10219,
+      "min": [
+        -3.227,
+        -3.343,
+        -0.284
+      ],
+      "max": [
+        3.721,
+        3.576,
+        7.671
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Bark.003",
+        "M_TR07_Leaves.003"
+      ]
+    },
+    "TR07_C_Plum_LOD1": {
+      "tris": 2876,
+      "min": [
+        -3.352,
+        -3.568,
+        -0.284
+      ],
+      "max": [
+        3.691,
+        3.706,
+        7.708
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Bark.003",
+        "M_TR07_Leaves.003"
+      ]
+    },
+    "TR07_C_Plum_LOD2": {
+      "tris": 1100,
+      "min": [
+        -3.536,
+        -3.699,
+        -0.284
+      ],
+      "max": [
+        4.047,
+        3.967,
+        8.002
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Bark.003",
+        "M_TR07_Leaves.003"
+      ]
+    },
+    "TR07_C_Plum_LOD3": {
+      "tris": 4,
+      "min": [
+        -3.796,
+        -3.796,
+        -0.3
+      ],
+      "max": [
+        3.796,
+        3.796,
+        11.099
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR07_Leaves.003"
+      ]
+    }
+  },
+  "files": {
+    "TR07_C_Plum_v001.fbx": "6893759e79659caef305b20f9f672a89e49aa7b82930918113dc4d5c33934fcb",
+    "TR07_C_Plum_v001.glb": "b5bb174662f0df4c444f715cb2b77d1aa35127013a44a886d24fed11b06acbb6"
+  }
+}
