@@ -910,7 +910,7 @@ _CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-6, 12), (1, 91)]
 _CR = random.Random(31)
 if 'real' in argv:   # 設定圖 V1：松樹比例高、樹冠之間看得到樹幹 → 外圍一部分圓冠樹換成傘頂松
     # 11/21 第二輪：設定圖 V1、V3 幾乎都是看得到樹幹的傘頂松，圓冠樹只零星幾棵 → 圓冠 75%、巨木 50% 換成松
-    TREES = [(x, y, ('P' if ((k == 'M' and _CR.random() < .75) or (k == 'G' and _CR.random() < .5)) else k), s) for x, y, k, s in TREES]
+    TREES = [(x, y, ('P' if (k == 'M' and math.hypot(x - CLEAR[0], y - CLEAR[1]) > CLEAR[2] + 8 and _CR.random() < .5) else k), s) for x, y, k, s in TREES]   # 11/22 他覺得上一版俯瞰較好 → 退回 50%
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
@@ -928,7 +928,7 @@ if 'real' in argv:   # 區塊外（鄰近區塊）的林子也種上，遠景才
         if any(math.hypot(x - a_, y - b_) < 14 for a_, b_ in extra):   # 疏一點：俯瞰要看得到樹幹和林間白霧
             continue
         extra.append((x, y))
-        KIND[FR.choice('PPPPBMG')](x, y, FR.uniform(.85, 1.15))
+        KIND[FR.choice('PPBMMG')](x, y, FR.uniform(.85, 1.15))
         if len(extra) >= 320:
             break
     print('EXTRA', len(extra))
@@ -1415,7 +1415,7 @@ if 'real' in argv:   # 林間低霧層：貼地一層較濃的霧（設定圖 V1
     _nt.links.new(_lmp.outputs['Vector'], _nz.inputs['Vector'])
     _mr = _nt.nodes.new('ShaderNodeMapRange')
     _mr.inputs['From Min'].default_value, _mr.inputs['From Max'].default_value = .42, .66
-    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .016
+    _mr.inputs['To Min'].default_value, _mr.inputs['To Max'].default_value = .0, .005   # 11/22 退回上一版的淡霧
     _nt.links.new(_nz.outputs['Fac'], _mr.inputs['Value'])
     # 高度：貼地到樹冠中段濃、往上漸淡
     _lsz = _nt.nodes.new('ShaderNodeSeparateXYZ'); _nt.links.new(_gp.outputs['Position'], _lsz.inputs[0])
