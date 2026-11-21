@@ -467,7 +467,11 @@ def glb(path, at, dz, rotz=0.0):
 
 
 _GTO = append(S_ + 'GT01_out/GT01_GodTree_v003.blend', lambda nm: nm.endswith('_LOD0' if 'real' in argv else '_LOD1'), TREE, gh(*TREE) - .6)
-glb(EXP + 'AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.glb', ALT, -.05)
+if REAL:   # AL02 重做的三層石砌祭壇（正面石階朝南、朝主路）
+    for _o in append(S_ + 'props_lib.blend', lambda nm: nm == 'AL02_Altar', ALT, gh(*ALT) - .12):
+        _o.rotation_euler.z = .35
+else:
+    glb(EXP + 'AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.glb', ALT, -.05)
 _rim = sum(gh(PIT[0] + 3.3 * math.cos(a_), PIT[1] + 3.3 * math.sin(a_)) for a_ in (0, 1.57, 3.14, 4.71)) / 4
 if not REAL:   # 真模型模式的坑直接挖在地形裡（CO01 v002 是平板狀，不像設定圖）
     glb(EXP + 'CO01_ExcavatedPit/CO01_ExcavatedPit_v002.glb', PIT, _rim - gh(*PIT) - .05)
@@ -720,7 +724,45 @@ if 'real' in argv:   # 區塊外（鄰近區塊）的林子也種上，遠景才
 
 # ---------------- 大苔石、板根牆、倒木 ----------------
 ROCKS = [(-6, -10, 1.6), (12, -14, 2.0), (-12, -2, 1.3), (22, 2, 1.8), (-2, -30, 1.2), (8, -48, 1.5), (-10, 52, 1.7), (24, 44, 1.4)]
-for x, y, r in ROCKS:
+if REAL:   # RK01 大苔石（真模型）；另外在路邊、根旁多擺一些小的
+    _rk = append(S_ + 'props_lib.blend', lambda nm: nm.startswith('RK01_Boulder'), (0, 0), 0)
+    _rkc = []
+    for _o in _rk:
+        _c = bpy.data.collections.new('C_' + _o.name)
+        for _u in list(_o.users_collection):
+            _u.objects.unlink(_o)
+        _c.objects.link(_o)
+        _o.location = (0, 0, 0)
+        _rkc.append(_c)
+    _RR = random.Random(71)
+    _rocks = list(ROCKS) + [(_RR.uniform(-40, 40), _RR.uniform(-95, 110), _RR.uniform(.4, 1.1)) for _ in range(70)]
+    for x, y, r in _rocks:
+        if path_d(x, y) < 1.8 or math.hypot(x - PIT[0], y - PIT[1]) < 6 or math.hypot(x - ALT[0], y - ALT[1]) < 6:
+            continue
+        e = bpy.data.objects.new('Rock', None)
+        e.instance_type = 'COLLECTION'
+        e.instance_collection = _rkc[0 if r > 1.7 else 1 if r > 1.3 else 2 if r > .9 else 3] if _RR.random() < .8 else _RR.choice(_rkc)
+        s_ = r / 1.2
+        e.scale = (s_, s_, s_ * _RR.uniform(.8, 1.1))
+        e.rotation_euler.z = _RR.uniform(0, 6.283)
+        e.location = (x, y, gh(x, y) - .12 * s_)
+        sc.collection.objects.link(e)
+        _nrk = globals().get('_nrk', 0) + 1
+        globals()['_nrk'] = _nrk
+    print('ROCKS', globals().get('_nrk', 0), [len(c_.objects) for c_ in _rkc])
+    # 設定圖裡各鏡頭前景的大苔石（手擺）
+    HERO = [(5.5, -1.5, 1.8, 1), (12.5, -6.5, 1.3, 2), (21, -5.5, 1.3, 2), (-3.5, -8, 1.3, 1), (5, -89, 1.4, 2), (-5, 96, 1.3, 2)]
+    for x, y, r, ci in HERO:
+        e = bpy.data.objects.new('HeroRock', None)
+        e.instance_type = 'COLLECTION'
+        e.instance_collection = _rkc[ci]
+        e.scale = (r / 1.2,) * 3
+        e.rotation_euler.z = _RR.uniform(0, 6.283)
+        e.location = (x, y, gh(x, y) - .35 * r / 1.2)
+        sc.collection.objects.link(e)
+    globals()['_HERO'] = HERO
+else:
+  for x, y, r in ROCKS:
     blob((x, y, gh(x, y) + r * .2), r, M_ROCK, sq=(1.2, 1, .7))
     blob((x, y, gh(x, y) + r * .55), r * .8, M_MOSS, sq=(1.2, 1, .35))
 WALLS = [((22, 4), (30, 16)), ((-14, 4), (-22, -6)), ((-36, 20), (-46, 30))]
@@ -787,6 +829,8 @@ if 'real' in argv:
         x, y = PR.uniform(-70, 70), PR.uniform(-105, 125)
         pdist = path_d(x, y)
         near = min([math.hypot(x - cx, y - cy) for cx, cy in _CAMS] + [math.hypot(x - ARCH_N[0], y - ARCH_N[1]) * .8, math.hypot(x - ARCH_S[0], y - ARCH_S[1]) * .8])
+        if any(math.hypot(x - hx, y - hy) < hr * .9 for hx, hy, hr, _ in globals().get('_HERO', [])):
+            continue
         if pdist < 2.6 or math.hypot(x - PIT[0], y - PIT[1]) < 5.4 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
         # 密度降低、成叢成片：用低頻雜訊做出有草的區塊和空地
