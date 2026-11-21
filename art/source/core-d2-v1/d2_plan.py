@@ -387,8 +387,8 @@ def mossify(m, amount=1.0, lift=1.0, furrow=False):
     nt.links.new(geo.outputs['Position'], mn.inputs['Vector'])
     mc = nt.nodes.new('ShaderNodeValToRGB')
     mc.color_ramp.elements[0].position, mc.color_ramp.elements[1].position = .3, .75
-    mc.color_ramp.elements[0].color = (.030, .042, .012, 1)   # 橄欖色、斑駁（不要像綠漆）
-    mc.color_ramp.elements[1].color = (.11, .13, .045, 1)
+    mc.color_ramp.elements[0].color = (.040, .050, .013, 1)   # 橄欖色、斑駁（不要像綠漆）；設定圖 v2 偏黃橄欖
+    mc.color_ramp.elements[1].color = (.17, .18, .048, 1)
     nt.links.new(mn.outputs['Fac'], mc.inputs[0])
     mx = nt.nodes.new('ShaderNodeMixRGB')
     nt.links.new(mr.outputs[0], mx.inputs[0])
@@ -400,10 +400,10 @@ def mossify(m, amount=1.0, lift=1.0, furrow=False):
     ln.inputs['Detail'].default_value = 10
     nt.links.new(geo.outputs['Position'], ln.inputs['Vector'])
     lr = nt.nodes.new('ShaderNodeMapRange')
-    lr.inputs['From Min'].default_value, lr.inputs['From Max'].default_value = .62, .70
+    lr.inputs['From Min'].default_value, lr.inputs['From Max'].default_value = .66, .74
     nt.links.new(ln.outputs['Fac'], lr.inputs['Value'])
     lmx = nt.nodes.new('ShaderNodeMixRGB')
-    lmx.inputs[2].default_value = (.42, .44, .38, 1)
+    lmx.inputs[2].default_value = (.30, .31, .27, 1)
     lf = nt.nodes.new('ShaderNodeMath')
     lf.operation = 'MULTIPLY'
     lf.inputs[1].default_value = .6
@@ -413,18 +413,39 @@ def mossify(m, amount=1.0, lift=1.0, furrow=False):
     nt.links.new(lmx.outputs[0], b.inputs['Base Color'])
     if furrow:   # 粗樹皮溝紋（只給神木；拱門用了會變成一格格蛇皮）：沿著樹幹往上拉長的深溝（設定圖神木的樹皮）
         fv = nt.nodes.new('ShaderNodeMapping')
-        fv.inputs['Scale'].default_value = (2.2, 2.2, .35)
+        fv.inputs['Scale'].default_value = (1.6, 1.6, .22)
         nt.links.new(geo.outputs['Position'], fv.inputs['Vector'])
-        vo = nt.nodes.new('ShaderNodeTexVoronoi')
-        vo.feature = 'DISTANCE_TO_EDGE'
-        vo.inputs['Scale'].default_value = 1.0
-        nt.links.new(fv.outputs['Vector'], vo.inputs['Vector'])
+        # 拉長的雜訊取 |fac-.5| 當「離溝多遠」：彎彎曲曲、粗細不一的縱溝（Voronoi 會變成黑色多邊形格線）
+        _fn = nt.nodes.new('ShaderNodeTexNoise')
+        _fn.inputs['Scale'].default_value = 1.3
+        _fn.inputs['Detail'].default_value = 5
+        _fn.inputs['Roughness'].default_value = .55
+        _fn.inputs['Distortion'].default_value = .4
+        nt.links.new(fv.outputs['Vector'], _fn.inputs['Vector'])
+        _fs = nt.nodes.new('ShaderNodeMath'); _fs.operation = 'SUBTRACT'; _fs.inputs[1].default_value = .5
+        nt.links.new(_fn.outputs['Fac'], _fs.inputs[0])
+        _fa = nt.nodes.new('ShaderNodeMath'); _fa.operation = 'ABSOLUTE'
+        nt.links.new(_fs.outputs[0], _fa.inputs[0])
+
+        class _VO:   # 跟原本 vo.outputs['Distance'] 同介面
+            outputs = {'Distance': _fa.outputs[0]}
+        vo = _VO
         fr = nt.nodes.new('ShaderNodeMapRange')
-        fr.inputs['From Min'].default_value, fr.inputs['From Max'].default_value = .0, .12
+        fr.inputs['From Min'].default_value, fr.inputs['From Max'].default_value = .0, .09
         nt.links.new(vo.outputs['Distance'], fr.inputs['Value'])
+        # 只在直立的樹幹面上有縱溝；橫躺的板根、朝上的面不要（不然變一格格）
+        _ab = nt.nodes.new('ShaderNodeMath'); _ab.operation = 'ABSOLUTE'
+        nt.links.new(sep.outputs['Z'], _ab.inputs[0])
+        vert = nt.nodes.new('ShaderNodeMapRange')
+        vert.inputs['From Min'].default_value, vert.inputs['From Max'].default_value = .25, .6
+        vert.inputs['To Min'].default_value, vert.inputs['To Max'].default_value = 1.0, 0.0
+        nt.links.new(_ab.outputs[0], vert.inputs['Value'])
+        _fm = nt.nodes.new('ShaderNodeMath'); _fm.operation = 'MULTIPLY'
+        nt.links.new(fr.outputs[0], _fm.inputs[0]); nt.links.new(vert.outputs[0], _fm.inputs[1])
+        fr = _fm
         bp2 = nt.nodes.new('ShaderNodeBump')
-        bp2.inputs['Strength'].default_value = 1.4
-        bp2.inputs['Distance'].default_value = .08
+        bp2.inputs['Strength'].default_value = 2.2
+        bp2.inputs['Distance'].default_value = .18
         nt.links.new(fr.outputs[0], bp2.inputs['Height'])
         if b.inputs['Normal'].links:
             nt.links.new(b.inputs['Normal'].links[0].from_socket, bp2.inputs['Normal'])
@@ -432,14 +453,30 @@ def mossify(m, amount=1.0, lift=1.0, furrow=False):
         gd = nt.nodes.new('ShaderNodeMixRGB')   # 溝裡較暗
         gd.blend_type = 'MULTIPLY'
         ginv = nt.nodes.new('ShaderNodeMapRange')
-        nt.links.new(vo.outputs['Distance'], ginv.inputs['Value'])
+        _iv = nt.nodes.new('ShaderNodeMath'); _iv.operation = 'MULTIPLY_ADD'   # 距離 + (1 - 直立度)：非直立面不加暗溝
+        _iv.inputs[1].default_value = -1.0
+        nt.links.new(vert.outputs[0], _iv.inputs[0])
+        _iv2 = nt.nodes.new('ShaderNodeMath'); _iv2.operation = 'ADD'
+        _iv.inputs[2].default_value = 1.0
+        nt.links.new(_iv.outputs[0], _iv2.inputs[0]); nt.links.new(vo.outputs['Distance'], _iv2.inputs[1])
+        nt.links.new(_iv2.outputs[0], ginv.inputs['Value'])
         ginv.inputs['From Min'].default_value, ginv.inputs['From Max'].default_value = .0, .06
-        ginv.inputs['To Min'].default_value, ginv.inputs['To Max'].default_value = .55, 1.0
+        ginv.inputs['To Min'].default_value, ginv.inputs['To Max'].default_value = .5, 1.0
         nt.links.new(ginv.outputs[0], gd.inputs[2])
         gd.inputs[0].default_value = 1
         nt.links.new(lmx.outputs[0], gd.inputs[1])
         nt.links.new(gd.outputs[0], b.inputs['Base Color'])
-    # 苔的地方比較霧面、凸一點
+    # 苔的地方凸一點、帶絨毛顆粒（苔的範圍 mr × 細雜訊 當高度）
+    _mh = nt.nodes.new('ShaderNodeMath'); _mh.operation = 'MULTIPLY'
+    nt.links.new(mr.outputs[0], _mh.inputs[0]); nt.links.new(mn.outputs['Fac'], _mh.inputs[1])
+    _mbp = nt.nodes.new('ShaderNodeBump')
+    _mbp.inputs['Strength'].default_value = .8
+    _mbp.inputs['Distance'].default_value = .04
+    nt.links.new(_mh.outputs[0], _mbp.inputs['Height'])
+    if b.inputs['Normal'].links:
+        nt.links.new(b.inputs['Normal'].links[0].from_socket, _mbp.inputs['Normal'])
+    nt.links.new(_mbp.outputs['Normal'], b.inputs['Normal'])
+    # 苔的地方比較霧面
     if not b.inputs['Roughness'].links:
         b.inputs['Roughness'].default_value = max(b.inputs['Roughness'].default_value, .8)
 
@@ -499,7 +536,7 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
         if o.type == 'MESH' and not any(k_ in o.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown')):
             print('MOSS', o.name)
             for sl in o.material_slots:
-                mossify(sl.material, 1.6, 1.6, furrow=True)   # 設定圖 v2：苔是厚厚一層
+                mossify(sl.material, 1.0, 1.35, furrow=True)   # 厚苔改用真的苔墊；樹皮本身維持深棕（V3 原本整片發灰綠）
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
@@ -747,7 +784,7 @@ if 'real' in argv:   # 區塊外（鄰近區塊）的林子也種上，遠景才
         x, y = FR.uniform(-172, 172), FR.uniform(-172, 172)
         if max(abs(x), abs(y)) < 126 or path_d(x, y) < 5 or (x > 40 and -10 < y < 50) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < 20:
             continue
-        if any(math.hypot(x - a_, y - b_) < 10 for a_, b_ in extra):
+        if any(math.hypot(x - a_, y - b_) < 14 for a_, b_ in extra):   # 疏一點：俯瞰要看得到樹幹和林間白霧
             continue
         extra.append((x, y))
         KIND[FR.choice('PPBMMG')](x, y, FR.uniform(.85, 1.15))
@@ -866,6 +903,11 @@ if 'real' in argv:
         if any(math.hypot(x - hx, y - hy) < hr * 1.3 for hx, hy, hr, _ in globals().get('_HERO', [])) or any(math.hypot(x - hx, y - hy) < hr * 1.1 for hx, hy, hr in globals().get('_ALLROCK', [])):
             continue
         if pdist < 3.0 or math.hypot(x - PIT[0], y - PIT[1]) < 5.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
+            continue
+        # V3 相機到坑之間是一片矮地（設定圖 V3 看得到坑），不長高的蕨
+        _ax, _ay, _bx, _by = 4, -15, PIT[0], PIT[1]
+        _t = max(0, min(1, ((x - _ax) * (_bx - _ax) + (y - _ay) * (_by - _ay)) / ((_bx - _ax) ** 2 + (_by - _ay) ** 2)))
+        if _t > .35 and math.hypot(x - _ax - _t * (_bx - _ax), y - _ay - _t * (_by - _ay)) < 3.0:
             continue
         # 密度降低、成叢成片：用低頻雜訊做出有草的區塊和空地
         patch = .5 + .5 * noise.noise(Vector((x * .09, y * .09, 4.4)))
@@ -1013,6 +1055,107 @@ if 'real' in argv:
                 continue
             _inst(SR.choice(MOSS), x, y, SR.uniform(.7, 1.6), -.02)
             nmo += 1
+    # 厚苔（設定圖 v2）：真的有厚度的苔墊，鋪在神木根部、長根、拱門朝上的面
+    import numpy as _np
+
+    def _moss_on(objs, n, zmax=None, smin=.35, smax=.8, seed=5):
+        rr_ = random.Random(seed)
+        pts = []
+        for o_, mw_ in objs:
+            me_ = o_.data
+            npo = len(me_.polygons)
+            if npo == 0:
+                continue
+            ce = _np.zeros(npo * 3); nr = _np.zeros(npo * 3); ar = _np.zeros(npo)
+            me_.polygons.foreach_get('center', ce); me_.polygons.foreach_get('normal', nr); me_.polygons.foreach_get('area', ar)
+            ce = ce.reshape(-1, 3); nr = nr.reshape(-1, 3)
+            for i_ in rr_.sample(range(npo), min(npo, 4000)):
+                p_ = mw_ @ Vector(ce[i_])
+                q_ = (mw_.to_3x3() @ Vector(nr[i_])).normalized()
+                if q_.z < .5 or (zmax is not None and p_.z - gh(p_.x, p_.y) > zmax):
+                    continue
+                if path_d(p_.x, p_.y) < 1.2:
+                    continue
+                pts.append((p_, q_))
+        rr_.shuffle(pts)
+        for p_, q_ in pts[:n]:
+            e = bpy.data.objects.new('MossPad', None)
+            e.instance_type = 'COLLECTION'
+            e.instance_collection = rr_.choice(MOSSP)
+            s_ = rr_.uniform(smin, smax)
+            rot = q_.to_track_quat('Z', 'Y') @ Matrix.Rotation(rr_.uniform(0, 6.283), 4, 'Z').to_quaternion()
+            e.rotation_mode = 'QUATERNION'
+            e.rotation_quaternion = rot
+            e.scale = (s_, s_, s_ * rr_.uniform(.8, 1.2))
+            e.location = p_ - q_ * .03
+            sc.collection.objects.link(e)
+        return min(n, len(pts))
+    # 樹上的苔墊：設定圖是受光的黃橄欖色、厚厚一團，比地上的苔亮
+    # 苔墊本體：實心、一團團隆起的苔枕（不是一層細毛）；表面用細碎凹凸做出絨毛感，邊緣貼合樹皮
+    mmossp = bpy.data.materials.new('UG22_BarkMoss')
+    mmossp.use_nodes = True
+    _mt = mmossp.node_tree
+    _mb = next(x_ for x_ in _mt.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _mp = _mt.nodes.new('ShaderNodeNewGeometry')
+    _mn1 = _mt.nodes.new('ShaderNodeTexNoise'); _mn1.inputs['Scale'].default_value = 3.0; _mn1.inputs['Detail'].default_value = 4
+    _mt.links.new(_mp.outputs['Position'], _mn1.inputs['Vector'])
+    _mcr = _mt.nodes.new('ShaderNodeValToRGB')
+    _mcr.color_ramp.elements[0].position, _mcr.color_ramp.elements[1].position = .3, .72
+    _mcr.color_ramp.elements[0].color = (.045, .055, .014, 1)
+    _mcr.color_ramp.elements[1].color = (.20, .21, .055, 1)   # 受光處偏黃橄欖（設定圖）
+    _mt.links.new(_mn1.outputs['Fac'], _mcr.inputs[0])
+    _mao = _mt.nodes.new('ShaderNodeAmbientOcclusion'); _mao.inputs['Distance'].default_value = .15
+    _mmx = _mt.nodes.new('ShaderNodeMixRGB'); _mmx.blend_type = 'MULTIPLY'; _mmx.inputs[0].default_value = .7
+    _mt.links.new(_mcr.outputs[0], _mmx.inputs[1]); _mt.links.new(_mao.outputs['AO'], _mmx.inputs[2])
+    _mt.links.new(_mmx.outputs[0], _mb.inputs['Base Color'])
+    _mb.inputs['Roughness'].default_value = .95
+    _mn2 = _mt.nodes.new('ShaderNodeTexNoise'); _mn2.inputs['Scale'].default_value = 140; _mn2.inputs['Detail'].default_value = 2
+    _mt.links.new(_mp.outputs['Position'], _mn2.inputs['Vector'])
+    _mbp = _mt.nodes.new('ShaderNodeBump'); _mbp.inputs['Strength'].default_value = .9; _mbp.inputs['Distance'].default_value = .01
+    _mt.links.new(_mn2.outputs['Fac'], _mbp.inputs['Height'])
+    _mt.links.new(_mbp.outputs['Normal'], _mb.inputs['Normal'])
+    try:
+        _mb.inputs['Sheen Weight'].default_value = .6
+        _mb.inputs['Sheen Tint'].default_value = (.5, .6, .3, 1)
+    except KeyError:
+        pass
+
+    def _cushion(i):
+        bm_ = bmesh.new()
+        bmesh.ops.create_icosphere(bm_, subdivisions=4, radius=1)
+        rr_ = random.Random(300 + i)
+        k1 = rr_.uniform(.7, 1.2)
+        off = Vector((i * 5.3, 1.7, 0))
+        for v in bm_.verts:
+            c = v.co.copy()
+            lump = noise.noise(c * 2.2 + off) * .22 + noise.noise(c * 5 + off) * .06
+            r = 1 + lump
+            z = c.z * .38 * (1 + lump * 1.5)
+            if z < -.06:   # 底面壓平、稍微埋進樹皮
+                z = -.06 - (-.06 - z) * .1
+            v.co = Vector((c.x * k1 * r, c.y * r, z))
+        me_ = bpy.data.meshes.new(f'MP{i}')
+        bm_.to_mesh(me_)
+        bm_.free()
+        for p in me_.polygons:
+            p.use_smooth = True
+        me_.materials.append(mmossp)
+        sc.collection.objects.link(bpy.data.objects.new(f'MP{i}', me_))
+    MOSSP = [_template(f'MP{i}', lambda i=i: _cushion(i)) for i in range(5)]
+    _gt_bark = [(o_, o_.matrix_world) for o_ in _GTO if o_.type == 'MESH' and not any(k_ in o_.name for k_ in ('Leaf', 'Leaves', 'Twig', 'Crown'))]
+    _arch_m = [(o_, o_.matrix_world) for o_ in (_ARS + [a_ for a_ in _ARN if a_.type == 'MESH']) if o_.type == 'MESH']
+    bpy.context.view_layer.update()
+    _root_m = []
+    for e_ in list(sc.collection.objects):
+        if e_.name.startswith('Root') and e_.instance_type == 'COLLECTION' and e_.instance_collection:
+            for o_ in e_.instance_collection.objects:
+                if o_.type == 'MESH':
+                    _root_m.append((o_, e_.matrix_world @ o_.matrix_world))
+    bpy.context.view_layer.update()
+    # 試過實心苔枕（11/21）：看起來像黏上去的塑膠塊，比材質苔差 → 不放，改加強 mossify 的苔（顏色、絨毛凹凸）
+    if 'mosspad' in argv:
+        print('MOSSPAD', _moss_on(_gt_bark, 900, zmax=9, smin=.3, smax=.75, seed=5),
+              _moss_on(_arch_m, 500, smin=.2, smax=.45, seed=6), _moss_on(_root_m, 700, smin=.25, smax=.55, seed=7))
     for cx, cy in _CAMS:   # 路邊一塊塊苔
         for _ in range(60):
             x, y = cx + SR.uniform(-16, 16), cy + SR.uniform(-16, 16)
@@ -1137,6 +1280,21 @@ for nd in list(nt.nodes):
 vs = nt.nodes.new('ShaderNodeVolumePrincipled')
 vs.inputs['Density'].default_value = .003 if 'real' in argv else .005
 vs.inputs['Color'].default_value = (.95, .96, .98, 1)
+if 'real' in argv:   # 空地裡霧薄（神木看得清楚、像設定圖），離開空地 15–45 m 漸漸變回林間的霧
+    _g = nt.nodes.new('ShaderNodeNewGeometry')
+    _vm = nt.nodes.new('ShaderNodeVectorMath'); _vm.operation = 'SUBTRACT'
+    _vm.inputs[1].default_value = (-9, 16, 0)
+    nt.links.new(_g.outputs['Position'], _vm.inputs[0])
+    _sx = nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(_vm.outputs[0], _sx.inputs[0])
+    _cx = nt.nodes.new('ShaderNodeCombineXYZ')
+    nt.links.new(_sx.outputs['X'], _cx.inputs['X']); nt.links.new(_sx.outputs['Y'], _cx.inputs['Y'])
+    _ln = nt.nodes.new('ShaderNodeVectorMath'); _ln.operation = 'LENGTH'
+    nt.links.new(_cx.outputs[0], _ln.inputs[0])
+    _dm = nt.nodes.new('ShaderNodeMapRange')
+    _dm.inputs['From Min'].default_value, _dm.inputs['From Max'].default_value = 15, 45
+    _dm.inputs['To Min'].default_value, _dm.inputs['To Max'].default_value = .0008, .003
+    nt.links.new(_ln.outputs['Value'], _dm.inputs['Value'])
+    nt.links.new(_dm.outputs[0], vs.inputs['Density'])
 nt.links.new(vs.outputs['Volume'], next(nd for nd in nt.nodes if nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
 fog.data.materials.append(fm)
 
@@ -1155,7 +1313,7 @@ sc.cycles.volume_step_rate = 4
 sc.view_settings.view_transform = 'AgX'
 if 'real' in argv:   # 神木樹冠底下太暗：從南邊打一盞大面積的柔光，像霧裡反射回來的天光
     _fl = bpy.data.lights.new('TrunkFill', 'AREA')
-    _fl.energy = 6000
+    _fl.energy = 5000
     _fl.size = 50
     _fl.color = (1.0, .96, .9)
     _flo = bpy.data.objects.new('TrunkFill', _fl)
@@ -1176,11 +1334,13 @@ sc.render.resolution_x, sc.render.resolution_y = 1536, 1024
 SHOTS = {
     'V1': ((70, -105, 62), (-6, 18, 0), 24, '俯瞰全景（東南高處）'),
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
-    'V3': ((6, -13, 1.9), (1, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
+    'V3': ((4, -15, 1.9), (6, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
     'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
     'V5': ((-6, 12, 2.2), (6, -30, 1.8), 20, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
 }
+if ONLY and 'VM' in ONLY:   # 檢查用：神木根部近拍（看苔墊）
+    SHOTS['VM'] = ((-10, 14, 2.2), (-22, 28, 1.0), 28, '神木根部近拍')
 for k, (loc, tgt, lens, _) in SHOTS.items():
     if ONLY and k not in ONLY:
         continue
