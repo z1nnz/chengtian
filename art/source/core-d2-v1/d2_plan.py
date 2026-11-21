@@ -213,11 +213,11 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     mz.inputs['Detail'].default_value = 4
     nt.links.new(tc.outputs['Object'], mz.inputs['Vector'])
     mrz = nt.nodes.new('ShaderNodeMapRange')
-    mrz.inputs['From Min'].default_value, mrz.inputs['From Max'].default_value = .36, .58
+    mrz.inputs['From Min'].default_value, mrz.inputs['From Max'].default_value = .30, .50
     nt.links.new(mz.outputs['Fac'], mrz.inputs['Value'])
     tintA = nt.nodes.new('ShaderNodeMixRGB')
-    tintA.inputs[1].default_value = (.40, .40, .30, 1)    # 濕腐葉（深、偏褐，森林地面，不是枯草原）
-    tintA.inputs[2].default_value = (.20, .34, .10, 1)    # 苔綠
+    tintA.inputs[1].default_value = (.30, .27, .21, 1)    # 濕腐葉（深、偏褐，森林地面，不是枯草原）
+    tintA.inputs[2].default_value = (.16, .26, .08, 1)    # 苔綠
     nt.links.new(mrz.outputs[0], tintA.inputs[0])
     lf = nt.nodes.new('ShaderNodeMixRGB')
     lf.blend_type = 'MULTIPLY'
@@ -825,18 +825,38 @@ if 'real' in argv:
         if nug >= 40000:
             break
     print('UNDERGROWTH', nug)
+    GC = UG['clover'] + UG['rosette'] + UG['heart'][:1] + UG['grass'][:2]
+    GW = [5] * len(UG['clover']) + [2] * len(UG['rosette']) + [2] + [1, 1]
+    GR = random.Random(57)
+    ngc = 0
+    for cx, cy in _CAMS + [ARCH_S, ARCH_N, PIT, ALT, TREE]:
+        for i in range(5200):
+            a_, r_ = GR.uniform(0, 6.283), 32 * GR.random() ** .6
+            x, y = cx + math.cos(a_) * r_, cy + math.sin(a_) * r_
+            if path_d(x, y) < 1.9 or math.hypot(x - PIT[0], y - PIT[1]) < 4.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.0:
+                continue
+            e = bpy.data.objects.new('GC', None)
+            e.instance_type = 'COLLECTION'
+            e.instance_collection = GR.choices(GC, GW)[0]
+            s_ = GR.uniform(.35, .8)
+            e.scale = (s_, s_, s_ * GR.uniform(.6, 1.0))
+            e.rotation_euler.z = GR.uniform(0, 6.283)
+            e.location = (x, y, gh(x, y) - .02)
+            sc.collection.objects.link(e)
+            ngc += 1
+    print('GROUNDCOVER', ngc)
     # 路上的積水小窪、落葉（設定圖每一張路面都有）
     litter_mat = _leaf_material('Litter', (.55, .5, .45, 1), (.85, .8, .72, 1), (.9, .85, .7, 1), gloss=.6)
     LR = random.Random(41)
 
     def _lit_place():
         cx, cy = LR.choice(_CAMS + [ARCH_S, ARCH_N, PIT, ALT])
-        a_, r_ = LR.uniform(0, 6.283), 14 * LR.random() ** .7
+        a_, r_ = LR.uniform(0, 6.283), 24 * LR.random() ** .7
         x, y = cx + math.cos(a_) * r_, cy + math.sin(a_) * r_
         if math.hypot(x - PIT[0], y - PIT[1]) < 3.6:
             return None
         return (x, y), gh(x, y)
-    litter('PathLitter', LR, 30000, _lit_place, litter_mat)
+    litter('PathLitter', LR, 70000, _lit_place, litter_mat)
     pw = bpy.data.materials.new('Puddle')
     pw.use_nodes = True
     _pb = next(x_ for x_ in pw.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED')
