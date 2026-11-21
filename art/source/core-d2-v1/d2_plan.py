@@ -959,6 +959,129 @@ if 'real' in argv:
         npd += 1
     print('PUDDLES', npd)
 
+    # ---------------- 小件：蕈叢、苔丘、小石頭、拱門垂藤 ----------------
+    SR = random.Random(83)
+
+    def _template(nm, build):
+        before = set(bpy.data.objects)
+        build()
+        col = bpy.data.collections.new(nm)
+        for o in set(bpy.data.objects) - before:
+            for u in list(o.users_collection):
+                u.objects.unlink(o)
+            col.objects.link(o)
+        return col
+
+    def _inst(col, x, y, s, z_off=0.0, rz=None):
+        e = bpy.data.objects.new('Small', None)
+        e.instance_type = 'COLLECTION'
+        e.instance_collection = col
+        e.scale = (s, s, s)
+        e.rotation_euler.z = SR.uniform(0, 6.283) if rz is None else rz
+        e.location = (x, y, gh(x, y) + z_off)
+        sc.collection.objects.link(e)
+
+    # 蕈叢：4 種（褐、淺茶、橘褐、小白），長在石頭邊、根邊、倒木旁
+    mmat = mushroom_material()
+    MUSH = [_template(f'MU{i}', lambda i=i: mushrooms(f'MU{i}', Vector((0, 0, 0)), random.Random(90 + i), SR.randint(4, 11),
+                                                       [1.3, 1.0, 1.6, .8][i], mmat, cap=[(.30, .17, .08), (.48, .36, .22), (.42, .20, .07), (.70, .66, .58)][i]))
+            for i in range(4)]
+    anchors = [(x, y, r) for x, y, r in globals().get('_ALLROCK', [])] + [(hx, hy, hr) for hx, hy, hr, _ in globals().get('_HERO', [])]
+    for a, b in ROOTS:
+        for s in (.35, .6, .85):
+            anchors.append((a[0] + (b[0] - a[0]) * s, a[1] + (b[1] - a[1]) * s, .6))
+    nmu = 0
+    for x0, y0, r0_ in anchors:
+        for _ in range(SR.randint(0, 3)):
+            ang = SR.uniform(0, 6.283)
+            x, y = x0 + math.cos(ang) * (r0_ * .55 + SR.uniform(.1, .5)), y0 + math.sin(ang) * (r0_ * .55 + SR.uniform(.1, .5))
+            if path_d(x, y) < 1.6:
+                continue
+            _inst(SR.choice(MUSH), x, y, SR.uniform(1.8, 3.0))
+            nmu += 1
+    # 苔丘：毛茸茸的短苔，貼著石頭腳、根腳、路邊
+    mmoss = _leaf_material('UG20_Moss', (.035, .06, .014, 1), (.12, .16, .045, 1), (.13, .17, .05, 1), gloss=.8)
+    _fbf = lambda p, s, o: noise.fractal(Vector(p) * s, .5, 2.0, o)
+    MOSS = [_template(f'MO{i}', lambda i=i: moss_tufts(f'MO{i}', [(i, 0, 0, [.45, .7, .35, .9][i], [.35, .5, .3, .55][i], [.08, .12, .06, .1][i], -.01)],
+                                                      random.Random(70 + i), mmoss, _fbf, density=4200)) for i in range(4)]
+    nmo = 0
+    for x0, y0, r0_ in anchors:
+        for _ in range(SR.randint(1, 4)):
+            ang = SR.uniform(0, 6.283)
+            x, y = x0 + math.cos(ang) * (r0_ * .5 + SR.uniform(0, .4)), y0 + math.sin(ang) * (r0_ * .5 + SR.uniform(0, .4))
+            if path_d(x, y) < 1.4:
+                continue
+            _inst(SR.choice(MOSS), x, y, SR.uniform(.7, 1.6), -.02)
+            nmo += 1
+    for cx, cy in _CAMS:   # 路邊一塊塊苔
+        for _ in range(60):
+            x, y = cx + SR.uniform(-16, 16), cy + SR.uniform(-16, 16)
+            pd_ = path_d(x, y)
+            if 1.6 < pd_ < 4.5:
+                _inst(SR.choice(MOSS), x, y, SR.uniform(.6, 1.4), -.02)
+                nmo += 1
+    # 小石頭：深灰褐、半埋，路面和路邊最多
+    stm = bpy.data.materials.new('SmallStone')
+    stm.use_nodes = True
+    _sb = next(x_ for x_ in stm.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _sb.inputs['Base Color'].default_value = (.085, .08, .07, 1)
+    _sb.inputs['Roughness'].default_value = .75
+
+    def _stone(i):
+        bm_ = bmesh.new()
+        bmesh.ops.create_icosphere(bm_, subdivisions=2, radius=1)
+        rr_ = random.Random(i)
+        k1, k2 = rr_.uniform(.7, 1.3), rr_.uniform(.35, .6)
+        for v in bm_.verts:
+            v.co = Vector((v.co.x * k1, v.co.y, v.co.z * k2)) * (1 + .18 * noise.noise(v.co * 1.7 + Vector((i * 3, 0, 0))))
+        me_ = bpy.data.meshes.new(f'ST{i}')
+        bm_.to_mesh(me_)
+        bm_.free()
+        for p in me_.polygons:
+            p.use_smooth = True
+        me_.materials.append(stm)
+        sc.collection.objects.link(bpy.data.objects.new(f'ST{i}', me_))
+    STN = [_template(f'STC{i}', lambda i=i: _stone(i)) for i in range(5)]
+    nst = 0
+    for cx, cy in _CAMS + [ARCH_S, ARCH_N]:
+        for _ in range(260):
+            x, y = cx + SR.uniform(-18, 18), cy + SR.uniform(-18, 18)
+            pd_ = path_d(x, y)
+            if pd_ < 3.5 and SR.random() < (.9 if pd_ < 1.5 else .5):
+                _inst(SR.choice(STN), x, y, SR.uniform(.04, .16), -.03)
+                nst += 1
+    # 拱門垂藤：從拱頂內側垂下的細藤，帶小葉（設定圖 V2、V6）
+    vmat = _leaf_material('UG21_Vine', (.04, .07, .02, 1), (.10, .15, .045, 1), (.12, .17, .06, 1), gloss=.5)
+    nvine = 0
+    for arch in (_ARS + [o_ for o_ in _ARN if o_.type == 'MESH']):
+        if arch.type != 'MESH' or len(arch.data.vertices) < 20000:
+            continue
+        mw = arch.matrix_world
+        _vv = arch.data.vertices
+        ws = [mw @ _vv[i_].co for i_ in range(0, len(_vv), max(1, len(_vv) // 6000))]
+        zt = max(w.z for w in ws)
+        zb = min(w.z for w in ws)
+        cand = [w for w in ws if w.z > zb + (zt - zb) * .55]
+        vb = LeafBuf()
+        for k in range(26):
+            p0 = SR.choice(cand)
+            L_ = SR.uniform(.8, min(2.6, (p0.z - gh(p0.x, p0.y)) * .7))
+            n_ = int(L_ / .06)
+            for j in range(n_):
+                t_ = j / n_
+                q = p0 + Vector((math.sin(t_ * 4 + k) * .05, math.cos(t_ * 3 + k) * .05, -L_ * t_))
+                if j % 2 == 0:
+                    d = Vector((SR.uniform(-1, 1), SR.uniform(-1, 1), SR.uniform(-.6, .1)))
+                    d, side, nrm = _frame(d)
+                    Ll = SR.uniform(.025, .05) * (1 - .4 * t_)
+                    vb.leaf(q, d, side, nrm, Ll, Ll * .55, shape=lambda u: math.sin(math.pi * min(1, u)) ** .7, fold=.2, droop=.3,
+                            tint=(1, 1, 1), nu=4, nv=2)
+            # 藤莖
+            vb.leaf(p0, Vector((0, 0, -1)), Vector((1, 0, 0)), Vector((0, 1, 0)), L_, .004, shape=lambda u: 1.0, fold=0, tint=(.5, .45, .35), nu=6, nv=1)
+            nvine += 1
+        vb.build(f'Vines_{arch.name}', vmat)
+    print('SMALL mush', nmu, 'moss', nmo, 'stones', nst, 'vines', nvine)
+
 # 1.75 m 人形尺（祭壇前）
 cyl((4, -6, gh(4, -6)), .22, .18, 1.75, mat('human', (.8, .1, .1))).hide_render = True
 

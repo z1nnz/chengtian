@@ -202,6 +202,20 @@ _bp.inputs['Strength'].default_value = .8
 _bp.inputs['Distance'].default_value = .03
 _nt.links.new(_n1.outputs['Fac'], _bp.inputs['Height'])
 _nt.links.new(_bp.outputs['Normal'], _b.inputs['Normal'])
+_ln = _nt.nodes.new('ShaderNodeTexNoise')   # 灰白地衣斑
+_ln.inputs['Scale'].default_value = 6
+_ln.inputs['Detail'].default_value = 8
+_nt.links.new(_geo.outputs['Position'], _ln.inputs['Vector'])
+_lr = _nt.nodes.new('ShaderNodeMapRange')
+_lr.inputs['From Min'].default_value, _lr.inputs['From Max'].default_value = .57, .7
+_lr.inputs['To Max'].default_value = .6
+_nt.links.new(_ln.outputs['Fac'], _lr.inputs['Value'])
+_lm = _nt.nodes.new('ShaderNodeMixRGB')
+_lm.inputs[2].default_value = (.27, .28, .25, 1)
+_nt.links.new(_lr.outputs[0], _lm.inputs[0])
+_src = _b.inputs['Base Color'].links[0].from_socket
+_nt.links.new(_src, _lm.inputs[1])
+_nt.links.new(_lm.outputs[0], _b.inputs['Base Color'])
 _b.inputs['Roughness'].default_value = .85
 for _l in list(_b.inputs['Roughness'].links):
     _nt.links.remove(_l)
@@ -221,6 +235,20 @@ for i, (nm, w, h) in enumerate(SIZES):
         p.y *= w / 2 * ky
         p.z = p.z * h * .62 + h * .12   # 下半埋進土裡（場景再往下壓）
         v.co = p
+    # 削幾刀：風化石有幾個平切面和稜角（不是圓饅頭）
+    for c_ in range(rr.randint(3, 5)):
+        a_ = rr.uniform(0, 6.283)
+        nrm_ = Vector((math.cos(a_), math.sin(a_), rr.uniform(-.1, .9))).normalized()
+        far = max(v.co.dot(nrm_) for v in bm.verts)
+        co_ = nrm_ * far * rr.uniform(.72, .88)
+        res = bmesh.ops.bisect_plane(bm, geom=list(bm.verts) + list(bm.edges) + list(bm.faces), plane_co=co_, plane_no=nrm_, clear_outer=True)
+        edges = [e for e in res['geom_cut'] if isinstance(e, bmesh.types.BMEdge)]
+        if edges:
+            try:
+                bmesh.ops.holes_fill(bm, edges=edges, sides=0)
+            except Exception:
+                pass
+    bmesh.ops.triangulate(bm, faces=[f_ for f_ in bm.faces if len(f_.verts) > 4])
     me = bpy.data.meshes.new(f'RK01_Boulder_{nm}')
     bm.to_mesh(me)
     bm.free()
