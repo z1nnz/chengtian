@@ -1037,6 +1037,8 @@ if 'real' in argv:   # 設定圖 V1：松樹比例高、樹冠之間看得到樹
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
+    if 'real' in argv and y < 10 and path_d(x, y) < 13:   # 11/22 z1nnz 選了試做版
+        continue   # 11/22 試做：V1 俯瞰前景那段路兩旁清出一條林間空帶，從上面看得到小路
     KIND[k](x, y, s)
 if 'real' in argv:   # V6 北入口兩側的近景大樹
     # 11/22 V6 框景：右邊近處一棵粗幹老樹、左邊近處一棵黃綠闊葉樹，把拱門框在中間（設定圖 V6）
@@ -1676,7 +1678,7 @@ if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光
     sc.view_settings.exposure = 1.0
     bg.inputs['Strength'].default_value = 3.4
     sun.energy = 1.2
-    if 'contrast' in argv:   # 11/22 試做：設定圖受光面和陰影對比較強 → 太陽加強、天光減弱、AgX 中高對比
+    if 'flat' not in argv:   # 11/22 z1nnz 選了試做版（預設開）：設定圖受光面和陰影對比較強 → 太陽加強、天光減弱、AgX 中高對比
         bg.inputs['Strength'].default_value = 2.6
         sun.energy = 2.6
         for _lk in ('AgX - Medium High Contrast', 'Medium High Contrast'):
