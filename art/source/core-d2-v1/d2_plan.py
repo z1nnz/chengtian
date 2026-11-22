@@ -813,6 +813,48 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         _dm.texture = bpy.data.textures.get('RootLumps') or bpy.data.textures.new('RootLumps', 'CLOUDS')
         _dm.texture.noise_scale = .35
         _dm.strength = .12; _dm.mid_level = .5; _dm.texture_coords = 'GLOBAL'
+    # 11/22 新物件：倒木與斷枝（設定圖 V5 左下一根灰白枯枝、V3 路邊零星斷枝）；全部貼地、下半截埋進土裡
+    _dwm = bpy.data.materials.new('DeadWood'); _dwm.use_nodes = True
+    _dn = _dwm.node_tree; _db = next(x_ for x_ in _dn.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _dtc = _dn.nodes.new('ShaderNodeTexCoord'); _dmp = _dn.nodes.new('ShaderNodeMapping'); _dmp.inputs['Scale'].default_value = (1 / .5, 1 / .5, 1 / .9)
+    _dn.links.new(_dtc.outputs['Object'], _dmp.inputs['Vector'])
+    _dti = _dn.nodes.new('ShaderNodeTexImage'); _dti.image = bpy.data.images.load('D:/chengtian/4-素材與快取/polyhaven-bark/bark_brown_02_diff_2k.png')
+    _dti.projection, _dti.projection_blend = 'BOX', .3; _dn.links.new(_dmp.outputs['Vector'], _dti.inputs['Vector'])
+    _dhs = _dn.nodes.new('ShaderNodeHueSaturation'); _dhs.inputs['Saturation'].default_value = .35; _dhs.inputs['Value'].default_value = 1.6   # 枯木灰白
+    _dn.links.new(_dti.outputs['Color'], _dhs.inputs['Color']); _dn.links.new(_dhs.outputs['Color'], _db.inputs['Base Color'])
+    _db.inputs['Roughness'].default_value = .9
+    mossify(_dwm, .7, 1.0)
+
+    def deadbranch(p0, ang, L, r0, seed):
+        rr_ = random.Random(seed)
+        d_ = Vector((math.cos(ang), math.sin(ang), 0))
+        sd_ = Vector((-d_.y, d_.x, 0))
+        segs = [(d_ * (L * t) + sd_ * (.25 * math.sin(t * 5 + seed)), r0 * (1 - .6 * t)) for t in (0, .25, .5, .75, 1)]
+        parts = [segs]
+        for _i in range(rr_.randint(2, 4)):   # 側枝：從主枝長出去，也躺在地上
+            t0 = rr_.uniform(.25, .85); b0 = d_ * (L * t0) + sd_ * (.25 * math.sin(t0 * 5 + seed))
+            ba = ang + rr_.choice((-1, 1)) * rr_.uniform(.5, 1.0); bl = rr_.uniform(.4, 1.2) * L * .4
+            bd = Vector((math.cos(ba), math.sin(ba), 0))
+            parts.append([(b0, r0 * .4), (b0 + bd * bl * .5, r0 * .3), (b0 + bd * bl, r0 * .12)])
+        for _k, pts_ in enumerate(parts):
+            cu_ = bpy.data.curves.new('DeadBranch', 'CURVE'); cu_.dimensions = '3D'; cu_.bevel_depth = 1.0; cu_.bevel_resolution = 4
+            cu_.use_fill_caps = True; cu_.resolution_u = 12
+            sp_ = cu_.splines.new('NURBS'); sp_.points.add(len(pts_) - 1)
+            for _j, (q_, r_) in enumerate(pts_):
+                w_ = Vector((p0[0], p0[1], 0)) + q_
+                sp_.points[_j].co = (w_.x, w_.y, gh(w_.x, w_.y) + r_ * .35, 1)   # 中心只比地面高 0.35 倍半徑 → 下半截在土裡
+                sp_.points[_j].radius = r_
+            sp_.use_endpoint_u = True; sp_.order_u = min(3, len(pts_))
+            cu_.materials.append(_dwm)
+            ob_ = bpy.data.objects.new('DeadBranch', cu_); sc.collection.objects.link(ob_)
+
+    _c3 = Vector((4, -15)); _f3 = Vector((2, 33)).normalized(); _r3 = Vector((_f3.y, -_f3.x))
+    _p = _c5 + _f5 * 3.2 + _r5 * -3.4   # V5 左下那根灰白枯枝（從左邊往路中間斜躺）
+    _dv = _f5 * .8 + _r5 * .6
+    deadbranch((_p.x, _p.y), math.atan2(_dv.y, _dv.x), 4.6, .17, 1)
+    for _fd, _rd, _ang, _L, _r0, _sd in ((7, -4.5, .4, 3.2, .12, 2), (9.5, 3.5, 2.6, 2.6, .1, 3), (12, -6.5, 1.2, 3.4, .13, 4), (5.5, 5.5, -.3, 2.2, .08, 5)):   # V3 路邊零星斷枝
+        _p = _c3 + _f3 * _fd + _r3 * _rd
+        deadbranch((_p.x, _p.y), _ang, _L, _r0, _sd)
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
