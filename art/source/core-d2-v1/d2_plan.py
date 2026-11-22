@@ -615,7 +615,7 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
     _bb = next(x for x in _bn.nodes if x.type == 'BSDF_PRINCIPLED')
     _btc = _bn.nodes.new('ShaderNodeTexCoord')
     _bmp = _bn.nodes.new('ShaderNodeMapping')
-    _bmp.inputs['Scale'].default_value = (1 / 1.1, 1 / 1.1, 1 / 2.0)   # 樹皮片沿樹幹拉長
+    _bmp.inputs['Scale'].default_value = (1 / 2.8, 1 / 2.8, 1 / 4.5)   # 11/22 第二步：樹皮板放大約 2.5 倍（跟 gt01_bark_detail.py 的幾何凹凸同一組）
     _bn.links.new(_btc.outputs['Object'], _bmp.inputs['Vector'])
 
     def _bim(fn, cs):
