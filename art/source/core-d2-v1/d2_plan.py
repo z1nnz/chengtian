@@ -694,11 +694,11 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
-def root_ridge(a, b, r0, r1, m=M_ROOT, force=False):
+def root_ridge(a, b, r0, r1, m=M_ROOT, force=False, tube=False):
     ax, ay = a; bx, by = b
     L = math.hypot(bx - ax, by - ay)
     N = max(3, int(L / 1.2))
-    if REAL and not globals().get('_ROOTCOLS') is None:   # RT01 掃描樹皮長根（roots_lib.blend）
+    if REAL and not tube and not globals().get('_ROOTCOLS') is None:   # RT01 掃描樹皮長根（roots_lib.blend）
         rc = globals()['_ROOTCOLS']
         L = math.hypot(bx - ax, by - ay)
         if not force and any(path_d(ax + (bx - ax) * s, ay + (by - ay) * s) < 2.2 for s in (.3, .5, .7, .9)):
@@ -783,7 +783,7 @@ for a, b in ROOTS:
     root_ridge(a, b, 1.5, .45)
 if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     for a, b, r in [((-1.5, 13), (5.5, -1), 1.1), ((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
-        root_ridge(a, b, r, .4, force=True)
+        root_ridge(a, b, r, .4, force=True, tube=True)   # 11/22 掃描根頭尾是切面、頂上一片平苔 → 改整條漸細的根
     # 11/22 V5 路右邊兩條交疊的大苔根（設定圖：從畫面右邊伸過來、往路邊斜下去鑽進土裡；前面那條壓在後面那條上）
     #   z1nnz「又翹起來了」：根要貼地、下半埋進土裡，不能斜斜翹在空中
     #   整條漸細的獨立模型（不是頭尾切面的掃描根）；點用 V5 鏡頭座標（往前 fd、往右 rd）
@@ -791,7 +791,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _v5m = _bkm.copy()
     _v5m.name = 'V5RootBark'
     next(x_ for x_ in _v5m.node_tree.nodes if x_.type == 'MAPPING').inputs['Scale'].default_value = (1 / .9, 1 / .9, 1 / 1.6)
-    mossify(_v5m, 1.1, 1.0)
+    mossify(_v5m, .75, 1.0)   # 苔少一點，看得到樹皮（不要像一塊草皮）
     for _k, (_pts, _r0, _r1) in enumerate((
             ([(3.6, 4.9, .38), (4.3, 3.4, .34), (5.1, 2.2, .24), (6.0, 1.4, -.12)], .58, .2),   # 近的、粗的：從畫面右下斜上去
             ([(6.8, 7.6, .32), (7.4, 5.6, .3), (8.4, 3.7, .2), (9.4, 2.4, -.1)], .45, .16))):   # 後面那條：從右邊較高處下來
@@ -802,8 +802,12 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             _p = _c5 + _f5 * _fd + _r5 * _rd
             _t = _j / (len(_pts) - 1)
             _rr = _r0 + (_r1 - _r0) * _t
-            _sp.points[_j].co = (_p.x, _p.y, gh(_p.x, _p.y) + _z, 1)
+            _sp.points[_j].co = (_p.x, _p.y, gh(_p.x, _p.y) + (_rr * .55 if _z > 0 else _z), 1)   # 圓的根躺在地上：露出上半圓多一點，不翹
             _sp.points[_j].radius = _rr
+            if _j < len(_pts) - 1:   # 11/22：根旁邊不長蕨（設定圖 V5 根整條露出來）→ 記下沿線取樣點
+                _q = _c5 + _f5 * _pts[_j + 1][0] + _r5 * _pts[_j + 1][1]
+                for _u in range(6):
+                    globals().setdefault('_V5RP', []).append(_p + (_q - _p) * (_u / 6))
         _sp.use_endpoint_u = True; _sp.order_u = 3
         _cu.materials.append(_v5m)
         _o = bpy.data.objects.new(f'V5Root{_k}', _cu); sc.collection.objects.link(_o)
@@ -1171,6 +1175,8 @@ if 'real' in argv:
         if any(math.hypot(x - hx, y - hy) < hr * 1.3 for hx, hy, hr, _ in globals().get('_HERO', [])) or any(math.hypot(x - hx, y - hy) < hr * 1.1 for hx, hy, hr in globals().get('_ALLROCK', [])):
             continue
         if pdist < 3.0 or math.hypot(x - PIT[0], y - PIT[1]) < 5.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
+            continue
+        if any(math.hypot(x - q_.x, y - q_.y) < 1.4 for q_ in globals().get('_V5RP', [])):
             continue
         # V3 相機到坑之間是一片矮地（設定圖 V3 看得到坑），不長高的蕨
         _ax, _ay, _bx, _by = 4, -15, PIT[0], PIT[1]
