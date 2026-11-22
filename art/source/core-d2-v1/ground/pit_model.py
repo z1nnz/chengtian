@@ -40,6 +40,10 @@ def height(x, y):
         h += .10 * nz(x, y, 1.6, 1.0) * wall + .05 * nz(x, y, 4.0, 2.0) * wall
         # 鏟痕：坑壁上一條條斜面
         h += .04 * math.sin(a * 9 + r * 3) * (1 - abs(u - .8) * 3) if .5 < u < 1 else 0
+        # 11/22 坑壁一層層土：壁面上幾道小台階（土層交界處略凹進去）
+        if .55 < u < 1:
+            zz_ = -DEP * wall
+            h += -.05 * math.exp(-((zz_ + .35) / .06) ** 2) - .04 * math.exp(-((zz_ + .85) / .07) ** 2)
     else:
         # 坑口外：一圈薄薄的鬆土（最高 0.18 m，一側多），往外很快回到平地
         d = r - rw
@@ -153,6 +157,22 @@ def ground_material():
     mud = mul(img(GT + 'brown_mud_02_diff_2k.png', 'sRGB', .9), (1.05, .72, .46))
     mudw = mul(mud, (.55, .5, .45))                         # 坑底濕泥較深
     mud2 = mix(sp.outputs[1], mud, mudw)
+    # 11/22 坑壁土層：最上面 30 cm 深色表土（含腐葉），中段棕土，下段偏黃的黏土
+    _gz = nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(tc.outputs['Object'], _gz.inputs[0])
+    _wn = nt.nodes.new('ShaderNodeTexNoise'); _wn.inputs['Scale'].default_value = 3.0
+    nt.links.new(tc.outputs['Object'], _wn.inputs['Vector'])
+    _za = nt.nodes.new('ShaderNodeMath'); _za.operation = 'MULTIPLY_ADD'; _za.inputs[1].default_value = .12
+    nt.links.new(_wn.outputs['Fac'], _za.inputs[0]); nt.links.new(_gz.outputs['Z'], _za.inputs[2])
+    _cr = nt.nodes.new('ShaderNodeValToRGB'); _el = _cr.color_ramp.elements
+    _el[0].position, _el[0].color = .0, (.85, .72, .50, 1)          # z -1.7：黏土（偏黃灰）
+    _el[1].position, _el[1].color = 1.0, (.30, .22, .16, 1)         # z 0：表土（深棕）
+    _e2 = _cr.color_ramp.elements.new(.55); _e2.color = (1.15, .85, .58, 1)   # 中段棕土
+    _e3 = _cr.color_ramp.elements.new(.80); _e3.color = (.50, .38, .27, 1)
+    _zr = nt.nodes.new('ShaderNodeMapRange'); _zr.inputs['From Min'].default_value, _zr.inputs['From Max'].default_value = -1.7, .06
+    nt.links.new(_za.outputs[0], _zr.inputs['Value']); nt.links.new(_zr.outputs[0], _cr.inputs[0])
+    _ml = nt.nodes.new('ShaderNodeMixRGB'); _ml.blend_type = 'MULTIPLY'; _ml.inputs[0].default_value = 1
+    nt.links.new(mud2, _ml.inputs[1]); nt.links.new(_cr.outputs[0], _ml.inputs[2])
+    mud2 = _ml.outputs[0]
     col = mix(mr.outputs[0], leaf, mud2)
     nt.links.new(col, b.inputs['Base Color'])
     nl = img(GT + 'forest_leaves_02_nor_gl_2k.png', 'Non-Color', 2.5)
@@ -207,24 +227,24 @@ _nt.links.new(_mx.outputs[0], _b.inputs['Base Color'])
 _b.inputs['Roughness'].default_value = .85
 
 clods = bmesh.new()
-for i in range(170):
+for i in range(450):
     a = R.uniform(0, 6.283)
     side = .5 + .5 * math.cos(a - 2.2)
     if R.random() > .35 + .65 * side:
         continue
     r = rim(a) + R.uniform(-.1, 1.3)
     x, y = math.cos(a) * r, math.sin(a) * r
-    rad = R.uniform(.04, .16)
-    m_ = bmesh.ops.create_icosphere(clods, subdivisions=2, radius=rad)
+    rad = R.uniform(.03, .11) if R.random() < .7 else R.uniform(.01, .03)
+    m_ = bmesh.ops.create_icosphere(clods, subdivisions=1, radius=rad)   # 11/22 不規則碎土塊（原本壓扁的圓球像圓餅）
     vs = m_['verts']
-    sx, sy, sz = R.uniform(1, 1.7), R.uniform(.8, 1.3), R.uniform(.45, .7)
+    sx, sy, sz = R.uniform(.8, 1.4), R.uniform(.7, 1.2), R.uniform(.7, 1.0)
     rot = R.uniform(0, 6.283)
     for v in vs:
         p = v.co
         p.x *= sx; p.y *= sy; p.z *= sz
-        p += Vector((nz(p.x + i, p.y, 9.0), nz(p.y, p.z + i, 9.0), nz(p.z, p.x + i, 9.0))) * rad * .35
+        p += Vector((nz(p.x + i, p.y, 9.0), nz(p.y, p.z + i, 9.0), nz(p.z, p.x + i, 9.0))) * rad * .7
         c_, s_ = math.cos(rot), math.sin(rot)
-        v.co = Vector((p.x * c_ - p.y * s_ + x, p.x * s_ + p.y * c_ + y, p.z + height(x, y) + rad * .2))
+        v.co = Vector((p.x * c_ - p.y * s_ + x, p.x * s_ + p.y * c_ + y, p.z + height(x, y) + rad * .05))
 cm = bpy.data.meshes.new('CO02_Clods')
 clods.to_mesh(cm)
 clods.free()
@@ -253,25 +273,25 @@ _mx.inputs[0].default_value = 1
 _mx.inputs[2].default_value = (.55, .42, .30, 1)
 _nt.links.new(_t.outputs['Color'], _mx.inputs[1])
 _nt.links.new(_mx.outputs[0], _b.inputs['Base Color'])
-for i in range(22):
+for i in range(46):   # 11/22 坑壁露出的根：多一點、粗一點（原本 1–5 cm 看不到）
     a = R.uniform(0, 6.283)
     rw = rim(a)
-    zz = -R.uniform(.15, .9) * DEP
+    zz = -R.uniform(.08, .75) * DEP
     u = (1 - (-zz / DEP)) ** (1 / 4.5)
     p0 = Vector((math.cos(a) * rw * u * 1.08, math.sin(a) * rw * u * 1.08, zz))
-    d = Vector((-math.cos(a) + R.uniform(-.4, .4), -math.sin(a) + R.uniform(-.4, .4), R.uniform(-.5, .3))).normalized()
-    L = R.uniform(.25, .9)
+    d = Vector((-math.cos(a) + R.uniform(-.4, .4), -math.sin(a) + R.uniform(-.4, .4), R.uniform(-.35, .15))).normalized()   # 從壁面伸出來，尾端再往下垂
+    L = R.uniform(.4, 1.0)
     cu = bpy.data.curves.new(f'CO02_Root{i}', 'CURVE')
     cu.dimensions = '3D'
-    cu.bevel_depth = R.uniform(.012, .05)
+    cu.bevel_depth = R.uniform(.02, .045) if R.random() < .75 else R.uniform(.05, .075)
     cu.bevel_resolution = 3
     cu.use_fill_caps = True
     sp = cu.splines.new('NURBS')
-    pts = [p0 - d * .2, p0 + d * L * .5 + Vector((0, 0, R.uniform(-.08, .06))), p0 + d * L]
+    pts = [p0 - d * .25, p0 + d * L * .3 + Vector((0, 0, -.03)), p0 + d * L * .6 + Vector((R.uniform(-.1, .1), R.uniform(-.1, .1), -.12)), p0 + d * L + Vector((0, 0, -.3))]   # 彎、往下垂
     sp.points.add(len(pts) - 1)
     for j, pp in enumerate(pts):
         sp.points[j].co = (pp.x, pp.y, pp.z, 1)
-        sp.points[j].radius = 1 - .35 * j / 2
+        sp.points[j].radius = 1 - .7 * j / 3
     sp.use_endpoint_u = True
     cu.materials.append(bark)
     ro = bpy.data.objects.new(f'CO02_Root{i}', cu)
@@ -282,13 +302,14 @@ wm = bpy.data.materials.new('CO02_Water')
 wm.use_nodes = True
 wb = next(x for x in wm.node_tree.nodes if x.type == 'BSDF_PRINCIPLED')
 wb.inputs['Base Color'].default_value = (.035, .028, .02, 1)
-wb.inputs['Roughness'].default_value = .08
+wb.inputs['Roughness'].default_value = .03
+wb.inputs['IOR'].default_value = 1.33
 bw = bmesh.new()
 cv = bw.verts.new((0, 0, 0))
 ring = []
 for k in range(36):
     a = k / 36 * 6.283
-    rr = .75 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))
+    rr = 1.0 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))
     ring.append(bw.verts.new((math.cos(a) * rr * 1.3 + .25, math.sin(a) * rr * .85 - .1, 0)))
 for k in range(36):
     bw.faces.new((cv, ring[k], ring[(k + 1) % 36]))
@@ -297,7 +318,8 @@ bw.to_mesh(wme)
 bw.free()
 wme.materials.append(wm)
 wo = bpy.data.objects.new('CO02_Water', wme)
-wo.location.z = -DEP + .10
+_fl = min(v.co.z for v in me.vertices if math.hypot(v.co.x - .25, v.co.y + .1) < .9)
+wo.location.z = _fl + .07   # 11/22 原本水面在坑底凹凸下面看不到 → 放在坑底最低處上方 7 cm
 sc.collection.objects.link(wo)
 
 # 小石頭：從土裡翻出來的
