@@ -50,6 +50,9 @@ def height(x, y):
         side = .5 + .5 * math.cos(a - 2.2)
         spill = math.exp(-(d / (.55 + .5 * side)) ** 2) * (.06 + .12 * side) * (.7 + .6 * (.5 + .5 * nz(x, y, 1.8, 7.0)))
         h = spill + .03 * nz(x, y, 5.0, 8.0) * math.exp(-d / 1.2)
+        # 11/22 z1nnz：坑外圍要一圈「翻土」→ 2.5 m 內一塊塊被翻起的土塊與凹凸（不是平滑的一圈）
+        tz = math.exp(-(d / 1.6) ** 2)
+        h += tz * (.07 * max(0.0, nz(x, y, 3.2, 12.0)) + .04 * nz(x, y, 7.5, 13.0) + .025 * abs(nz(x, y, 14.0, 14.0)))
         # 坑口邊緣一圈被踩實、略塌
         h -= .06 * math.exp(-(d / .12) ** 2)
     # 外緣淡出到 0
@@ -65,7 +68,7 @@ def soil(x, y):
     if r < rw:
         return 1.0
     side = .5 + .5 * math.cos(a - 2.2)
-    reach = .5 + .9 * side + .25 * nz(x, y, 2.2, 9.0)
+    reach = 1.3 + .9 * side + .45 * nz(x, y, 2.2, 9.0)   # 翻土範圍整圈都有，一側較多
     return max(0.0, min(1.0, 1 - (r - rw - reach) / .5))
 
 
@@ -227,12 +230,12 @@ _nt.links.new(_mx.outputs[0], _b.inputs['Base Color'])
 _b.inputs['Roughness'].default_value = .85
 
 clods = bmesh.new()
-for i in range(450):
+for i in range(800):
     a = R.uniform(0, 6.283)
     side = .5 + .5 * math.cos(a - 2.2)
-    if R.random() > .35 + .65 * side:
+    if R.random() > .55 + .45 * side:
         continue
-    r = rim(a) + R.uniform(-.1, 1.3)
+    r = rim(a) + R.uniform(-.1, 1.3) ** 1 * (1 if R.random() < .6 else 1.9)   # 翻出的土塊散得更遠
     x, y = math.cos(a) * r, math.sin(a) * r
     rad = R.uniform(.03, .11) if R.random() < .7 else R.uniform(.01, .03)
     m_ = bmesh.ops.create_icosphere(clods, subdivisions=1, radius=rad)   # 11/22 不規則碎土塊（原本壓扁的圓球像圓餅）
