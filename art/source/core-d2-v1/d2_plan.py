@@ -837,6 +837,9 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             bd = Vector((math.cos(ba), math.sin(ba), 0))
             parts.append([(b0, r0 * .4), (b0 + bd * bl * .5, r0 * .3), (b0 + bd * bl, r0 * .12)])
         for _k, pts_ in enumerate(parts):
+            # 11/22 z1nnz「擋到路了」：枝條任何一點進到走道（離路中線 2 m 內）就不放
+            if any(path_d(p0[0] + q_.x, p0[1] + q_.y) < 2.0 for q_, r_ in pts_):
+                continue
             cu_ = bpy.data.curves.new('DeadBranch', 'CURVE'); cu_.dimensions = '3D'; cu_.bevel_depth = 1.0; cu_.bevel_resolution = 4
             cu_.use_fill_caps = True; cu_.resolution_u = 12
             sp_ = cu_.splines.new('NURBS'); sp_.points.add(len(pts_) - 1)
@@ -849,8 +852,8 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             ob_ = bpy.data.objects.new('DeadBranch', cu_); sc.collection.objects.link(ob_)
 
     _c3 = Vector((4, -15)); _f3 = Vector((2, 33)).normalized(); _r3 = Vector((_f3.y, -_f3.x))
-    _p = _c5 + _f5 * 3.2 + _r5 * -3.4   # V5 左下那根灰白枯枝（從左邊往路中間斜躺）
-    _dv = _f5 * .8 + _r5 * .6
+    _p = _c5 + _f5 * 2.6 + _r5 * -4.4   # V5 左下那根灰白枯枝：躺在路左邊，順著路的方向，不伸進走道
+    _dv = _f5 * .97 + _r5 * -.25
     deadbranch((_p.x, _p.y), math.atan2(_dv.y, _dv.x), 4.6, .17, 1)
     for _fd, _rd, _ang, _L, _r0, _sd in ((7, -4.5, .4, 3.2, .12, 2), (9.5, 3.5, 2.6, 2.6, .1, 3), (12, -6.5, 1.2, 3.4, .13, 4), (5.5, 5.5, -.3, 2.2, .08, 5)):   # V3 路邊零星斷枝
         _p = _c3 + _f3 * _fd + _r3 * _rd
