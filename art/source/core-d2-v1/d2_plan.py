@@ -1233,6 +1233,47 @@ if 'real' in argv:
             sc.collection.objects.link(e)
             ngc += 1
     print('GROUNDCOVER', ngc)
+    # 11/22 新物件：常春藤爬在 V6 兩棵框景樹的樹幹上（設定圖 V6 右邊那棵整根爬滿藤）
+    _ivm = bpy.data.materials.new('IvyLeaf'); _ivm.use_nodes = True
+    _ivn = _ivm.node_tree; _ivb = next(x_ for x_ in _ivn.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _ivo = _ivn.nodes.new('ShaderNodeObjectInfo'); _ivc = _ivn.nodes.new('ShaderNodeValToRGB')
+    _ivc.color_ramp.elements[0].color = (.025, .045, .015, 1); _ivc.color_ramp.elements[1].color = (.09, .13, .04, 1)
+    _ivr = _ivn.nodes.new('ShaderNodeAttribute'); _ivr.attribute_name = 'LeafTone'
+    _ivn.links.new(_ivr.outputs['Fac'], _ivc.inputs[0]); _ivn.links.new(_ivc.outputs[0], _ivb.inputs['Base Color'])
+    _ivb.inputs['Roughness'].default_value = .45
+    try:
+        _ivb.inputs['Transmission Weight'].default_value = .0
+        _ivb.inputs['Subsurface Weight'].default_value = .1
+    except KeyError:
+        pass
+    _IR = random.Random(77)
+    for (tx_, ty_, s_) in ((6.0, 100.7, 1.1), (-7.2, 100, 1.0)):
+        z0_ = gh(tx_, ty_) - .3
+        Ht_ = 16 * s_ * .62
+        bm_ = bmesh.new(); tone_ = []
+        for st_ in range(9):   # 9 條藤從樹腳往上繞
+            a_ = _IR.uniform(0, 6.283); z_ = _IR.uniform(0, .5); zt_ = Ht_ * _IR.uniform(.55, .95)
+            while z_ < zt_:
+                t_ = z_ / Ht_
+                rr_ = (.6 * s_ * (1 - t_) + .35 * s_ * t_) + .04
+                for _ in range(3):   # 每一節 3 片葉
+                    la_ = a_ + _IR.uniform(-.25, .25); lz_ = z_ + _IR.uniform(-.08, .08)
+                    n_ = Vector((math.cos(la_), math.sin(la_), 0))
+                    c_ = Vector((tx_ + n_.x * rr_, ty_ + n_.y * rr_, z0_ + lz_)) + n_ * _IR.uniform(0, .06)
+                    up_ = Vector((0, 0, 1)); sd_ = n_.cross(up_)
+                    sz_ = _IR.uniform(.07, .14)
+                    tilt_ = n_ * _IR.uniform(.2, .6)
+                    v0 = bm_.verts.new(c_ - up_ * sz_ * .2)
+                    v1 = bm_.verts.new(c_ + sd_ * sz_ * .55 + up_ * sz_ * .35 + tilt_ * sz_)
+                    v2 = bm_.verts.new(c_ + up_ * sz_ * 1.0 + tilt_ * sz_ * 1.4)
+                    v3 = bm_.verts.new(c_ - sd_ * sz_ * .55 + up_ * sz_ * .35 + tilt_ * sz_)
+                    bm_.faces.new((v0, v1, v2, v3)); tone_ += [_IR.random()] * 4
+                a_ += _IR.uniform(.05, .22) / max(rr_, .2); z_ += _IR.uniform(.07, .13)
+        me_ = bpy.data.meshes.new('Ivy'); bm_.to_mesh(me_); bm_.free()
+        at_ = me_.attributes.new('LeafTone', 'FLOAT', 'POINT'); at_.data.foreach_set('value', tone_)
+        me_.materials.append(_ivm)
+        ob_ = bpy.data.objects.new('Ivy', me_); sc.collection.objects.link(ob_)
+        print('IVY', len(me_.polygons))
     # 路上的積水小窪、落葉（設定圖每一張路面都有）
     litter_mat = _leaf_material('Litter', (.55, .5, .45, 1), (.85, .8, .72, 1), (.9, .85, .7, 1), gloss=.6)
     LR = random.Random(41)
