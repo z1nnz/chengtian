@@ -855,6 +855,42 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     for _fd, _rd, _ang, _L, _r0, _sd in ((7, -4.5, .4, 3.2, .12, 2), (9.5, 3.5, 2.6, 2.6, .1, 3), (12, -6.5, 1.2, 3.4, .13, 4), (5.5, 5.5, -.3, 2.2, .08, 5)):   # V3 路邊零星斷枝
         _p = _c3 + _f3 * _fd + _r3 * _rd
         deadbranch((_p.x, _p.y), _ang, _L, _r0, _sd)
+    # 11/22 新物件：苔丘（設定圖 V5 路左邊、祭壇後面一團長滿厚苔的小土丘）；獨立模型，底部埋進地裡
+    _mm = bpy.data.materials.new('MossMound'); _mm.use_nodes = True
+    _mn = _mm.node_tree; _mb = next(x_ for x_ in _mn.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _mg = _mn.nodes.new('ShaderNodeNewGeometry')
+    _mz1 = _mn.nodes.new('ShaderNodeTexNoise'); _mz1.inputs['Scale'].default_value = 2.5; _mz1.inputs['Detail'].default_value = 6
+    _mn.links.new(_mg.outputs['Position'], _mz1.inputs['Vector'])
+    _mcr = _mn.nodes.new('ShaderNodeValToRGB')
+    _mcr.color_ramp.elements[0].position, _mcr.color_ramp.elements[1].position = .3, .75
+    _mcr.color_ramp.elements[0].color = (.025, .032, .01, 1); _mcr.color_ramp.elements[1].color = (.10, .11, .035, 1)   # 暗橄欖，不要亮綠
+    _mn.links.new(_mz1.outputs['Fac'], _mcr.inputs[0]); _mn.links.new(_mcr.outputs[0], _mb.inputs['Base Color'])
+    _mz2 = _mn.nodes.new('ShaderNodeTexNoise'); _mz2.inputs['Scale'].default_value = 90; _mz2.inputs['Detail'].default_value = 2
+    _mn.links.new(_mg.outputs['Position'], _mz2.inputs['Vector'])
+    _mbp = _mn.nodes.new('ShaderNodeBump'); _mbp.inputs['Strength'].default_value = .8; _mbp.inputs['Distance'].default_value = .015
+    _mn.links.new(_mz2.outputs['Fac'], _mbp.inputs['Height']); _mn.links.new(_mbp.outputs['Normal'], _mb.inputs['Normal'])
+    _mb.inputs['Roughness'].default_value = .95
+    try:
+        _mb.inputs['Sheen Weight'].default_value = .5; _mb.inputs['Sheen Tint'].default_value = (.5, .6, .3, 1)
+    except KeyError:
+        pass
+
+    def moss_mound(x, y, w, h, seed):
+        bm_ = bmesh.new(); bmesh.ops.create_icosphere(bm_, subdivisions=5, radius=1)
+        off_ = Vector((seed * 3.1, 1.3, 0))
+        for v in bm_.verts:
+            c = v.co.copy()
+            lump = noise.noise(c * 1.6 + off_) * .25 + noise.noise(c * 4.5 + off_) * .07   # 一團團隆起，不是正圓
+            r = 1 + lump
+            v.co = Vector((c.x * w * r, c.y * w * .85 * r, max(c.z, -.3) * h * (1 + lump)))
+        me_ = bpy.data.meshes.new('MossMound'); bm_.to_mesh(me_); bm_.free()
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        me_.materials.append(_mm)
+        ob_ = bpy.data.objects.new('MossMound', me_); sc.collection.objects.link(ob_)
+        ob_.location = (x, y, gh(x, y) - h * .25)
+    _p = _c5 + _f5 * 11 + _r5 * -3.0
+    moss_mound(_p.x, _p.y, 2.0, 1.0, 1)
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
