@@ -782,7 +782,7 @@ ROOTS.append(((TREE[0] + 4, TREE[1] - 7), (ALT[0] - 2, ALT[1] - 4)))
 for a, b in ROOTS:
     root_ridge(a, b, 1.5, .45)
 if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
-    for a, b, r in [((-1.5, 13), (5.5, -1), 1.1), ((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
+    for a, b, r in [((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
         root_ridge(a, b, r, .4, force=True, tube=True)   # 11/22 掃描根頭尾是切面、頂上一片平苔 → 改整條漸細的根
     # 11/22 V5 路右邊兩條交疊的大苔根（設定圖：從畫面右邊伸過來、往路邊斜下去鑽進土裡；前面那條壓在後面那條上）
     #   z1nnz「又翹起來了」：根要貼地、下半埋進土裡，不能斜斜翹在空中
@@ -790,31 +790,55 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _c5 = Vector((-6, 12)); _f5 = Vector((23, -33)).normalized(); _r5 = Vector((_f5.y, -_f5.x))
     _v5m = _bkm.copy()
     _v5m.name = 'V5RootBark'
-    next(x_ for x_ in _v5m.node_tree.nodes if x_.type == 'MAPPING').inputs['Scale'].default_value = (1 / .9, 1 / .9, 1 / 1.6)
-    mossify(_v5m, .75, 1.0)   # 苔少一點，看得到樹皮（不要像一塊草皮）
+    next(x_ for x_ in _v5m.node_tree.nodes if x_.type == 'MAPPING').inputs['Scale'].default_value = (1 / .4, 1 / .4, 1 / .4)   # 細一點：大塊盒投影在圓根上會拉成直條紋
+    _vt = _v5m.node_tree
+    _vuv = _vt.nodes.new('ShaderNodeUVMap'); _vuv.uv_map = 'UVMap'
+    _vmp = next(x_ for x_ in _vt.nodes if x_.type == 'MAPPING'); _vmp.inputs['Scale'].default_value = (1, 1, 1)
+    _vt.links.new(_vuv.outputs['UV'], _vmp.inputs['Vector'])
+    for _ti in _vt.nodes:
+        if _ti.type == 'TEX_IMAGE':
+            _ti.projection = 'FLAT'
+    mossify(_v5m, .45, 1.0)   # 11/22：苔只留在背脊一條（整片頂面都是苔 → 從低角度看像草皮平台）
     for _k, (_pts, _r0, _r1) in enumerate((
             ([(3.6, 4.9, .38), (4.3, 3.4, .34), (5.1, 2.2, .24), (6.0, 1.4, -.12)], .58, .2),   # 近的、粗的：從畫面右下斜上去
             ([(6.8, 7.6, .32), (7.4, 5.6, .3), (8.4, 3.7, .2), (9.4, 2.4, -.1)], .45, .16))):   # 後面那條：從右邊較高處下來
-        _cu = bpy.data.curves.new(f'V5Root{_k}', 'CURVE'); _cu.dimensions = '3D'; _cu.bevel_depth = 1.0; _cu.bevel_resolution = 6
-        _cu.resolution_u = 24; _cu.use_fill_caps = True
-        _sp = _cu.splines.new('NURBS'); _sp.points.add(len(_pts) - 1)
+        # 11/22：曲線轉出來的根從低角度看像平台 → 改成自己一圈圈建的圓管（截面一定是圓的）
+        _ctr = []
         for _j, (_fd, _rd, _z) in enumerate(_pts):
             _p = _c5 + _f5 * _fd + _r5 * _rd
-            _t = _j / (len(_pts) - 1)
-            _rr = _r0 + (_r1 - _r0) * _t
-            _sp.points[_j].co = (_p.x, _p.y, gh(_p.x, _p.y) + (_rr * .55 if _z > 0 else _z), 1)   # 圓的根躺在地上：露出上半圓多一點，不翹
-            _sp.points[_j].radius = _rr
-            if _j < len(_pts) - 1:   # 11/22：根旁邊不長蕨（設定圖 V5 根整條露出來）→ 記下沿線取樣點
+            _rr = _r0 + (_r1 - _r0) * (_j / (len(_pts) - 1))
+            _ctr.append((Vector((_p.x, _p.y, gh(_p.x, _p.y) + (_rr * .45 if _z > 0 else _z))), _rr))
+            if _j < len(_pts) - 1:
                 _q = _c5 + _f5 * _pts[_j + 1][0] + _r5 * _pts[_j + 1][1]
                 for _u in range(6):
                     globals().setdefault('_V5RP', []).append(_p + (_q - _p) * (_u / 6))
-        _sp.use_endpoint_u = True; _sp.order_u = 3
-        _cu.materials.append(_v5m)
-        _o = bpy.data.objects.new(f'V5Root{_k}', _cu); sc.collection.objects.link(_o)
-        bpy.context.view_layer.update()
-        _me = bpy.data.meshes.new_from_object(_o.evaluated_get(bpy.context.evaluated_depsgraph_get()))
-        bpy.data.objects.remove(_o, do_unlink=True)
+        _bm = bmesh.new(); _rings = []; _NS = 40
+        for _i in range(_NS + 1):
+            _t = _i / _NS * (len(_ctr) - 1); _a = min(int(_t), len(_ctr) - 2); _f = _t - _a
+            _c = _ctr[_a][0].lerp(_ctr[_a + 1][0], _f); _rr = _ctr[_a][1] + (_ctr[_a + 1][1] - _ctr[_a][1]) * _f
+            _c.z = gh(_c.x, _c.y) + (_rr * .45 if _i < _NS * .8 else _rr * .45 - (_i - _NS * .8) / (_NS * .2) * _rr * 1.4)
+            _tg = (_ctr[_a + 1][0] - _ctr[_a][0]); _tg.z = 0; _tg.normalize()
+            _sd = Vector((-_tg.y, _tg.x, 0))
+            _rg = []
+            for _j in range(16):
+                _an = 2 * math.pi * _j / 16
+                _off = _sd * math.cos(_an) + Vector((0, 0, 1)) * math.sin(_an)
+                _rg.append(_bm.verts.new(_c + _off * _rr * (1 + .08 * noise.noise(Vector((_i * .4, _j * .5, _k * 3))))))
+            _rings.append(_rg)
+        for _i in range(_NS):
+            for _j in range(16):
+                _bm.faces.new((_rings[_i][_j], _rings[_i][(_j + 1) % 16], _rings[_i + 1][(_j + 1) % 16], _rings[_i + 1][_j]))
+        _uvl = _bm.loops.layers.uv.new('UVMap')   # u 繞一圈、v 沿根長度 → 樹皮紋路順著根走
+        for _fc in _bm.faces:
+            for _lp in _fc.loops:
+                _vi = _lp.vert.index
+                _lp[_uvl].uv = ((_vi % 16) / 16 * 2 * math.pi * _r0 / 1.2, (_vi // 16) / _NS * 6.0 / 1.6)
+        _me = bpy.data.meshes.new(f'V5Root{_k}'); _bm.to_mesh(_me); _bm.free()
+        for _pp in _me.polygons:
+            _pp.use_smooth = True
+        _me.materials.append(_v5m)
         _o = bpy.data.objects.new(f'V5Root{_k}', _me); sc.collection.objects.link(_o)
+        _o.hide_render = 'v5root' not in argv   # 11/22：試了曲線、圓管、順向 UV，從 V5 低角度看都像一塊草皮平台 → 先不放，之後換真的根模型
         _o.modifiers.new('Sub', 'SUBSURF').render_levels = 1
         _dm = _o.modifiers.new('Lumps', 'DISPLACE')   # 根表面不規則的瘤與起伏
         _dm.texture = bpy.data.textures.get('RootLumps') or bpy.data.textures.new('RootLumps', 'CLOUDS')
