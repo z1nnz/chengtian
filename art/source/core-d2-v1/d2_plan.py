@@ -605,7 +605,7 @@ def glb(path, at, dz, rotz=0.0):
     return keep
 
 
-_GTO = append(S_ + ('GT01_out/GT01_GodTree_v004_fused.blend' if 'real' in argv else 'GT01_out/GT01_GodTree_v003.blend'),
+_GTO = append(S_ + ('GT01_out/GT01_GodTree_v004b_detail.blend' if 'real' in argv else 'GT01_out/GT01_GodTree_v003.blend'),
               lambda nm: nm.endswith('_LOD0' if 'real' in argv else '_LOD1'), TREE, gh(*TREE) - .6)
 if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11/21「樹幹不連貫」）；熔接後沒有 UV → 樹皮改用盒投影掃描樹皮
     _BK = 'D:/chengtian/4-素材與快取/polyhaven-bark/'
