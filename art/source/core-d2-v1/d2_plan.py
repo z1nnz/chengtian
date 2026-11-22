@@ -779,8 +779,39 @@ ROOTS.append(((TREE[0] + 4, TREE[1] - 7), (ALT[0] - 2, ALT[1] - 4)))
 for a, b in ROOTS:
     root_ridge(a, b, 1.5, .45)
 if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
-    for a, b, r in [((-1.5, 13), (5.5, -1), 1.1), ((-10, 11), (-5.5, -5), 1.2), ((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
+    for a, b, r in [((-1.5, 13), (5.5, -1), 1.1), ((-11.5, 9), (-15, -3), .9), ((-2, 16), (2, 6), .8)]:
         root_ridge(a, b, r, .4, force=True)
+    # 11/22 V5 路右邊兩條交疊的大苔根（設定圖：從畫面右邊伸過來、往路邊斜下去鑽進土裡；前面那條壓在後面那條上）
+    #   整條漸細的獨立模型（不是頭尾切面的掃描根）；點用 V5 鏡頭座標（往前 fd、往右 rd）
+    _c5 = Vector((-6, 12)); _f5 = Vector((23, -33)).normalized(); _r5 = Vector((_f5.y, -_f5.x))
+    _v5m = _bkm.copy()
+    _v5m.name = 'V5RootBark'
+    next(x_ for x_ in _v5m.node_tree.nodes if x_.type == 'MAPPING').inputs['Scale'].default_value = (1 / .9, 1 / .9, 1 / 1.6)
+    mossify(_v5m, 1.1, 1.0)
+    for _k, (_pts, _r0, _r1) in enumerate((
+            ([(3.6, 4.9, 1.9), (4.3, 3.4, 1.25), (5.1, 2.2, .6), (6.0, 1.4, -.1)], .58, .2),   # 近的、粗的：從畫面右下斜上去
+            ([(6.8, 7.6, 2.2), (7.4, 5.6, 1.5), (8.4, 3.7, .65), (9.4, 2.4, -.1)], .45, .16))):   # 後面那條：從右邊較高處下來
+        _cu = bpy.data.curves.new(f'V5Root{_k}', 'CURVE'); _cu.dimensions = '3D'; _cu.bevel_depth = 1.0; _cu.bevel_resolution = 6
+        _cu.resolution_u = 24; _cu.use_fill_caps = True
+        _sp = _cu.splines.new('NURBS'); _sp.points.add(len(_pts) - 1)
+        for _j, (_fd, _rd, _z) in enumerate(_pts):
+            _p = _c5 + _f5 * _fd + _r5 * _rd
+            _t = _j / (len(_pts) - 1)
+            _rr = _r0 + (_r1 - _r0) * _t
+            _sp.points[_j].co = (_p.x, _p.y, gh(_p.x, _p.y) + _z, 1)
+            _sp.points[_j].radius = _rr
+        _sp.use_endpoint_u = True; _sp.order_u = 3
+        _cu.materials.append(_v5m)
+        _o = bpy.data.objects.new(f'V5Root{_k}', _cu); sc.collection.objects.link(_o)
+        bpy.context.view_layer.update()
+        _me = bpy.data.meshes.new_from_object(_o.evaluated_get(bpy.context.evaluated_depsgraph_get()))
+        bpy.data.objects.remove(_o, do_unlink=True)
+        _o = bpy.data.objects.new(f'V5Root{_k}', _me); sc.collection.objects.link(_o)
+        _o.modifiers.new('Sub', 'SUBSURF').render_levels = 1
+        _dm = _o.modifiers.new('Lumps', 'DISPLACE')   # 根表面不規則的瘤與起伏
+        _dm.texture = bpy.data.textures.get('RootLumps') or bpy.data.textures.new('RootLumps', 'CLOUDS')
+        _dm.texture.noise_scale = .35
+        _dm.strength = .12; _dm.mid_level = .5; _dm.texture_coords = 'GLOBAL'
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
