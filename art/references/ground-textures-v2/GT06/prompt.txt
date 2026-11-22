@@ -1,0 +1,1 @@
+AI-generated top-down tea-field soil texture source: muted reddish brown and umber crumbly earth, occasional tiny gravel, faint shallow horizontal cultivation traces, no plants, path or shadows. Second AI edit reduced orange saturation and made furrows less regular. Converted to exact seamless Albedo/Normal/MaskURP maps.
