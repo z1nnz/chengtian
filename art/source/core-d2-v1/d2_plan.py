@@ -1216,8 +1216,9 @@ if 'real' in argv:
         if nug >= 20000:
             break
     print('UNDERGROWTH', nug)
-    GC = UG['clover'] + UG['rosette'] + UG['heart'][:1] + UG['grass'][:2]
-    GW = [5] * len(UG['clover']) + [2] * len(UG['rosette']) + [2] + [1, 1]
+    # 11/22 優化：地上的草 → 一片片平貼的三葉草太多、看起來像貼上去的 → 三葉草減少，加入各種高度的草叢與莎草
+    GC = UG['clover'] + UG['rosette'] + UG['heart'][:1] + UG['grass'] + UG['sedge']
+    GW = [1.6] * len(UG['clover']) + [1.2] * len(UG['rosette']) + [1.5] + [1.4] * len(UG['grass']) + [1.0] * len(UG['sedge'])
     GR = random.Random(57)
     ngc = 0
     for cx, cy in _CAMS + [ARCH_S, ARCH_N, PIT, ALT, TREE]:
@@ -1230,7 +1231,7 @@ if 'real' in argv:
             e.instance_type = 'COLLECTION'
             e.instance_collection = GR.choices(GC, GW)[0]
             s_ = GR.uniform(.35, .8)
-            e.scale = (s_, s_, s_ * GR.uniform(.6, 1.0))
+            e.scale = (s_, s_, s_ * GR.uniform(.5, 1.5))   # 高矮不一
             e.rotation_euler.z = GR.uniform(0, 6.283)
             e.location = (x, y, gh(x, y) - .02)
             sc.collection.objects.link(e)
@@ -1675,6 +1676,16 @@ if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光
     sc.view_settings.exposure = 1.0
     bg.inputs['Strength'].default_value = 3.4
     sun.energy = 1.2
+    if 'contrast' in argv:   # 11/22 試做：設定圖受光面和陰影對比較強 → 太陽加強、天光減弱、AgX 中高對比
+        bg.inputs['Strength'].default_value = 2.6
+        sun.energy = 2.6
+        for _lk in ('AgX - Medium High Contrast', 'Medium High Contrast'):
+            try:
+                sc.view_settings.look = _lk
+                break
+            except TypeError:
+                pass
+        print('LOOK', sc.view_settings.look)
 sc.render.resolution_x, sc.render.resolution_y = 1536, 1024
 SHOTS = {
     'V1': ((70, -105, 62), (-6, 18, 0), 24, '俯瞰全景（東南高處）'),
