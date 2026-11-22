@@ -1501,6 +1501,15 @@ if 'real' in argv:
             if 1.2 < pd_ < 3.0 and SR.random() < .12:   # 路邊半埋的大一點石頭（設定圖每張路邊都有）
                 _inst(SR.choice(STN), x, y, SR.uniform(.18, .34), -.08)
                 nst += 1
+    # 11/22 優化 1：路面碎石（設定圖泥路上滿是 2–8 cm 的小碎石，集中在路中間和車轍邊）
+    GR_ = random.Random(23)
+    for cx, cy in _CAMS + [ARCH_S, ARCH_N]:
+        for _ in range(14000):   # 第一版太少看不出來、第二版 1.5 萬顆像鋪石子路 → 取中間：稀疏、小顆、半埋
+            x, y = cx + GR_.uniform(-20, 20), cy + GR_.uniform(-20, 20)
+            if path_d(x, y) < 1.7 and GR_.random() < .4:
+                _inst(GR_.choice(STN), x, y, GR_.uniform(.03, .06) if GR_.random() < .85 else GR_.uniform(.06, .1), -.03)
+                nst += 1
+    print('STONES', nst)
     # 拱門垂藤：從拱頂內側垂下的細藤，帶小葉（設定圖 V2、V6）
     vmat = _leaf_material('UG21_Vine', (.04, .07, .02, 1), (.10, .15, .045, 1), (.12, .17, .06, 1), gloss=.5)
     nvine = 0
