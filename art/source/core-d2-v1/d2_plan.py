@@ -1714,6 +1714,8 @@ for k, (loc, tgt, lens, _) in SHOTS.items():
     co.rotation_euler = (Vector(tgt) - Vector(loc)).to_track_quat('-Z', 'Y').to_euler()
     sc.camera = co
     sc.render.filepath = OUT + (f'D2_real_{k}.png' if 'real' in argv else f'D2_plan_{k}.png')
+    if 'real' in argv:   # 11/22 V6 在框景樹冠底下太黑（設定圖是明亮霧天）→ 只有這一鏡曝光加一點，不動全場光
+        sc.view_settings.exposure = 2.5 if k == 'V6' else 1.0
     bpy.ops.render.render(write_still=True)
     print('SHOT', k)
 
