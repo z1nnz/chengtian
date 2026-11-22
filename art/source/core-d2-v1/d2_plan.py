@@ -638,6 +638,9 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
 if REAL:   # AL02 重做的三層石砌祭壇（正面石階朝南、朝主路）
     for _o in append(S_ + 'props_lib.blend', lambda nm: nm == 'AL02_Altar', ALT, gh(*ALT) - .12):
         _o.rotation_euler.z = .35
+        for _sl in _o.material_slots:   # 11/22 優化 2：祭壇補苔（設定圖石階頂面、邊緣、石縫都有橄欖色苔）
+            if _sl.material:
+                mossify(_sl.material, 2.2, 1.0, reach=.35)   # 1.3 看不出差別（石材本身已偏綠）→ 加量
 else:
     glb(EXP + 'AL01_RootAltarTerrace/AL01_RootAltarTerrace_v001.glb', ALT, -.05)
 _rim = sum(gh(PIT[0] + 3.3 * math.cos(a_), PIT[1] + 3.3 * math.sin(a_)) for a_ in (0, 1.57, 3.14, 4.71)) / 4
