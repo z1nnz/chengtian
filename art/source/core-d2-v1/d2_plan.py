@@ -1028,6 +1028,76 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     place_lantern(*_clear(ALT[0] + 4.0, ALT[1] - 2.6), .35, 0, True, 2)         # 祭壇前右：倒下摔成兩截
     broken_pillar(*_clear(ALT[0] - 6.5, ALT[1] + 3.0), 1.4, .6, 3)              # 祭壇左後：斷石柱
 
+    # 11/23 故事「有人來挖過」：坑邊丟下的工具——斷柄木鏟、翻倒的破竹簍、碎陶片（V4 看得到的坑口前緣）
+    def _mat(nm, col, rough, noise_s=0.0, col2=None):
+        m = bpy.data.materials.new(nm); m.use_nodes = True
+        b = next(x_ for x_ in m.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED')
+        b.inputs['Roughness'].default_value = rough
+        if col2:
+            t = m.node_tree; n_ = t.nodes.new('ShaderNodeTexNoise'); n_.inputs['Scale'].default_value = noise_s
+            cr = t.nodes.new('ShaderNodeValToRGB'); cr.color_ramp.elements[0].color = (*col, 1); cr.color_ramp.elements[1].color = (*col2, 1)
+            t.links.new(n_.outputs['Fac'], cr.inputs[0]); t.links.new(cr.outputs[0], b.inputs['Base Color'])
+        else:
+            b.inputs['Base Color'].default_value = (*col, 1)
+        return m
+    _m_iron = _mat('RustyIron', (.03, .025, .02), .75, 18, (.12, .05, .02))
+    _m_handle = _mat('OldHandle', (.09, .07, .05), .85, 25, (.05, .04, .03))   # 舊木柄：暗、髒（枯木灰白太亮、像新的）
+    _m_bamboo = _mat('OldBamboo', (.16, .12, .06), .8, 30, (.08, .06, .035))   # 舊竹篾：暗、髒
+    _m_pot = _mat('Pottery', (.30, .14, .07), .8, 12, (.18, .10, .06))
+    _pf = Vector((-5, 8.5)).normalized(); _pr = Vector((_pf.y, -_pf.x)); _rim = Vector(PIT) - _pf * 4.3   # V4 鏡頭這一側的坑口外
+    # 木鏟：斷掉的木柄（斷口參差）＋鏽鐵鏟頭，斜躺在翻土上
+    _sp = _rim + _pr * 1.4; _sa = math.atan2(_pr.y, _pr.x) + .5
+    bm_ = bmesh.new()
+    g = bmesh.ops.create_cone(bm_, cap_ends=True, segments=10, radius1=.022, radius2=.02, depth=.85)
+    for v in g['verts']:
+        if v.co.z > .4:
+            v.co.z += random.Random(int(v.co.x * 1000)).uniform(-.05, .04)   # 斷口
+    bmesh.ops.rotate(bm_, verts=g['verts'], cent=Vector(), matrix=Matrix.Rotation(math.pi / 2, 3, 'Y'))
+    bmesh.ops.translate(bm_, verts=g['verts'], vec=Vector((.42, 0, 0)))
+    me_ = bpy.data.meshes.new('ShovelHandle'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_m_handle)
+    bm_ = bmesh.new(); g = bmesh.ops.create_cube(bm_, size=1)
+    for v in g['verts']:
+        v.co = Vector((-.14 + v.co.x * .28 * (1 if v.co.x > 0 else .85), v.co.y * .2 * (1 - .3 * (v.co.x < 0)), v.co.z * .012))
+    me2 = bpy.data.meshes.new('ShovelBlade'); bm_.to_mesh(me2); bm_.free(); me2.materials.append(_m_iron)
+    for me_x in (me_, me2):
+        o = bpy.data.objects.new(me_x.name, me_x); sc.collection.objects.link(o)
+        o.location = (_sp.x, _sp.y, gh0(*PIT) + .06); o.rotation_euler = (.05, -.06, _sa)   # 鏟頭半埋在土裡
+    # 竹簍：直立竹篾 + 一圈圈箍，翻倒側躺，一側破一個缺口
+    _bp = _rim - _pr * 2.2; _ba = math.atan2(_pf.y, _pf.x) + 1.2
+    bm_ = bmesh.new(); R_b, H_b = .26, .42
+    for k in range(28):
+        a = 2 * math.pi * k / 28
+        if 2.2 < a < 2.9:
+            continue   # 破洞
+        g = bmesh.ops.create_cube(bm_, size=1)
+        for v in g['verts']:
+            v.co = Vector((v.co.x * .012, v.co.y * .03, v.co.z * H_b + H_b / 2))
+        bmesh.ops.rotate(bm_, verts=g['verts'], cent=Vector(), matrix=Matrix.Rotation(a, 3, 'Z'))
+        bmesh.ops.translate(bm_, verts=g['verts'], vec=Vector((math.cos(a) * R_b * (1 + .1 * (k % 3 == 0)), math.sin(a) * R_b, 0)))
+    for zz in (.03, .2, .39):
+        g = bmesh.ops.create_cone(bm_, cap_ends=False, segments=24, radius1=R_b + .015, radius2=R_b + .015, depth=.025)
+        bmesh.ops.translate(bm_, verts=g['verts'], vec=Vector((0, 0, zz)))
+    me_ = bpy.data.meshes.new('Basket'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_m_bamboo)
+    o = bpy.data.objects.new('Basket', me_); sc.collection.objects.link(o)
+    o.location = (_bp.x, _bp.y, gh0(*PIT) + R_b * .85 + .05); o.rotation_euler = (math.pi / 2 - .15, 0, _ba)
+    # 碎陶片：彎的破片，散在竹簍旁和坑口
+    PR_ = random.Random(9)
+    bm_ = bmesh.new()
+    for k in range(14):
+        c = _bp + Vector((PR_.uniform(-1.3, 1.6), PR_.uniform(-1, 1.2)))
+        a0, da = PR_.uniform(0, 6.28), PR_.uniform(.5, 1.1); h_ = PR_.uniform(.06, .14); rr = PR_.uniform(.12, .2)
+        vs = [[bm_.verts.new(Vector((math.cos(a0 + da * i / 4) * rr, math.sin(a0 + da * i / 4) * rr, h_ * j))) for j in (0, 1)] for i in range(5)]
+        for i in range(4):
+            bm_.faces.new((vs[i][0], vs[i + 1][0], vs[i + 1][1], vs[i][1]))
+        rot = Matrix.Rotation(PR_.uniform(1.2, 1.7), 3, 'X') @ Matrix.Rotation(PR_.uniform(0, 6.28), 3, 'Z')
+        for col in vs:
+            for v in col:
+                v.co = rot @ v.co + Vector((c.x, c.y, gh0(*PIT) + .06))
+    me_ = bpy.data.meshes.new('PotShards'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_m_pot)
+    sol = bpy.data.objects.new('PotShards', me_); sc.collection.objects.link(sol)
+    sol.modifiers.new('Th', 'SOLIDIFY').thickness = .012
+    print('PITTOOLS', [round(v, 1) for v in (_sp.x, _sp.y, _bp.x, _bp.y)])
+
     # 11/23 故事「荒廢很多年」：倒下的老樹（獨立模型）——整根橫躺、半埋、長苔，一頭根盤翹起帶著土
     _flm = _bkm.copy(); _flm.name = 'FallenLogBark'
     _ft = _flm.node_tree
