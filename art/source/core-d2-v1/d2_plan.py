@@ -926,6 +926,101 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _p = _c5 + _f5 * 11 + _r5 * -3.0
     moss_mound(_p.x, _p.y, 2.0, 1.0, 1)
 
+    # 11/23 故事「荒廢很多年」：倒下的老樹（獨立模型）——整根橫躺、半埋、長苔，一頭根盤翹起帶著土
+    _flm = _bkm.copy(); _flm.name = 'FallenLogBark'
+    _ft = _flm.node_tree
+    _fuv = _ft.nodes.new('ShaderNodeUVMap'); _fuv.uv_map = 'UVMap'
+    _fmp = next(x_ for x_ in _ft.nodes if x_.type == 'MAPPING'); _fmp.inputs['Scale'].default_value = (1, 1, 1)
+    _ft.links.new(_fuv.outputs['UV'], _fmp.inputs['Vector'])
+    for _ti in _ft.nodes:
+        if _ti.type == 'TEX_IMAGE':
+            _ti.projection = 'FLAT'
+    mossify(_flm, 1.3, 1.0, reach=.15)
+    _fdirt = M_DIRT if 'M_DIRT' in globals() else _flm
+
+    def fallen_log(x, y, ang, L, R0, seed):
+        rr_ = random.Random(seed)
+        d_ = Vector((math.cos(ang), math.sin(ang), 0)); s_ = Vector((-d_.y, d_.x, 0))
+        bm_ = bmesh.new(); uvl_ = bm_.loops.layers.uv.new('UVMap')
+        NS, NR = 60, 20
+        rings = []
+        for i in range(NS + 1):
+            t = i / NS
+            c = Vector((x, y, 0)) + d_ * (L * t) + s_ * (.5 * math.sin(t * 2.6 + seed))
+            r = R0 * (1 - .45 * t) * (1 + .25 * max(0, .08 - t) / .08)   # 根端粗、樹梢細
+            c.z = gh(c.x, c.y) + r * .55   # 半埋：下面四成多在土裡
+            rg = []
+            for j in range(NR):
+                a = 2 * math.pi * j / NR
+                bump = 1 + .07 * noise.noise(Vector((t * 9, j * .7, seed))) + .05 * noise.noise(Vector((t * 30, j * 2.1, seed)))
+                rg.append(bm_.verts.new(c + (s_ * math.cos(a) + Vector((0, 0, 1)) * math.sin(a)) * r * bump))
+            rings.append(rg)
+        for i in range(NS):
+            for j in range(NR):
+                f = bm_.faces.new((rings[i][j], rings[i][(j + 1) % NR], rings[i + 1][(j + 1) % NR], rings[i + 1][j]))
+                for lp, (ii, jj) in zip(f.loops, ((i, j), (i, j + 1), (i + 1, j + 1), (i + 1, j))):
+                    lp[uvl_].uv = (jj / NR * 2 * math.pi * R0 / 1.4, ii / NS * L / 2.2)
+        bm_.faces.new(rings[-1][::-1])   # 斷口
+        me_ = bpy.data.meshes.new('FallenLog'); bm_.to_mesh(me_); bm_.free()
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        me_.materials.append(_flm)
+        ob_ = bpy.data.objects.new('FallenLog', me_); sc.collection.objects.link(ob_)
+        # 根盤：倒下時從土裡翻起來的一面，直立的圓盤 + 一圈斷根 + 根上帶的土
+        base = Vector((x, y, gh(x, y))) - d_ * .3
+        bm2 = bmesh.new()
+        for k in range(14):
+            a = 2 * math.pi * k / 14 + rr_.uniform(-.15, .15)
+            dirr = (s_ * math.cos(a) + Vector((0, 0, 1)) * math.sin(a)).normalized()
+            Lr = R0 * rr_.uniform(1.6, 2.6)
+            prev = None
+            for u in range(9):
+                tt = u / 8
+                c = base + Vector((0, 0, R0 * .9)) + dirr * (Lr * tt) - d_ * (.4 * tt * tt)
+                rad = R0 * .28 * (1 - .85 * tt) + .03
+                ring = [bm2.verts.new(c + (d_ * math.cos(b) + dirr.cross(d_).normalized() * math.sin(b)) * rad) for b in [2 * math.pi * q / 8 for q in range(8)]]
+                if prev:
+                    for q in range(8):
+                        bm2.faces.new((prev[q], prev[(q + 1) % 8], ring[(q + 1) % 8], ring[q]))
+                prev = ring
+        me2 = bpy.data.meshes.new('RootPlate'); bm2.to_mesh(me2); bm2.free()
+        for p_ in me2.polygons:
+            p_.use_smooth = True
+        me2.materials.append(_flm)
+        sc.collection.objects.link(bpy.data.objects.new('RootPlate', me2))
+        bm3 = bmesh.new(); bmesh.ops.create_icosphere(bm3, subdivisions=4, radius=1)
+        for v in bm3.verts:
+            c = v.co.copy(); lump = noise.noise(c * 2.2 + Vector((seed, 0, 0))) * .3
+            v.co = Vector((c.x * .35 * (1 + lump), c.y * (1 + lump), c.z * (1 + lump)))
+        me3 = bpy.data.meshes.new('RootDirt'); bm3.to_mesh(me3); bm3.free()
+        for p_ in me3.polygons:
+            p_.use_smooth = True
+        me3.materials.append(_fdirt)
+        od = bpy.data.objects.new('RootDirt', me3); sc.collection.objects.link(od)
+        od.scale = (R0 * 1.2,) * 3; od.rotation_euler.z = ang
+        od.location = base + Vector((0, 0, R0 * .9)) - d_ * .15
+        # 翻起後留下的淺坑
+        print('FALLENLOG', round(x, 1), round(y, 1))
+
+    # 自動找位置：在 V3、V5 畫面裡、林中（離路 > 4.5 m、離祭壇 > 10、離坑 > 9、離神木 > 18），樹幹大致橫在畫面上
+    for (cx_, cy_), (tx_, ty_), seed_, L_, R_ in (((4, -15), (6, 18), 41, 12, .9), ((-6, 12), (17, -21), 42, 10, .8)):
+        f_ = Vector((tx_ - cx_, ty_ - cy_)).normalized(); r_ = Vector((f_.y, -f_.x))
+        best_ = None
+        for fd_ in range(8, 30):
+            for rd_ in (-16, -14, -12, -10, -8, -6, 6, 8, 10, 12, 14, 16):
+                p_ = Vector((cx_, cy_)) + f_ * fd_ + r_ * rd_
+                a_ = math.atan2(r_.y, r_.x) + (.35 if rd_ > 0 else -.35)
+                e_ = p_ + Vector((math.cos(a_), math.sin(a_))) * L_
+                ok_ = all(path_d(*(p_ + (e_ - p_) * u_)) > 3.2 for u_ in (0, .25, .5, .75, 1))
+                ok_ = ok_ and min(math.hypot(q_.x - ALT[0], q_.y - ALT[1]) for q_ in (p_, e_)) > 8
+                ok_ = ok_ and min(math.hypot(q_.x - PIT[0], q_.y - PIT[1]) for q_ in (p_, e_)) > 7.5
+                ok_ = ok_ and min(math.hypot(q_.x - TREE[0], q_.y - TREE[1]) for q_ in (p_, e_)) > 18
+                if ok_ and (best_ is None or fd_ < best_[0]):
+                    best_ = (fd_, p_, a_)
+        if best_:
+            fallen_log(best_[1].x, best_[1].y, best_[2], L_, R_, seed_)
+            globals().setdefault('_LOGS', []).append((best_[1], best_[2], L_, R_))
+
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
 # B 黃綠闊葉：12–20 m，團狀樹冠（黃綠）→ 空地邊緣、東側開口兩旁
@@ -1201,6 +1296,14 @@ if 'real' in argv:
         if pdist < 3.0 or math.hypot(x - PIT[0], y - PIT[1]) < 5.0 or math.hypot(x - ALT[0], y - ALT[1]) < 6.5:
             continue
         if any(math.hypot(x - q_.x, y - q_.y) < 1.4 for q_ in globals().get('_V5RP', [])):
+            continue
+        _skip = False
+        for _lp, _la, _lL, _lR in globals().get('_LOGS', []):   # 倒木上不長蕨（壓在上面會穿模）
+            _ld = Vector((math.cos(_la), math.sin(_la))); _rel = Vector((x, y)) - _lp
+            _tt = max(0.0, min(_lL, _rel.dot(_ld)))
+            if (_rel - _ld * _tt).length < _lR + .3:
+                _skip = True
+        if _skip:
             continue
         # V3 相機到坑之間是一片矮地（設定圖 V3 看得到坑），不長高的蕨
         _ax, _ay, _bx, _by = 4, -15, PIT[0], PIT[1]
