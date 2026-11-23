@@ -1,0 +1,1 @@
+AI-generated top-down wet rice-paddy mud texture source: muted dark warm-brown soft mud, fine soil, tiny pebbles and small irregular shallow puddles with gentle pale-sky reflection. No rice plants or field bank. Converted to exact seamless Albedo/Normal/MaskURP maps; brighter puddles receive higher smoothness.
