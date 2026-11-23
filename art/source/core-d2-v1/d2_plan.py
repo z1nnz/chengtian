@@ -4,7 +4,7 @@
 #   座標：x 東、y 北，單位公尺；區塊 200×200（x,y ∈ -100..100）
 import bpy, bmesh, sys, math, random, json
 import numpy as np
-from mathutils import Vector, noise
+from mathutils import Vector, Matrix, noise
 
 argv = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 QUICK = 'quick' in argv
@@ -925,6 +925,108 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         ob_.location = (x, y, gh(x, y) - h * .25)
     _p = _c5 + _f5 * 11 + _r5 * -3.0
     moss_mound(_p.x, _p.y, 2.0, 1.0, 1)
+
+    # 11/23 故事「從前是聖地」：石燈籠（一座站著但歪了、一座倒下摔成兩截）＋斷石柱；石材跟祭壇同一套、長苔
+    _stm = bpy.data.materials.get('AL02_Stone')
+    _lsm = _stm.copy() if _stm else bpy.data.materials.new('LanternStone')
+    _lsm.name = 'LanternStone'
+    _MOSSED.discard(_lsm.name)
+    mossify(_lsm, 1.6, 1.0, reach=.2)
+
+    def _oct(bm_, z0, h, r0, r1, seg=8, ox=0.0):
+        g = bmesh.ops.create_cone(bm_, cap_ends=True, segments=seg, radius1=r0, radius2=r1, depth=h)
+        bmesh.ops.translate(bm_, verts=g['verts'], vec=Vector((ox, 0, z0 + h / 2)))
+        return g['verts']
+
+    def _box(bm_, z0, sx, sy, sz):
+        g = bmesh.ops.create_cube(bm_, size=1)
+        for v in g['verts']:
+            v.co = Vector((v.co.x * sx, v.co.y * sy, v.co.z * sz + z0 + sz / 2))
+        return g['verts']
+
+    def lantern_parts(seed):
+        # 由下到上：基座、柱、托盤、燈室（四面開窗）、屋頂（翹角）、寶珠；全高約 2.3 m
+        rr_ = random.Random(seed)
+        lower = bmesh.new(); upper = bmesh.new()
+        _oct(lower, 0, .22, .42, .38); _oct(lower, .22, .08, .3, .3)
+        _oct(lower, .3, .85, .14, .12, seg=8)
+        _oct(lower, 1.15, .12, .2, .34, seg=6)
+        _box(upper, 0, .46, .46, .42)                              # 燈室
+        for k in range(4):                                         # 四面窗：往內凹的暗格
+            a = k * math.pi / 2
+            w = bmesh.ops.create_cube(upper, size=1)['verts']
+            for v in w:
+                v.co = Vector((v.co.x * .2, v.co.y * .06, v.co.z * .22))
+                v.co.rotate(Matrix.Rotation(a, 3, 'Z'))
+                v.co += Vector((math.cos(a + math.pi / 2) * 0, 0, 0)) + Vector((math.sin(a) * .22, math.cos(a) * .22, .21))
+        rf = _oct(upper, .42, .32, .52, .06, seg=6)               # 六角屋頂
+        for v in rf:                                               # 翹角：外緣角上翹
+            if v.co.z < .5 and v.co.xy.length > .45:
+                v.co.z += .06
+        _oct(upper, .74, .1, .07, .02, seg=8); bmesh.ops.create_uvsphere(upper, u_segments=8, v_segments=6, radius=.07)
+        for v in upper.verts:
+            if v.co.length < .08 and abs(v.co.z) < .08:
+                v.co.z += .88
+        out = []
+        for nm, bm_ in (('LanternLower', lower), ('LanternUpper', upper)):
+            for v in bm_.verts:   # 邊角缺損：每個頂點隨機往內縮一點（舊、被風化）
+                v.co *= 1 - .04 * rr_.random()
+            me_ = bpy.data.meshes.new(nm); bm_.to_mesh(me_); bm_.free()
+            me_.materials.append(_lsm)
+            out.append(me_)
+        return out
+
+    def place_lantern(x, y, rot, tilt, fallen, seed):
+        lo, up = lantern_parts(seed)
+        z = gh(x, y)
+        if not fallen:   # 站著但歪了、底座陷進土裡
+            for me_, dz in ((lo, 0), (up, 1.27)):
+                o = bpy.data.objects.new(me_.name, me_); sc.collection.objects.link(o)
+                o.location = (x, y, z - .12)
+                o.rotation_euler = (tilt, 0, rot)
+                o.data.transform(Matrix.Translation((0, 0, dz)))
+        else:            # 倒下：下半截橫躺，上半截（燈室＋屋頂）摔到一邊、斜插在土裡
+            o = bpy.data.objects.new(lo.name, lo); sc.collection.objects.link(o)
+            o.location = (x, y, z + .18); o.rotation_euler = (math.pi / 2 - .05, 0, rot)
+            o2 = bpy.data.objects.new(up.name, up); sc.collection.objects.link(o2)
+            d_ = Vector((math.cos(rot + math.pi / 2), math.sin(rot + math.pi / 2), 0))
+            p2 = Vector((x, y, 0)) + d_ * -1.9 + Vector((-d_.y, d_.x, 0)) * .5
+            o2.location = (p2.x, p2.y, gh(p2.x, p2.y) - .1); o2.rotation_euler = (1.1, .4, rot + .7)
+        print('LANTERN', round(x, 1), round(y, 1), 'fallen' if fallen else 'tilted')
+
+    def broken_pillar(x, y, h, rot, seed):
+        rr_ = random.Random(seed)
+        bm_ = bmesh.new()
+        _box(bm_, 0, .5, .5, .25)                     # 柱礎
+        g = _oct(bm_, .25, h, .2, .19, seg=12)
+        for v in g:                                    # 斷口：頂面高低不平
+            if v.co.z > .25 + h * .9:
+                v.co.z -= rr_.uniform(0, .35)
+        for v in bm_.verts:
+            v.co *= 1 - .03 * rr_.random()
+        me_ = bpy.data.meshes.new('BrokenPillar'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_lsm)
+        o = bpy.data.objects.new('BrokenPillar', me_); sc.collection.objects.link(o)
+        o.location = (x, y, gh(x, y) - .15); o.rotation_euler = (rr_.uniform(-.06, .06), rr_.uniform(-.06, .06), rot)
+        # 斷下來的那一截倒在旁邊
+        bm2 = bmesh.new(); _oct(bm2, 0, h * .7, .19, .18, seg=12)
+        me2 = bpy.data.meshes.new('PillarPiece'); bm2.to_mesh(me2); bm2.free(); me2.materials.append(_lsm)
+        o2 = bpy.data.objects.new('PillarPiece', me2); sc.collection.objects.link(o2)
+        d_ = Vector((math.cos(rot), math.sin(rot), 0)); q = Vector((x, y, 0)) + d_ * .5
+        o2.location = (q.x, q.y, gh(q.x, q.y) + .1); o2.rotation_euler = (math.pi / 2, 0, rot + .2)
+        print('PILLAR', round(x, 1), round(y, 1))
+
+    def _clear(x, y, need=2.4):   # 不擋路：離路中線 need m 以上，否則沿著遠離路的方向推出去
+        for _ in range(20):
+            if path_d(x, y) >= need:
+                return x, y
+            e = .2
+            gx = path_d(x + e, y) - path_d(x - e, y); gy = path_d(x, y + e) - path_d(x, y - e)
+            n = math.hypot(gx, gy) or 1
+            x += gx / n * .4; y += gy / n * .4
+        return x, y
+    place_lantern(*_clear(ALT[0] - 4.2, ALT[1] - 3.2), .35, .09, False, 1)      # 祭壇前左：歪掉的那座
+    place_lantern(*_clear(ALT[0] + 4.0, ALT[1] - 2.6), .35, 0, True, 2)         # 祭壇前右：倒下摔成兩截
+    broken_pillar(*_clear(ALT[0] - 6.5, ALT[1] + 3.0), 1.4, .6, 3)              # 祭壇左後：斷石柱
 
     # 11/23 故事「荒廢很多年」：倒下的老樹（獨立模型）——整根橫躺、半埋、長苔，一頭根盤翹起帶著土
     _flm = _bkm.copy(); _flm.name = 'FallenLogBark'
