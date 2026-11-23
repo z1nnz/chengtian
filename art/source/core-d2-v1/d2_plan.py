@@ -999,7 +999,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         for p_ in me2.polygons:
             p_.use_smooth = True
         me2.materials.append(_bkm)   # 斷根沒有 UV → 用神木的盒投影樹皮（不然會拉成條紋）
-        sc.collection.objects.link(bpy.data.objects.new('RootPlate', me2))
+        # 11/23 z1nnz「看不出來是什麼」：程式拼的根盤從正面看是一團 → 不放，等 Tripo 做根盤
         bm3 = bmesh.new(); bmesh.ops.create_icosphere(bm3, subdivisions=4, radius=1)
         for v in bm3.verts:
             c = v.co.copy(); lump = noise.noise(c * 2.2 + Vector((seed, 0, 0))) * .3
@@ -1021,7 +1021,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         for fd_ in range(8, 30):
             for rd_ in ((6, 8, 10, 12, 14, 16) if seed_ == 41 else (-16, -14, -12, -10, -8, -6, 6, 8, 10, 12, 14, 16)):   # V3 那棵放畫面右邊（左邊被神木和蕨擋住）
                 p_ = Vector((cx_, cy_)) + f_ * fd_ + r_ * rd_
-                a_ = math.atan2(r_.y, r_.x) + (.35 if rd_ > 0 else -.35)
+                a_ = math.atan2(r_.y, r_.x) + (.12 if rd_ > 0 else -.12)   # 倒木幾乎橫在畫面上，看得到整根側面（斜對鏡頭只看得到截面）
                 e_ = p_ + Vector((math.cos(a_), math.sin(a_))) * L_
                 ok_ = all(path_d(*(p_ + (e_ - p_) * u_)) > 3.2 for u_ in (0, .25, .5, .75, 1))
                 ok_ = ok_ and min(math.hypot(q_.x - ALT[0], q_.y - ALT[1]) for q_ in (p_, e_)) > 8
@@ -1029,7 +1029,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                 ok_ = ok_ and min(math.hypot(q_.x - TREE[0], q_.y - TREE[1]) for q_ in (p_, e_)) > 18
                 if ok_ and (best_ is None or fd_ < best_[0]):
                     best_ = (fd_, p_, a_)
-        if best_:
+        if best_ and 'logs' in argv:   # 11/23：程式拼的倒木從 V5 看是一團／一塊圓盤，看不出是樹 → 先不放（argv 加 logs 才放），等 Tripo
             fallen_log(best_[1].x, best_[1].y, best_[2], L_, R_, seed_)
             globals().setdefault('_LOGS', []).append((best_[1], best_[2], L_, R_))
 
