@@ -936,7 +936,15 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         if _ti.type == 'TEX_IMAGE':
             _ti.projection = 'FLAT'
     mossify(_flm, 1.3, 1.0, reach=.15)
-    _fdirt = M_DIRT if 'M_DIRT' in globals() else _flm
+    _fdirt = bpy.data.materials.new('RootPlateSoil'); _fdirt.use_nodes = True   # 根盤帶起來的土：亮一點的濕棕土（原本誤用樹皮材質 → 一團黑）
+    _sn = _fdirt.node_tree; _sb = next(x_ for x_ in _sn.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _stc = _sn.nodes.new('ShaderNodeTexCoord'); _smp = _sn.nodes.new('ShaderNodeMapping'); _smp.inputs['Scale'].default_value = (2.5, 2.5, 2.5)
+    _sn.links.new(_stc.outputs['Object'], _smp.inputs['Vector'])
+    _sti = _sn.nodes.new('ShaderNodeTexImage'); _sti.image = bpy.data.images.load(_GT + 'brown_mud_02_diff_2k.png'); _sti.projection = 'BOX'
+    _sn.links.new(_smp.outputs['Vector'], _sti.inputs['Vector'])
+    _smx = _sn.nodes.new('ShaderNodeMixRGB'); _smx.blend_type = 'MULTIPLY'; _smx.inputs[0].default_value = 1; _smx.inputs[2].default_value = (1.25, .9, .6, 1)
+    _sn.links.new(_sti.outputs['Color'], _smx.inputs[1]); _sn.links.new(_smx.outputs[0], _sb.inputs['Base Color'])
+    _sb.inputs['Roughness'].default_value = .9
 
     def fallen_log(x, y, ang, L, R0, seed):
         rr_ = random.Random(seed)
@@ -947,7 +955,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         for i in range(NS + 1):
             t = i / NS
             c = Vector((x, y, 0)) + d_ * (L * t) + s_ * (.5 * math.sin(t * 2.6 + seed))
-            r = R0 * (1 - .45 * t) * (1 + .25 * max(0, .08 - t) / .08)   # 根端粗、樹梢細
+            r = R0 * (1 - .45 * t) * (1 + .7 * max(0, .1 - t) / .1)   # 根端粗、樹梢細
             c.z = gh(c.x, c.y) + r * .55   # 半埋：下面四成多在土裡
             rg = []
             for j in range(NR):
@@ -960,7 +968,9 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                 f = bm_.faces.new((rings[i][j], rings[i][(j + 1) % NR], rings[i + 1][(j + 1) % NR], rings[i + 1][j]))
                 for lp, (ii, jj) in zip(f.loops, ((i, j), (i, j + 1), (i + 1, j + 1), (i + 1, j))):
                     lp[uvl_].uv = (jj / NR * 2 * math.pi * R0 / 1.4, ii / NS * L / 2.2)
-        bm_.faces.new(rings[-1][::-1])   # 斷口
+        for _cf in (bm_.faces.new(rings[-1][::-1]), bm_.faces.new(rings[0])):   # 斷口、根端封起來；截面 UV 用平面投影（不然拉成直條紋）
+            for lp in _cf.loops:
+                lp[uvl_].uv = (lp.vert.co.dot(s_) * .3, lp.vert.co.z * .3)
         me_ = bpy.data.meshes.new('FallenLog'); bm_.to_mesh(me_); bm_.free()
         for p_ in me_.polygons:
             p_.use_smooth = True
@@ -969,15 +979,17 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         # 根盤：倒下時從土裡翻起來的一面，直立的圓盤 + 一圈斷根 + 根上帶的土
         base = Vector((x, y, gh(x, y))) - d_ * .3
         bm2 = bmesh.new()
-        for k in range(14):
-            a = 2 * math.pi * k / 14 + rr_.uniform(-.15, .15)
+        for k in range(22):   # 11/23：斷根粗細差很多、長短不一、彎曲，尖端收細（原本一樣粗的圓頭棍 → 像一叢尖刺）
+            a = 2 * math.pi * k / 22 + rr_.uniform(-.2, .2)
             dirr = (s_ * math.cos(a) + Vector((0, 0, 1)) * math.sin(a)).normalized()
-            Lr = R0 * rr_.uniform(1.6, 2.6)
+            thick = rr_.choice((.34, .26, .2, .14, .1, .08))
+            Lr = R0 * rr_.uniform(.9, 2.8) * (1.2 if thick > .2 else 1)
+            bend = Vector((rr_.uniform(-1, 1), rr_.uniform(-1, 1), rr_.uniform(-1, .3))) * .35
             prev = None
             for u in range(9):
                 tt = u / 8
-                c = base + Vector((0, 0, R0 * .9)) + dirr * (Lr * tt) - d_ * (.4 * tt * tt)
-                rad = R0 * .28 * (1 - .85 * tt) + .03
+                c = base + Vector((0, 0, R0 * .9)) + dirr * (Lr * tt) - d_ * (.4 * tt * tt) + bend * (Lr * tt * tt)
+                rad = R0 * thick * (1 - .92 * tt ** .8) + .015
                 ring = [bm2.verts.new(c + (d_ * math.cos(b) + dirr.cross(d_).normalized() * math.sin(b)) * rad) for b in [2 * math.pi * q / 8 for q in range(8)]]
                 if prev:
                     for q in range(8):
@@ -986,7 +998,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         me2 = bpy.data.meshes.new('RootPlate'); bm2.to_mesh(me2); bm2.free()
         for p_ in me2.polygons:
             p_.use_smooth = True
-        me2.materials.append(_flm)
+        me2.materials.append(_bkm)   # 斷根沒有 UV → 用神木的盒投影樹皮（不然會拉成條紋）
         sc.collection.objects.link(bpy.data.objects.new('RootPlate', me2))
         bm3 = bmesh.new(); bmesh.ops.create_icosphere(bm3, subdivisions=4, radius=1)
         for v in bm3.verts:
@@ -996,8 +1008,8 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         for p_ in me3.polygons:
             p_.use_smooth = True
         me3.materials.append(_fdirt)
-        od = bpy.data.objects.new('RootDirt', me3); sc.collection.objects.link(od)
-        od.scale = (R0 * 1.2,) * 3; od.rotation_euler.z = ang
+        od = bpy.data.objects.new('RootDirt', me3)   # 11/23：一整片土盤從正面看像一塊紙板 → 不放
+        od.scale = (R0 * 1.05,) * 3; od.rotation_euler.z = ang
         od.location = base + Vector((0, 0, R0 * .9)) - d_ * .15
         # 翻起後留下的淺坑
         print('FALLENLOG', round(x, 1), round(y, 1))
@@ -1007,7 +1019,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         f_ = Vector((tx_ - cx_, ty_ - cy_)).normalized(); r_ = Vector((f_.y, -f_.x))
         best_ = None
         for fd_ in range(8, 30):
-            for rd_ in (-16, -14, -12, -10, -8, -6, 6, 8, 10, 12, 14, 16):
+            for rd_ in ((6, 8, 10, 12, 14, 16) if seed_ == 41 else (-16, -14, -12, -10, -8, -6, 6, 8, 10, 12, 14, 16)):   # V3 那棵放畫面右邊（左邊被神木和蕨擋住）
                 p_ = Vector((cx_, cy_)) + f_ * fd_ + r_ * rd_
                 a_ = math.atan2(r_.y, r_.x) + (.35 if rd_ > 0 else -.35)
                 e_ = p_ + Vector((math.cos(a_), math.sin(a_))) * L_
