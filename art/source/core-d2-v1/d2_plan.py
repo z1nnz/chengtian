@@ -1277,6 +1277,38 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     globals()['_SLABS'] = _SLABS
     print('SLABS', _nsl)
 
+    # 11/24 V5 右前方：設定圖兩根長滿苔的大倒木 → 放 Josh 的 DR08 朽木 v002（#127），我們自己做的倒木不用了
+    def place_glb_log(path, x, y, ang, sink, scale=1.0):
+        objs = glb(path, (0, 0), -gh(0, 0))
+        bpy.context.view_layer.update()
+        pts = [o_.matrix_world @ Vector(c) for o_ in objs for c in o_.bound_box]
+        dx_ = max(p_.x for p_ in pts) - min(p_.x for p_ in pts); dy_ = max(p_.y for p_ in pts) - min(p_.y for p_ in pts)
+        a0 = 0.0 if dx_ >= dy_ else math.pi / 2; L_ = max(dx_, dy_) * scale
+        M_ = Matrix.Translation((x, y, gh(x, y) - sink)) @ Matrix.Rotation(ang - a0, 4, 'Z') @ Matrix.Scale(scale, 4)
+        for o_ in objs:
+            o_.matrix_world = M_ @ o_.matrix_world
+            if 'Plants' in o_.name:
+                continue
+            for sl_ in o_.material_slots:   # 我們自己修：場景裡太亮太橘（像紅磚）→ 壓暗、降飽和，再長苔（從頂上往側面爬）
+                m_ = sl_.material
+                if not m_ or m_.get('dr08fix') or not m_.use_nodes:
+                    continue
+                m_['dr08fix'] = 1
+                b_ = next((x_ for x_ in m_.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED'), None)
+                if b_ and b_.inputs['Base Color'].links:
+                    src_ = b_.inputs['Base Color'].links[0].from_socket
+                    hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation'); hs_.inputs['Saturation'].default_value = .5; hs_.inputs['Value'].default_value = .5
+                    m_.node_tree.links.new(src_, hs_.inputs['Color']); m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
+                mossify(m_, 1.4, 1.0, reach=.4)
+        d_ = Vector((math.cos(ang), math.sin(ang)))
+        globals().setdefault('_LOGS', []).append((Vector((x, y)) - d_ * L_ / 2, ang, L_, min(dx_, dy_) * scale / 2))   # 倒木上不長蕨
+        print('DR08', path.split('/')[-1], round(x, 1), round(y, 1), 'len', round(L_, 1))
+    _DR = 'D:/chengtian/4-素材與快取/josh-dr08/'
+    if 'nodr08' not in argv:
+        _la = math.atan2((_f5 * .55 - _r5).y, (_f5 * .55 - _r5).x)   # 從右前往左後斜躺（設定圖從右下角斜進畫面）
+        _p = _c5 + _f5 * 5.2 + _r5 * 4.4; place_glb_log(_DR + 'DR08_RottenLog_C_v002.glb', *_clear(_p.x, _p.y, 3.2), _la, .12, 1.15)
+        _p = _c5 + _f5 * 8.8 + _r5 * 5.6; place_glb_log(_DR + 'DR08_RottenLog_B_v002.glb', *_clear(_p.x, _p.y, 3.4), _la + .25, .1, 1.1)
+
     # 11/24 地面細節：落葉堆（堆在樹樁、石頭、根邊的角落，風吹過去積起來的）、松果、小蕈叢（樹樁上、落葉堆邊）
     _lfm = [_mat('LeafBrown', (.16, .08, .03), .85, 30, (.09, .045, .02)), _mat('LeafOrange', (.30, .13, .04), .85, 30, (.18, .07, .02)), _mat('LeafDark', (.06, .04, .02), .9, 30, (.035, .025, .015))]
     _pcm = _mat('PineCone', (.11, .06, .03), .8, 60, (.05, .03, .015))
