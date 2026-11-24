@@ -1299,15 +1299,15 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                     src_ = b_.inputs['Base Color'].links[0].from_socket
                     hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation'); hs_.inputs['Saturation'].default_value = .5; hs_.inputs['Value'].default_value = .5
                     m_.node_tree.links.new(src_, hs_.inputs['Color']); m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
-                mossify(m_, 1.4, 1.0, reach=.4)
+                mossify(m_, .9, 1.0, reach=.12)   # 苔只在頂上，側面露出樹皮（1.4／0.4 蓋滿整根像苔丘）
         d_ = Vector((math.cos(ang), math.sin(ang)))
         globals().setdefault('_LOGS', []).append((Vector((x, y)) - d_ * L_ / 2, ang, L_, min(dx_, dy_) * scale / 2))   # 倒木上不長蕨
         print('DR08', path.split('/')[-1], round(x, 1), round(y, 1), 'len', round(L_, 1))
     _DR = 'D:/chengtian/4-素材與快取/josh-dr08/'
     if 'nodr08' not in argv:
         _la = math.atan2((_f5 * .55 - _r5).y, (_f5 * .55 - _r5).x)   # 從右前往左後斜躺（設定圖從右下角斜進畫面）
-        _p = _c5 + _f5 * 5.2 + _r5 * 4.4; place_glb_log(_DR + 'DR08_RottenLog_C_v002.glb', *_clear(_p.x, _p.y, 3.2), _la, .12, 1.15)
-        _p = _c5 + _f5 * 8.8 + _r5 * 5.6; place_glb_log(_DR + 'DR08_RottenLog_B_v002.glb', *_clear(_p.x, _p.y, 3.4), _la + .25, .1, 1.1)
+        _p = _c5 + _f5 * 3.4 + _r5 * 3.6; place_glb_log(_DR + 'DR08_RottenLog_C_v002.glb', *_clear(_p.x, _p.y, 2.9), _la, .14, 1.2)   # 11/24 拉近放大：設定圖從右下角伸進來
+        _p = _c5 + _f5 * 7.0 + _r5 * 4.8; place_glb_log(_DR + 'DR08_RottenLog_B_v002.glb', *_clear(_p.x, _p.y, 3.2), _la + .25, .12, 1.1)
 
     # 11/24 地面細節：落葉堆（堆在樹樁、石頭、根邊的角落，風吹過去積起來的）、松果、小蕈叢（樹樁上、落葉堆邊）
     _lfm = [_mat('LeafBrown', (.16, .08, .03), .85, 30, (.09, .045, .02)), _mat('LeafOrange', (.30, .13, .04), .85, 30, (.18, .07, .02)), _mat('LeafDark', (.06, .04, .02), .9, 30, (.035, .025, .015))]
