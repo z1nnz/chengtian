@@ -314,7 +314,7 @@ cv = bw.verts.new((0, 0, 0))
 ring = []
 for k in range(36):
     a = k / 36 * 6.283
-    rr = 1.0 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))
+    rr = 1.35 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))   # 11/24 設定圖坑底一大灘水 → 加大
     ring.append(bw.verts.new((math.cos(a) * rr * 1.3 + .25, math.sin(a) * rr * .85 - .1, 0)))
 for k in range(36):
     bw.faces.new((cv, ring[k], ring[(k + 1) % 36]))
@@ -324,7 +324,7 @@ bw.free()
 wme.materials.append(wm)
 wo = bpy.data.objects.new('CO02_Water', wme)
 _fl = min(v.co.z for v in me.vertices if math.hypot(v.co.x - .25, v.co.y + .1) < .9)
-wo.location.z = _fl + .07   # 11/22 原本水面在坑底凹凸下面看不到 → 放在坑底最低處上方 7 cm
+wo.location.z = _fl + .16   # 11/22 原本水面在坑底凹凸下面看不到 → 放在坑底最低處上方 7 cm
 sc.collection.objects.link(wo)
 
 # 小石頭：從土裡翻出來的

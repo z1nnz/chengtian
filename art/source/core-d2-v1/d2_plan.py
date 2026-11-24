@@ -255,7 +255,7 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     pn.inputs['Detail'].default_value = 4
     nt.links.new(tc.outputs['Object'], pn.inputs['Vector'])
     pmr = nt.nodes.new('ShaderNodeMapRange')
-    pmr.inputs['From Min'].default_value, pmr.inputs['From Max'].default_value = .56, .60
+    pmr.inputs['From Min'].default_value, pmr.inputs['From Max'].default_value = .535, .575   # 11/24 設定圖路上水窪多 → 多一些
     nt.links.new(pn.outputs['Fac'], pmr.inputs['Value'])
     pmul = nt.nodes.new('ShaderNodeMath')
     pmul.operation = 'MULTIPLY'
@@ -674,12 +674,12 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
                         _gnz.inputs['Detail'].default_value = 3
                         _t.links.new(_gg.outputs['Position'], _gnz.inputs['Vector'])
                         _gmr = _t.nodes.new('ShaderNodeMapRange')
-                        _gmr.inputs['From Min'].default_value, _gmr.inputs['From Max'].default_value = .47, .58
-                        _gmr.inputs['To Max'].default_value = .85
+                        _gmr.inputs['From Min'].default_value, _gmr.inputs['From Max'].default_value = .43, .56   # 11/24 六張比對：金黃葉叢再多一點、偏橙
+                        _gmr.inputs['To Max'].default_value = .95
                         _t.links.new(_gnz.outputs['Fac'], _gmr.inputs['Value'])
                         _gmx = _t.nodes.new('ShaderNodeMixRGB')
                         _gmx.blend_type = 'MULTIPLY'
-                        _gmx.inputs[2].default_value = (2.3, 1.55, .38, 1)   # 金黃
+                        _gmx.inputs[2].default_value = (2.5, 1.45, .32, 1)   # 金黃偏橙
                         _t.links.new(_gmr.outputs[0], _gmx.inputs[0])
                         _t.links.new(hs_.outputs[0], _gmx.inputs[1])
                         _t.links.new(_gmx.outputs[0], b_.inputs['Base Color'])
@@ -2210,7 +2210,7 @@ if 'real' in argv:
         zb = min(w.z for w in ws)
         cand = [w for w in ws if w.z > zb + (zt - zb) * .55]
         vb = LeafBuf()
-        for k in range(55):   # 設定圖 V2、V6 拱門垂藤很多
+        for k in range(95 if arch in _ARS else 55):   # 設定圖 V2、V6 拱門垂藤很多（11/24 V2 南拱再加）
             p0 = SR.choice(cand)
             L_ = SR.uniform(.8, min(2.6, (p0.z - gh(p0.x, p0.y)) * .7))
             n_ = int(L_ / .06)
@@ -2426,7 +2426,7 @@ sc.render.resolution_x, sc.render.resolution_y = 1536, 1024
 SHOTS = {
     'V1': ((70, -105, 62), (-6, 18, 0), 24, '俯瞰全景（東南高處）'),
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
-    'V3': ((4, -15, 1.9), (6, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
+    'V3': ((4, -15, 1.9), (9.5, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
     'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
     'V5': ((-6, 12, 2.2), (17, -21, 1.8), 18, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
