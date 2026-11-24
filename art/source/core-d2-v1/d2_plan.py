@@ -1109,12 +1109,12 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _cwv.inputs['Scale'].default_value = 9; _cwv.inputs['Distortion'].default_value = 3; _cwv.inputs['Detail'].default_value = 4
     _cn.links.new(_ctc.outputs['Object'], _cwv.inputs['Vector'])
     _ccr = _cn.nodes.new('ShaderNodeValToRGB')
-    _ccr.color_ramp.elements[0].color = (.07, .055, .04, 1); _ccr.color_ramp.elements[1].color = (.17, .14, .10, 1)
+    _ccr.color_ramp.elements[0].color = (.04, .03, .022, 1); _ccr.color_ramp.elements[1].color = (.10, .08, .058, 1)   # 11/24 調暗：原本淺色圓盤太乾淨、像新鋸的
     _cn.links.new(_cwv.outputs['Fac'], _ccr.inputs[0]); _cn.links.new(_ccr.outputs[0], _cb.inputs['Base Color'])
     _cbp = _cn.nodes.new('ShaderNodeBump'); _cbp.inputs['Strength'].default_value = .6
     _cn.links.new(_cwv.outputs['Fac'], _cbp.inputs['Height']); _cn.links.new(_cbp.outputs['Normal'], _cb.inputs['Normal'])
     _cb.inputs['Roughness'].default_value = .9
-    mossify(_ctm, .8, 1.0)
+    mossify(_ctm, 1.2, 1.0)
 
     def stump(x, y, r, h, seed):
         rr_ = random.Random(seed); N = 36; off_ = Vector((seed * 2.3, .7, 0))
@@ -1162,7 +1162,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         ob_.location = (x, y, min(gh(x + dx, y + dy) for dx in (-r, 0, r) for dy in (-r, 0, r)) - .02)
         ob_.rotation_euler = (0, 0, rr_.uniform(0, 6.28))
         print('STUMP', round(x, 1), round(y, 1))
-    for _fd, _rd, _r, _h, _sd in ((4.0, 5.0, .45, .55, 11), (10.5, -5.0, .55, .4, 12)):   # V3 路兩旁：兩個老樹樁
+    for _fd, _rd, _r, _h, _sd in ((7.5, 4.2, .45, .55, 11), (9.0, -3.8, .55, .4, 12)):   # V3 路兩旁：兩個老樹樁（11/24 移進鏡頭：原本一個在畫框外、一個被蕨蓋住）
         _p = _c3 + _f3 * _fd + _r3 * _rd
         stump(*_clear(_p.x, _p.y, 3.0), _r, _h, _sd)
     _p = _c5 + _f5 * 6.5 + _r5 * 4.2   # V5 路右邊一個
