@@ -170,9 +170,10 @@ def ground_material():
     nt.links.new(_wn.outputs['Fac'], _za.inputs[0]); nt.links.new(_gz.outputs['Z'], _za.inputs[2])
     _cr = nt.nodes.new('ShaderNodeValToRGB'); _el = _cr.color_ramp.elements
     _el[0].position, _el[0].color = .0, (.85, .72, .50, 1)          # z -1.7：黏土（偏黃灰）
-    _el[1].position, _el[1].color = 1.0, (.30, .22, .16, 1)         # z 0：表土（深棕）
+    _dk = 'darkrim' in sys.argv   # 11/25 z1nnz：坑的土跟周遭的土顏色差太多 → 坑口那圈表土調亮、接近外面林床的棕（darkrim = 舊版深色）
+    _el[1].position, _el[1].color = 1.0, ((.30, .22, .16, 1) if _dk else (.66, .52, .37, 1))         # z 0：表土
     _e2 = _cr.color_ramp.elements.new(.55); _e2.color = (1.15, .85, .58, 1)   # 中段棕土
-    _e3 = _cr.color_ramp.elements.new(.80); _e3.color = (.50, .38, .27, 1)
+    _e3 = _cr.color_ramp.elements.new(.80); _e3.color = (.50, .38, .27, 1) if _dk else (.78, .60, .42, 1)
     _zr = nt.nodes.new('ShaderNodeMapRange'); _zr.inputs['From Min'].default_value, _zr.inputs['From Max'].default_value = -1.7, .06
     nt.links.new(_za.outputs[0], _zr.inputs['Value']); nt.links.new(_zr.outputs[0], _cr.inputs[0])
     _ml = nt.nodes.new('ShaderNodeMixRGB'); _ml.blend_type = 'MULTIPLY'; _ml.inputs[0].default_value = 1
@@ -314,7 +315,7 @@ cv = bw.verts.new((0, 0, 0))
 ring = []
 for k in range(36):
     a = k / 36 * 6.283
-    rr = 1.35 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))   # 11/24 設定圖坑底一大灘水 → 加大
+    rr = 1.75 * (1 + .3 * nz(math.cos(a), math.sin(a), 1.8, 11.0))   # 11/24 設定圖坑底一大灘水 → 加大
     ring.append(bw.verts.new((math.cos(a) * rr * 1.3 + .25, math.sin(a) * rr * .85 - .1, 0)))
 for k in range(36):
     bw.faces.new((cv, ring[k], ring[(k + 1) % 36]))
@@ -324,7 +325,7 @@ bw.free()
 wme.materials.append(wm)
 wo = bpy.data.objects.new('CO02_Water', wme)
 _fl = min(v.co.z for v in me.vertices if math.hypot(v.co.x - .25, v.co.y + .1) < .9)
-wo.location.z = _fl + .16   # 11/22 原本水面在坑底凹凸下面看不到 → 放在坑底最低處上方 7 cm
+wo.location.z = _fl + (.16 if 'lowwater' in sys.argv else .30)   # 11/25 V4 設定圖坑底一大灘反光的水 → 水面再抬高 14 cm，淹到坑底斜面、水面變大（lowwater = 舊版）。11/22 原本水面在坑底凹凸下面看不到 → 放在坑底最低處上方 7 cm
 sc.collection.objects.link(wo)
 
 # 小石頭：從土裡翻出來的
