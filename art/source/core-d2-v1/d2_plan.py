@@ -1121,6 +1121,8 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     except KeyError:
         pass
 
+    _STUMPS = []
+
     def stump(x, y, r, h, seed):
         rr_ = random.Random(seed); N = 36; off_ = Vector((seed * 2.3, .7, 0))
         lobes = rr_.randint(4, 6); ph = rr_.uniform(0, 6.28)
@@ -1166,7 +1168,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         ob_ = bpy.data.objects.new('Stump', me_); sc.collection.objects.link(ob_)
         ob_.location = (x, y, min(gh(x + dx, y + dy) for dx in (-r, 0, r) for dy in (-r, 0, r)) - .02)
         ob_.rotation_euler = (0, 0, rr_.uniform(0, 6.28))
-        _PROPS.append((x, y, r * 1.5))
+        _PROPS.append((x, y, r * 1.5)); _STUMPS.append((x, y, r, h))
         print('STUMP', round(x, 1), round(y, 1))
     for _fd, _rd, _r, _h, _sd in ((5.5, 3.4, .55, .6, 11), (6.5, -3.4, .6, .5, 12)):   # V3 路兩旁：兩個老樹樁（11/24 移進鏡頭：原本一個在畫框外、一個被蕨蓋住）
         _p = _c3 + _f3 * _fd + _r3 * _rd
@@ -1234,6 +1236,8 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     # 11/24 第二版：祭壇前那段太短看不到 → 祭壇附近的主路、支路底下原本都是石板路，現在大多被土蓋掉、只剩一段段露出來
     _RUNS = [(tuple(_st), tuple(_st + _af * (_L + .5)), 1.0), ((4, -10), (4, -6), .55), ((4, -6), (9, 1), 1.0), ((9, 1), (14, 8), .7),
              ((3, -5), (-1, 3), .9), ((-1, 3), (-5, 9), .55)]
+    _slm = _stm.copy() if _stm else _lsm.copy(); _slm.name = 'PathSlabStone'   # 路上的石板常被踩：苔少一點，石面看得出來
+    mossify(_slm, .7, 1.0)
     _SR = random.Random(41); _nsl = 0; _SLABS = []
     for (ax_, ay_), (bx_, by_), keep in _RUNS:
         A_, B_ = Vector((ax_, ay_)), Vector((bx_, by_)); dv = (B_ - A_); Lr = dv.length; dv = dv.normalized(); sv = Vector((-dv.y, dv.x))
@@ -1253,14 +1257,93 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                     bmesh.ops.bevel(bm_, geom=bm_.edges[:], offset=.025, segments=2, affect='EDGES')
                     for v in bm_.verts:   # 磨圓、表面不平
                         v.co.z += noise.noise(v.co * 6 + Vector((_nsl, 0, 0))) * .015
-                    me_ = bpy.data.meshes.new('ShrineSlab'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_lsm)
+                    me_ = bpy.data.meshes.new('ShrineSlab'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_slm)
                     ob_ = bpy.data.objects.new('ShrineSlab', me_); sc.collection.objects.link(ob_)
-                    ob_.location = (c.x, c.y, gh(c.x, c.y) - .055 - _SR.uniform(0, .04))   # 頂面跟路面差不多平，有的陷下去
+                    ob_.location = (c.x, c.y, gh(c.x, c.y) + .0 - _SR.uniform(0, .03))   # 11/24 抬高：原本被路面的泥蓋掉 → 石面露出 4–7 cm
                     ob_.rotation_euler = (_SR.uniform(-.05, .05), _SR.uniform(-.05, .05), math.atan2(dv.y, dv.x) - math.pi / 2 + _SR.uniform(-.1, .1) + (_SR.uniform(-.15, .15) if len(pieces) > 1 else 0))
                     _nsl += 1; _SLABS.append((c.x, c.y))
             _d += dep + _SR.uniform(.06, .14)
     globals()['_SLABS'] = _SLABS
     print('SLABS', _nsl)
+
+    # 11/24 地面細節：落葉堆（堆在樹樁、石頭、根邊的角落，風吹過去積起來的）、松果、小蕈叢（樹樁上、落葉堆邊）
+    _lfm = [_mat('LeafBrown', (.16, .08, .03), .85, 30, (.09, .045, .02)), _mat('LeafOrange', (.30, .13, .04), .85, 30, (.18, .07, .02)), _mat('LeafDark', (.06, .04, .02), .9, 30, (.035, .025, .015))]
+    _pcm = _mat('PineCone', (.11, .06, .03), .8, 60, (.05, .03, .015))
+    _mcap = _mat('MushCap', (.30, .17, .08), .6, 15, (.18, .09, .04)); _mstem = _mat('MushStem', (.55, .50, .40), .7)
+    _LR = random.Random(91)
+
+    def leaf_pile(x, y, w, hgt, seed):   # 一團低矮的土丘＋上面密密的落葉片（單一網格）
+        rr_ = random.Random(seed); bm_ = bmesh.new(); ax_ = rr_.uniform(0, 6.28)
+        for _ in range(int(380 * w)):
+            a = rr_.uniform(0, 6.283); d = math.sqrt(rr_.random()); lx, ly = math.cos(a) * d * w, math.sin(a) * d * w * .7
+            px, py = x + lx * math.cos(ax_) - ly * math.sin(ax_), y + lx * math.sin(ax_) + ly * math.cos(ax_)
+            z = gh(px, py) + hgt * (1 - d * d) + rr_.uniform(0, .02)
+            sz = rr_.uniform(.035, .07); rot = Matrix.Rotation(rr_.uniform(0, 6.28), 3, 'Z') @ Matrix.Rotation(rr_.uniform(-.6, .6), 3, 'X')
+            cv = [rot @ Vector(q) * sz for q in ((-1, -.5, 0), (1, -.5, 0), (1.1, .5, .15), (-1.1, .5, .15))]   # 微捲的葉片
+            f_ = bm_.faces.new([bm_.verts.new(Vector((px, py, z)) + c) for c in cv]); f_.material_index = rr_.choices((0, 1, 2), (.5, .25, .25))[0]
+        me_ = bpy.data.meshes.new('LeafPile'); bm_.to_mesh(me_); bm_.free()
+        for m_ in _lfm:
+            me_.materials.append(m_)
+        ob_ = bpy.data.objects.new('LeafPile', me_); sc.collection.objects.link(ob_)
+        ob_.modifiers.new('Th', 'SOLIDIFY').thickness = .003
+
+    _cone_bm = bmesh.new()   # 松果樣板：一層層鱗片（每圈 8 片小三角）
+    for k in range(7):
+        t = k / 6; rad = .035 * math.sin(math.pi * (.15 + .8 * t)); z = .1 * t
+        for i in range(8):
+            a = 6.283 * (i + .5 * k) / 8
+            p0 = Vector((math.cos(a) * rad * .4, math.sin(a) * rad * .4, z)); tip = Vector((math.cos(a) * rad, math.sin(a) * rad, z - .012))
+            side = Vector((-math.sin(a), math.cos(a), 0)) * rad * .45
+            _cone_bm.faces.new((_cone_bm.verts.new(p0 - side), _cone_bm.verts.new(tip), _cone_bm.verts.new(p0 + side), _cone_bm.verts.new(p0 + Vector((0, 0, .015)))))
+    _cme = bpy.data.meshes.new('PineCone'); _cone_bm.to_mesh(_cme); _cone_bm.free(); _cme.materials.append(_pcm)
+
+    def pine_cones(x, y, n, spread):
+        for _ in range(n):
+            px, py = x + _LR.gauss(0, spread), y + _LR.gauss(0, spread)
+            if path_d(px, py) < 1.6:
+                continue
+            ob_ = bpy.data.objects.new('PineCone', _cme); sc.collection.objects.link(ob_)
+            s_ = _LR.uniform(.8, 1.3); ob_.scale = (s_, s_, s_)
+            ob_.location = (px, py, gh(px, py) + .025); ob_.rotation_euler = (math.pi / 2 + _LR.uniform(-.3, .3), 0, _LR.uniform(0, 6.28))   # 側躺
+
+    def mush_cluster(x, y, z0, n, size, seed):   # 一叢大小不一的小蕈
+        rr_ = random.Random(seed); bm_ = bmesh.new()
+        for k in range(n):
+            px, py = x + rr_.gauss(0, size * 2), y + rr_.gauss(0, size * 2); s_ = size * rr_.uniform(.5, 1.3)
+            zb = (z0 if z0 is not None else gh(px, py)) - .01; h_ = s_ * rr_.uniform(1.2, 2.2); tl = Vector((rr_.uniform(-.15, .15), rr_.uniform(-.15, .15), 1)).normalized()
+            g = bmesh.ops.create_cone(bm_, cap_ends=False, segments=8, radius1=s_ * .18, radius2=s_ * .14, depth=h_)
+            for v in g['verts']:
+                v.co = Vector((px, py, zb)) + Vector((v.co.x, v.co.y, 0)) + tl * (v.co.z + h_ / 2)
+            for f_ in bm_.faces:
+                if f_.material_index == 0 and not f_.tag:
+                    f_.material_index = 1; f_.tag = True
+            g = bmesh.ops.create_uvsphere(bm_, u_segments=12, v_segments=6, radius=s_ * rr_.uniform(.45, .65))
+            top = Vector((px, py, zb)) + tl * h_
+            for v in g['verts']:
+                v.co = top + Vector((v.co.x, v.co.y, max(v.co.z, -s_ * .05) * .55))
+            for f_ in bm_.faces:
+                if not f_.tag:
+                    f_.material_index = 0; f_.tag = True
+        me_ = bpy.data.meshes.new('MushCluster'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_mcap); me_.materials.append(_mstem)
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        ob_ = bpy.data.objects.new('MushCluster', me_); sc.collection.objects.link(ob_)
+
+    _np = 0
+    for _x, _y, _r, _h in _STUMPS:   # 樹樁：根邊一側積落葉、切口上長一叢小蕈、旁邊幾顆松果
+        a = _LR.uniform(0, 6.28); leaf_pile(_x + math.cos(a) * (_r + .35), _y + math.sin(a) * (_r + .35), .7, .12, _np); _np += 1
+        mush_cluster(_x + _LR.uniform(-.1, .1), _y + _LR.uniform(-.1, .1), gh(_x, _y) + _h * .95 - .05, _LR.randint(4, 7), .045, _np)
+        mush_cluster(_x + math.cos(a + 2) * (_r + .15), _y + math.sin(a + 2) * (_r + .15), None, _LR.randint(3, 6), .04, _np + 50)
+        pine_cones(_x, _y, _LR.randint(3, 6), .9)
+    for _cx, _fx, _rx in ((_c3, 6.0, 4.6), (_c3, 12.0, -4.4), (_c3, 15.0, 5.0), (_c5, 4.0, -3.2), (_c5, 9.0, 3.6), (_c5, 13.0, -4.0)):   # V3、V5 路邊：落葉堆＋小蕈＋松果，成堆不平均
+        _bx_ = _c3 if _cx is _c3 else _c5; _ff = _f3 if _cx is _c3 else _f5; _rr = _r3 if _cx is _c3 else _r5
+        _p = _bx_ + _ff * _fx + _rr * _rx; _q = _clear(_p.x, _p.y, 2.6)
+        leaf_pile(*_q, _LR.uniform(.6, 1.1), _LR.uniform(.08, .16), _np); _np += 1
+        if _LR.random() < .6:
+            mush_cluster(_q[0] + _LR.uniform(-.6, .6), _q[1] + _LR.uniform(-.6, .6), None, _LR.randint(3, 8), .04, _np + 80)
+        pine_cones(*_q, _LR.randint(2, 7), 1.2)
+        _PROPS.append((_q[0], _q[1], .6))   # 大蕨退開、周圍長矮草
+    print('LITTER piles', _np)
 
     # 11/24 故事「從前是聖地」：神木腰上綁的舊祈福繩＋垂下來的褪色布條（z1nnz 同意動神木，只加繩子、不改樹）
     if 'norope' not in argv:
