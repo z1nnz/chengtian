@@ -22,6 +22,7 @@ for o in list(bpy.data.objects):
 TREE = (-24.0, 30.0)          # 神木
 ALT = (7.0, 7.0)              # 祭壇
 PIT = (14.5, -3.0)            # 被挖的坑（z1nnz 11/21：離走道遠一點）
+PIT2, PIT2_S = (8.6, -8.4), .65   # 11/24 故事「有人來挖過」：V3 右前方再一個小的試挖坑（設定圖 V3 右前方看得到坑）
 ARCH_S = (2.0, -84.0)         # 南入口（Josh 的根拱）
 ARCH_N = (-4.0, 108.0)         # 北入口（核心組根拱）
 CLEAR = (-4.0, 10.0, 38.0)    # 林中空地：中心、半徑
@@ -70,6 +71,9 @@ def gh(x, y):
     if REAL:   # 坑是獨立模型（CO02）；坑周圍 6 m 內地面整平，讓坑模型平平地鋪上去
         w = max(0.0, min(1.0, (11.5 - rp) / 4.0))
         h = h * (1 - w) + gh0(*PIT) * w
+        if 'pit2' in argv:
+            rp2 = math.hypot(x - PIT2[0], y - PIT2[1]); w2 = max(0.0, min(1.0, (6.2 * PIT2_S + 2.5 - rp2) / 2.5))
+            h = h * (1 - w2) + gh0(*PIT2) * w2
     h -= max(0.0, 1 - path_d(x, y) / 2.2) * .18
     if not REAL:
         h -= 1.1 * max(0.0, 1 - rp / 2.7) ** .6
@@ -280,7 +284,7 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     # 坑（CO02 獨立模型）底下的主地面壓低，不要蓋住坑洞
     _bm = bmesh.new()   # 坑模型底下的主地面挖掉（不能只壓低，斜面會穿進坑裡）
     _bm.from_mesh(me)
-    bmesh.ops.delete(_bm, geom=[f_ for f_ in _bm.faces if math.hypot(f_.calc_center_median().x - PIT[0], f_.calc_center_median().y - PIT[1]) < 5.3], context='FACES')
+    bmesh.ops.delete(_bm, geom=[f_ for f_ in _bm.faces if math.hypot(f_.calc_center_median().x - PIT[0], f_.calc_center_median().y - PIT[1]) < 5.3 or ('pit2' in argv and math.hypot(f_.calc_center_median().x - PIT2[0], f_.calc_center_median().y - PIT2[1]) < 5.3 * PIT2_S)], context='FACES')
     # 11/21 地面細化（z1nnz：「地板的建模沒有到圖那麼精細」）：近景三區改成 8 cm 細網格，材質做真位移
     #   泥路的凹凸、路邊微微隆起的土埂、積水窪真的凹下去；主地面沒有 DispW 屬性 → 不位移，接縫對得上
     PATCHES = [(-30, 32, -24, 36), (-12, 16, -100, -68), (-16, 14, 86, 118)]
@@ -318,13 +322,15 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
         W = np.clip(edge / 1.5, 0, 1)
         rp_ = np.hypot(XX - PIT[0], YY - PIT[1])
         W = W * np.clip((rp_ - 5.6) / 1.4, 0, 1)
+        if 'pit2' in argv:
+            W = W * np.clip((np.hypot(XX - PIT2[0], YY - PIT2[1]) - 5.6 * PIT2_S) / 1.4, 0, 1)
         verts = np.stack([XX.ravel(), YY.ravel(), Hf.ravel()], 1).astype(np.float32)
         ii = np.arange((nyf - 1) * (nxf - 1))
         r0 = ii // (nxf - 1); c0 = ii % (nxf - 1)
         v0 = r0 * nxf + c0
         quads = np.stack([v0, v0 + 1, v0 + nxf + 1, v0 + nxf], 1)
         cen = verts[quads].mean(1)
-        keep = np.hypot(cen[:, 0] - PIT[0], cen[:, 1] - PIT[1]) >= 5.3
+        keep = (np.hypot(cen[:, 0] - PIT[0], cen[:, 1] - PIT[1]) >= 5.3) & (('pit2' not in argv) | (np.hypot(cen[:, 0] - PIT2[0], cen[:, 1] - PIT2[1]) >= 5.3 * PIT2_S))
         quads = quads[keep]
         pme = bpy.data.meshes.new(f'GroundFine{_pi}')
         pme.vertices.add(len(verts)); pme.vertices.foreach_set('co', verts.ravel())
@@ -380,8 +386,10 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
         GM.cycles.displacement_method = 'BOTH'
     with bpy.data.libraries.load(S_ + 'pit_lib.blend', link=False) as (_s, _d):
         _d.objects = [nm for nm in _s.objects if nm.startswith('CO02')]
+    _z0 = {}
     for o in _d.objects:
         sc.collection.objects.link(o)
+        _z0[o.name] = o.location.z
         o.location = (PIT[0], PIT[1], o.location.z + gh0(*PIT) + .012)
         if o.name == 'CO02_Pit':   # 坑外圈沒土的地方改用林床材質，交界才看不出接縫；坑內與鬆土保留坑自己的泥土材質
             o.data.materials.append(GM)
@@ -389,6 +397,11 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
             for p_ in o.data.polygons:
                 if max(_mk[v_].color[0] for v_ in p_.vertices) < .02:
                     p_.material_index = 1
+    if 'pit2' in argv:   # 11/24 小試挖坑：同一個坑模型縮小一份，放在 V3 右前方
+        for o in list(_d.objects):
+            o2 = o.copy(); o2.data = o.data.copy(); sc.collection.objects.link(o2)
+            o2.scale = (PIT2_S, PIT2_S, PIT2_S * .8); o2.rotation_euler.z = 2.1
+            o2.location = (PIT2[0], PIT2[1], _z0[o.name] * PIT2_S * .8 + gh0(*PIT2) + .012)
 g = bpy.data.objects.new('Ground', me)
 sc.collection.objects.link(g)
 
@@ -1205,6 +1218,8 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     for _k, (_x, _y, _r) in enumerate(_PROPS):
         base_mound(_x, _y, _r, _k)
     globals()['_PROPS'] = _PROPS
+    if 'pit2' in argv:
+        _PROPS.append((PIT2[0], PIT2[1], 6.2 * PIT2_S * .75))   # 大蕨退開、坑外一圈矮草（土堆已經在坑模型裡）
     # 11/24 祭壇做舊：腳下一圈崩落的碎石塊（角掉下來的），半埋、成堆不均勻
     bpy.context.view_layer.update()
     _abb = [o_.matrix_world @ Vector(c) for o_ in _ALTOBJ if o_.type == 'MESH' for c in o_.bound_box]
