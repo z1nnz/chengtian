@@ -1702,11 +1702,24 @@ while len(TREES) < (260 if not QUICK else 120) and tries < 60000:
     if any(math.hypot(x - tx, y - ty) < max(GAP[k], GAP[tk]) * R.uniform(.85, 1.1) for tx, ty, tk, _ in TREES):
         continue
     TREES.append((x, y, k, R.uniform(.85, 1.15)))
-_CAMS = [(2.5, -97), (6, -13), (18.5, -10.5), (-6, 12), (1, 91)]
+_CAMS = [(2.5, -97), (8, -10.5), (18.5, -10.5), (-6, 12), (1, 91)]
 _CR = random.Random(31)
 if 'real' in argv:   # 設定圖 V1：松樹比例高、樹冠之間看得到樹幹 → 外圍一部分圓冠樹換成傘頂松
     # 11/21 第二輪：設定圖 V1、V3 幾乎都是看得到樹幹的傘頂松，圓冠樹只零星幾棵 → 圓冠 75%、巨木 50% 換成松
     TREES = [(x, y, ('P' if (k == 'M' and math.hypot(x - CLEAR[0], y - CLEAR[1]) > CLEAR[2] + 8 and _CR.random() < .5) else k), s) for x, y, k, s in TREES]   # 11/22 他覺得上一版俯瞰較好 → 退回 50%
+if 'real' in argv and 'nofill' not in argv:   # 11/24 z1nnz 同意 V1 補樹：空地外圈（離空地中心 22–38 m）樹與樹之間露太多草地 → 補一圈松為主的樹；空地中心、路、祭壇、坑、神木樹冠下照舊空著
+    _FR = random.Random(124); _nf = 0
+    for _ in range(6000):
+        x, y = _FR.uniform(-45, 40), _FR.uniform(-35, 55)
+        dc = math.hypot(x - CLEAR[0], y - CLEAR[1])
+        if not (22 < dc < CLEAR[2] + 2) or path_d(x, y) < 6 or math.hypot(x - ALT[0], y - ALT[1]) < 13 or math.hypot(x - PIT[0], y - PIT[1]) < 11 or math.hypot(x - TREE[0], y - TREE[1]) < 27:
+            continue
+        if any(math.hypot(x - tx, y - ty) < 9.5 for tx, ty, _k, _s in TREES):
+            continue
+        TREES.append((x, y, 'P' if _FR.random() < .7 else 'M', _FR.uniform(.8, 1.1))); _nf += 1
+        if _nf >= 28:
+            break
+    print('V1 FILL', _nf)
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
@@ -2473,7 +2486,7 @@ sc.render.resolution_x, sc.render.resolution_y = 1536, 1024
 SHOTS = {
     'V1': ((70, -105, 62), (-6, 18, 0), 24, '俯瞰全景（東南高處）'),
     'V2': ((2.5, -97, 1.7), (1.5, -60, 4.5), 22, '南入口（Josh 根拱）往北看'),
-    'V3': ((4, -15, 1.9), (9.5, 18, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
+    'V3': ((8, -10.5, 1.9), (11, 22.5, 5.0), 16, '祭壇前（神木左、祭壇中右、坑右前）'),
     'V4': ((18.5, -10.5, 2.4), (13.5, -2.0, -.8), 24, '坑邊近景'),
     'V5': ((-6, 12, 2.2), (17, -21, 1.8), 18, '神木根旁回頭看（往南看祭壇與小路）'),
     'V6': ((1, 91, 1.7), (-5, 135, 5.0), 24, '北入口（核心組根拱）往外看'),
