@@ -1236,8 +1236,13 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     # 11/24 第二版：祭壇前那段太短看不到 → 祭壇附近的主路、支路底下原本都是石板路，現在大多被土蓋掉、只剩一段段露出來
     _RUNS = [(tuple(_st), tuple(_st + _af * (_L + .5)), 1.0), ((4, -10), (4, -6), .55), ((4, -6), (9, 1), 1.0), ((9, 1), (14, 8), .7),
              ((3, -5), (-1, 3), .9), ((-1, 3), (-5, 9), .55)]
-    _slm = _stm.copy() if _stm else _lsm.copy(); _slm.name = 'PathSlabStone'   # 路上的石板常被踩：苔少一點，石面看得出來
-    mossify(_slm, .7, 1.0)
+    _slm = (_stm or _lsm).copy(); _slm.name = 'PathSlabStone'   # 11/24 第三次：純灰色太新、像紙板 → 用祭壇石材紋理、去掉綠、壓暗，再長一點苔
+    _snt = _slm.node_tree; _sbs = next(x_ for x_ in _snt.nodes if x_.type == 'BSDF_PRINCIPLED')
+    if _sbs.inputs['Base Color'].links:
+        _src_ = _sbs.inputs['Base Color'].links[0].from_socket
+        _hsv = _snt.nodes.new('ShaderNodeHueSaturation'); _hsv.inputs['Saturation'].default_value = .35; _hsv.inputs['Value'].default_value = .7
+        _snt.links.new(_src_, _hsv.inputs['Color']); _snt.links.new(_hsv.outputs['Color'], _sbs.inputs['Base Color'])
+    mossify(_slm, .9, 1.0)
     _SR = random.Random(41); _nsl = 0; _SLABS = []
     for (ax_, ay_), (bx_, by_), keep in _RUNS:
         A_, B_ = Vector((ax_, ay_)), Vector((bx_, by_)); dv = (B_ - A_); Lr = dv.length; dv = dv.normalized(); sv = Vector((-dv.y, dv.x))
@@ -1254,12 +1259,18 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                     bm_ = bmesh.new(); bmesh.ops.create_cube(bm_, size=1)
                     for v in bm_.verts:
                         v.co = Vector((v.co.x * w_ * _SR.uniform(.92, 1.0), (a0 + (v.co.y + .5) * (a1 - a0) - .5) * dep * _SR.uniform(.92, 1.0), v.co.z * .14))
-                    bmesh.ops.bevel(bm_, geom=bm_.edges[:], offset=.025, segments=2, affect='EDGES')
+                    for _cc in range(_SR.choice((0, 0, 1, 1, 2))):   # 缺角：切掉一兩個角，不要整齊方磚
+                        sx_, sy_ = _SR.choice((-1, 1)), _SR.choice((-1, 1)); cut = _SR.uniform(.08, .18)
+                        co_ = Vector((sx_ * (w_ / 2 - cut), sy_ * ((a1 - a0) * dep / 2 - cut) + ((a0 + a1) / 2 - .5) * dep, 0))
+                        no_ = Vector((sx_, sy_ * _SR.uniform(.6, 1.6), _SR.uniform(-.3, .3))).normalized()
+                        bmesh.ops.bisect_plane(bm_, geom=bm_.verts[:] + bm_.edges[:] + bm_.faces[:], plane_co=co_, plane_no=no_, clear_outer=True)
+                        bmesh.ops.holes_fill(bm_, edges=[e for e in bm_.edges if e.is_boundary])
+                    bmesh.ops.bevel(bm_, geom=bm_.edges[:], offset=.02, segments=2, affect='EDGES')
                     for v in bm_.verts:   # 磨圓、表面不平
                         v.co.z += noise.noise(v.co * 6 + Vector((_nsl, 0, 0))) * .015
                     me_ = bpy.data.meshes.new('ShrineSlab'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_slm)
                     ob_ = bpy.data.objects.new('ShrineSlab', me_); sc.collection.objects.link(ob_)
-                    ob_.location = (c.x, c.y, gh(c.x, c.y) + .0 - _SR.uniform(0, .03))   # 11/24 抬高：原本被路面的泥蓋掉 → 石面露出 4–7 cm
+                    ob_.location = (c.x, c.y, gh(c.x, c.y) - .012 - _SR.uniform(0, .02))   # 11/24 抬高：原本被路面的泥蓋掉 → 石面露出 4–7 cm
                     ob_.rotation_euler = (_SR.uniform(-.05, .05), _SR.uniform(-.05, .05), math.atan2(dv.y, dv.x) - math.pi / 2 + _SR.uniform(-.1, .1) + (_SR.uniform(-.15, .15) if len(pieces) > 1 else 0))
                     _nsl += 1; _SLABS.append((c.x, c.y))
             _d += dep + _SR.uniform(.06, .14)
