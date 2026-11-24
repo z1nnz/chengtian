@@ -2239,6 +2239,19 @@ w.use_nodes = True
 bg = next(n for n in w.node_tree.nodes if n.type == 'BACKGROUND')
 bg.inputs['Color'].default_value = (.66, .70, .74, 1)   # 設定圖 v2：霧白、透
 bg.inputs['Strength'].default_value = 1.6
+if 'real' in argv and 'plainsky' not in argv:   # 11/24 六張比對：設定圖都是灰色多雲的天 → 鏡頭看到的天空加雲（只換鏡頭看到的，打光不變）
+    _wt = w.node_tree; _wo = next(n for n in _wt.nodes if n.type == 'OUTPUT_WORLD')
+    _cbg = _wt.nodes.new('ShaderNodeBackground'); _cbg.inputs['Strength'].default_value = 1.6
+    _wtc = _wt.nodes.new('ShaderNodeTexCoord'); _wcn = _wt.nodes.new('ShaderNodeTexNoise')
+    _wcn.inputs['Scale'].default_value = 2.2; _wcn.inputs['Detail'].default_value = 8; _wcn.inputs['Roughness'].default_value = .62
+    _wmp = _wt.nodes.new('ShaderNodeMapping'); _wmp.inputs['Scale'].default_value = (1, 1, 3.5)   # 雲壓扁成一層層
+    _wt.links.new(_wtc.outputs['Generated'], _wmp.inputs['Vector']); _wt.links.new(_wmp.outputs['Vector'], _wcn.inputs['Vector'])
+    _wcr = _wt.nodes.new('ShaderNodeValToRGB'); _wcr.color_ramp.elements[0].position, _wcr.color_ramp.elements[1].position = .38, .68
+    _wcr.color_ramp.elements[0].color = (.40, .43, .47, 1); _wcr.color_ramp.elements[1].color = (.74, .77, .80, 1)
+    _wt.links.new(_wcn.outputs['Fac'], _wcr.inputs[0]); _wt.links.new(_wcr.outputs[0], _cbg.inputs['Color'])
+    _wlp = _wt.nodes.new('ShaderNodeLightPath'); _wmx = _wt.nodes.new('ShaderNodeMixShader')
+    _wt.links.new(_wlp.outputs['Is Camera Ray'], _wmx.inputs[0]); _wt.links.new(bg.outputs[0], _wmx.inputs[1]); _wt.links.new(_cbg.outputs[0], _wmx.inputs[2])
+    _wt.links.new(_wmx.outputs[0], _wo.inputs['Surface'])
 sun = bpy.data.lights.new('Sun', 'SUN')
 sun.energy = 3.2
 sun.angle = .2
