@@ -1,0 +1,80 @@
+{
+  "asset": "XT01_XianxiaGreatTree",
+  "version": "v004",
+  "built": "2026-11-13 17:56",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "roots_to_minus_0p3": true,
+    "fbx_objects": true,
+    "fbx_height_err_m": 0.0,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "XT01_XianxiaGreatTree_Collision": {
+      "tris": 36,
+      "max_z": 3.5,
+      "min_z": -0.0,
+      "colour_layers": [],
+      "materials": []
+    },
+    "XT01_XianxiaGreatTree_LOD0": {
+      "tris": 30717,
+      "max_z": 16.508,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Bark",
+        "M_XT01_Leaves_Green"
+      ]
+    },
+    "XT01_XianxiaGreatTree_LOD1": {
+      "tris": 7191,
+      "max_z": 16.508,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Bark",
+        "M_XT01_Leaves_Green"
+      ]
+    },
+    "XT01_XianxiaGreatTree_LOD2": {
+      "tris": 2399,
+      "max_z": 16.508,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Bark",
+        "M_XT01_Leaves_Green"
+      ]
+    },
+    "XT01_XianxiaGreatTree_LOD3": {
+      "tris": 4,
+      "max_z": 16.558,
+      "min_z": -0.3,
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_XT01_Impostor_Green"
+      ]
+    }
+  },
+  "files": {
+    "XT01_XianxiaGreatTree_v001.fbx": "be66bb43eb03a32b7b05eb7518f238ac7eaa45bab0b1707ce5f24538ac449671",
+    "XT01_XianxiaGreatTree_v001.glb": "15163da4d653e96500d355b03acba432ea3c87385b86f8add4f4e8ab9a0edf7c",
+    "XT01_XianxiaGreatTree_v002.fbx": "dcd505cf533f187cdebd0d52da591636103565763745057811baeba0012b8646",
+    "XT01_XianxiaGreatTree_v002.glb": "de7e0964d1bef5de3d85a761c00a87d988ea0633927b2b918ee3a5b72b489cfc",
+    "XT01_XianxiaGreatTree_v003.fbx": "80bdfac58bbec6fe554a46856f7716407721e47f55b5c3a1498ecbb10907841b",
+    "XT01_XianxiaGreatTree_v003.glb": "3afd3ced234d16304fbc8c2ebbbf4393bfdf353f1c0d31bd7acab9fee87eac4e",
+    "XT01_XianxiaGreatTree_v004.fbx": "3eed356d0d9ee52992d291ab0b93eb63430f2aa9e9ec9ca0e68f08f48ff7bbbc",
+    "XT01_XianxiaGreatTree_v004.glb": "7a9ac3170996e90468a8d919edfe51b120b9e3362abec4bfd30bd4169004cd80"
+  }
+}

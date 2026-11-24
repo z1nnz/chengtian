@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_XT01_Impostor_Gold
+  m_Shader: {fileID: 4800000, guid: ae86b2f854c37524b9a35b974c8352c3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _BAKED_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2450
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 6cd3dbdf0da1a6242af454c1a9adda03, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0.5, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Ambient: 1
+    - _Baked: 1
+    - _Cutoff: 0.5
+    - _Detail: 0.8
+    - _DetailMid: 0.65
+    - _Flutter: 0.035
+    - _GrazeMax: 0.6
+    - _GrazeMin: 0.24
+    - _MaskOffset: 0
+    - _MidPoint: 0.5
+    - _ShadowStrength: 0.55
+    - _Translucency: 0.35
+    - _ValueStrength: 0.45
+    - _VariationAmount: 0.45
+    - _WindSpeed: 1
+    - _WindStrength: 0.22
+    - _Wrap: 0.5
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DeepColor: {r: 0.17, g: 0.35, b: 0.32, a: 1}
+    - _MidColor: {r: 0.36, g: 0.6, b: 0.27, a: 1}
+    - _ShadowTint: {r: 0.62, g: 0.74, b: 0.9, a: 1}
+    - _TipColor: {r: 0.72, g: 0.85, b: 0.42, a: 1}
+    - _VariationA: {r: 0.73, g: 0.64, b: 0.35, a: 1}
+    - _VariationB: {r: 0.44, g: 0.62, b: 0.53, a: 1}
+    - _WindDir: {r: 1, g: 0, b: 0.35, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

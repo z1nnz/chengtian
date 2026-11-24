@@ -1,0 +1,24 @@
+TR03 樟：三視圖提示詞與選圖
+工作包：2026-11-11 B｜64 小時（世界裡的樹全部重做），B 批 TR03。
+
+選用：TR03-cand-3.png。備選：TR03-cand-1.png。
+選用理由：
+- 主幹粗短，約在樹高四分之一處分成三四根大枝，大枝再往外分叉，骨架看得清楚。
+- 樹冠寬圓、厚，由一團團大葉簇疊成，每團上亮下暗，團與團之間看得到枝條和陰影，正是「葉團大而密」。
+- 三個方向的輪廓都不同，正面寬、側面稍窄，像村子中間的大樹。
+沒選的原因：
+- cand-1：可用，留作備選；但大枝分得太晚，樹冠像一整個圓頂，大枝在正面看不太到。
+- cand-2：樹幹像好幾股纏在一起，主幹太粗（約樹高 1/3），童話比例。
+- cand-4：樹幹有大樹洞，那是 TR08 枯樹的特徵；樟樹不建樹洞。
+四張共同的問題（建模時不照做）：
+- 根盤太寬、樹幹太粗，是童話比例。15 m 的樟樹，建模時胸徑取約 1.3–1.5 m，根部外擴到約 2.2 m。
+- 受光面偏黃，接近檸檬黃。工作包要的是「沉穩的鼠尾草綠」，受光面改成暖灰綠，陰影偏藍青。
+- 根部的石頭、蕨和草不建（地面歸地形）。
+
+工具與張數：
+- Codex CLI 0.167.0，模型 gpt-6.1-terra，推理 xhigh，內建 image_gen。
+- 共 4 張（TR03-cand-1..4），原尺寸存檔，沒有 seed。生成日期 2026-11-13。
+- 提示詞組法和 TR01、TR02 相同：物件句（工作包第 7 節 TR03 原文）＋單件 Layout 段＋5.2 美術方向＋「Avoid:」接 5.3 與本包那句。全部用原文，一字未改，完整內容在 full_prompt.txt。
+
+== 物件句 ==
+Three-view orthographic turnaround sheet of a large village camphor tree about 15 m tall, a stout grey-brown trunk splitting into several big limbs, a very wide rounded dense crown made of large overlapping leaf clusters, muted glossy sage-green leaves, deep shade under the crown, a hand-painted stylized game tree.

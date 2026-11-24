@@ -1,0 +1,77 @@
+INFO prefab Assets/YunJing/Models/XianxiaGreatTreeV4/XT01_XianxiaGreatTree_Green.prefab
+INFO prefab Assets/YunJing/Models/XianxiaGreatTreeV4/XT01_XianxiaGreatTree_Gold.prefab
+PASS Green: LODGroup LOD0-LOD3, one renderer each (size 32.5 m, transition heights 0.980 / 0.812 / 0.319 / 0.060 for 60 / 110 / 280 / 1500 m, LOD bias 2.00)
+PASS Green: LOD0 30717 triangles (model_info 30717, cap 32000)
+PASS Green: LOD0 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Green (YunJing/XianxiaTreeLeaves)
+PASS Green: LOD0 vertex colour on every vertex (49214/49214)
+PASS Green: wind weights: bark below 2 m <= 0.00, leaf cards 0.56-1.00; light mask 0.00-1.00
+PASS Green: LOD0 normals all unit length (0 bad of 49214)
+PASS Green: LOD1 7191 triangles (model_info 7191, cap 8000)
+PASS Green: LOD1 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Green (YunJing/XianxiaTreeLeaves)
+PASS Green: LOD1 vertex colour on every vertex (11049/11049)
+PASS Green: LOD2 2399 triangles (model_info 2399, cap 2500)
+PASS Green: LOD2 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Green (YunJing/XianxiaTreeLeaves)
+PASS Green: LOD2 vertex colour on every vertex (3830/3830)
+PASS Green: LOD3 4 triangles (model_info 4, cap 200)
+PASS Green: LOD3 materials M_XT01_Impostor_Green (YunJing/XianxiaTreeLeaves)
+PASS Green: LOD3 vertex colour on every vertex (8/8)
+PASS Green: height 16.51 m (model_info 16.51), crown 27.6 x 27.5 m, roots to -0.30 m
+PASS Green: trunk MeshCollider (convex) with its renderer hidden
+PASS Green: leaf atlas Preserve Coverage at 0.5, 1024 max
+PASS Gold: LODGroup LOD0-LOD3, one renderer each (size 32.5 m, transition heights 0.980 / 0.812 / 0.319 / 0.060 for 60 / 110 / 280 / 1500 m, LOD bias 2.00)
+PASS Gold: LOD0 30717 triangles (model_info 30717, cap 32000)
+PASS Gold: LOD0 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Gold (YunJing/XianxiaTreeLeaves)
+PASS Gold: LOD0 vertex colour on every vertex (49214/49214)
+PASS Gold: wind weights: bark below 2 m <= 0.00, leaf cards 0.56-1.00; light mask 0.00-1.00
+PASS Gold: LOD0 normals all unit length (0 bad of 49214)
+PASS Gold: LOD1 7191 triangles (model_info 7191, cap 8000)
+PASS Gold: LOD1 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Gold (YunJing/XianxiaTreeLeaves)
+PASS Gold: LOD1 vertex colour on every vertex (11049/11049)
+PASS Gold: LOD2 2399 triangles (model_info 2399, cap 2500)
+PASS Gold: LOD2 materials M_XT01_Bark (YunJing/XianxiaTreeBark), M_XT01_Leaves_Gold (YunJing/XianxiaTreeLeaves)
+PASS Gold: LOD2 vertex colour on every vertex (3830/3830)
+PASS Gold: LOD3 4 triangles (model_info 4, cap 200)
+PASS Gold: LOD3 materials M_XT01_Impostor_Gold (YunJing/XianxiaTreeLeaves)
+PASS Gold: LOD3 vertex colour on every vertex (8/8)
+PASS Gold: height 16.51 m (model_info 16.51), crown 27.6 x 27.5 m, roots to -0.30 m
+PASS Gold: trunk MeshCollider (convex) with its renderer hidden
+PASS Gold: leaf atlas Preserve Coverage at 0.5, 1024 max
+PASS walker heading at the trunk stops 1.67 m from the axis (collider radius 1.47 m)
+PASS walker 1.5 m beside the trunk goes on under the crown (3.80 m past)
+SHOT XT01_XianxiaGreatTree_green_three_quarter
+SHOT XT01_XianxiaGreatTree_green_front
+SHOT XT01_XianxiaGreatTree_green_right
+SHOT XT01_XianxiaGreatTree_green_back
+SHOT XT01_XianxiaGreatTree_green_left
+SHOT XT01_XianxiaGreatTree_green_under_crown_eye_1p7
+SHOT XT01_XianxiaGreatTree_close_bark_roots
+SHOT XT01_XianxiaGreatTree_close_crown_rim
+SHOT XT01_XianxiaGreatTree_LOD0
+SHOT XT01_XianxiaGreatTree_LOD1
+SHOT XT01_XianxiaGreatTree_LOD2
+SHOT XT01_XianxiaGreatTree_LOD3
+SHOT XT01_XianxiaGreatTree_wind_off
+SHOT XT01_XianxiaGreatTree_wind_off_close
+SHOT XT01_XianxiaGreatTree_wind_10x
+SHOT XT01_XianxiaGreatTree_wind_10x_close
+INFO wind shots at sway 0 and 2.20 m (10x the default 0.22 m); materials put back to 0.22
+SHOT XT01_XianxiaGreatTree_far_50m
+INFO at 50 m the LODGroup shows LOD0
+SHOT XT01_XianxiaGreatTree_far_100m
+INFO at 100 m the LODGroup shows LOD1
+SHOT XT01_XianxiaGreatTree_far_250m
+INFO at 250 m the LODGroup shows LOD2
+SHOT XT01_XianxiaGreatTree_gold_three_quarter
+SHOT XT01_XianxiaGreatTree_gold_front
+SHOT XT01_XianxiaGreatTree_gold_right
+SHOT XT01_XianxiaGreatTree_gold_back
+SHOT XT01_XianxiaGreatTree_gold_left
+SHOT XT01_XianxiaGreatTree_gold_under_crown_eye_1p7
+SHOT XT01_XianxiaGreatTree_green_gold_with_VL02_and_1p75m
+SHOT XT01_XianxiaGreatTree_green_gold_far_120m
+INFO game scene spawn none at (0.00, 0.00, 0.00)
+INFO game scene: gold tree inside the courtyard at (-8.50, 0.00, 6.50), green tree outside the north-east corner at (20.00, 0.00, 24.00), temporary ground outside the walls
+SHOT XT01_XianxiaGreatTree_in_game_scene_Qingxi
+SHOT XT01_XianxiaGreatTree_in_game_scene_Qingxi_near
+
+Unity 6000.3.28f1, colour space Gamma; failed checks: 0; walking is a scripted CharacterController; the game-scene shots place the trees in Qingxi.unity without saving it
