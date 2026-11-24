@@ -636,7 +636,8 @@ if 'real' in argv:   # v004：樹幹 7 根管＋板根熔成一整塊（z1nnz 11
             _o.data.materials.clear()
             _o.data.materials.append(_bkm)
 if REAL:   # AL02 重做的三層石砌祭壇（正面石階朝南、朝主路）
-    for _o in append(S_ + 'props_lib.blend', lambda nm: nm == 'AL02_Altar', ALT, gh(*ALT) - .12):
+    _ALTOBJ = append(S_ + 'props_lib.blend', lambda nm: nm == 'AL02_Altar', ALT, gh(*ALT) - .12)
+    for _o in _ALTOBJ:
         _o.rotation_euler.z = .35
         for _sl in _o.material_slots:   # 11/22 優化 2：祭壇補苔（設定圖石階頂面、邊緣、石縫都有橄欖色苔）
             if _sl.material:
@@ -1024,9 +1025,10 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             n = math.hypot(gx, gy) or 1
             x += gx / n * .4; y += gy / n * .4
         return x, y
-    place_lantern(*_clear(ALT[0] - 4.2, ALT[1] - 3.2), .35, .09, False, 1)      # 祭壇前左：歪掉的那座
-    place_lantern(*_clear(ALT[0] + 4.0, ALT[1] - 2.6), .35, 0, True, 2)         # 祭壇前右：倒下摔成兩截
-    broken_pillar(*_clear(ALT[0] - 6.5, ALT[1] + 3.0), 1.4, .6, 3)              # 祭壇左後：斷石柱
+    _PROPS = []   # 11/24 影片「接地」：每個擺件底下補土堆、周圍長草 (x, y, 半徑)
+    _q = _clear(ALT[0] - 4.2, ALT[1] - 3.2); place_lantern(*_q, .35, .09, False, 1); _PROPS.append((*_q, .45))      # 祭壇前左：歪掉的那座
+    _q = _clear(ALT[0] + 4.0, ALT[1] - 2.6); place_lantern(*_q, .35, 0, True, 2); _PROPS.append((*_q, .55))         # 祭壇前右：倒下摔成兩截
+    _q = _clear(ALT[0] - 6.5, ALT[1] + 3.0); broken_pillar(*_q, 1.4, .6, 3); _PROPS.append((*_q, .6))               # 祭壇左後：斷石柱
 
     # 11/23 故事「有人來挖過」：坑邊丟下的工具——斷柄木鏟、翻倒的破竹簍、碎陶片（V4 看得到的坑口前緣）
     def _mat(nm, col, rough, noise_s=0.0, col2=None):
@@ -1114,7 +1116,6 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _cbp = _cn.nodes.new('ShaderNodeBump'); _cbp.inputs['Strength'].default_value = .6
     _cn.links.new(_cwv.outputs['Fac'], _cbp.inputs['Height']); _cn.links.new(_cbp.outputs['Normal'], _cb.inputs['Normal'])
     _cb.inputs['Roughness'].default_value = .9
-    mossify(_ctm, 1.2, 1.0)
 
     def stump(x, y, r, h, seed):
         rr_ = random.Random(seed); N = 36; off_ = Vector((seed * 2.3, .7, 0))
@@ -1161,12 +1162,64 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         ob_ = bpy.data.objects.new('Stump', me_); sc.collection.objects.link(ob_)
         ob_.location = (x, y, min(gh(x + dx, y + dy) for dx in (-r, 0, r) for dy in (-r, 0, r)) - .02)
         ob_.rotation_euler = (0, 0, rr_.uniform(0, 6.28))
+        _PROPS.append((x, y, r * 1.5))
         print('STUMP', round(x, 1), round(y, 1))
-    for _fd, _rd, _r, _h, _sd in ((7.5, 4.2, .45, .55, 11), (9.0, -3.8, .55, .4, 12)):   # V3 路兩旁：兩個老樹樁（11/24 移進鏡頭：原本一個在畫框外、一個被蕨蓋住）
+    for _fd, _rd, _r, _h, _sd in ((5.5, 3.4, .55, .6, 11), (6.5, -3.4, .6, .5, 12)):   # V3 路兩旁：兩個老樹樁（11/24 移進鏡頭：原本一個在畫框外、一個被蕨蓋住）
         _p = _c3 + _f3 * _fd + _r3 * _rd
         stump(*_clear(_p.x, _p.y, 3.0), _r, _h, _sd)
     _p = _c5 + _f5 * 6.5 + _r5 * 4.2   # V5 路右邊一個
     stump(*_clear(_p.x, _p.y, 3.0), .5, .5, 13)
+
+    # 11/24 接地：擺件底下一圈壓實的土、邊緣不規則，擺件看起來是陷在土裡，不是放在草上
+    _bmm = bpy.data.materials.new('BaseSoil'); _bmm.use_nodes = True   # 壓實的深色濕土＋落葉碎屑色
+    _bt = _bmm.node_tree; _bbs = next(x_ for x_ in _bt.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _btc2 = _bt.nodes.new('ShaderNodeTexCoord'); _bmp2 = _bt.nodes.new('ShaderNodeMapping'); _bmp2.inputs['Scale'].default_value = (1.5, 1.5, 1.5)
+    _bt.links.new(_btc2.outputs['Object'], _bmp2.inputs['Vector'])
+    _bti = _bt.nodes.new('ShaderNodeTexImage'); _bti.image = bpy.data.images.load(_GT + 'brown_mud_02_diff_2k.png')
+    _bt.links.new(_bmp2.outputs['Vector'], _bti.inputs['Vector'])
+    _bmx = _bt.nodes.new('ShaderNodeMixRGB'); _bmx.blend_type = 'MULTIPLY'; _bmx.inputs[0].default_value = 1; _bmx.inputs[2].default_value = (.75, .6, .45, 1)
+    _bt.links.new(_bti.outputs['Color'], _bmx.inputs[1]); _bt.links.new(_bmx.outputs[0], _bbs.inputs['Base Color'])
+    _bbs.inputs['Roughness'].default_value = .95
+
+    def base_mound(x, y, r, seed):
+        bm_ = bmesh.new(); bmesh.ops.create_circle(bm_, cap_ends=True, segments=28, radius=1)
+        bmesh.ops.subdivide_edges(bm_, edges=bm_.edges[:], cuts=2, use_grid_fill=True)
+        off_ = Vector((seed * 1.7, 3.3, 0))
+        for v in bm_.verts:
+            d = v.co.length; a = math.atan2(v.co.y, v.co.x)
+            rr = (r + .35) * (1 + .25 * noise.noise(Vector((math.cos(a), math.sin(a), 0)) * 1.5 + off_))
+            v.co = Vector((v.co.x * rr, v.co.y * rr, 0))
+            v.co.z = gh(x + v.co.x, y + v.co.y) - gh(x, y) + .1 * max(0.0, 1 - d) ** .7 - .03
+        me_ = bpy.data.meshes.new('BaseMound'); bm_.to_mesh(me_); bm_.free()
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        me_.materials.append(_bmm)
+        ob_ = bpy.data.objects.new('BaseMound', me_); sc.collection.objects.link(ob_)
+        ob_.location = (x, y, gh(x, y))
+    for _k, (_x, _y, _r) in enumerate(_PROPS):
+        base_mound(_x, _y, _r, _k)
+    globals()['_PROPS'] = _PROPS
+    # 11/24 祭壇做舊：腳下一圈崩落的碎石塊（角掉下來的），半埋、成堆不均勻
+    bpy.context.view_layer.update()
+    _abb = [o_.matrix_world @ Vector(c) for o_ in _ALTOBJ if o_.type == 'MESH' for c in o_.bound_box]
+    _ax0, _ax1 = min(v.x for v in _abb), max(v.x for v in _abb); _ay0, _ay1 = min(v.y for v in _abb), max(v.y for v in _abb)
+    _RB = random.Random(23); _nrb = 0
+    for _cl in range(6):   # 6 堆，每堆 3–7 塊
+        side = _RB.randint(0, 3); t_ = _RB.random()
+        cx_, cy_ = ((_ax0 + (_ax1 - _ax0) * t_, _ay0 - .2), (_ax0 + (_ax1 - _ax0) * t_, _ay1 + .2), (_ax0 - .2, _ay0 + (_ay1 - _ay0) * t_), (_ax1 + .2, _ay0 + (_ay1 - _ay0) * t_))[side]
+        for _ in range(_RB.randint(3, 7)):
+            x_, y_ = cx_ + _RB.gauss(0, .35), cy_ + _RB.gauss(0, .35)
+            if path_d(x_, y_) < 1.8:
+                continue
+            sz = _RB.choice([_RB.uniform(.06, .12), _RB.uniform(.06, .12), _RB.uniform(.12, .22)])
+            bm_ = bmesh.new(); bmesh.ops.create_icosphere(bm_, subdivisions=1, radius=1)
+            for v in bm_.verts:   # 有稜角的碎塊，不是圓球
+                v.co = Vector((v.co.x * _RB.uniform(.8, 1.3), v.co.y * _RB.uniform(.8, 1.3), v.co.z * _RB.uniform(.5, .9)))
+            me_ = bpy.data.meshes.new('AltarRubble'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_lsm)
+            ob_ = bpy.data.objects.new('AltarRubble', me_); sc.collection.objects.link(ob_)
+            ob_.scale = (sz, sz, sz); ob_.location = (x_, y_, gh(x_, y_) + sz * .15)
+            ob_.rotation_euler = (_RB.uniform(-.4, .4), _RB.uniform(-.4, .4), _RB.uniform(0, 6.28)); _nrb += 1
+    print('ALTAR RUBBLE', _nrb)
 
     # 11/23 故事「荒廢很多年」：倒下的老樹（獨立模型）——整根橫躺、半埋、長苔，一頭根盤翹起帶著土
     _flm = _bkm.copy(); _flm.name = 'FallenLogBark'
@@ -1551,6 +1604,8 @@ if 'real' in argv:
             continue
         if any(math.hypot(x - q_.x, y - q_.y) < 1.4 for q_ in globals().get('_V5RP', [])):
             continue
+        if any(math.hypot(x - px_, y - py_) < pr_ + .5 for px_, py_, pr_ in globals().get('_PROPS', [])):   # 擺件旁不長大蕨（只留矮草）
+            continue
         _skip = False
         for _lp, _la, _lL, _lR in globals().get('_LOGS', []):   # 倒木上不長蕨（壓在上面會穿模）
             _ld = Vector((math.cos(_la), math.sin(_la))); _rel = Vector((x, y)) - _lp
@@ -1605,6 +1660,45 @@ if 'real' in argv:
         if nug >= 20000:
             break
     print('UNDERGROWTH', nug)
+    # 11/24 過渡：擺件底部一圈矮草、莎草（成叢、不均勻）
+    _BG = random.Random(71); _SMALL = UG['grass'] + UG['sedge'] + UG['clover']
+    def _tuft(x, y, z, s):
+        e = bpy.data.objects.new('UG', None); e.instance_type = 'COLLECTION'; e.instance_collection = _BG.choice(_SMALL)
+        e.scale = (s, s, s * _BG.uniform(.8, 1.3)); e.rotation_euler.z = _BG.uniform(0, 6.283)
+        e.location = (x, y, z); sc.collection.objects.link(e)
+    for _x, _y, _r in globals().get('_PROPS', []):
+        for _ in range(_BG.randint(7, 12)):
+            a = _BG.uniform(0, 6.283) if _BG.random() < .4 else _BG.gauss(1.0, .8)   # 偏一側長得多
+            d = _r + _BG.uniform(.0, .55); x2, y2 = _x + math.cos(a) * d, _y + math.sin(a) * d
+            if path_d(x2, y2) > 1.8:
+                _tuft(x2, y2, gh(x2, y2) + .02, _BG.uniform(.35, .75))
+    # 11/24 祭壇做舊：石階邊緣、石縫長草（往下打射線，找祭壇頂面上靠邊的位置）
+    _nseam = 0
+    bpy.context.view_layer.update()
+    for _o in globals().get('_ALTOBJ', []):
+        if _o.type != 'MESH':
+            continue
+        _mw = _o.matrix_world; _mi = _mw.inverted(); _bb = [_mw @ Vector(c) for c in _o.bound_box]
+        _x0, _x1 = min(v.x for v in _bb), max(v.x for v in _bb); _y0, _y1 = min(v.y for v in _bb), max(v.y for v in _bb); _zt = max(v.z for v in _bb) + 1
+        def _hit(px, py):
+            o_ = _mi @ Vector((px, py, _zt)); d_ = (_mi.to_3x3() @ Vector((0, 0, -1))).normalized()
+            ok_, loc_, nor_, _ = _o.ray_cast(o_, d_)
+            return (_mw @ loc_, (_mw.to_3x3() @ nor_).normalized()) if ok_ else (None, None)
+        for _ in range(4000):
+            px, py = _BG.uniform(_x0, _x1), _BG.uniform(_y0, _y1)
+            lo, no = _hit(px, py)
+            if lo is None or no.z < .9 or lo.z < gh(px, py) + .12:
+                continue
+            edge = False
+            for dx, dy in ((.22, 0), (-.22, 0), (0, .22), (0, -.22)):
+                l2, _n2 = _hit(px + dx, py + dy)
+                if l2 is None or l2.z < lo.z - .1:
+                    edge = True
+            if edge and _BG.random() < .35:
+                _tuft(lo.x, lo.y, lo.z - .01, _BG.uniform(.25, .5)); _nseam += 1
+            if _nseam >= 70:
+                break
+    print('BASEGRASS', len(globals().get('_PROPS', [])), 'SEAM', _nseam)
     # 11/22 優化：地上的草 → 一片片平貼的三葉草太多、看起來像貼上去的 → 三葉草減少，加入各種高度的草叢與莎草
     GC = UG['clover'] + UG['rosette'] + UG['heart'][:1] + UG['grass'] + UG['sedge']
     GW = [1.6] * len(UG['clover']) + [1.2] * len(UG['rosette']) + [1.5] + [1.4] * len(UG['grass']) + [1.0] * len(UG['sedge'])
@@ -2061,6 +2155,28 @@ if 'real' in argv:   # 神木樹冠底下太暗：從南邊打一盞大面積的
     _flo.light_linking.receiver_collection = _rc
     _flo.location = (TREE[0] + 18, TREE[1] - 40, gh(*TREE) + 14)
     _flo.rotation_euler = (Vector((TREE[0], TREE[1], gh(*TREE) + 12)) - _flo.location).to_track_quat('-Z', 'Y').to_euler()
+    # 11/24 影片「有來源的光」：樹冠縫漏下一道光柱打在祭壇上（順著太陽方向；柱內霧濃一點才看得到光束）
+    if 'noshaft' not in argv:
+        bpy.context.view_layer.update()
+        _sd = (so.matrix_world.to_3x3() @ Vector((0, 0, -1))).normalized()
+        _tgt = Vector((ALT[0], ALT[1], gh(*ALT) + .8)); _src = _tgt - _sd * 30
+        _sp = bpy.data.lights.new('AltarShaft', 'SPOT'); _sp.energy = 60000; _sp.spot_size = math.radians(7); _sp.spot_blend = .5
+        _sp.color = (1.0, .9, .72); _sp.shadow_soft_size = .3
+        _spo = bpy.data.objects.new('AltarShaft', _sp); sc.collection.objects.link(_spo)
+        _spo.location = _src; _spo.rotation_euler = (_tgt - _src).to_track_quat('-Z', 'Y').to_euler()
+        bm_ = bmesh.new(); bmesh.ops.create_cone(bm_, cap_ends=True, segments=24, radius1=2.2, radius2=1.4, depth=26)
+        me_ = bpy.data.meshes.new('ShaftVol'); bm_.to_mesh(me_); bm_.free()
+        _svm = bpy.data.materials.new('ShaftVol'); _svm.use_nodes = True; _st = _svm.node_tree
+        for _nd in list(_st.nodes):
+            if _nd.type == 'BSDF_PRINCIPLED':
+                _st.nodes.remove(_nd)
+        _sv = _st.nodes.new('ShaderNodeVolumePrincipled'); _sv.inputs['Density'].default_value = .025; _sv.inputs['Color'].default_value = (1, .97, .9, 1)
+        _st.links.new(_sv.outputs['Volume'], next(_nd for _nd in _st.nodes if _nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
+        me_.materials.append(_svm)
+        _svo = bpy.data.objects.new('ShaftVol', me_); sc.collection.objects.link(_svo)
+        _mid = (_tgt + _src) / 2 + _sd * 1.5
+        _svo.location = _mid; _svo.rotation_euler = (_tgt - _src).to_track_quat('Z', 'Y').to_euler()
+        print('SHAFT', [round(v, 2) for v in _sd])
 if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光，不要逆光剪影）
     sc.view_settings.exposure = 1.0
     bg.inputs['Strength'].default_value = 3.4
