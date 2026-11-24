@@ -1716,6 +1716,10 @@ if 'real' in argv and 'nofill' not in argv:   # 11/24 z1nnz 同意 V1 補樹：�
             continue
         if any(math.hypot(x - tx, y - ty) < 9.5 for tx, ty, _k, _s in TREES):
             continue
+        _vx, _vy = x - 8, y + 10.5   # 11/25 補的樹不要擋 V3：V3 鏡頭前 40 m、左右 ±35° 內不補
+        _vd = math.hypot(_vx, _vy)
+        if _vd < 40 and (_vx * 3 + _vy * 33) / (_vd * math.hypot(3, 33) + 1e-6) > math.cos(math.radians(35)):
+            continue
         TREES.append((x, y, 'P' if _FR.random() < .7 else 'M', _FR.uniform(.8, 1.1))); _nf += 1
         if _nf >= 28:
             break
