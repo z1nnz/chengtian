@@ -1,0 +1,122 @@
+{
+  "asset": "TR01_C_CliffPine",
+  "version": "v001",
+  "built": "2026-11-12 06:27",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0001,
+    "fbx_wind_colour": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR01_C_CliffPine",
+      "TR01_C_CliffPine_Collision",
+      "TR01_C_CliffPine_LOD0",
+      "TR01_C_CliffPine_LOD1",
+      "TR01_C_CliffPine_LOD2",
+      "TR01_C_CliffPine_LOD3"
+    ],
+    "TR01_C_CliffPine_Collision": {
+      "tris": 28,
+      "min": [
+        0.705,
+        -0.208,
+        -0.0
+      ],
+      "max": [
+        1.516,
+        0.602,
+        3.0
+      ],
+      "colour_layers": [],
+      "materials": []
+    },
+    "TR01_C_CliffPine_LOD0": {
+      "tris": 15624,
+      "min": [
+        -2.244,
+        -3.682,
+        -0.3
+      ],
+      "max": [
+        8.571,
+        4.992,
+        12.453
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Bark.003",
+        "M_TR01_Leaves.003"
+      ]
+    },
+    "TR01_C_CliffPine_LOD1": {
+      "tris": 3810,
+      "min": [
+        -2.493,
+        -4.014,
+        -0.3
+      ],
+      "max": [
+        8.806,
+        5.185,
+        12.646
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Bark.003",
+        "M_TR01_Leaves.003"
+      ]
+    },
+    "TR01_C_CliffPine_LOD2": {
+      "tris": 728,
+      "min": [
+        -2.72,
+        -4.319,
+        -0.3
+      ],
+      "max": [
+        9.064,
+        5.37,
+        13.009
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Bark.003",
+        "M_TR01_Leaves.003"
+      ]
+    },
+    "TR01_C_CliffPine_LOD3": {
+      "tris": 4,
+      "min": [
+        -8.742,
+        -8.742,
+        -0.3
+      ],
+      "max": [
+        8.742,
+        8.742,
+        25.952
+      ],
+      "colour_layers": [
+        "Wind"
+      ],
+      "materials": [
+        "M_TR01_Leaves.003"
+      ]
+    }
+  },
+  "files": {
+    "TR01_C_CliffPine_v001.fbx": "c7cd07c7c1aa4c2342f003b08b8643f42b711aebbd8a10ee59b4bab6fc30e39f",
+    "TR01_C_CliffPine_v001.glb": "7adab337f07fc5dd435f2e492227ad5cf3b158e22e8d916607072bdeda67be72"
+  }
+}
