@@ -1111,16 +1111,20 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _cwv.inputs['Scale'].default_value = 9; _cwv.inputs['Distortion'].default_value = 3; _cwv.inputs['Detail'].default_value = 4
     _cn.links.new(_ctc.outputs['Object'], _cwv.inputs['Vector'])
     _ccr = _cn.nodes.new('ShaderNodeValToRGB')
-    _ccr.color_ramp.elements[0].color = (.04, .03, .022, 1); _ccr.color_ramp.elements[1].color = (.10, .08, .058, 1)   # 11/24 調暗：原本淺色圓盤太乾淨、像新鋸的
+    _ccr.color_ramp.elements[0].color = (.018, .013, .009, 1); _ccr.color_ramp.elements[1].color = (.055, .04, .028, 1)   # 11/24 第二次調暗：還是像灰石板 → 改成深色爛木頭   # 11/24 調暗：原本淺色圓盤太乾淨、像新鋸的
     _cn.links.new(_cwv.outputs['Fac'], _ccr.inputs[0]); _cn.links.new(_ccr.outputs[0], _cb.inputs['Base Color'])
     _cbp = _cn.nodes.new('ShaderNodeBump'); _cbp.inputs['Strength'].default_value = .6
     _cn.links.new(_cwv.outputs['Fac'], _cbp.inputs['Height']); _cn.links.new(_cbp.outputs['Normal'], _cb.inputs['Normal'])
-    _cb.inputs['Roughness'].default_value = .9
+    _cb.inputs['Roughness'].default_value = .95
+    try:
+        _cb.inputs['Specular IOR Level'].default_value = .15   # 斜面反射天空會發白
+    except KeyError:
+        pass
 
     def stump(x, y, r, h, seed):
         rr_ = random.Random(seed); N = 36; off_ = Vector((seed * 2.3, .7, 0))
         lobes = rr_.randint(4, 6); ph = rr_.uniform(0, 6.28)
-        tilt = Vector((rr_.uniform(-.12, .12), rr_.uniform(-.12, .12)))   # 鋸口不是水平的
+        tilt = Vector((rr_.uniform(-.06, .06), rr_.uniform(-.06, .06)))   # 鋸口不是水平的
         zs = [-.35, -.1, .05, .15, .3, .5, .75, 1.0]
         bm_ = bmesh.new(); rings = []
         for z01 in zs:
@@ -1154,7 +1158,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         for i, v in enumerate(top):   # 木舌：切口外緣一段往上撕起、參差
             a = 6.2832 * i / N; da = math.atan2(math.sin(a - tongue), math.cos(a - tongue))
             if abs(da) < .7:
-                v.co.z += (1 - abs(da) / .7) * r * .55 + rr_.uniform(0, .05)
+                v.co.z += (1 - abs(da) / .7) * r * .3 + rr_.uniform(0, .05)
         me_ = bpy.data.meshes.new('Stump'); bm_.to_mesh(me_); bm_.free()
         for p_ in me_.polygons:
             p_.use_smooth = True
@@ -1220,6 +1224,104 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             ob_.scale = (sz, sz, sz); ob_.location = (x_, y_, gh(x_, y_) + sz * .15)
             ob_.rotation_euler = (_RB.uniform(-.4, .4), _RB.uniform(-.4, .4), _RB.uniform(0, 6.28)); _nrb += 1
     print('ALTAR RUBBLE', _nrb)
+    # 11/24 故事「從前是聖地」：祭壇正面通到主路的舊石板路——歪斜、半埋、有的斷成兩半、有的不見了，縫裡長草
+    _af = Vector((math.sin(.35), -math.cos(.35)))   # 祭壇正面方向（轉了 0.35）
+    _half = max(abs((v.xy - Vector(ALT)).dot(_af)) for v in _abb)
+    _st = Vector(ALT) + _af * (_half + .25)
+    _L = 0.0
+    while path_d(*(_st + _af * _L)) > .8 and _L < 12:
+        _L += .2
+    # 11/24 第二版：祭壇前那段太短看不到 → 祭壇附近的主路、支路底下原本都是石板路，現在大多被土蓋掉、只剩一段段露出來
+    _RUNS = [(tuple(_st), tuple(_st + _af * (_L + .5)), 1.0), ((4, -10), (4, -6), .55), ((4, -6), (9, 1), 1.0), ((9, 1), (14, 8), .7),
+             ((3, -5), (-1, 3), .9), ((-1, 3), (-5, 9), .55)]
+    _SR = random.Random(41); _nsl = 0; _SLABS = []
+    for (ax_, ay_), (bx_, by_), keep in _RUNS:
+        A_, B_ = Vector((ax_, ay_)), Vector((bx_, by_)); dv = (B_ - A_); Lr = dv.length; dv = dv.normalized(); sv = Vector((-dv.y, dv.x))
+        _d = 0.0
+        while _d < Lr:
+            dep = _SR.uniform(.45, .65)
+            patch = .5 + .5 * noise.noise(Vector(((A_ + dv * _d).x * .35, (A_ + dv * _d).y * .35, 2.2)))   # 一段段露出、一段段被土蓋
+            for col in (-.62, 0, .62):
+                if _SR.random() > keep * (.25 + .9 * patch):
+                    continue
+                w_ = _SR.uniform(.5, .62); c = A_ + dv * (_d + dep / 2) + sv * (col + _SR.uniform(-.05, .05))
+                pieces = [(0, 1)] if _SR.random() > .25 else [(0, .55), (.6, 1)]   # 有的斷成兩半
+                for a0, a1 in pieces:
+                    bm_ = bmesh.new(); bmesh.ops.create_cube(bm_, size=1)
+                    for v in bm_.verts:
+                        v.co = Vector((v.co.x * w_ * _SR.uniform(.92, 1.0), (a0 + (v.co.y + .5) * (a1 - a0) - .5) * dep * _SR.uniform(.92, 1.0), v.co.z * .14))
+                    bmesh.ops.bevel(bm_, geom=bm_.edges[:], offset=.025, segments=2, affect='EDGES')
+                    for v in bm_.verts:   # 磨圓、表面不平
+                        v.co.z += noise.noise(v.co * 6 + Vector((_nsl, 0, 0))) * .015
+                    me_ = bpy.data.meshes.new('ShrineSlab'); bm_.to_mesh(me_); bm_.free(); me_.materials.append(_lsm)
+                    ob_ = bpy.data.objects.new('ShrineSlab', me_); sc.collection.objects.link(ob_)
+                    ob_.location = (c.x, c.y, gh(c.x, c.y) - .055 - _SR.uniform(0, .04))   # 頂面跟路面差不多平，有的陷下去
+                    ob_.rotation_euler = (_SR.uniform(-.05, .05), _SR.uniform(-.05, .05), math.atan2(dv.y, dv.x) - math.pi / 2 + _SR.uniform(-.1, .1) + (_SR.uniform(-.15, .15) if len(pieces) > 1 else 0))
+                    _nsl += 1; _SLABS.append((c.x, c.y))
+            _d += dep + _SR.uniform(.06, .14)
+    globals()['_SLABS'] = _SLABS
+    print('SLABS', _nsl)
+
+    # 11/24 故事「從前是聖地」：神木腰上綁的舊祈福繩＋垂下來的褪色布條（z1nnz 同意動神木，只加繩子、不改樹）
+    if 'norope' not in argv:
+        _wood = [o_ for o_ in _GTO if o_.type == 'MESH' and 'Wood' in o_.name]
+        def _surf_r(a, z):   # 這個角度、高度上，樹幹最外側離中心多遠
+            d = Vector((math.cos(a), math.sin(a), 0)); best = 99.0   # 11/24 修：從中心往外打、取最近的面（從外往內會先打到外圍的根和枝 → 半徑 12–25 m）
+            for o_ in _wood:
+                mi = o_.matrix_world.inverted()
+                ok_, loc_, _n, _i = o_.ray_cast(mi @ Vector((TREE[0], TREE[1], z)), (mi.to_3x3() @ d).normalized())
+                if ok_:
+                    best = min(best, ((o_.matrix_world @ loc_).xy - Vector(TREE)).length)
+            return best if best < 99 else 3.0
+        NR = 128   # 3.4 m、8 m 都還在板根區（繩子變成圍欄浮在外面）→ 往上找樹幹截面夠圓（最大/最小 < 1.45）的最低高度
+        for _h in [8 + .75 * k for k in range(20)]:
+            _rz = gh(*TREE) + _h
+            _rad = [_surf_r(6.2832 * i / NR, _rz) for i in range(NR)]
+            if max(_rad) / max(min(_rad), .1) < 1.45:
+                break
+        print('ROPE height', _h)
+        _rad = [max(_rad[(i + k) % NR] for k in range(-2, 3)) + .08 for i in range(NR)]   # 只跨過細溝，貼著樹幹
+        _rpm = _mat('OldRope', (.30, .25, .15), .9, 40, (.17, .14, .09))
+        mossify(_rpm, .5, 1.0)
+        def _rope(zoff, thick, sag_ph):
+            cu_ = bpy.data.curves.new('ShrineRope', 'CURVE'); cu_.dimensions = '3D'; cu_.bevel_depth = thick; cu_.bevel_resolution = 3
+            sp_ = cu_.splines.new('NURBS'); sp_.points.add(NR - 1); sp_.use_cyclic_u = True; sp_.order_u = 3
+            for i in range(NR):
+                a = 6.2832 * i / NR; rr = _rad[i] + thick
+                z = _rz + zoff + .3 * math.sin(a * 3 + sag_ph) + .1 * math.sin(a * 7)   # 綁得不平、有鬆有緊
+                sp_.points[i].co = (TREE[0] + math.cos(a) * rr, TREE[1] + math.sin(a) * rr, z, 1)
+            cu_.materials.append(_rpm)
+            ob_ = bpy.data.objects.new('ShrineRope', cu_); sc.collection.objects.link(ob_)
+        _rope(0, .16, 0); _rope(-.45, .1, 1.3)   # 神木很大（樹幹半徑約 9 m）→ 繩子要粗   # 一粗一細兩道
+        _cl = [_mat('ClothRed', (.30, .05, .035), .9, 20, (.16, .04, .03)), _mat('ClothWhite', (.42, .40, .34), .9, 20, (.25, .23, .18)), _mat('ClothYellow', (.40, .30, .12), .9, 20, (.22, .17, .08))]
+        _CR = random.Random(77); _nst = 0
+        bm_ = bmesh.new(); _mi_of = []
+        for i in range(NR):
+            if _CR.random() > .45:
+                continue
+            a = 6.2832 * i / NR + _CR.uniform(-.02, .02)
+            d = Vector((math.cos(a), math.sin(a), 0)); t_ = Vector((-d.y, d.x, 0))
+            L_ = _CR.uniform(1.2, 2.8); W_ = _CR.uniform(.2, .35); z0 = _rz + .3 * math.sin(a * 3) + .1 * math.sin(a * 7) - .1
+            low = max(_surf_r(a, z0 - L_ * .5), _surf_r(a, z0 - L_)) + .1
+            rows = []
+            for j in range(9):
+                f = j / 8; z = z0 - L_ * f
+                rr = max(_rad[i] + .1, low) + .05 * math.sin(f * 3 + i)   # 垂下時離開樹皮
+                w = W_ * (1 - .25 * f) * (1 if j < 8 else _CR.uniform(.3, 1))   # 尾端破掉
+                c = Vector((TREE[0], TREE[1], 0)) + d * rr + Vector((0, 0, z)) + t_ * (.03 * math.sin(f * 4 + i))
+                rows.append((bm_.verts.new(c - t_ * w / 2), bm_.verts.new(c + t_ * w / 2 + Vector((0, 0, _CR.uniform(-.04, 0) if j == 8 else 0)))))
+            k_ = _CR.choices((0, 1, 2), (.5, .3, .2))[0]
+            for j in range(8):
+                f_ = bm_.faces.new((rows[j][0], rows[j][1], rows[j + 1][1], rows[j + 1][0])); f_.material_index = k_
+            _nst += 1
+        me_ = bpy.data.meshes.new('ClothStrips'); bm_.to_mesh(me_); bm_.free()
+        for m_ in _cl:
+            me_.materials.append(m_)
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        ob_ = bpy.data.objects.new('ClothStrips', me_); sc.collection.objects.link(ob_)
+        ob_.modifiers.new('Th', 'SOLIDIFY').thickness = .004
+        print('ROPE r', round(min(_rad), 1), round(max(_rad), 1), 'strips', _nst)
 
     # 11/23 故事「荒廢很多年」：倒下的老樹（獨立模型）——整根橫躺、半埋、長苔，一頭根盤翹起帶著土
     _flm = _bkm.copy(); _flm.name = 'FallenLogBark'
@@ -1699,6 +1801,10 @@ if 'real' in argv:
             if _nseam >= 70:
                 break
     print('BASEGRASS', len(globals().get('_PROPS', [])), 'SEAM', _nseam)
+    for _x, _y in globals().get('_SLABS', []):   # 石板縫長草
+        for _ in range(_BG.randint(1, 3)):
+            a = _BG.uniform(0, 6.283); x2, y2 = _x + math.cos(a) * .4, _y + math.sin(a) * .4
+            _tuft(x2, y2, gh(x2, y2) + .01, _BG.uniform(.15, .3) if path_d(x2, y2) < 1.2 else _BG.uniform(.25, .45))   # 路中間只有貼地小草
     # 11/22 優化：地上的草 → 一片片平貼的三葉草太多、看起來像貼上去的 → 三葉草減少，加入各種高度的草叢與莎草
     GC = UG['clover'] + UG['rosette'] + UG['heart'][:1] + UG['grass'] + UG['sedge']
     GW = [1.6] * len(UG['clover']) + [1.2] * len(UG['rosette']) + [1.5] + [1.4] * len(UG['grass']) + [1.0] * len(UG['sedge'])
