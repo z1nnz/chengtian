@@ -1,0 +1,22 @@
+Use your built-in image generation tool (image_gen) to make reference sheets for ONE 3D game asset family, and save the PNG files into ./out/ with the exact file names below. Use V4.png and V6.png in this folder as the main input reference images for every generation: they show an ancient-tree forest floor with fallen branches, mossy roots and logs. V1.png and V5.png show the same forest from other angles. Match their bark, colours, moss and painting style exactly. Do not write any code other than what is needed to copy the generated files into ./out/.
+
+These sheets are for building a real-time 3D game model, so every feature must be a BIG, CLEAR, READABLE SHAPE that a modeller can copy, not fine painterly noise. Keep the silhouette simple and strong.
+
+The asset: "DR09 piles of broken branches", THREE sizes of a loose heap of dead fallen branches lying on the forest floor, the kind that collects under a giant tree after a storm:
+- Size S: about 1.5 m long, 1.0 m wide, 0.4 m tall. 5 to 7 branches, 4 to 10 cm thick, crossing each other in an X / lattice, one forked branch.
+- Size M: about 2.5 m long, 1.6 m wide, 0.7 m tall. 8 to 12 branches, 5 to 18 cm thick, one thicker main limb lying underneath, smaller ones leaning across it, a few ends propped up off the ground.
+- Size L: about 4 m long, 2.2 m wide, 1.1 m tall. 12 to 18 branches, 5 to 28 cm thick, one big broken limb (about 28 cm) as the base with side forks, branches stacked on it at different angles, some ends sticking up diagonally.
+All three:
+- Branches are dead but not rotten mush: grey-brown bark, gently bent and knobbly with short broken side twigs (stubs), never straight poles or cylinders of equal thickness; each tapers towards the tip.
+- Broken ends: torn, splintered breaks with pale warm-cream wood fibres and a few long jagged splinters on one side, not clean saw cuts. Some ends with bark peeled back showing pale wood.
+- Patches of dark olive-green moss on the upward-facing sides of the thicker branches only, pale grey-green lichen spots, a few small tan mushrooms on the thickest limb.
+- Brown and orange-brown dead leaves trapped between the branches and piled underneath, plus loose twigs and leaf litter on the ground around the base, so the pile sits on the ground and does not float.
+- Clear gaps between branches so you can see through the pile in places.
+
+Files to make (each a separate generation, landscape, at least 1536x1024):
+1. out/DR09-threeview.png : orthographic views of ALL THREE sizes (S top row, M middle row, L bottom row): SIDE view on the left and TOP view on the right of each row; same scale, flat ground line, a small 1.75 m grey human silhouette for scale. Plain light warm-grey background, even soft overcast lighting, no cast shadows on the background, no fog, no trees, no text or labels.
+2. out/DR09-threequarter.png : all three piles on the mossy forest floor near the path, three-quarter view from eye height 1.7 m about 6 m away, overcast light, the same style as V6.
+3. out/DR09-detail.png : a sheet of three close-ups: (a) a torn splintered branch break with pale cream fibres and peeled bark; (b) where branches cross, with trapped dead leaves, moss on top and lichen spots; (c) the base of the pile on the ground, leaf litter, loose twigs and a few small mushrooms.
+
+Style: Eastern xianxia fantasy, hand-painted look 3D game concept art, low saturation, overcast. Deep grey-brown old bark, pale grey lichen, dark olive-green moss on upward-facing surfaces, warm orange-brown dead leaves. Not a photo.
+When finished, list the files in ./out/ with their pixel sizes.
