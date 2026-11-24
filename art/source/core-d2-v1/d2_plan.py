@@ -1098,6 +1098,76 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     sol.modifiers.new('Th', 'SOLIDIFY').thickness = .012
     print('PITTOOLS', [round(v, 1) for v in (_sp.x, _sp.y, _bp.x, _bp.y)])
 
+    # 11/24 故事「荒廢很多年」：從前砍掉的老樹留下的樹樁——根部往外張、埋進土裡；切口風化下陷、一側留著撕裂的木舌；長苔
+    _skm = _bkm.copy(); _skm.name = 'StumpBark'
+    next(x_ for x_ in _skm.node_tree.nodes if x_.type == 'MAPPING').inputs['Scale'].default_value = (1.2, 1.2, 1.0)
+    mossify(_skm, 1.1, 1.0, reach=.3)
+    _ctm = bpy.data.materials.new('StumpCut'); _ctm.use_nodes = True   # 切口：灰褐舊木，年輪＋裂紋
+    _cn = _ctm.node_tree; _cb = next(x_ for x_ in _cn.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _ctc = _cn.nodes.new('ShaderNodeTexCoord')
+    _cwv = _cn.nodes.new('ShaderNodeTexWave'); _cwv.wave_type = 'RINGS'; _cwv.rings_direction = 'Z'
+    _cwv.inputs['Scale'].default_value = 9; _cwv.inputs['Distortion'].default_value = 3; _cwv.inputs['Detail'].default_value = 4
+    _cn.links.new(_ctc.outputs['Object'], _cwv.inputs['Vector'])
+    _ccr = _cn.nodes.new('ShaderNodeValToRGB')
+    _ccr.color_ramp.elements[0].color = (.07, .055, .04, 1); _ccr.color_ramp.elements[1].color = (.17, .14, .10, 1)
+    _cn.links.new(_cwv.outputs['Fac'], _ccr.inputs[0]); _cn.links.new(_ccr.outputs[0], _cb.inputs['Base Color'])
+    _cbp = _cn.nodes.new('ShaderNodeBump'); _cbp.inputs['Strength'].default_value = .6
+    _cn.links.new(_cwv.outputs['Fac'], _cbp.inputs['Height']); _cn.links.new(_cbp.outputs['Normal'], _cb.inputs['Normal'])
+    _cb.inputs['Roughness'].default_value = .9
+    mossify(_ctm, .8, 1.0)
+
+    def stump(x, y, r, h, seed):
+        rr_ = random.Random(seed); N = 36; off_ = Vector((seed * 2.3, .7, 0))
+        lobes = rr_.randint(4, 6); ph = rr_.uniform(0, 6.28)
+        tilt = Vector((rr_.uniform(-.12, .12), rr_.uniform(-.12, .12)))   # 鋸口不是水平的
+        zs = [-.35, -.1, .05, .15, .3, .5, .75, 1.0]
+        bm_ = bmesh.new(); rings = []
+        for z01 in zs:
+            z = z01 * h if z01 > 0 else z01
+            flare = max(0.0, 1 - max(z, 0) / (h * .6)) ** 2   # 底部往外張的板根
+            row = []
+            for i in range(N):
+                a = 6.2832 * i / N
+                lobe = max(0.0, math.sin(a * lobes + ph)) ** 2
+                rad = r * (1 + noise.noise(Vector((math.cos(a), math.sin(a), z)) * 2 + off_) * .12 + flare * (.35 + .9 * lobe))
+                zz = z + (tilt.x * math.cos(a) + tilt.y * math.sin(a)) * r if z01 == 1.0 else z
+                row.append(bm_.verts.new(Vector((math.cos(a) * rad, math.sin(a) * rad, zz))))
+            rings.append(row)
+        for k in range(len(rings) - 1):
+            for i in range(N):
+                bm_.faces.new((rings[k][i], rings[k][(i + 1) % N], rings[k + 1][(i + 1) % N], rings[k + 1][i]))
+        # 切口：一圈圈往中間收、中心爛得下陷；一側留一片撕裂木舌（砍倒時沒鋸斷的地方）
+        top = rings[-1]; prev = top; tongue = rr_.uniform(0, 6.28)
+        for s_ in (.85, .6, .35):
+            row = []
+            for i, v in enumerate(top):
+                a = 6.2832 * i / N
+                c = Vector((v.co.x * s_, v.co.y * s_, v.co.z - (1 - s_) * .12 * r / .5 - rr_.uniform(0, .015)))
+                row.append(bm_.verts.new(c))
+            for i in range(N):
+                f_ = bm_.faces.new((prev[i], prev[(i + 1) % N], row[(i + 1) % N], row[i])); f_.material_index = 1
+            prev = row
+        cen = bm_.verts.new(Vector((0, 0, sum(v.co.z for v in prev) / N - .03)))
+        for i in range(N):
+            f_ = bm_.faces.new((prev[i], prev[(i + 1) % N], cen)); f_.material_index = 1
+        for i, v in enumerate(top):   # 木舌：切口外緣一段往上撕起、參差
+            a = 6.2832 * i / N; da = math.atan2(math.sin(a - tongue), math.cos(a - tongue))
+            if abs(da) < .7:
+                v.co.z += (1 - abs(da) / .7) * r * .55 + rr_.uniform(0, .05)
+        me_ = bpy.data.meshes.new('Stump'); bm_.to_mesh(me_); bm_.free()
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        me_.materials.append(_skm); me_.materials.append(_ctm)
+        ob_ = bpy.data.objects.new('Stump', me_); sc.collection.objects.link(ob_)
+        ob_.location = (x, y, min(gh(x + dx, y + dy) for dx in (-r, 0, r) for dy in (-r, 0, r)) - .02)
+        ob_.rotation_euler = (0, 0, rr_.uniform(0, 6.28))
+        print('STUMP', round(x, 1), round(y, 1))
+    for _fd, _rd, _r, _h, _sd in ((4.0, 5.0, .45, .55, 11), (10.5, -5.0, .55, .4, 12)):   # V3 路兩旁：兩個老樹樁
+        _p = _c3 + _f3 * _fd + _r3 * _rd
+        stump(*_clear(_p.x, _p.y, 3.0), _r, _h, _sd)
+    _p = _c5 + _f5 * 6.5 + _r5 * 4.2   # V5 路右邊一個
+    stump(*_clear(_p.x, _p.y, 3.0), .5, .5, 13)
+
     # 11/23 故事「荒廢很多年」：倒下的老樹（獨立模型）——整根橫躺、半埋、長苔，一頭根盤翹起帶著土
     _flm = _bkm.copy(); _flm.name = 'FallenLogBark'
     _ft = _flm.node_tree
