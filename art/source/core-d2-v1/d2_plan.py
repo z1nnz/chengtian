@@ -2262,26 +2262,44 @@ if 'real' in argv:   # 神木樹冠底下太暗：從南邊打一盞大面積的
     _flo.location = (TREE[0] + 18, TREE[1] - 40, gh(*TREE) + 14)
     _flo.rotation_euler = (Vector((TREE[0], TREE[1], gh(*TREE) + 12)) - _flo.location).to_track_quat('-Z', 'Y').to_euler()
     # 11/24 影片「有來源的光」：樹冠縫漏下一道光柱打在祭壇上（順著太陽方向；柱內霧濃一點才看得到光束）
-    if 'noshaft' not in argv:
+    if 'noshaft' not in argv:   # 11/24 第二版（z1nnz「光打得很假」）：不再是一根實心錐體 → 祭壇一帶一團一縷縷的薄霧，只被三道從樹冠縫射下的柔邊光照亮
         bpy.context.view_layer.update()
         _sd = (so.matrix_world.to_3x3() @ Vector((0, 0, -1))).normalized()
-        _tgt = Vector((ALT[0], ALT[1], gh(*ALT) + .8)); _src = _tgt - _sd * 30
-        _sp = bpy.data.lights.new('AltarShaft', 'SPOT'); _sp.energy = 60000; _sp.spot_size = math.radians(7); _sp.spot_blend = .5
-        _sp.color = (1.0, .9, .72); _sp.shadow_soft_size = .3
-        _spo = bpy.data.objects.new('AltarShaft', _sp); sc.collection.objects.link(_spo)
-        _spo.location = _src; _spo.rotation_euler = (_tgt - _src).to_track_quat('-Z', 'Y').to_euler()
-        bm_ = bmesh.new(); bmesh.ops.create_cone(bm_, cap_ends=True, segments=24, radius1=2.2, radius2=1.4, depth=26)
-        me_ = bpy.data.meshes.new('ShaftVol'); bm_.to_mesh(me_); bm_.free()
-        _svm = bpy.data.materials.new('ShaftVol'); _svm.use_nodes = True; _st = _svm.node_tree
+        _tgt = Vector((ALT[0], ALT[1], gh(*ALT) + .8))
+        _SH = random.Random(5)
+        for _k, (_dx, _dy, _ang, _en) in enumerate(((0, 0, 5.0, 220000), (1.8, -1.2, 2.6, 90000), (-1.5, 1.6, 3.4, 120000))):
+            _t2 = _tgt + Vector((_dx, _dy, 0)); _src = _t2 - _sd * 26   # 光源在樹冠高度（約 17 m）往下打
+            _sp = bpy.data.lights.new(f'AltarShaft{_k}', 'SPOT'); _sp.energy = _en; _sp.spot_size = math.radians(_ang); _sp.spot_blend = 1.0
+            _sp.color = (1.0, .9, .74); _sp.shadow_soft_size = .15
+            _spo = bpy.data.objects.new(f'AltarShaft{_k}', _sp); sc.collection.objects.link(_spo)
+            _spo.location = _src; _spo.rotation_euler = (_t2 - _src).to_track_quat('-Z', 'Y').to_euler()
+        # 局部薄霧：雜訊做出一縷縷、離地越高越淡；太陽和補光不照它（光源連結排除），只有光束照得到
+        bpy.ops.mesh.primitive_cube_add(size=1, location=(ALT[0] + _sd.x * -8, ALT[1] + _sd.y * -8, gh(*ALT) + 11))
+        _svo = bpy.context.object; _svo.name = 'ShaftHaze'; _svo.scale = (30, 30, 22)
+        _svm = bpy.data.materials.new('ShaftHaze'); _svm.use_nodes = True; _st = _svm.node_tree
         for _nd in list(_st.nodes):
             if _nd.type == 'BSDF_PRINCIPLED':
                 _st.nodes.remove(_nd)
-        _sv = _st.nodes.new('ShaderNodeVolumePrincipled'); _sv.inputs['Density'].default_value = .025; _sv.inputs['Color'].default_value = (1, .97, .9, 1)
+        _sv = _st.nodes.new('ShaderNodeVolumePrincipled'); _sv.inputs['Color'].default_value = (1, .97, .92, 1); _sv.inputs['Anisotropy'].default_value = .6   # 往前散射：逆光看光束才亮
+        _sg = _st.nodes.new('ShaderNodeNewGeometry')
+        _snz = _st.nodes.new('ShaderNodeTexNoise'); _snz.inputs['Scale'].default_value = .18; _snz.inputs['Detail'].default_value = 5; _snz.inputs['Roughness'].default_value = .65
+        _st.links.new(_sg.outputs['Position'], _snz.inputs['Vector'])
+        _smr = _st.nodes.new('ShaderNodeMapRange'); _smr.inputs['From Min'].default_value, _smr.inputs['From Max'].default_value = .38, .72
+        _smr.inputs['To Min'].default_value, _smr.inputs['To Max'].default_value = .0, .012
+        _st.links.new(_snz.outputs['Fac'], _smr.inputs['Value'])
+        _ssz = _st.nodes.new('ShaderNodeSeparateXYZ'); _st.links.new(_sg.outputs['Position'], _ssz.inputs[0])
+        _shz = _st.nodes.new('ShaderNodeMapRange'); _shz.inputs['From Min'].default_value, _shz.inputs['From Max'].default_value = gh(*ALT) + 2, gh(*ALT) + 20
+        _shz.inputs['To Min'].default_value, _shz.inputs['To Max'].default_value = 1.0, .15
+        _st.links.new(_ssz.outputs['Z'], _shz.inputs['Value'])
+        _smu = _st.nodes.new('ShaderNodeMath'); _smu.operation = 'MULTIPLY'
+        _st.links.new(_smr.outputs[0], _smu.inputs[0]); _st.links.new(_shz.outputs[0], _smu.inputs[1])
+        _st.links.new(_smu.outputs[0], _sv.inputs['Density'])
         _st.links.new(_sv.outputs['Volume'], next(_nd for _nd in _st.nodes if _nd.type == 'OUTPUT_MATERIAL').inputs['Volume'])
-        me_.materials.append(_svm)
-        _svo = bpy.data.objects.new('ShaftVol', me_); sc.collection.objects.link(_svo)
-        _mid = (_tgt + _src) / 2 + _sd * 1.5
-        _svo.location = _mid; _svo.rotation_euler = (_tgt - _src).to_track_quat('Z', 'Y').to_euler()
+        _svo.data.materials.append(_svm)
+        _hzc = bpy.data.collections.new('NoHaze'); _hzc.objects.link(_svo)
+        for _lo in (so, _flo):
+            _lo.light_linking.receiver_collection = _hzc
+            _hzc.collection_objects[0].light_linking.link_state = 'EXCLUDE'
         print('SHAFT', [round(v, 2) for v in _sd])
 if 'real' in argv:   # 陰天：天光為主、太陽弱（設定圖是散射光，不要逆光剪影）
     sc.view_settings.exposure = 1.0
