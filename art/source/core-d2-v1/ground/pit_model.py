@@ -159,7 +159,7 @@ def ground_material():
     mr.inputs['From Min'].default_value, mr.inputs['From Max'].default_value = .75, 1.1
     nt.links.new(ma.outputs[0], mr.inputs['Value'])
     leaf = mul(img(GT + 'forest_leaves_02_diffuse_2k.png', 'sRGB', 2.5), (.62, .62, .46))
-    mud = mul(img(GT + 'brown_mud_02_diff_2k.png', 'sRGB', .9), (1.05, .72, .46))
+    mud = mul(img(GT + 'brown_mud_02_diff_2k.png', 'sRGB', .9), (1.05, .72, .46) if 'warmsoil' in sys.argv else (.90, .74, .56))   # 11/25 坑壁和翻土偏紅橘 → 往林床的黃灰棕拉（warmsoil = 舊版）
     mudw = mul(mud, (.55, .5, .45))                         # 坑底濕泥較深
     mud2 = mix(sp.outputs[1], mud, mudw)
     # 11/22 坑壁土層：最上面 30 cm 深色表土（含腐葉），中段棕土，下段偏黃的黏土
@@ -172,7 +172,7 @@ def ground_material():
     _el[0].position, _el[0].color = .0, (.85, .72, .50, 1)          # z -1.7：黏土（偏黃灰）
     _dk = 'darkrim' in sys.argv   # 11/25 z1nnz：坑的土跟周遭的土顏色差太多 → 坑口那圈表土調亮、接近外面林床的棕（darkrim = 舊版深色）
     _el[1].position, _el[1].color = 1.0, ((.30, .22, .16, 1) if _dk else (.66, .52, .37, 1))         # z 0：表土
-    _e2 = _cr.color_ramp.elements.new(.55); _e2.color = (1.15, .85, .58, 1)   # 中段棕土
+    _e2 = _cr.color_ramp.elements.new(.55); _e2.color = (1.15, .85, .58, 1) if 'warmsoil' in sys.argv else (1.05, .88, .66, 1)   # 中段棕土
     _e3 = _cr.color_ramp.elements.new(.80); _e3.color = (.50, .38, .27, 1) if _dk else (.78, .60, .42, 1)
     _zr = nt.nodes.new('ShaderNodeMapRange'); _zr.inputs['From Min'].default_value, _zr.inputs['From Max'].default_value = -1.7, .06
     nt.links.new(_za.outputs[0], _zr.inputs['Value']); nt.links.new(_zr.outputs[0], _cr.inputs[0])
