@@ -1,0 +1,146 @@
+{
+  "asset": "TR03_A_Camphor",
+  "version": "v002",
+  "minTier": "low",
+  "name_zh": "樟（寬圓冠、三條大枝 3.5–4.5 m 分出）",
+  "species": "TR03",
+  "species_zh": "樟",
+  "slot": "A1 院子、林緣",
+  "work_pack": "2026-11-14 樹木重做 v2：照天空島世界樹的做法（B：針葉和大喬木）",
+  "method": "docs/execution/2026-11-14/tree-method（天空島世界樹）：S 形主幹、不對稱主枝、三級枝、葉冠錨點＋枝梢流、五頂點立體葉、頂點色",
+  "reference": "art/references/TR03/v002-r3/TR03-cand-2.png（prompt.txt 同資料夾）",
+  "height_m": 15.942,
+  "dimensions_m": [
+    22.493,
+    16.969,
+    16.242
+  ],
+  "bounds_min_m": [
+    -11.079,
+    -8.121,
+    -0.3
+  ],
+  "bounds_max_m": [
+    11.414,
+    8.848,
+    15.942
+  ],
+  "ground_z_m": 0.0,
+  "root_depth_m": 0.3,
+  "origin": "trunk base centre, z = 0 on the ground; roots go down to z = -0.3",
+  "front": "-Y (Blender) = +Z (Unity)",
+  "crown_anchors": 16,
+  "main_limbs": 16,
+  "seed": 503,
+  "collision": true,
+  "collision_note": "TR03_A_Camphor_Collision: 8-sided prism round the trunk (radius 1.11 m, z 0-3 m); hide its renderer, use it as a MeshCollider or a CapsuleCollider of the same size. The crown does not block.",
+  "collision_capsule": {
+    "radius": 1.111,
+    "height": 3.0,
+    "centre": [
+      0.038,
+      0.016,
+      1.5
+    ]
+  },
+  "objects_per_lod": 1,
+  "materials": [
+    "M_TR03_Bark",
+    "M_TR03_Leaves",
+    "M_TR03_Impostor"
+  ],
+  "material_slots": {
+    "LOD0-2": [
+      "M_TR03_Bark",
+      "M_TR03_Leaves"
+    ],
+    "LOD3": [
+      "M_TR03_Impostor"
+    ]
+  },
+  "shared_textures": "art/exports/trees-v2/TR03_Shared/Textures",
+  "texture_resolution_px": {
+    "TR03_Bark_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "TR03_Bark_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "TR03_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "TR03_Impostor_BaseColor.png": [
+      1536,
+      512
+    ],
+    "TR03_Impostor_Normal.png": [
+      1536,
+      512
+    ],
+    "TR03_Leaves_Palette.png": [
+      256,
+      64
+    ]
+  },
+  "leaf_geometry": "ovate leaves: seven-vertex solid leaves (6 outline points rounding the blade + a raised midrib, 6 triangles; rules relaxed 2026-11-16 with LOD0 up to 120,000), 0.56-0.64 m x 0.37-0.42 m at LOD0, 6-9 in a loose cluster opening up and outward round a point of a tip twig, from 15 % of the twig to the tip; LOD1 0.75-0.90 m five-vertex, 4-5 per whorl; LOD2 0.95-1.2 m, 3-4; LOD3 impostor",
+  "leaf_material": "opaque (no alpha), both faces drawn, roughness about 0.9, metallic 0; BaseColor = the palette texture on UV0 (or multiply the vertex colour instead)",
+  "vertex_colour": "Color (FBX vertex colour, linear): leaves RGB = leaf colour from height / inside-outside, A = canopy occlusion (not transparency); wood RGB 1, A 1",
+  "wind": "UV1 \"Wind\": u = sway weight (trunk 0, limbs 0.03-0.3, secondaries 0.3-0.5, tips 0.5-0.8, leaves 0.62-1), v = phase 0..1",
+  "lod_switch_distance_m": [
+    35,
+    90,
+    220,
+    1200
+  ],
+  "lod3": "two crossed cards with a front impostor of LOD0 (impostor atlas column 0)",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 118088,
+      "cap": 120000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 11858,
+      "leaf_blades": 17705
+    },
+    "LOD1": {
+      "triangles": 14682,
+      "cap": 15000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 6918,
+      "leaf_blades": 1941
+    },
+    "LOD2": {
+      "triangles": 3835,
+      "cap": 4000,
+      "objects": 1,
+      "materials": 2,
+      "wood_triangles": 655,
+      "leaf_blades": 795
+    },
+    "LOD3": {
+      "triangles": 4,
+      "cap": 200,
+      "objects": 1,
+      "materials": 1,
+      "wood_triangles": 0,
+      "leaf_blades": 0
+    }
+  },
+  "lod_totals": {
+    "LOD0": 118088,
+    "LOD1": 14682,
+    "LOD2": 3835,
+    "LOD3": 4
+  },
+  "texture_naming": "BaseColor = Albedo; MetallicSmoothness = URP mask (R metallic 0, A smoothness), same naming as village-houses-b (VL)",
+  "status": {
+    "Exported": true,
+    "Imported": "未驗",
+    "Visually_Verified": "未驗",
+    "In_game_Verified": "未驗"
+  }
+}

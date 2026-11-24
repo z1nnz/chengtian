@@ -1,0 +1,141 @@
+{
+  "asset": "TR02_B_Cypress",
+  "version": "v002",
+  "built": "2026-11-16 18:57",
+  "blender": "5.2.2 LTS",
+  "checks": {
+    "lod_caps": true,
+    "height_in_range": true,
+    "origin_ground": true,
+    "anchors_12_20": true,
+    "fbx_objects": true,
+    "fbx_lod0_height_err_m": 0.0001,
+    "fbx_vertex_colour": true,
+    "fbx_wind_uv": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "TR02_B_Cypress",
+      "TR02_B_Cypress_Collision",
+      "TR02_B_Cypress_LOD0",
+      "TR02_B_Cypress_LOD1",
+      "TR02_B_Cypress_LOD2",
+      "TR02_B_Cypress_LOD3"
+    ],
+    "TR02_B_Cypress_Collision": {
+      "tris": 28,
+      "min": [
+        -0.439,
+        -0.674,
+        -0.0
+      ],
+      "max": [
+        0.828,
+        0.594,
+        3.0
+      ],
+      "colour_layers": [],
+      "uv_layers": [],
+      "materials": []
+    },
+    "TR02_B_Cypress_LOD0": {
+      "tris": 118192,
+      "min": [
+        -2.958,
+        -3.342,
+        -0.3
+      ],
+      "max": [
+        3.789,
+        3.561,
+        12.623
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR02_Bark.002",
+        "M_TR02_Leaves.002"
+      ]
+    },
+    "TR02_B_Cypress_LOD1": {
+      "tris": 14730,
+      "min": [
+        -3.132,
+        -3.36,
+        -0.3
+      ],
+      "max": [
+        3.758,
+        3.561,
+        12.579
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR02_Bark.002",
+        "M_TR02_Leaves.002"
+      ]
+    },
+    "TR02_B_Cypress_LOD2": {
+      "tris": 3937,
+      "min": [
+        -3.474,
+        -3.496,
+        -0.3
+      ],
+      "max": [
+        4.038,
+        3.497,
+        12.288
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR02_Bark.002",
+        "M_TR02_Leaves.002"
+      ]
+    },
+    "TR02_B_Cypress_LOD3": {
+      "tris": 4,
+      "min": [
+        -6.096,
+        -6.512,
+        -0.3
+      ],
+      "max": [
+        6.927,
+        6.512,
+        12.723
+      ],
+      "colour_layers": [
+        "Color"
+      ],
+      "uv_layers": [
+        "UVMap",
+        "Wind.001"
+      ],
+      "materials": [
+        "M_TR02_Impostor.002"
+      ]
+    }
+  },
+  "files": {
+    "TR02_B_Cypress_v002.fbx": "633e64a7b3b280f2a34001e2d2ad30dff8f73f582bdfaef3c578955bac978e0a",
+    "TR02_B_Cypress_v002.glb": "4edb6246bf44972f9f4c0aa5fb0b4adda73b2b3f6f367ff55994c154b4af6c46"
+  }
+}
