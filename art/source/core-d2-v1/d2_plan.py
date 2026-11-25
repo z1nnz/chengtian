@@ -1839,6 +1839,32 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         long_log(_c5 - _f5 * 1.0 + _r5 * 4.2, _c5 + _f5 * 10.0 + _r5 * 2.6, .8, 61, stubs=0)
         # 第二根：更近、更低，貼著右下角，斷口落在畫面下緣中間偏右
         long_log(_c5 - _f5 * .5 + _r5 * 2.6, _c5 + _f5 * 3.8 + _r5 * 1.7, .55, 62, stubs=0)
+    if any(a.startswith('lg01') for a in argv):   # 11/25 試放 Codex 的 LG01 長圓苔倒木（v003）到 V5 右下，看在場景裡像不像
+        _lgp = 'D:/chengtian/1-進行中/codex-d2-log/out/LG01_MossLog_' + next((a[5:] for a in argv if a.startswith('lg01=')), 'v005') + '.blend'
+        with bpy.data.libraries.load(_lgp, link=False) as (s_, d_):
+            d_.objects = [n for n in s_.objects if n in ('LG01_A_LOD0', 'LG01_B_LOD0')]
+        for o_ in d_.objects:
+            if o_ is None:
+                continue
+            sc.collection.objects.link(o_)
+            if o_.name.startswith('LG01_A'):   # v005 試放：往右移 0.8 m，不壓路邊
+                p0, p1 = _c5 - _f5 * 1.0 + _r5 * 4.2, _c5 + _f5 * 7.5 + _r5 * 3.2
+            else:
+                p0, p1 = _c5 + _f5 * 1.0 + _r5 * 6.4, _c5 + _f5 * 7.6 + _r5 * 4.8
+            for sl_ in o_.material_slots:   # 場景光比 Codex 的檢查圖亮 → 整根發白像水泥：壓暗、苔色拉飽和
+                m_ = sl_.material
+                if m_ and m_.use_nodes and 'lg01raw' not in argv:
+                    b_ = next((x_ for x_ in m_.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED'), None)
+                    if b_ and b_.inputs['Base Color'].links:
+                        src_ = b_.inputs['Base Color'].links[0].from_socket
+                        hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation')
+                        hs_.inputs['Saturation'].default_value = 1.35; hs_.inputs['Value'].default_value = .55
+                        m_.node_tree.links.new(src_, hs_.inputs['Color']); m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
+            dd_ = p1 - p0; mid_ = (p0 + p1) / 2
+            o_.rotation_euler = (0, 0, math.atan2(dd_.y, dd_.x))
+            o_.location = (mid_.x, mid_.y, gh(mid_.x, mid_.y) - o_.dimensions.z * .15)
+            globals().setdefault('_LOGS', []).append((Vector((p0.x, p0.y)), math.atan2(dd_.y, dd_.x), dd_.length, o_.dimensions.y / 2))
+            print('LG01', o_.name, tuple(round(c, 1) for c in o_.location))
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
@@ -2267,7 +2293,53 @@ if 'real' in argv:
     except KeyError:
         pass
     _IR = random.Random(77)
-    for (tx_, ty_, s_) in ((6.0, 100.7, 1.1), (-7.2, 100, 1.0)):
+    if 'oldivy' not in argv:   # 11/25 V6：舊版菱形葉浮在樹幹外、亮面發白像一條簾子 → 心形葉、用射線找真的樹皮表面貼上去、深綠
+        bpy.context.view_layer.update()
+        _dg = bpy.context.evaluated_depsgraph_get()
+        _ivt = [(6.0, 100.7, 1.1), (-7.2, 100, 1.0)]
+        _ivm2 = _leaf_material('IvyTrunk', (.09, .15, .04, 1), (.22, .32, .09, 1), (.26, .36, .12, 1), gloss=.4)   # 比 heart_mat 亮，貼在深色樹幹上才看得出來
+        _cl, _ct = Vector((1, 91, gh(1, 91) + 1.7)), Vector((-5, 135, gh(-5, 135) + 5.0))   # V6 鏡頭：找畫面右邊那棵框景樹（設定圖整根爬滿藤）
+        _fw = (_ct - _cl).normalized(); _rt = _fw.cross(Vector((0, 0, 1))).normalized(); _upv = _rt.cross(_fw)
+        for _u in (.64, .61, .58, .55):   # 畫面右邊那棵樹（u = 橫向 tan 偏移；24mm 鏡頭畫面邊 = ±0.75）
+            _dr = (_fw + _rt * _u + _upv * -.05).normalized()
+            _h, _hp, _hn, _i, _ob, _m = sc.ray_cast(_dg, _cl, _dr, distance=30)
+            print('IVY ray', _u, _h, _ob.name if _h else None, tuple(round(c, 1) for c in _hp) if _h else None)
+            if _h and not _ob.name.startswith(('Ivy', 'Fern', 'UG', 'Ground', 'Terrain')):
+                _cc = _hp - Vector((_hn.x, _hn.y, 0)).normalized() * .35
+                print('IVY target', _ob.name, tuple(round(c, 1) for c in _cc))
+                if min(math.hypot(_cc.x - a, _cc.y - b) for a, b, _s in _ivt) > 1.5:
+                    _ivt.append((_cc.x, _cc.y, 1.2))
+                break
+        for (tx_, ty_, s_) in _ivt:
+            z0_ = gh(tx_, ty_)
+            Ht_ = 16 * s_ * .62
+            ivb = LeafBuf(); nl_ = 0
+            for st_ in range(60):   # 60 條藤（v3：除錯圖顯示 30 條還是太稀）；從樹腳往上繞（v2：14 條＋小葉貼在深色樹幹上看不到）
+                a_ = _IR.uniform(0, 6.283); z_ = _IR.uniform(0, .4); zt_ = Ht_ * _IR.uniform(.45, .95)
+                while z_ < zt_:
+                    for _ in range(3):
+                        la_ = a_ + _IR.uniform(-.2, .2); lz_ = z_ + _IR.uniform(-.06, .06)
+                        n_ = Vector((math.cos(la_), math.sin(la_), 0))
+                        o_ = Vector((tx_, ty_, z0_ + lz_)) + n_ * 4
+                        hit_, hp_, hn_, _i, hob_, _m = sc.ray_cast(_dg, o_, -n_, distance=4.2)
+                        if not hit_ or hob_.name.startswith(('Ivy', 'Fern', 'UG')):
+                            continue
+                        up_ = Vector((0, 0, 1)); sd_ = hn_.cross(up_).normalized()
+                        d_ = (up_ * _IR.uniform(.2, .7) + hn_ * _IR.uniform(.3, .7) + sd_ * _IR.uniform(-.5, .5)).normalized()
+                        side_ = hn_.cross(d_).normalized(); nrm_ = d_.cross(side_).normalized()
+                        Ll = _IR.uniform(.11, .19)
+                        ivb.leaf(hp_ + hn_ * .015, d_, side_, nrm_, Ll, Ll * .9,
+                                 shape=lambda u: (math.sin(math.pi * min(1, u) ** .7) ** .6) * (.75 + .25 * min(1, u * 4)),
+                                 fold=.2, droop=.25, tint=(.8, .85, .8), nu=4, nv=2)
+                        nl_ += 1
+                    a_ += _IR.uniform(.03, .15); z_ += _IR.uniform(.06, .11)
+            if 'ivydebug' in argv:
+                _ivm2 = bpy.data.materials.new('IvyDebug'); _ivm2.use_nodes = True
+                next(x_ for x_ in _ivm2.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED').inputs['Emission Color'].default_value = (1, 0, 0, 1)
+                next(x_ for x_ in _ivm2.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED').inputs['Emission Strength'].default_value = 5
+            ivb.build('Ivy', _ivm2)
+            print('IVY', nl_)
+    for (tx_, ty_, s_) in (((6.0, 100.7, 1.1), (-7.2, 100, 1.0)) if 'oldivy' in argv else ()):
         z0_ = gh(tx_, ty_) - .3
         Ht_ = 16 * s_ * .62
         bm_ = bmesh.new(); tone_ = []
