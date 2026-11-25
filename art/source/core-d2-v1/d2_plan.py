@@ -2416,12 +2416,22 @@ if 'real' in argv:
             for j in range(n_):
                 t_ = j / n_
                 q = p0 + Vector((math.sin(t_ * 4 + k) * .05, math.cos(t_ * 3 + k) * .05, -L_ * t_))
-                if j % 2 == 0:
-                    d = Vector((SR.uniform(-1, 1), SR.uniform(-1, 1), SR.uniform(-.6, .1)))
-                    d, side, nrm = _frame(d)
-                    Ll = SR.uniform(.025, .05) * (1 - .4 * t_)
-                    vb.leaf(q, d, side, nrm, Ll, Ll * .55, shape=lambda u: math.sin(math.pi * min(1, u)) ** .7, fold=.2, droop=.3,
-                            tint=(1, 1, 1), nu=4, nv=2)
+                if 'oldvine' in argv:
+                    if j % 2 == 0:
+                        d = Vector((SR.uniform(-1, 1), SR.uniform(-1, 1), SR.uniform(-.6, .1)))
+                        d, side, nrm = _frame(d)
+                        Ll = SR.uniform(.025, .05) * (1 - .4 * t_)
+                        vb.leaf(q, d, side, nrm, Ll, Ll * .55, shape=lambda u: math.sin(math.pi * min(1, u)) ** .7, fold=.2, droop=.3,
+                                tint=(1, 1, 1), nu=4, nv=2)
+                elif j % 2 == 0 or t_ < .35:   # 11/25 設定圖 V2、V6：常春藤心形葉 6–11 cm，上段一串串密、往下漸疏漸小
+                    for _ in range(2 if t_ < .35 else 1):
+                        d = Vector((SR.uniform(-1, 1), SR.uniform(-1, 1), SR.uniform(-.9, -.2)))   # 葉尖朝下垂
+                        d, side, nrm = _frame(d)
+                        Ll = SR.uniform(.06, .11) * (1 - .45 * t_)
+                        tn_ = SR.uniform(.85, 1.15)
+                        vb.leaf(q, d, side, nrm, Ll, Ll * .9,
+                                shape=lambda u: (math.sin(math.pi * min(1, u) ** .7) ** .6) * (.75 + .25 * min(1, u * 4)),   # 心形：基部寬、尖頭
+                                fold=.25, droop=.35, tint=(tn_, tn_, tn_), nu=5, nv=2)
             # 藤莖
             vb.leaf(p0, Vector((0, 0, -1)), Vector((1, 0, 0)), Vector((0, 1, 0)), L_, .004, shape=lambda u: 1.0, fold=0, tint=(.5, .45, .35), nu=6, nv=1)
             nvine += 1
