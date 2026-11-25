@@ -453,7 +453,7 @@ def append(path, want, offset, dz):
 _MOSSED = set()
 
 
-def mossify(m, amount=1.0, lift=1.0, furrow=False, reach=0.0):   # reach：苔往側面爬多少（0 = 只長在朝上的面）
+def mossify(m, amount=1.0, lift=1.0, furrow=False, reach=0.0, lichen=0.0):   # reach：苔往側面爬多少（0 = 只長在朝上的面）
     """照拱門的做法給樹皮加苔（z1nnz 11/21）：朝上的面、凹處長一片片青苔，凸處帶灰白地衣；樹皮整體提亮成棕灰。
     只改材質節點，接在原本的 Base Color 後面。"""
     if m is None or m.name in _MOSSED or not m.use_nodes:
@@ -526,6 +526,36 @@ def mossify(m, amount=1.0, lift=1.0, furrow=False, reach=0.0):   # reach：苔�
     nt.links.new(lf.outputs[0], lmx.inputs[0])
     nt.links.new(mx.outputs[0], lmx.inputs[1])
     nt.links.new(lmx.outputs[0], b.inputs['Base Color'])
+    if lichen > 0:   # 11/25 設定圖 V2、V6 拱門：樹皮上滿是 2–6 cm 的灰白地衣小斑，一群一群，長在沒苔的樹皮上
+        sp = nt.nodes.new('ShaderNodeTexNoise')
+        sp.inputs['Scale'].default_value = 22
+        sp.inputs['Detail'].default_value = 3
+        sp.inputs['Roughness'].default_value = .5
+        nt.links.new(geo.outputs['Position'], sp.inputs['Vector'])
+        spr = nt.nodes.new('ShaderNodeMapRange')
+        spr.inputs['From Min'].default_value, spr.inputs['From Max'].default_value = .55, .62   # v1 .60/.66 太少
+        nt.links.new(sp.outputs['Fac'], spr.inputs['Value'])
+        cl = nt.nodes.new('ShaderNodeTexNoise')   # 成群：大尺度遮罩
+        cl.inputs['Scale'].default_value = 1.6
+        cl.inputs['Detail'].default_value = 3
+        nt.links.new(geo.outputs['Position'], cl.inputs['Vector'])
+        clr = nt.nodes.new('ShaderNodeMapRange')
+        clr.inputs['From Min'].default_value, clr.inputs['From Max'].default_value = .34, .54
+        nt.links.new(cl.outputs['Fac'], clr.inputs['Value'])
+        inv = nt.nodes.new('ShaderNodeMath'); inv.operation = 'SUBTRACT'
+        inv.inputs[0].default_value = 1
+        nt.links.new(mr.outputs[0], inv.inputs[1])   # 苔的地方不長
+        f1 = nt.nodes.new('ShaderNodeMath'); f1.operation = 'MULTIPLY'
+        nt.links.new(spr.outputs[0], f1.inputs[0]); nt.links.new(clr.outputs[0], f1.inputs[1])
+        f2 = nt.nodes.new('ShaderNodeMath'); f2.operation = 'MULTIPLY'
+        nt.links.new(f1.outputs[0], f2.inputs[0]); nt.links.new(inv.outputs[0], f2.inputs[1])
+        f3 = nt.nodes.new('ShaderNodeMath'); f3.operation = 'MULTIPLY'; f3.use_clamp = True
+        nt.links.new(f2.outputs[0], f3.inputs[0]); f3.inputs[1].default_value = lichen
+        smx = nt.nodes.new('ShaderNodeMixRGB')
+        smx.inputs[2].default_value = (.66, .68, .61, 1)   # 灰白偏一點綠（v1 .50 太暗看不出）
+        nt.links.new(f3.outputs[0], smx.inputs[0])
+        nt.links.new(lmx.outputs[0], smx.inputs[1])
+        nt.links.new(smx.outputs[0], b.inputs['Base Color'])
     if furrow:   # 粗樹皮溝紋（只給神木；拱門用了會變成一格格蛇皮）：沿著樹幹往上拉長的深溝（設定圖神木的樹皮）
         fv = nt.nodes.new('ShaderNodeMapping')
         fv.inputs['Scale'].default_value = (1.6, 1.6, .22)
@@ -704,7 +734,7 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
     for o in _ARS + [o_ for o_ in _ARN if o_.type == 'MESH']:
         for sl in o.material_slots:
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
-                mossify(sl.material, 1.4 if o in _ARS else 1.6, 3.0, reach=.15)   # 11/22 設定圖 V2、V6 拱門側面也有一條條苔
+                mossify(sl.material, 1.4 if o in _ARS else 1.6, 3.0, reach=.15, lichen=(0 if 'nolichen' in argv else 1.0))   # 11/22 設定圖 V2、V6 拱門側面也有一條條苔
     mossify(M_BARKR, .75, 1.6)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
