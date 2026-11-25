@@ -930,7 +930,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     _db.inputs['Roughness'].default_value = .9
     mossify(_dwm, .7, 1.0)
 
-    def deadbranch(p0, ang, L, r0, seed):
+    def deadbranch(p0, ang, L, r0, seed, mind=2.0):
         rr_ = random.Random(seed)
         d_ = Vector((math.cos(ang), math.sin(ang), 0))
         sd_ = Vector((-d_.y, d_.x, 0))
@@ -943,7 +943,8 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             parts.append([(b0, r0 * .4), (b0 + bd * bl * .5, r0 * .3), (b0 + bd * bl, r0 * .12)])
         for _k, pts_ in enumerate(parts):
             # 11/22 z1nnz「擋到路了」：枝條任何一點進到走道（離路中線 2 m 內）就不放
-            if any(path_d(p0[0] + q_.x, p0[1] + q_.y) < 2.0 for q_, r_ in pts_):
+            if any(path_d(p0[0] + q_.x, p0[1] + q_.y) < mind for q_, r_ in pts_):
+                print('DEADBRANCH skip', seed, _k)
                 continue
             cu_ = bpy.data.curves.new('DeadBranch', 'CURVE'); cu_.dimensions = '3D'; cu_.bevel_depth = 1.0; cu_.bevel_resolution = 4
             cu_.use_fill_caps = True; cu_.resolution_u = 12
@@ -957,9 +958,41 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             ob_ = bpy.data.objects.new('DeadBranch', cu_); sc.collection.objects.link(ob_)
 
     _c3 = Vector((4, -15)); _f3 = Vector((2, 33)).normalized(); _r3 = Vector((_f3.y, -_f3.x))
-    _p = _c5 + _f5 * 2.6 + _r5 * -4.4   # V5 左下那根灰白枯枝：躺在路左邊，順著路的方向，不伸進走道
+    _p = _c5 + (_f5 * 2.6 + _r5 * -4.4 if 'oldv5branch' in argv else _f5 * 2.2 + _r5 * -2.3)   # V5 左下那根灰白枯枝：躺在路左邊，順著路的方向，不伸進走道（11/25 原位置在畫面外 → 移進左下角）
     _dv = _f5 * .97 + _r5 * -.25
-    deadbranch((_p.x, _p.y), math.atan2(_dv.y, _dv.x), 4.6, .17, 1)
+    deadbranch((_p.x, _p.y), math.atan2(_dv.y, _dv.x), 4.6, .17, 1, mind=1.8)
+    if 'notwigs' not in argv:   # 11/25 設定圖 V5 左下、V2 路邊：一根根細枯枝（1–3 cm 粗、20–80 cm 長，帶一兩個分叉），散在路邊草和泥上，不進走道
+        _TW = random.Random(57); _ntw = 0
+        _twc = [(_c5.x, _c5.y), (2.5, -90), (2.0, -78), (4, -15), (8, -2)]
+        for cx_, cy_ in _twc:
+            for _ in range(700):
+                x_, y_ = cx_ + _TW.uniform(-14, 14), cy_ + _TW.uniform(-14, 14)
+                pd_ = path_d(x_, y_)
+                if not (2.0 < pd_ < 4.8) or _TW.random() > (.9 if pd_ < 3.2 else .5):   # v2：v1 太稀、有的落在泥路邊
+                    continue
+                a_ = _TW.uniform(0, 6.283); L_ = _TW.uniform(.2, .8); r_ = _TW.uniform(.008, .022) * (.6 + L_)
+                d_ = Vector((math.cos(a_), math.sin(a_), 0)); sd_ = Vector((-d_.y, d_.x, 0))
+                bend_ = _TW.uniform(-.12, .12)
+                main_ = [(d_ * (L_ * t) + sd_ * (bend_ * math.sin(t * 3.1) * L_), r_ * (1 - .55 * t)) for t in (0, .33, .66, 1)]
+                parts_ = [main_]
+                for _f in range(_TW.choice((0, 1, 1, 2))):   # 分叉
+                    t0 = _TW.uniform(.3, .75); b0 = main_[1][0].lerp(main_[2][0], t0)
+                    ba = a_ + _TW.choice((-1, 1)) * _TW.uniform(.4, .9); bl = L_ * _TW.uniform(.25, .5)
+                    parts_.append([(b0, r_ * .5), (b0 + Vector((math.cos(ba), math.sin(ba), 0)) * bl, r_ * .25)])
+                if any(path_d(x_ + q_.x, y_ + q_.y) < 1.9 for pt_ in parts_ for q_, _r in pt_):
+                    continue
+                for pt_ in parts_:
+                    cu_ = bpy.data.curves.new('Twig', 'CURVE'); cu_.dimensions = '3D'; cu_.bevel_depth = 1.0; cu_.bevel_resolution = 1
+                    cu_.use_fill_caps = True; cu_.resolution_u = 4
+                    sp_ = cu_.splines.new('POLY'); sp_.points.add(len(pt_) - 1)
+                    for _j, (q_, rq_) in enumerate(pt_):
+                        w_ = Vector((x_, y_, 0)) + q_
+                        sp_.points[_j].co = (w_.x, w_.y, gh(w_.x, w_.y) + rq_ * .6 + _TW.uniform(0, .015), 1)   # 細枝架在落葉草上，不全埋
+                        sp_.points[_j].radius = rq_
+                    cu_.materials.append(_dwm)
+                    sc.collection.objects.link(bpy.data.objects.new('Twig', cu_))
+                _ntw += 1
+        print('TWIGS', _ntw)
     for _fd, _rd, _ang, _L, _r0, _sd in ((7, -4.5, .4, 3.2, .12, 2), (9.5, 3.5, 2.6, 2.6, .1, 3), (12, -6.5, 1.2, 3.4, .13, 4), (5.5, 5.5, -.3, 2.2, .08, 5)):   # V3 路邊零星斷枝
         _p = _c3 + _f3 * _fd + _r3 * _rd
         deadbranch((_p.x, _p.y), _ang, _L, _r0, _sd)
