@@ -1304,6 +1304,26 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             o_.matrix_world = M_ @ o_.matrix_world
             if 'Plants' in o_.name:
                 continue
+            if 'scanbark' in argv:   # 11/25 試過：換掃描樹皮貼圖 → 從 V5 看像一塊淺色石頭，不用（scanbark 才開）。 換成神木同一套掃描樹皮（盒投影、溝紋深）＋頂上一塊塊苔；dr08mat = 11/24 的壓暗版
+                # v3：盒投影的紋路方向轉不過來 → 改用 Josh 自己的 UV（紋路本來就順著倒木），只把貼圖換成神木的掃描樹皮
+                for sl_ in o_.material_slots:
+                    m_ = sl_.material
+                    if not m_ or 'Plants' in m_.name or not m_.use_nodes or m_.get('scanbark'):
+                        continue
+                    m_['scanbark'] = 1
+                    _nt = m_.node_tree
+                    _uvn = _nt.nodes.new('ShaderNodeUVMap'); _mpn = _nt.nodes.new('ShaderNodeMapping'); _mpn.inputs['Scale'].default_value = (2.0, 2.0, 1.0)
+                    _nt.links.new(_uvn.outputs['UV'], _mpn.inputs['Vector'])
+                    for t_ in [n_ for n_ in _nt.nodes if n_.type == 'TEX_IMAGE']:
+                        nor_ = 'Normal' in t_.image.name
+                        t_.image = bpy.data.images.load(_BK + ('bark_brown_02_nor_gl_2k.png' if nor_ else 'bark_brown_02_diff_2k.png'), check_existing=True)
+                        t_.image.colorspace_settings.name = 'Non-Color' if nor_ else 'sRGB'
+                        _nt.links.new(_mpn.outputs['Vector'], t_.inputs['Vector'])
+                    for n_ in _nt.nodes:
+                        if n_.type == 'NORMAL_MAP':
+                            n_.inputs['Strength'].default_value = 1.5
+                    mossify(m_, .6, 1.0, reach=.12)
+                continue
             for sl_ in o_.material_slots:   # 我們自己修：場景裡太亮太橘（像紅磚）→ 壓暗、降飽和，再長苔（從頂上往側面爬）
                 m_ = sl_.material
                 if not m_ or m_.get('dr08fix') or not m_.use_nodes:
@@ -1312,15 +1332,21 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                 b_ = next((x_ for x_ in m_.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED'), None)
                 if b_ and b_.inputs['Base Color'].links:
                     src_ = b_.inputs['Base Color'].links[0].from_socket
-                    hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation'); hs_.inputs['Saturation'].default_value = .5; hs_.inputs['Value'].default_value = .5
+                    hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation'); hs_.inputs['Saturation'].default_value = (.5 if 'dr08mat' in argv else .42); hs_.inputs['Value'].default_value = (.5 if 'dr08mat' in argv else .78)   # 11/25 v4：保留 Josh 的樹皮貼圖，提亮成設定圖的灰棕（dr08mat = 11/24 的深色）
+                    for n_ in m_.node_tree.nodes:
+                        if n_.type == 'NORMAL_MAP' and 'dr08mat' not in argv:
+                            n_.inputs['Strength'].default_value = 2.2   # 樹皮溝紋加深
                     m_.node_tree.links.new(src_, hs_.inputs['Color']); m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
-                mossify(m_, .9, 1.0, reach=.12)   # 苔只在頂上，側面露出樹皮（1.4／0.4 蓋滿整根像苔丘）
+                mossify(m_, (.9 if 'dr08mat' in argv else .6), 1.0, reach=.12)   # 苔只在頂上，側面露出樹皮（1.4／0.4 蓋滿整根像苔丘）
         d_ = Vector((math.cos(ang), math.sin(ang)))
         globals().setdefault('_LOGS', []).append((Vector((x, y)) - d_ * L_ / 2, ang, L_, min(dx_, dy_) * scale / 2))   # 倒木上不長蕨
         print('DR08', path.split('/')[-1], round(x, 1), round(y, 1), 'len', round(L_, 1))
     _DR = 'D:/chengtian/4-素材與快取/josh-dr08/'
-    if 'nodr08' not in argv:
-        _la = math.atan2((_f5 * .55 - _r5).y, (_f5 * .55 - _r5).x)   # 從右前往左後斜躺（設定圖從右下角斜進畫面）
+    _dlm = _bkm.copy(); _dlm.name = 'DR08_ScanBark'
+    next(x_ for x_ in _dlm.node_tree.nodes if x_.type == 'MAPPING').inputs['Scale'].default_value = (1.3, 1.3, 1.3)   # 倒木比神木細 → 樹皮紋路縮小
+    mossify(_dlm, .6, 1.0, reach=.12)   # .9 頂上整片綠 → 減
+    if 'nodr08' not in argv and 'longlog' not in argv:   # 11/25 z1nnz 覺得 Josh 的 DR08 形狀不錯、只是材質差一點 → 留 DR08、換材質；longlog = 我們的程式長倒木
+        _la =math.atan2((_f5 * .55 - _r5).y, (_f5 * .55 - _r5).x)   # 從右前往左後斜躺（設定圖從右下角斜進畫面）
         _p = _c5 + _f5 * 3.4 + _r5 * 3.6; place_glb_log(_DR + 'DR08_RottenLog_C_v002.glb', *_clear(_p.x, _p.y, 2.9), _la, .14, 1.2)   # 11/24 拉近放大：設定圖從右下角伸進來
         _p = _c5 + _f5 * 7.0 + _r5 * 4.8; place_glb_log(_DR + 'DR08_RottenLog_B_v002.glb', *_clear(_p.x, _p.y, 3.2), _la + .25, .12, 1.1)
 
@@ -1567,9 +1593,80 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                 ok_ = ok_ and min(math.hypot(q_.x - TREE[0], q_.y - TREE[1]) for q_ in (p_, e_)) > 18
                 if ok_ and (best_ is None or fd_ < best_[0]):
                     best_ = (fd_, p_, a_)
-        if best_ and 'logs' in argv:   # 11/23：程式拼的倒木從 V5 看是一團／一塊圓盤，看不出是樹 → 先不放（argv 加 logs 才放），等 Tripo
+        if False and best_ and 'logs' in argv:   # 11/25 舊的程式倒木停用（被下面 long_log 取代）；11/23：程式拼的倒木從 V5 看是一團／一塊圓盤，看不出是樹 → 先不放（argv 加 logs 才放），等 Tripo
             fallen_log(best_[1].x, best_[1].y, best_[2], L_, R_, seed_)
             globals().setdefault('_LOGS', []).append((best_[1], best_[2], L_, R_))
+
+    # 11/25 V5 右前方兩根長倒木（設定圖：圓、長、斜躺，頂上厚苔、側面露樹皮，兩頭伸出畫面或是斷口）
+    _llm = _bkm.copy(); _llm.name = 'LongLogBark'   # 11/25 v2：苔只長成頂上一塊塊，側面露出樹皮（v1 頂上整片平平的綠 → 像長滿草的花台）
+    _lt = _llm.node_tree; _luv = _lt.nodes.new('ShaderNodeUVMap'); _luv.uv_map = 'UVMap'
+    _lmp = next(x_ for x_ in _lt.nodes if x_.type == 'MAPPING'); _lmp.inputs['Scale'].default_value = (1, 1, 1)
+    _lt.links.new(_luv.outputs['UV'], _lmp.inputs['Vector'])
+    for _ti in _lt.nodes:
+        if _ti.type == 'TEX_IMAGE':
+            _ti.projection = 'FLAT'
+    mossify(_llm, .45, 1.0, reach=0.0)   # v3：.8 還是整片綠 → 再減
+
+    def long_log(p0, p1, R0, seed, sink=.25, stubs=2):
+        rr_ = random.Random(seed)
+        d3 = Vector((p1.x - p0.x, p1.y - p0.y, 0)); L = d3.length; d_ = d3.normalized(); s_ = Vector((-d_.y, d_.x, 0))
+        bm_ = bmesh.new(); uvl_ = bm_.loops.layers.uv.new('UVMap')
+        NS, NR = max(40, int(L * 7)), 28
+        rings = []; cen = []
+        bend = rr_.uniform(-.25, .25)
+        for i in range(NS + 1):
+            t = i / NS
+            c = Vector((p0.x, p0.y, 0)) + d_ * (L * t) + s_ * (bend * math.sin(t * math.pi))
+            r = R0 * (1 - .25 * t)
+            c.z = max(gh(c.x, c.y), gh(c.x + s_.x * r, c.y + s_.y * r), gh(c.x - s_.x * r, c.y - s_.y * r)) + r * (1 - 2 * sink)   # 直徑的 sink 比例埋在土裡
+            cen.append((c, r))
+            rg = []
+            for j in range(NR):
+                a = 2 * math.pi * j / NR
+                # 樹皮縱向溝紋 + 低頻起伏；斷口那頭最後 6% 參差不齊
+                ridge = .07 * abs(math.sin(j * 2.3 + t * L * .35 + noise.noise(Vector((t * 4, j, seed))) * 2))   # v3：溝紋加深、沿著樹幹微微扭
+                bump = 1 + .13 * noise.noise(Vector((t * 2.5, math.cos(2 * math.pi * j / NR) * .8, math.sin(2 * math.pi * j / NR) * .8 + seed))) + ridge
+                if t > .9:   # 斷口：最後一成參差、往內收
+                    bump *= 1 - (t - .9) / .1 * rr_.uniform(.15, .8)
+                rg.append(bm_.verts.new(c + (s_ * math.cos(a) + Vector((0, 0, 1)) * math.sin(a)) * r * bump))
+            rings.append(rg)
+        for i in range(NS):
+            for j in range(NR):
+                f = bm_.faces.new((rings[i][j], rings[i][(j + 1) % NR], rings[i + 1][(j + 1) % NR], rings[i + 1][j]))
+                for lp, (ii, jj) in zip(f.loops, ((i, j), (i, j + 1), (i + 1, j + 1), (i + 1, j))):
+                    lp[uvl_].uv = (jj / NR * 2 * math.pi * R0 / 1.4, ii / NS * L / 2.2)
+        for _cf in (bm_.faces.new(rings[-1][::-1]), bm_.faces.new(rings[0])):
+            for lp in _cf.loops:
+                lp[uvl_].uv = (lp.vert.co.dot(s_) * .3, lp.vert.co.z * .3)
+        # 斷掉的枝椿：往上、往側面伸出一小截
+        for k in range(stubs):
+            t = rr_.uniform(.3, .8); c, r = cen[int(t * NS)]
+            a = rr_.uniform(.4, 1.3) * rr_.choice((1, -1))
+            dirr = (s_ * math.cos(a) + Vector((0, 0, 1)) * math.sin(a) + d_ * .35).normalized()
+            rs = r * rr_.uniform(.18, .3); Ls = r * rr_.uniform(.9, 1.6)
+            prev = None
+            for u in range(6):
+                tt = u / 5; cc = c + dirr * (r * .8 + Ls * tt)
+                q_ = dirr.cross(Vector((0, 0, 1))).normalized(); w_ = dirr.cross(q_).normalized()
+                ring = [bm_.verts.new(cc + (q_ * math.cos(b) + w_ * math.sin(b)) * rs * (1 - .55 * tt)) for b in [2 * math.pi * q / 10 for q in range(10)]]
+                if prev:
+                    for q in range(10):
+                        bm_.faces.new((prev[q], prev[(q + 1) % 10], ring[(q + 1) % 10], ring[q]))
+                prev = ring
+            bm_.faces.new(prev[::-1])
+        me_ = bpy.data.meshes.new('LongLog'); bm_.to_mesh(me_); bm_.free()
+        for p_ in me_.polygons:
+            p_.use_smooth = True
+        me_.materials.append(_llm)
+        ob_ = bpy.data.objects.new('LongLog', me_); sc.collection.objects.link(ob_)
+        globals().setdefault('_LOGS', []).append((Vector((p0.x, p0.y)), math.atan2(d_.y, d_.x), L, R0))
+        print('LONGLOG', round(p0.x, 1), round(p0.y, 1), '->', round(p1.x, 1), round(p1.y, 1), 'R', R0)
+    if 'longlog' in argv:
+        # 第一根：從右前方畫面外，往左後斜躺，斷口落在畫面右側中間
+        # v2：順著視線方向往後躺（v1 橫在畫面上像兩條長椅）；近端從畫面右下角外面進來
+        long_log(_c5 - _f5 * 1.0 + _r5 * 4.2, _c5 + _f5 * 10.0 + _r5 * 2.6, .8, 61, stubs=0)
+        # 第二根：更近、更低，貼著右下角，斷口落在畫面下緣中間偏右
+        long_log(_c5 - _f5 * .5 + _r5 * 2.6, _c5 + _f5 * 3.8 + _r5 * 1.7, .55, 62, stubs=0)
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
 # P 傘頂松：直幹 26–36 m，頂上 2–3 層平展樹冠（深綠）→ 東側坡、北側高處
