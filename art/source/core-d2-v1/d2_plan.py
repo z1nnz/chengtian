@@ -721,6 +721,77 @@ _rim = sum(gh(PIT[0] + 3.3 * math.cos(a_), PIT[1] + 3.3 * math.sin(a_)) for a_ i
 if not REAL:   # 真模型模式的坑直接挖在地形裡（CO01 v002 是平板狀，不像設定圖）
     glb(EXP + 'CO01_ExcavatedPit/CO01_ExcavatedPit_v002.glb', PIT, _rim - gh(*PIT) - .05)
 _ARS = glb('D:/chengtian/4-素材與快取/josh-dr01/DR01_RootArch_v006.glb', ARCH_S, -.15)
+if 'oldballs' not in argv:   # 11/25 設定圖 V2 拱頂：扁平、一層層疊的層狀菌（棕色、邊緣淺）；DR01 拱頂上原本是一顆顆圓球 → 拿掉圓球、原地長層狀菌
+    bpy.context.view_layer.update()
+    _bz0 = gh(*ARCH_S)
+    _fm = bpy.data.materials.new('BracketFungus'); _fm.use_nodes = True
+    _fn_ = _fm.node_tree; _fb = next(x_ for x_ in _fn_.nodes if x_.type == 'BSDF_PRINCIPLED')
+    _fa = _fn_.nodes.new('ShaderNodeAttribute'); _fa.attribute_name = 'Rim'
+    _fr = _fn_.nodes.new('ShaderNodeValToRGB')
+    _fr.color_ramp.elements[0].color = (.30, .18, .09, 1); _fr.color_ramp.elements[1].color = (.66, .52, .36, 1)   # 中間深棕 → 外緣淺褐
+    _fr.color_ramp.elements[0].position = .45
+    _fn_.links.new(_fa.outputs['Fac'], _fr.inputs[0]); _fn_.links.new(_fr.outputs[0], _fb.inputs['Base Color'])
+    _fb.inputs['Roughness'].default_value = .6
+    _fsites = []
+    for o_ in _ARS:
+        if o_.type != 'MESH' or 'Plants' in o_.name:
+            continue
+        mw_ = o_.matrix_world
+        bmb = bmesh.new(); bmb.from_mesh(o_.data); bmb.verts.ensure_lookup_table()
+        seen_, kill_, keepco_ = set(), [], []
+        for v0_ in bmb.verts:
+            if v0_.index in seen_:
+                continue
+            part_, st_ = [], [v0_]
+            while st_:
+                x_ = st_.pop()
+                if x_.index in seen_:
+                    continue
+                seen_.add(x_.index); part_.append(x_); st_ += [e_.other_vert(x_) for e_ in x_.link_edges]
+            ws_ = [mw_ @ v_.co for v_ in part_]
+            lo_ = Vector([min(w[i] for w in ws_) for i in range(3)]); hi_ = Vector([max(w[i] for w in ws_) for i in range(3)])
+            d_ = hi_ - lo_; c_ = (lo_ + hi_) / 2
+            if len(part_) < 80 and max(d_) < 1.6 and min(d_) > .2 and max(d_) / min(d_) < 2.2 and c_.z - _bz0 > 4.0:
+                kill_ += part_; _fsites.append((c_, max(d_)))
+            elif len(part_) >= 80:
+                keepco_ += ws_[::7]
+        print('FUNGUS balls removed', len(_fsites), 'from', o_.name)
+        bmesh.ops.delete(bmb, geom=kill_, context='VERTS'); bmb.to_mesh(o_.data); bmb.free()
+    # 層狀菌：每處 2–4 片半圓扁片，貼在最近的樹皮上、往外伸，上下錯開疊
+    _FR = random.Random(88)
+    bmf = bmesh.new(); rim_ = []
+    for c_, sz_ in _fsites:
+        out_ = Vector((2.5 - c_.x, -97 - c_.y, 0)) if c_.y < ARCH_S[1] + 3 else Vector((c_.x - ARCH_S[0], c_.y - ARCH_S[1], 0))   # v2：朝 V2 看得到的那一面（拱頂上的圓球底下沒有側面可貼）
+        out_ = out_.normalized() if out_.length > 1e-3 else Vector((1, 0, 0))
+        near_ = c_ - out_ * sz_ * .3
+        _nk = min(keepco_, key=lambda w: (w - near_).length_squared)
+        if (_nk - near_).length > .15:   # v3：拱底下有幾組浮在空中 → 貼到最近的樹皮上
+            near_ = _nk
+        side_ = Vector((-out_.y, out_.x, 0))
+        for k_ in range(_FR.randint(2, 4)):
+            R_ = sz_ * _FR.uniform(.5, .75) * (1 - .18 * k_)   # v1 .28–.5 從 V2 看不到
+            base_ = near_ + out_ * .02 + Vector((0, 0, -k_ * R_ * .55)) + side_ * _FR.uniform(-.15, .15) * sz_
+            ring_ = []
+            for i_ in range(13):
+                a_ = -math.pi / 2 + math.pi * i_ / 12
+                rr_ = R_ * (1 + .08 * math.sin(a_ * 5 + k_))
+                p_ = base_ + (out_ * math.cos(a_) + side_ * math.sin(a_)) * rr_
+                ring_.append((p_, 1.0))
+            top_ = [bmf.verts.new(p_ + Vector((0, 0, R_ * .05))) for p_, f_ in ring_]   # 邊緣薄、中間厚（微拱）
+            bot_ = [bmf.verts.new(p_ - Vector((0, 0, R_ * .05))) for p_, f_ in ring_]
+            ct_ = bmf.verts.new(base_ + Vector((0, 0, R_ * .22)))
+            cb_ = bmf.verts.new(base_ - Vector((0, 0, R_ * .05)))
+            for i_ in range(12):
+                bmf.faces.new((ct_, top_[i_], top_[i_ + 1])); bmf.faces.new((cb_, bot_[i_ + 1], bot_[i_]))
+                bmf.faces.new((top_[i_], bot_[i_], bot_[i_ + 1], top_[i_ + 1]))
+            bmf.faces.new((ct_, top_[0], bot_[0], cb_)); bmf.faces.new((ct_, cb_, bot_[12], top_[12]))
+            rim_ += [f_ for _, f_ in ring_] + [f_ for _, f_ in ring_] + [0, 0]
+    _fme = bpy.data.meshes.new('BracketFungus'); bmf.to_mesh(_fme); bmf.free()
+    _rat = _fme.attributes.new('Rim', 'FLOAT', 'POINT'); _rat.data.foreach_set('value', rim_)
+    for p_ in _fme.polygons:
+        p_.use_smooth = True
+    _fme.materials.append(_fm)
+    sc.collection.objects.link(bpy.data.objects.new('BracketFungus', _fme))
 _ARN = append(S_ + 'root_arch_lib.blend', lambda nm: not (nm in ('Grid', 'Cube') or nm.startswith(('Cylinder', 'Camera', 'Sun', 'Ground', 'Floor'))),
        ARCH_N, gh(*ARCH_N) - .15)
 for o in list(bpy.data.objects):     # 根拱庫裡若有非網格物件就拿掉
