@@ -1,0 +1,38 @@
+{
+ "front": {
+  "ref_aspect": 0.301,
+  "our_aspect": 0.265,
+  "iou": 0.531,
+  "top_profile_err": 0.022,
+  "ref_void": 0.606,
+  "our_void": 0.647,
+  "top_seg_lower": [
+   -0.006,
+   0.026,
+   0.009,
+   0.002,
+   0.032,
+   0.02,
+   0.008,
+   -0.018
+  ]
+ },
+ "top": {
+  "ref_aspect": 0.506,
+  "our_aspect": 0.302,
+  "iou": 0.272,
+  "top_profile_err": 0.195,
+  "ref_void": 0.477,
+  "our_void": 0.662,
+  "top_seg_lower": [
+   0.238,
+   0.23,
+   0.234,
+   0.196,
+   0.146,
+   0.138,
+   0.219,
+   0.151
+  ]
+ }
+}
