@@ -24,7 +24,7 @@ namespace YunJing.Editor
         static string Models = BudgetModels;
         static bool Raw => Models == RawModels;
         static string Version(string id) => "v001";
-        static readonly string[] AllIds = { "DR06_FallenTrunk_B", "DR06_FallenTrunk_A", "DR05_HollowLog", "DR07_GiantStump_A", "DR07_GiantStump_B", "DR08_RottenLog_A", "DR08_RottenLog_B", "DR08_RottenLog_C" };
+        static readonly string[] AllIds = { "DR06_FallenTrunk_B", "DR06_FallenTrunk_A", "DR05_HollowLog", "DR07_GiantStump_A", "DR07_GiantStump_B", "DR08_RottenLog_A", "DR08_RottenLog_B", "DR08_RottenLog_C", "DR09_BranchPile_S", "DR09_BranchPile_M", "DR09_BranchPile_L" };
         static string[] Ids => string.IsNullOrEmpty(Environment.GetEnvironmentVariable("D2_IDS")) ? AllIds
             : Environment.GetEnvironmentVariable("D2_IDS").Split(',').Select(s => s.Trim()).Where(AllIds.Contains).ToArray();
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
@@ -100,6 +100,8 @@ namespace YunJing.Editor
             }
             // DR08: A / B / C share six hand-painted tiling layers (1024) and the plant atlas (2048) in DR08_Shared
             if (Ids.Any(IsLayered)) Copy(Path.Combine(Exports, "DR08_Shared", "Textures"), Path.Combine(Repo, "apps/game", Models, "DR08_Shared", "Textures"), "*.png");
+            // DR09 branch piles: the same layers, with a pale cream fresh-break wood (DR09_Shared) in the fibre slot
+            if (Ids.Any(i => i.StartsWith("DR09"))) Copy(Path.Combine(Exports, "DR09_Shared", "Textures"), Path.Combine(Repo, "apps/game", Models, "DR09_Shared", "Textures"), "*.png");
             Copy(Path.Combine(Repo, "art/exports/d2-roots-b/Shared"), Path.Combine(Repo, "apps/game", Models, "Shared"), "*.png");
             AssetDatabase.Refresh();
             foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { Models }))
@@ -137,7 +139,7 @@ namespace YunJing.Editor
         }
 
         static readonly Dictionary<string, Material> Mats = new Dictionary<string, Material>();
-        static bool IsLayered(string id) => id.StartsWith("DR08");
+        static bool IsLayered(string id) => id.StartsWith("DR08") || id.StartsWith("DR09");
         static readonly string[] Layers = { "Bark", "Moss", "Rot", "Fibre", "Inner", "Soil" };
         static Texture2D SharedTex(string name) => AssetDatabase.LoadAssetAtPath<Texture2D>($"{Models}/DR08_Shared/Textures/{name}.png");
         // DR08: the body slot gets YunJing/D2LayeredWood (six layers mixed by vertex colour + UV1), the bracket fungus slot and Detail_ the plant atlas
@@ -145,10 +147,11 @@ namespace YunJing.Editor
         {
             if (!IsLayered(id)) return Mat(id, IsDetail(r), info);
             bool plants = IsDetail(r) || (imported != null && imported.name.Contains("Plants"));
-            string key = "DR08" + (plants ? "Plants" : "Layered");
+            string fam = !plants && id.StartsWith("DR09") ? "DR09" : "DR08";
+            string key = fam + (plants ? "Plants" : "Layered");
             if (Mats.TryGetValue(key, out var cached) && cached) return cached;
-            var dir = $"{Models}/DR08_Shared/Materials"; Directory.CreateDirectory(Path.Combine(Repo, "apps/game", dir));
-            var path = $"{dir}/M_DR08_{(plants ? "Plants" : "Layered")}.mat";
+            var dir = $"{Models}/{fam}_Shared/Materials"; Directory.CreateDirectory(Path.Combine(Repo, "apps/game", dir));
+            var path = $"{dir}/M_{fam}_{(plants ? "Plants" : "Layered")}.mat";
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             var shader = Shader.Find(plants ? "Universal Render Pipeline/Lit" : "YunJing/D2LayeredWood");
             Check(shader != null, $"{id}: shader {(plants ? "URP Lit" : "YunJing/D2LayeredWood")} found");
@@ -167,8 +170,12 @@ namespace YunJing.Editor
                 var sizes = new List<string>();
                 foreach (var l in Layers)
                 {
-                    var al = SharedTex($"DR08_{l}_Albedo"); var nm = SharedTex($"DR08_{l}_Normal");
-                    Check(al != null && nm != null, $"{id}: DR08_{l}_Albedo / Normal found");
+                    bool fresh = fam == "DR09" && l == "Fibre";
+                    string tn = fresh ? "DR09_FreshWood" : $"DR08_{l}";
+                    bool bark9 = fam == "DR09" && l == "Bark";   // DR09 bark: recoloured olive grey-brown albedo, DR08 bark normal
+                    var al = fresh || bark9 ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{Models}/DR09_Shared/Textures/{(bark9 ? "DR09_Bark" : tn)}_Albedo.png") : SharedTex($"{tn}_Albedo");
+                    var nm = fresh ? AssetDatabase.LoadAssetAtPath<Texture2D>($"{Models}/DR09_Shared/Textures/{tn}_Normal.png") : SharedTex($"{tn}_Normal");
+                    Check(al != null && nm != null, $"{id}: {(bark9 ? "DR09_Bark" : tn)}_Albedo / {tn}_Normal found ({l} slot)");
                     mat.SetTexture($"_{l}Map", al); mat.SetTexture($"_{l}Nrm", nm);
                     foreach (var t in new[] { al, nm }.Where(t => t))
                     {
@@ -384,6 +391,22 @@ namespace YunJing.Editor
                 return;
             }
             float L = info.length_build_m;
+            if (id.StartsWith("DR09"))
+            {
+                // DR09 branch piles (centred on the origin, long side along x): a shin-high sweep (0.08–0.22 m, radius 0.06) across the pile is
+                // stopped on every line from -0.3 L to 0.3 L (step over or go round), and the highest point is between 0.3 and 1.3 m
+                int sn = 0, sh = 0;
+                for (float x = -.3f * L; x <= .3f * L + 1e-3f; x += .15f * L, sn++)
+                    if (Physics.CapsuleCast(new Vector3(x, .14f, -12), new Vector3(x, .16f, -12), .06f, Vector3.forward, 24)) sh++;
+                Check(sh == sn, $"{id}: a shin-high sweep across the pile is stopped at {sh} of {sn} lines (-0.3 L to 0.3 L)");
+                float best = 0;
+                for (float x = -.5f * L; x <= .5f * L; x += .05f)
+                    for (float z = -1.2f; z <= 1.2f; z += .05f)
+                        if (Physics.Raycast(new Vector3(x, 10, z), Vector3.down, out var hm, 12)) best = Mathf.Max(best, hm.point.y);
+                Check(best > .2f && best < 1.3f, $"{id}: the top of the collision is {best:0.00} m (a heap below shoulder height; thin twigs are not in the collision)");
+                UnityEngine.Object.DestroyImmediate(go);
+                return;
+            }
             if (id.StartsWith("DR08"))
             {
                 // DR08 rotten logs are low (top 0.6–0.85 m, below hip height): instead of the 1.75 m walker capsule, check that
@@ -457,7 +480,7 @@ namespace YunJing.Editor
             void S(string file, Cam c) => Shot(id, file, new Vector3(c.from[0], c.from[2], c.from[1]), new Vector3(c.at[0], c.at[2], c.at[1]), c.lens_mm);
             S("side-lod0", cams["side"]);
             if (Raw) { var rk = cams.ContainsKey("snap") ? "snap" : cams.ContainsKey("end") ? "end" : "tq"; S(rk, cams[rk]); if (water) { water.SetActive(false); S(rk + "-dry", cams[rk]); } return; }      // 樹樁拍四分之三      // 空心倒木沒有斷口（snap），改拍洞口（end）
-            foreach (var k in new[] { "tq", "plate", "plateq", "snap", "back", "sap", "end", "endA", "inside", "peel", "hinge", "into", "roots", "rim", "hole", "fungi", "brk" }) if (cams.ContainsKey(k)) S(k, cams[k]);
+            foreach (var k in new[] { "tq", "plate", "plateq", "snap", "back", "sap", "end", "endA", "inside", "peel", "hinge", "into", "roots", "rim", "hole", "fungi", "brk", "close", "top" }) if (cams.ContainsKey(k)) S(k, cams[k]);
             if (water)
             {
                 // dry: the same stump without the water FBX

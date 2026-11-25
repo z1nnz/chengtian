@@ -1,0 +1,13 @@
+Use your built-in image generation tool (image_gen) to paint ONE TEXTURE for a real-time 3D game asset (a pile of broken dead branches), and save the PNG file into ./out/ with the exact file name below. Use ref-detail.png in this folder (top-left close-up: the torn splintered branch break with pale cream wood) and V6.png as the input reference images; match their hand-painted style and colours. Do not write any code other than what is needed to copy the generated file into ./out/.
+
+This is a TEXTURE, not an illustration:
+- Square, at least 1024x1024.
+- Seen straight on (orthographic, flat), filling the whole square edge to edge. No perspective, no background, no frame, no border, no vignette, no text.
+- Even, flat, soft overcast light. No strong cast shadows and no directional highlights. Only gentle ambient occlusion in the deep splits.
+- Seamless / tileable: the left edge continues into the right edge and the top into the bottom.
+- Hand-painted Eastern xianxia fantasy game style, clear readable medium-size shapes, painterly but not noisy.
+
+File:
+1. out/tex_freshwood.png : freshly torn, splintered dead-branch wood: pale warm cream / light straw wood (like the splinters in ref-detail.png), long thin fibres and splinters running LEFT-RIGHT, separated by thin darker warm-brown splits, a few slightly greyer weathered strips, no bark, no moss.
+
+When finished, list the file in ./out/ with its pixel size.

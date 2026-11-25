@@ -1,0 +1,271 @@
+{
+  "asset": "DR09_BranchPile_L",
+  "version": "v001",
+  "minTier": "standard",
+  "detailObjects": [
+    "Detail_DR09_Leaves"
+  ],
+  "name_zh": "斷枝堆 L：大堆（長約 4 m）",
+  "slot": "D2 古樹空地四周的林地、路邊（工作包：三種大小共 12 處擺放；V4、V6）",
+  "note": "風雨後掉在神木底下的一堆枯斷枝：粗的主枝躺在最下面、略陷進落葉土，其他枝順著長向交疊、斜靠在下面的枝上（兩點支撐，一頭可以翹起）；枝有彎、有分岔、有斷枝樁和細枝梢；斷口是撕裂的淺奶油色木刺束、一側剝皮露出新木；粗枝朝上的面長苔、樹皮上有淡灰綠地衣（畫在樹皮貼圖裡）；交叉處夾著落葉，腳下一層落葉土和小枝。表面是 DR08 的六層手繪平鋪貼圖（撕裂纖維那層換成 DR09 淺色新斷木），用頂點權重混合，S／M／L 共用。",
+  "references": "art/references/DR09/v001/（Codex 依 D2 設定圖 V4、V6 畫的三視圖、四分之三視圖、細節圖）；淺色斷木貼圖原圖 art/source/d2-logs-b/tex_src_dr09/（Codex 畫）",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 26208,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 2
+    },
+    "LOD1": {
+      "triangles": 13051,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 2
+    },
+    "LOD2": {
+      "triangles": 3978,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 2
+    }
+  },
+  "texture_resolution_px": {
+    "DR08_Shared/Textures/DR08_Bark_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Moss_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Moss_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Plants_Albedo.png": [
+      2048,
+      2048
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)：看斷枝堆的長邊；長向沿 X",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "底部中心：LOD0 本體外框 XY 的中心正下方的地面；z = 0 是地面，主枝和落葉土陷進地面的部分在 z < 0",
+  "dimensions_m": [
+    4.0,
+    2.2756,
+    1.2
+  ],
+  "bounds_min_m": [
+    -2.0,
+    -1.1378,
+    -0.102
+  ],
+  "bounds_max_m": [
+    2.0,
+    1.1378,
+    1.098
+  ],
+  "spec_check": {
+    "spec": {
+      "L": 4.0,
+      "W": 2.2,
+      "H": 1.1
+    },
+    "length_x_m": 4.0,
+    "width_y_m": 2.2756,
+    "top_z_m": 1.098,
+    "length_ok": true,
+    "width_ok": true,
+    "height_ok": true,
+    "in_pack_range_1p5_to_4m": true,
+    "note": "工作包：斷枝堆三種大小，長 1.5–4 m。外框含腳下落葉土堆（四周比枝多出 0.3–0.4 m、外緣鑽進地面）；長容許 ±15%、寬 ±25%、頂高 ±25%（目標見 spec）"
+  },
+  "lods": {
+    "LOD0": {
+      "DR09_BranchPile_L_LOD0": 25556,
+      "Detail_DR09_Leaves_LOD0": 652
+    },
+    "LOD1": {
+      "DR09_BranchPile_L_LOD1": 12723,
+      "Detail_DR09_Leaves_LOD1": 328
+    },
+    "LOD2": {
+      "DR09_BranchPile_L_LOD2": 3878,
+      "Detail_DR09_Leaves_LOD2": 100
+    },
+    "collision": 2424
+  },
+  "lod_rule": "LOD 每級用同一份擺法重建（不是 decimate）：環距、每圈點數變粗；LOD2 拿掉細枝條和地上小枝、木刺只留 LOD0／1；落葉卡照組抽掉（LOD1 留約 50%、LOD2 約 15%）",
+  "materials": [
+    "M_DR09_Layered",
+    "M_DR08_Plants"
+  ],
+  "objects_per_lod": 2,
+  "material_note": "本體 M_DR09_Layered：YunJing/D2LayeredWood，DR08_Shared 的樹皮、苔、褐腐、內壁、土＋DR09_Shared 的淺色新斷木（纖維那格），六層 1024；Detail_DR09_Leaves 用 M_DR08_Plants（DR08 的 2048 手繪植物圖集，alpha 裁切、雙面）",
+  "uv": {
+    "UV0": "UVMap：公尺（沿枝長 = u；細枝的樹皮 UV 放大最多 2.6 倍）；落葉卡是植物圖集的 UV",
+    "UV1": "Extra：x = 土的權重，y = 頂點 AO（1 = 不遮）",
+    "vertex_color": "RGBA = 苔、褐腐木、撕裂纖維（這裡是淺色新斷木）、樹洞內壁的權重；樹皮 = 1 − 其他權重總和"
+  },
+  "unity": {
+    "shader": "YunJing/D2LayeredWood（apps/game/Assets/YunJing/Runtime/D2Logs/D2LayeredWood.shader）",
+    "fibre_slot": "DR09_Shared/Textures/DR09_FreshWood_{Albedo,Normal}.png",
+    "other_slots": "DR08_Shared/Textures/DR08_{Bark,Moss,Rot,Inner,Soil}_{Albedo,Normal}.png",
+    "plants": "Universal Render Pipeline/Lit，雙面、alpha clip 0.5"
+  },
+  "collision": "DR09_BranchPile_L_Collision：MeshCollider（convex off），renderer 關；只收半徑 3 cm 以上的枝和分岔（6 邊、每 0.3 m 一環），細枝、落葉土不收",
+  "sockets_blender_xyz": {},
+  "build_origin_m": [
+    0.0189,
+    -0.0776,
+    0.0
+  ],
+  "build_origin_note": "建模座標（擺放時的座標，斷枝堆大致以原點為中心）的原點在本資產座標裡的位置；Unity 檢查把模型放在它的負值，審圖鏡位才對得上",
+  "length_build_m": 4.0,
+  "ruler_build_xy": [
+    -2.469,
+    1.715
+  ],
+  "review_cams_build_xyz": [
+    {
+      "name": "tq",
+      "from": [
+        -3.819,
+        -4.122,
+        2.298
+      ],
+      "at": [
+        -0.019,
+        0.078,
+        0.384
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "side",
+      "from": [
+        -0.019,
+        -7.122,
+        0.9
+      ],
+      "at": [
+        -0.019,
+        0.078,
+        0.494
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "top",
+      "from": [
+        -0.019,
+        -0.522,
+        7.9
+      ],
+      "at": [
+        -0.019,
+        0.078,
+        0
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "end",
+      "from": [
+        4.181,
+        -0.522,
+        1.0
+      ],
+      "at": [
+        -0.019,
+        0.078,
+        0.439
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "close",
+      "from": [
+        -0.899,
+        -1.322,
+        1.209
+      ],
+      "at": [
+        -0.899,
+        0.078,
+        0.384
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "brk",
+      "from": [
+        0.861,
+        -1.222,
+        1.049
+      ],
+      "at": [
+        0.861,
+        0.078,
+        0.329
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "back",
+      "from": [
+        1.181,
+        5.278,
+        1.659
+      ],
+      "at": [
+        -0.019,
+        0.078,
+        0.384
+      ],
+      "lens_mm": 40
+    }
+  ],
+  "external_assets": [],
+  "files_sha256": {
+    "DR09_BranchPile_L_v001.fbx": "80887ab023a25795c02c9ba3e820ea32925714e27c2c30feeb2b333ee7253c26",
+    "DR09_BranchPile_L_v001.glb": "72d4506f253bee1d97f069f4903181ce4453bee08c3b626f5644e580bdfa287f"
+  }
+}

@@ -1,0 +1,29 @@
+Unity 6000.3.28f1, pipeline URP
+PASS DR09_BranchPile_S: shader URP Lit found
+PASS DR09_BranchPile_S: DR08_Plants_Albedo.png found
+PASS DR09_BranchPile_S: shader YunJing/D2LayeredWood found
+PASS DR09_BranchPile_S: DR09_Bark_Albedo / DR08_Bark_Normal found (Bark slot)
+PASS DR09_BranchPile_S: DR08_Moss_Albedo / DR08_Moss_Normal found (Moss slot)
+PASS DR09_BranchPile_S: DR08_Rot_Albedo / DR08_Rot_Normal found (Rot slot)
+PASS DR09_BranchPile_S: DR09_FreshWood_Albedo / DR09_FreshWood_Normal found (Fibre slot)
+PASS DR09_BranchPile_S: DR08_Inner_Albedo / DR08_Inner_Normal found (Inner slot)
+PASS DR09_BranchPile_S: DR08_Soil_Albedo / DR08_Soil_Normal found (Soil slot)
+PASS DR09_BranchPile_S: shared tiling layers delivered at 1024x1024 (1024, tiled 1–2 times per metre)
+PASS DR09_BranchPile_S: imported size 1.425 x 1.128 x 0.417 m matches model_info 1.4248 x 1.128 x 0.4169 within 2 cm
+PASS DR09_BranchPile_S: lowest point y = -0.022 (the trunk sinks into the soil, origin on the ground)
+PASS DR09_BranchPile_S: origin at the bottom centre (LOD0 body footprint centre 0.000, 0.000 m from the origin; y = 0 is the ground)
+PASS DR09_BranchPile_S: triangles LOD0/1/2 = 6234 / 3007 / 850 (48% / 14%), model_info 6234 / 3007 / 850
+PASS DR09_BranchPile_S: objects per LOD 2 / 2 / 2 (model_info 2 / 2 / 2)
+PASS DR09_BranchPile_S: 2 materials over every LOD and Detail_ mesh (model_info 2: body, two-sided plants)
+PASS DR09_BranchPile_S: Detail_* plants render both faces
+PASS DR09_BranchPile_S: minTier = standard (blocks the way: everyone sees it)
+PASS DR09_BranchPile_S: detailObjects Detail_DR09_Leaves present in the FBX
+PASS DR09_BranchPile_S: Detail_* off still shows the body (1 mesh per LOD)
+PASS DR09_BranchPile_S: DR09_BranchPile_S_LOD0 has UV0 (metres), UV1 (soil, AO) and vertex colours (moss, rot, fibre, inner weights)
+INFO DR09_BranchPile_S: mean layer weights moss 0.03, rot 0.00, fibre 0.31, inner 0.00, soil 0.16; AO 0.24–1.00
+PASS DR09_BranchPile_S: body slots M_DR09_Layered (YunJing/D2LayeredWood): layered wood (any extra slot two-sided plant atlas)
+PASS DR09_BranchPile_S: one collision shell (MeshCollider, renderer off)
+PASS DR09_BranchPile_S: a shin-high sweep across the pile is stopped at 5 of 5 lines (-0.3 L to 0.3 L)
+PASS DR09_BranchPile_S: the top of the collision is 0.36 m (a heap below shoulder height; thin twigs are not in the collision)
+INFO renders written to art/previews/d2-logs-b/DR09_BranchPile_S/unity
+INFO DR09_BranchPile_S: *-rawimport.png show the delivered files without the project's import budget (2048 textures, no crunch, no mesh compression)

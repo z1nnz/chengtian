@@ -1,0 +1,183 @@
+{
+  "asset": "DR09_BranchPile_S",
+  "version": "v001",
+  "blender": "5.2.2 LTS",
+  "bounds_main": {
+    "min": [
+      -0.7124,
+      -0.564,
+      -0.022
+    ],
+    "max": [
+      0.7124,
+      0.564,
+      0.3949
+    ],
+    "dims": [
+      1.4248,
+      1.128,
+      0.4169
+    ]
+  },
+  "origin_at_bottom_centre": {
+    "footprint_centre_xy_m": [
+      0.0,
+      0.0
+    ],
+    "ok": true
+  },
+  "bounds_detail": {
+    "min": [
+      -0.9888,
+      -0.9212,
+      -0.0217
+    ],
+    "max": [
+      1.0502,
+      0.8984,
+      0.4186
+    ]
+  },
+  "spec_check": {
+    "spec": {
+      "L": 1.5,
+      "W": 1.0,
+      "H": 0.4
+    },
+    "length_x_m": 1.4248,
+    "width_y_m": 1.128,
+    "top_z_m": 0.3949,
+    "length_ok": true,
+    "width_ok": true,
+    "height_ok": true,
+    "in_pack_range_1p5_to_4m": true,
+    "note": "工作包：斷枝堆三種大小，長 1.5–4 m。外框含腳下落葉土堆（四周比枝多出 0.3–0.4 m、外緣鑽進地面）；長容許 ±15%、寬 ±25%、頂高 ±25%（目標見 spec）"
+  },
+  "branch_overlap": {
+    "pieces": 44,
+    "penetrating_over_5mm": 0,
+    "worst_m": 0.0006,
+    "note": "擺放時的解析檢查：每根枝的軸線＋半徑對其他枝的 3D 最近距離（負 = 穿進去）；分岔、斷枝樁、細枝和自己的母枝不算"
+  },
+  "pieces": {
+    "branch": 6,
+    "fork": 5,
+    "stub": 7,
+    "twig": 19,
+    "litter": 7
+  },
+  "leaves_inside_body_lod0": {
+    "vertices_checked": 582,
+    "inside_body_over_2cm": 0,
+    "inside_body_over_5cm": 0
+  },
+  "buried_depth_m": 0.022,
+  "tris": {
+    "LOD0": {
+      "DR09_BranchPile_S_LOD0": 5846,
+      "Detail_DR09_Leaves_LOD0": 388
+    },
+    "LOD1": {
+      "DR09_BranchPile_S_LOD1": 2823,
+      "Detail_DR09_Leaves_LOD1": 184
+    },
+    "LOD2": {
+      "DR09_BranchPile_S_LOD2": 814,
+      "Detail_DR09_Leaves_LOD2": 36
+    },
+    "collision": 348
+  },
+  "lod_ratio": {
+    "LOD1": 0.482,
+    "LOD2": 0.136
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "DR09_BranchPile_S",
+      "DR09_BranchPile_S_Collision",
+      "DR09_BranchPile_S_LOD0",
+      "DR09_BranchPile_S_LOD1",
+      "DR09_BranchPile_S_LOD2",
+      "Detail_DR09_Leaves_LOD0",
+      "Detail_DR09_Leaves_LOD1",
+      "Detail_DR09_Leaves_LOD2"
+    ],
+    "lod0_dimensions_m": [
+      1.4248,
+      1.128,
+      0.4169
+    ],
+    "uv_layers": [
+      "UVMap",
+      "Extra"
+    ],
+    "colour_attributes": [
+      "Layers"
+    ],
+    "materials": [
+      "M_DR08_Plants",
+      "M_DR09_Layered"
+    ]
+  },
+  "fbx_dims_match": true,
+  "textures_px": {
+    "DR08_Shared/Textures/DR08_Bark_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Moss_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Moss_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Plants_Albedo.png": [
+      2048,
+      2048
+    ]
+  },
+  "texel_px_per_m": {
+    "bark": "1024 × (1.0–2.6)：樹皮 UV 照枝粗細放大（半徑 10 cm 以上 1 倍、細枝最多 2.6 倍），鱗片大小跟著枝變",
+    "moss": 2048,
+    "fresh_wood": 1024,
+    "soil": 1024
+  }
+}
