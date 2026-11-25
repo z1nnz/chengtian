@@ -682,6 +682,36 @@ if REAL:   # AL02 重做的三層石砌祭壇（正面石階朝南、朝主路�
     _ALTOBJ = append(S_ + 'props_lib.blend', lambda nm: nm == 'AL02_Altar', ALT, gh(*ALT) - .12)
     for _o in _ALTOBJ:
         _o.rotation_euler.z = .35
+        if _o.type == 'MESH' and 'nochip' not in argv:   # 11/25 祭壇做舊：石塊缺角（約四成石塊的一兩個角崩掉一塊）＋邊緣不平整的磨損
+            _o.data = _o.data.copy()
+            _cb = bmesh.new(); _cb.from_mesh(_o.data); _cb.verts.ensure_lookup_table()
+            _seen = set(); _CR = random.Random(31); _nchip = 0
+            for _v0 in _cb.verts:
+                if _v0.index in _seen:
+                    continue
+                _part, _st = [], [_v0]
+                while _st:   # 找出這一塊石頭的全部頂點
+                    _x = _st.pop()
+                    if _x.index in _seen:
+                        continue
+                    _seen.add(_x.index); _part.append(_x); _st += [e_.other_vert(_x) for e_ in _x.link_edges]
+                _lo = Vector((min(v_.co.x for v_ in _part), min(v_.co.y for v_ in _part), min(v_.co.z for v_ in _part)))
+                _hi = Vector((max(v_.co.x for v_ in _part), max(v_.co.y for v_ in _part), max(v_.co.z for v_ in _part)))
+                _ct = (_lo + _hi) / 2; _sz = _hi - _lo
+                for v_ in _part:   # 邊緣磨損：靠近稜角的頂點往內縮一點、不均勻
+                    _e = sum(1 for k_ in range(3) if min(v_.co[k_] - _lo[k_], _hi[k_] - v_.co[k_]) < .07)
+                    if _e >= 2:
+                        v_.co += (_ct - v_.co).normalized() * .03 * (1 + noise.noise(v_.co * 9))
+                for _ in range(_CR.choice((0, 1, 1, 2))):   # v2：v1 從 V3 看不出來 → 缺角變大變多。缺角：只崩上面的角（下面埋在石堆裡看不到）
+                    _c = Vector((_CR.choice((_lo.x, _hi.x)), _CR.choice((_lo.y, _hi.y)), _hi.z))
+                    _R = min(_sz.x, _sz.y, _sz.z) * _CR.uniform(.65, 1.0)
+                    for v_ in _part:
+                        d_ = (v_.co - _c).length
+                        if d_ < _R:
+                            v_.co += (_ct - v_.co).normalized() * (_R - d_) * 1.0 * (1 + .35 * noise.noise(v_.co * 14))
+                    _nchip += 1
+            _cb.to_mesh(_o.data); _cb.free()
+            print('ALTAR CHIPS', _nchip)
         for _sl in _o.material_slots:   # 11/22 優化 2：祭壇補苔（設定圖石階頂面、邊緣、石縫都有橄欖色苔）
             if _sl.material:
                 mossify(_sl.material, 2.2, 1.0, reach=.35)   # 1.3 看不出差別（石材本身已偏綠）→ 加量
