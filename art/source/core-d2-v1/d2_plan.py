@@ -238,7 +238,32 @@ if 'real' in argv:   # 泥路用平滑遮罩混材質（不要方塊鋸齒邊）
     mud = mt_.outputs[0]
     cm = nt.nodes.new('ShaderNodeMixRGB')
     nt.links.new(mr.outputs[0], cm.inputs[0])
-    nt.links.new(lf.outputs[0], cm.inputs[1])
+    _lfo = lf.outputs[0]
+    if 'darkfloor' in sys.argv:   # 11/26 z1nnz「已經很好了」→ 不預設開；設定圖 V1：樹冠底下的林床很暗、幾乎看不到；我們從上面看是一片亮黃綠草地 → 離空地 45 m 外的林床漸漸壓暗成深褐腐葉（地面鏡頭 25 m 內不動）
+        _gpf = nt.nodes.new('ShaderNodeNewGeometry')
+        _dsub = nt.nodes.new('ShaderNodeVectorMath'); _dsub.operation = 'SUBTRACT'; _dsub.inputs[1].default_value = (-9, 16, 0)
+        nt.links.new(_gpf.outputs['Position'], _dsub.inputs[0])
+        _dsx = nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(_dsub.outputs[0], _dsx.inputs[0])
+        _dcx = nt.nodes.new('ShaderNodeCombineXYZ'); nt.links.new(_dsx.outputs['X'], _dcx.inputs['X']); nt.links.new(_dsx.outputs['Y'], _dcx.inputs['Y'])
+        _dln = nt.nodes.new('ShaderNodeVectorMath'); _dln.operation = 'LENGTH'; nt.links.new(_dcx.outputs[0], _dln.inputs[0])
+        _dmr = nt.nodes.new('ShaderNodeMapRange'); _dmr.inputs['From Min'].default_value, _dmr.inputs['From Max'].default_value = 45, 70
+        nt.links.new(_dln.outputs['Value'], _dmr.inputs['Value'])
+        _fac = _dmr.outputs[0]
+        for _cx, _cy in ((2.5, -97), (1, 91)):   # 地面鏡頭 V2、V6 附近不壓暗（V3–V5 在空地內，本來就不受影響）
+            _cs = nt.nodes.new('ShaderNodeVectorMath'); _cs.operation = 'SUBTRACT'; _cs.inputs[1].default_value = (_cx, _cy, 0)
+            nt.links.new(_gpf.outputs['Position'], _cs.inputs[0])
+            _csx = nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(_cs.outputs[0], _csx.inputs[0])
+            _ccx = nt.nodes.new('ShaderNodeCombineXYZ'); nt.links.new(_csx.outputs['X'], _ccx.inputs['X']); nt.links.new(_csx.outputs['Y'], _ccx.inputs['Y'])
+            _cl = nt.nodes.new('ShaderNodeVectorMath'); _cl.operation = 'LENGTH'; nt.links.new(_ccx.outputs[0], _cl.inputs[0])
+            _cm = nt.nodes.new('ShaderNodeMapRange'); _cm.inputs['From Min'].default_value, _cm.inputs['From Max'].default_value = 25, 40
+            nt.links.new(_cl.outputs['Value'], _cm.inputs['Value'])
+            _mm = nt.nodes.new('ShaderNodeMath'); _mm.operation = 'MULTIPLY'
+            nt.links.new(_fac, _mm.inputs[0]); nt.links.new(_cm.outputs[0], _mm.inputs[1]); _fac = _mm.outputs[0]
+        _dk = nt.nodes.new('ShaderNodeMixRGB'); _dk.blend_type = 'MULTIPLY'
+        _dk.inputs[2].default_value = (.42, .36, .30, 1)   # 深褐、去掉苔綠
+        nt.links.new(_fac, _dk.inputs[0]); nt.links.new(lf.outputs[0], _dk.inputs[1])
+        _lfo = _dk.outputs[0]
+    nt.links.new(_lfo, cm.inputs[1])
     nt.links.new(mud, cm.inputs[2])
     nt.links.new(cm.outputs[0], b.inputs['Base Color'])
     nmx = nt.nodes.new('ShaderNodeMixRGB')
