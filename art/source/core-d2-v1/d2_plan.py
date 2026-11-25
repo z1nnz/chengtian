@@ -1839,7 +1839,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
         long_log(_c5 - _f5 * 1.0 + _r5 * 4.2, _c5 + _f5 * 10.0 + _r5 * 2.6, .8, 61, stubs=0)
         # 第二根：更近、更低，貼著右下角，斷口落在畫面下緣中間偏右
         long_log(_c5 - _f5 * .5 + _r5 * 2.6, _c5 + _f5 * 3.8 + _r5 * 1.7, .55, 62, stubs=0)
-    if any(a.startswith('lg01') for a in argv):   # 11/25 試放 Codex 的 LG01 長圓苔倒木（v003）到 V5 右下，看在場景裡像不像
+    if 'nolg01' not in argv:   # 11/26 z1nnz 同意放進場景（nolg01 = 不放）。11/25 試放 Codex 的 LG01 長圓苔倒木（v003）到 V5 右下，看在場景裡像不像
         _lgp = 'D:/chengtian/1-進行中/codex-d2-log/out/LG01_MossLog_' + next((a[5:] for a in argv if a.startswith('lg01=')), 'v005') + '.blend'
         with bpy.data.libraries.load(_lgp, link=False) as (s_, d_):
             d_.objects = [n for n in s_.objects if n in ('LG01_A_LOD0', 'LG01_B_LOD0')]
@@ -1858,7 +1858,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                     if b_ and b_.inputs['Base Color'].links:
                         src_ = b_.inputs['Base Color'].links[0].from_socket
                         hs_ = m_.node_tree.nodes.new('ShaderNodeHueSaturation')
-                        hs_.inputs['Saturation'].default_value = 1.35; hs_.inputs['Value'].default_value = .55
+                        hs_.inputs['Saturation'].default_value = 1.6; hs_.inputs['Value'].default_value = .68   # 11/26 .55 苔太暗太少 → 提亮、苔色更飽和
                         m_.node_tree.links.new(src_, hs_.inputs['Color']); m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
             dd_ = p1 - p0; mid_ = (p0 + p1) / 2
             o_.rotation_euler = (0, 0, math.atan2(dd_.y, dd_.x))
@@ -2019,6 +2019,20 @@ if 'real' in argv and 'nofill' not in argv:   # 11/24 z1nnz 同意 V1 補樹：�
         if _nf >= 28:
             break
     print('V1 FILL', _nf)
+if 'real' in argv and 'nov6fill' not in argv:   # 11/26 設定圖 V6：拱門後面是霧裡一層層的闊葉林；我們那邊（外圈樹距 14 m）是一片空草地 → 在 V6 視線扇形裡補真的樹（不是背景畫）
+    _VR = random.Random(126); _nv = 0
+    _vf = Vector((-6, 44)).normalized()
+    for _ in range(8000):
+        x, y = _VR.uniform(-45, 40), _VR.uniform(115, 170)
+        _v = Vector((x - 1, y - 91)); _d = _v.length
+        if not (30 < _d < 80) or _v.normalized().dot(_vf) < math.cos(math.radians(30)) or path_d(x, y) < 4.5:
+            continue
+        if any(math.hypot(x - tx, y - ty) < 8.5 for tx, ty, _k, _s in TREES):
+            continue
+        TREES.append((x, y, 'M' if _VR.random() < .7 else 'P', _VR.uniform(.85, 1.15))); _nv += 1
+        if _nv >= 34:
+            break
+    print('V6 FILL', _nv)
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
