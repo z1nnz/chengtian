@@ -1367,7 +1367,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
                         if n_.type == 'NORMAL_MAP' and 'dr08mat' not in argv:
                             n_.inputs['Strength'].default_value = 2.2   # 樹皮溝紋加深
                     m_.node_tree.links.new(src_, hs_.inputs['Color']); m_.node_tree.links.new(hs_.outputs[0], b_.inputs['Base Color'])
-                mossify(m_, (.9 if 'dr08mat' in argv else .6), 1.0, reach=.12)   # 苔只在頂上，側面露出樹皮（1.4／0.4 蓋滿整根像苔丘）
+                mossify(m_, (.9 if 'dr08mat' in argv else (.6 if 'baredr08' in argv else 1.05)), 1.0, reach=.14)   # 11/25 .6 太禿、.78 看不出差 → 1.05；苔只在頂上，側面露出樹皮（1.4／0.4 蓋滿整根像苔丘）
         d_ = Vector((math.cos(ang), math.sin(ang)))
         globals().setdefault('_LOGS', []).append((Vector((x, y)) - d_ * L_ / 2, ang, L_, min(dx_, dy_) * scale / 2))   # 倒木上不長蕨
         print('DR08', path.split('/')[-1], round(x, 1), round(y, 1), 'len', round(L_, 1))
@@ -2642,6 +2642,8 @@ SHOTS = {
 }
 if ONLY and 'VM' in ONLY:   # 檢查用：神木根部近拍（看苔墊）
     SHOTS['VM'] = ((-10, 14, 2.2), (-22, 28, 1.0), 28, '神木根部近拍')
+if ONLY and 'VL' in ONLY:   # 檢查用：林子裡那兩根 DR08 倒木（11/25 移出六張圖之後看不到）
+    SHOTS['VL'] = ((7, 15, 1.9), (-.5, 22, .3), 24, 'DR08 倒木近拍')
 for k, (loc, tgt, lens, _) in SHOTS.items():
     if ONLY and k not in ONLY:
         continue
