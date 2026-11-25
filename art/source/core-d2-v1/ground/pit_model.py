@@ -190,7 +190,7 @@ def ground_material():
     nt.links.new(nmap.outputs['Normal'], b.inputs['Normal'])
     rr = nt.nodes.new('ShaderNodeMapRange')
     nt.links.new(sp.outputs[1], rr.inputs['Value'])
-    rr.inputs['To Min'].default_value, rr.inputs['To Max'].default_value = .8, .35
+    rr.inputs['To Min'].default_value, rr.inputs['To Max'].default_value = .8, (.35 if 'walldrefl' in sys.argv else .55)   # 11/25 坑壁對鏡面隱形後，濕亮處會透過坑壁映到天空變白斑 → 濕處粗糙度 .35→.55
     nt.links.new(rr.outputs[0], b.inputs['Roughness'])
     return m
 
@@ -310,6 +310,42 @@ wb = next(x for x in wm.node_tree.nodes if x.type == 'BSDF_PRINCIPLED')
 wb.inputs['Base Color'].default_value = (.035, .028, .02, 1)
 wb.inputs['Roughness'].default_value = .03
 wb.inputs['IOR'].default_value = 1.33
+if 'oldwater' not in sys.argv and 'emitwater' not in sys.argv:   # v4：真的鏡面層（Glossy），倒影是土壁、天光的真實反射；Unity 用高 smoothness + 反射探針
+    _wn = wm.node_tree
+    _out = next(x for x in _wn.nodes if x.type == 'OUTPUT_MATERIAL')
+    _lw = _wn.nodes.new('ShaderNodeLayerWeight'); _lw.inputs['Blend'].default_value = .3
+    _k = _wn.nodes.new('ShaderNodeMapRange'); _k.inputs['To Min'].default_value, _k.inputs['To Max'].default_value = .35, .9   # 正看 35%、斜看 90% 的鏡面
+    _wn.links.new(_lw.outputs['Fresnel'], _k.inputs['Value'])
+    _gl = _wn.nodes.new('ShaderNodeBsdfGlossy'); _gl.inputs['Roughness'].default_value = .05
+    _gl.inputs['Color'].default_value = (.36, .35, .33, 1)   # .9、.62 天空倒影還是過曝成白片
+    _ms = _wn.nodes.new('ShaderNodeMixShader')
+    _wn.links.new(_k.outputs[0], _ms.inputs[0]); _wn.links.new(wb.outputs[0], _ms.inputs[1]); _wn.links.new(_gl.outputs[0], _ms.inputs[2])
+    _wn.links.new(_ms.outputs[0], _out.inputs['Surface'])
+    _rp = _wn.nodes.new('ShaderNodeTexNoise'); _rp.inputs['Scale'].default_value = 9
+    _bp = _wn.nodes.new('ShaderNodeBump'); _bp.inputs['Strength'].default_value = .025
+    _wn.links.new(_rp.outputs['Fac'], _bp.inputs['Height'])
+    _wn.links.new(_bp.outputs['Normal'], wb.inputs['Normal']); _wn.links.new(_bp.outputs['Normal'], _gl.inputs['Normal'])
+    wb.inputs['Base Color'].default_value = (.02, .015, .01, 1)
+if 'emitwater' in sys.argv:   # 11/25 v1–v3 發光假倒影：像一塊灰板 → 不用。V4 設定圖：深褐水面上一片片亮的天光倒影；坑裡真的反射只看得到土壁和樹冠（黑） → 加天光倒影層（Unity 用反射探針／平面反射達到同樣效果）
+    _wn = wm.node_tree
+    _out = next(x for x in _wn.nodes if x.type == 'OUTPUT_MATERIAL')
+    _lw = _wn.nodes.new('ShaderNodeLayerWeight'); _lw.inputs['Blend'].default_value = .55
+    _cn = _wn.nodes.new('ShaderNodeTexNoise'); _cn.inputs['Scale'].default_value = 1.4; _cn.inputs['Detail'].default_value = 4
+    _cr = _wn.nodes.new('ShaderNodeMapRange'); _cr.inputs['From Min'].default_value, _cr.inputs['From Max'].default_value = .50, .60   # v3：v2 整片均勻灰像泥 → 只留一塊塊亮倒影，其餘是深色水
+    _wn.links.new(_cn.outputs['Fac'], _cr.inputs['Value'])
+    _k = _wn.nodes.new('ShaderNodeMath'); _k.operation = 'MULTIPLY'   # v1 MULTIPLY_ADD + 發光 .55 → 整片白；v2 倒影只在雲塊處、斜看處   # 霧天的天光倒影：面向角越斜越亮，加上雲塊的明暗
+    _wn.links.new(_lw.outputs['Facing'], _k.inputs[0])
+    _wn.links.new(_cr.outputs[0], _k.inputs[1])
+    _kk = _wn.nodes.new('ShaderNodeMath'); _kk.operation = 'MULTIPLY'; _kk.use_clamp = True
+    _wn.links.new(_k.outputs[0], _kk.inputs[0]); _kk.inputs[1].default_value = .85
+    _em = _wn.nodes.new('ShaderNodeEmission'); _em.inputs['Color'].default_value = (.60, .62, .62, 1); _em.inputs['Strength'].default_value = .22
+    _ms = _wn.nodes.new('ShaderNodeMixShader')
+    _wn.links.new(_kk.outputs[0], _ms.inputs[0]); _wn.links.new(wb.outputs[0], _ms.inputs[1]); _wn.links.new(_em.outputs[0], _ms.inputs[2])
+    _wn.links.new(_ms.outputs[0], _out.inputs['Surface'])
+    _rp = _wn.nodes.new('ShaderNodeTexNoise'); _rp.inputs['Scale'].default_value = 14   # 細小漣漪，讓倒影有點碎
+    _bp = _wn.nodes.new('ShaderNodeBump'); _bp.inputs['Strength'].default_value = .04
+    _wn.links.new(_rp.outputs['Fac'], _bp.inputs['Height']); _wn.links.new(_bp.outputs['Normal'], wb.inputs['Normal'])
+    wb.inputs['Base Color'].default_value = (.022, .017, .011, 1)
 bw = bmesh.new()
 cv = bw.verts.new((0, 0, 0))
 ring = []
@@ -350,6 +386,18 @@ sme.materials.append(stone)
 so = bpy.data.objects.new('CO02_Stones', sme)
 sc.collection.objects.link(so)
 print('PIT_TRIS', sum(len(p.vertices) - 2 for p in me.polygons))
+# 11/25 z1nnz「應該是要反樹的倒影」：坑壁比水面高，真鏡面只映到土壁 → 坑壁、土塊、石頭不出現在鏡面反射裡，
+# 水面直接映出坑外的樹和天光（Unity：平面反射的 culling mask 排除坑那一層）。walldrefl = 舊版（映土壁）
+if 'walldrefl' not in sys.argv:
+    for _m in (GM, mud_mat, stone):
+        _t = _m.node_tree
+        _o = next(x for x in _t.nodes if x.type == 'OUTPUT_MATERIAL')
+        _src = _o.inputs['Surface'].links[0].from_socket
+        _lp = _t.nodes.new('ShaderNodeLightPath'); _tr = _t.nodes.new('ShaderNodeBsdfTransparent')
+        _mx = _t.nodes.new('ShaderNodeMixShader')
+        _t.links.new(_lp.outputs['Is Glossy Ray'], _mx.inputs[0])
+        _t.links.new(_src, _mx.inputs[1]); _t.links.new(_tr.outputs[0], _mx.inputs[2])
+        _t.links.new(_mx.outputs[0], _o.inputs['Surface'])
 
 bpy.ops.wm.save_as_mainfile(filepath=S_ + f'pit_lib.blend')
 if 'norender' in argv:
