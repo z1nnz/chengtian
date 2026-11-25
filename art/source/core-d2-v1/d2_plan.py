@@ -1347,8 +1347,9 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
     mossify(_dlm, .6, 1.0, reach=.12)   # .9 頂上整片綠 → 減
     if 'nodr08' not in argv and 'longlog' not in argv:   # 11/25 z1nnz 覺得 Josh 的 DR08 形狀不錯、只是材質差一點 → 留 DR08、換材質；longlog = 我們的程式長倒木
         _la =math.atan2((_f5 * .55 - _r5).y, (_f5 * .55 - _r5).x)   # 從右前往左後斜躺（設定圖從右下角斜進畫面）
-        _p = _c5 + _f5 * 3.4 + _r5 * 3.6; place_glb_log(_DR + 'DR08_RottenLog_C_v002.glb', *_clear(_p.x, _p.y, 2.9), _la, .14, 1.2)   # 11/24 拉近放大：設定圖從右下角伸進來
-        _p = _c5 + _f5 * 7.0 + _r5 * 4.8; place_glb_log(_DR + 'DR08_RottenLog_B_v002.glb', *_clear(_p.x, _p.y, 3.2), _la + .25, .12, 1.1)
+        _old = 'oldpos' in argv   # 11/25 z1nnz「這個擺的位置不要擺在這」：原本貼著路、蓋住半個畫面 → 往右邊畫面邊緣挪，和路之間留一排蕨（設定圖）；oldpos = 原位置
+        _p = _c5 + _f5 * (3.4 if _old else 4.2) + _r5 * (3.6 if _old else 5.8); place_glb_log(_DR + 'DR08_RottenLog_C_v002.glb', *_clear(_p.x, _p.y, 2.9 if _old else 4.2), _la, .14, 1.2)   # 11/24 拉近放大：設定圖從右下角伸進來
+        _p = _c5 + _f5 * (7.0 if _old else 8.5) + _r5 * (4.8 if _old else 7.0); place_glb_log(_DR + 'DR08_RottenLog_B_v002.glb', *_clear(_p.x, _p.y, 3.2 if _old else 4.5), _la + .25, .12, 1.1)
 
     # 11/24 地面細節：落葉堆（堆在樹樁、石頭、根邊的角落，風吹過去積起來的）、松果、小蕈叢（樹樁上、落葉堆邊）
     _lfm = [_mat('LeafBrown', (.16, .08, .03), .85, 30, (.09, .045, .02)), _mat('LeafOrange', (.30, .13, .04), .85, 30, (.18, .07, .02)), _mat('LeafDark', (.06, .04, .02), .9, 30, (.035, .025, .015))]
