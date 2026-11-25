@@ -1,0 +1,36 @@
+{
+ "ref_crop_px": 565,
+ "ref_object_px": 548,
+ "rows": {
+  "參考：去落葉（overlay 原定義）": {
+   "bbox_void": 0.485,
+   "outline_void": 0.265,
+   "outline_fill": 0.701,
+   "aspect": 0.507
+  },
+  "參考：保留落葉": {
+   "bbox_void": 0.349,
+   "outline_void": 0.129,
+   "outline_fill": 0.748,
+   "aspect": 0.511
+  },
+  "v029 灰模剪影（無落葉、無土壤貼片；overlay 原定義）": {
+   "bbox_void": 0.612,
+   "outline_void": 0.336,
+   "outline_fill": 0.585,
+   "aspect": 0.527
+  },
+  "v029 灰模剪影，降到參考解析度＋同樣開運算": {
+   "bbox_void": 0.612,
+   "outline_void": 0.328,
+   "outline_fill": 0.577,
+   "aspect": 0.528
+  },
+  "v029 完整剪影（含落葉卡、土壤貼片）": {
+   "bbox_void": 0.466,
+   "outline_void": 0.185,
+   "outline_fill": 0.655,
+   "aspect": 0.534
+  }
+ }
+}
