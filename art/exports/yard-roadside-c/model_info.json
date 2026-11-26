@@ -1,0 +1,1255 @@
+{
+ "VG01": {
+  "id": "VG01",
+  "name": "VegetableBeds",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG01_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG01_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG01_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   2.859,
+   1.941,
+   0.336
+  ],
+  "body_dimensions_xyz_m": [
+   2.859,
+   1.941,
+   0.336
+  ],
+  "size_limit_xyz_m": [
+   3,
+   2,
+   0.4
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [
+   "Detail_Stones",
+   "Detail_Weeds"
+  ],
+  "detailMeshes": [
+   "VG01_Detail_Stones_LOD0",
+   "VG01_Detail_Stones_LOD1",
+   "VG01_Detail_Stones_LOD2",
+   "VG01_Detail_Weeds_LOD0",
+   "VG01_Detail_Weeds_LOD1",
+   "VG01_Detail_Weeds_LOD2"
+  ],
+  "lods": {
+   "LOD0": {
+    "triangles": 17054,
+    "triangles_without_detail": 16294,
+    "objects": 3,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG01_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG01_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG01_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG01_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 8527,
+    "triangles_without_detail": 8147,
+    "objects": 3,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG01_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG01_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG01_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG01_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 2558,
+    "triangles_without_detail": 2444,
+    "objects": 3,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG01_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG01_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG01_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG01_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG01_Body_LOD0",
+    "VG01_Body_LOD1",
+    "VG01_Body_LOD2"
+   ],
+   "Detail_Stones": [
+    "VG01_Detail_Stones_LOD0",
+    "VG01_Detail_Stones_LOD1",
+    "VG01_Detail_Stones_LOD2"
+   ],
+   "Detail_Weeds": [
+    "VG01_Detail_Weeds_LOD0",
+    "VG01_Detail_Weeds_LOD1",
+    "VG01_Detail_Weeds_LOD2"
+   ]
+  },
+  "material": "M_VG01_VegetableBeds",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 438,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG01/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": {
+   "mesh": "VG01_Collision",
+   "primitives": [
+    {
+     "type": "box",
+     "size_xyz_m": [
+      2.6,
+      1.7,
+      0.17
+     ],
+     "center_xyz_m": [
+      -0.017,
+      -0.009,
+      0.085
+     ]
+    }
+   ],
+   "note": "one box over the earth (the plants are not solid): the player walks round the plot"
+  },
+  "notes": [
+   "three ridges on one piece of earth: rounded tops, trodden furrows, a ragged rim down to the ground; no fence or stone wall",
+   "each crop is one recipe repeated along its ridge with random size, leaf count, lean and turn (12 greens, 12 radishes, 18 onion clumps)",
+   "Detail_Stones (7 small stones on the rim) and Detail_Weeds (10 weeds in the furrows) are off at the standard tier"
+  ]
+ },
+ "VG02": {
+  "id": "VG02",
+  "name": "GourdTrellis",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG02_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG02_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG02_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   2.165,
+   1.447,
+   2.016
+  ],
+  "body_dimensions_xyz_m": [
+   2.165,
+   1.447,
+   2.016
+  ],
+  "size_limit_xyz_m": [
+   2.4,
+   1.6,
+   2.1
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [],
+  "detailMeshes": [],
+  "lods": {
+   "LOD0": {
+    "triangles": 18116,
+    "triangles_without_detail": 18116,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG02_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG02_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG02_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG02_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 9058,
+    "triangles_without_detail": 9058,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG02_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG02_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG02_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG02_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 2716,
+    "triangles_without_detail": 2716,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG02_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG02_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG02_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG02_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG02_Body_LOD0",
+    "VG02_Body_LOD1",
+    "VG02_Body_LOD2"
+   ]
+  },
+  "material": "M_VG02_GourdTrellis",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 216,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG02/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": "none: a small prop on the ground the player walks round; add a box from body_dimensions if the scene needs one",
+  "notes": [
+   "bamboo poles with raised nodes; every joint is lashed with cord (two loops on each diagonal of the crossing), nothing nailed",
+   "the vine stems and the three gourds are modelled; the leaves (three sprites) and four flowers are cards drawn in the top 22 % of the atlas, alpha clip: turn on Mip Maps Preserve Coverage for the albedo in Unity",
+   "the posts go into the ground (no base stones); no cloth wraps"
+  ]
+ },
+ "VG03": {
+  "id": "VG03",
+  "name": "ClothesPole",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG03_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG03_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG03_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   2.54,
+   0.297,
+   1.832
+  ],
+  "body_dimensions_xyz_m": [
+   2.54,
+   0.297,
+   1.832
+  ],
+  "size_limit_xyz_m": [
+   2.6,
+   0.6,
+   1.9
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [],
+  "detailMeshes": [],
+  "lods": {
+   "LOD0": {
+    "triangles": 7264,
+    "triangles_without_detail": 7264,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG03_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG03_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG03_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG03_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 3632,
+    "triangles_without_detail": 3632,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG03_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG03_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG03_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG03_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 1088,
+    "triangles_without_detail": 1088,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG03_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG03_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG03_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG03_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG03_Body_LOD0",
+    "VG03_Body_LOD1",
+    "VG03_Body_LOD2"
+   ]
+  },
+  "material": "M_VG03_ClothesPole",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 50,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG03/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": "none: a small prop on the ground the player walks round; add a box from body_dimensions if the scene needs one",
+  "notes": [
+   "two forked posts of crooked natural timber set in the ground; the bamboo pole lies in the crotches and is tied with cord",
+   "the jacket hangs with its sleeves on the pole, the trousers are folded over it; the folds deepen towards the hems and are in the shape, not only in the normal map",
+   "frayed hems are cards in the top 10 % of the atlas (alpha clip): turn on Mip Maps Preserve Coverage for the albedo in Unity; the two patches are painted",
+   "no cloth wraps or boards on the posts"
+  ]
+ },
+ "VG04_01": {
+  "id": "VG04_01",
+  "name": "Haystack",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG04_01_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG04_01_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG04_01_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   2.028,
+   2.09,
+   2.336
+  ],
+  "body_dimensions_xyz_m": [
+   2.028,
+   2.081,
+   2.336
+  ],
+  "size_limit_xyz_m": [
+   2.2,
+   2.2,
+   2.4
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [
+   "Detail_Stalks"
+  ],
+  "detailMeshes": [
+   "VG04_01_Detail_Stalks_LOD0",
+   "VG04_01_Detail_Stalks_LOD1",
+   "VG04_01_Detail_Stalks_LOD2"
+  ],
+  "lods": {
+   "LOD0": {
+    "triangles": 4398,
+    "triangles_without_detail": 3894,
+    "objects": 2,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG04_01_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 2199,
+    "triangles_without_detail": 1947,
+    "objects": 2,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG04_01_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 658,
+    "triangles_without_detail": 584,
+    "objects": 2,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG04_01_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG04_01_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG04_01_Body_LOD0",
+    "VG04_01_Body_LOD1",
+    "VG04_01_Body_LOD2"
+   ],
+   "Detail_Stalks": [
+    "VG04_01_Detail_Stalks_LOD0",
+    "VG04_01_Detail_Stalks_LOD1",
+    "VG04_01_Detail_Stalks_LOD2"
+   ]
+  },
+  "material": "M_VG04_01_Haystack",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 190,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG04/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": "none in the model; if the scene needs one, a capsule of radius 0.95 m and height 2.0 m",
+  "notes": [
+   "a lopsided dome, not a smooth bun: six overlapping thatch skirts with rims jagged in the shape, a fringe of loose strands under every rim",
+   "the fringes are cards in the top 12 % of the atlas (alpha clip): turn on Mip Maps Preserve Coverage for the albedo in Unity",
+   "Detail_Stalks: stray stalks, off at the standard tier"
+  ]
+ },
+ "VG04_02": {
+  "id": "VG04_02",
+  "name": "HaystackPulled",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG04_02_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG04_02_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG04_02_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   2.152,
+   1.967,
+   2.348
+  ],
+  "body_dimensions_xyz_m": [
+   2.152,
+   1.941,
+   2.348
+  ],
+  "size_limit_xyz_m": [
+   2.2,
+   2.2,
+   2.4
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [
+   "Detail_Stalks"
+  ],
+  "detailMeshes": [
+   "VG04_02_Detail_Stalks_LOD0",
+   "VG04_02_Detail_Stalks_LOD1",
+   "VG04_02_Detail_Stalks_LOD2"
+  ],
+  "lods": {
+   "LOD0": {
+    "triangles": 6190,
+    "triangles_without_detail": 5574,
+    "objects": 2,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG04_02_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 3095,
+    "triangles_without_detail": 2787,
+    "objects": 2,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG04_02_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 927,
+    "triangles_without_detail": 835,
+    "objects": 2,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG04_02_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG04_02_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG04_02_Body_LOD0",
+    "VG04_02_Body_LOD1",
+    "VG04_02_Body_LOD2"
+   ],
+   "Detail_Stalks": [
+    "VG04_02_Detail_Stalks_LOD0",
+    "VG04_02_Detail_Stalks_LOD1",
+    "VG04_02_Detail_Stalks_LOD2"
+   ]
+  },
+  "material": "M_VG04_02_HaystackPulled",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 209,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG04/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": "none in the model; if the scene needs one, a capsule of radius 0.95 m and height 2.0 m",
+  "notes": [
+   "a lopsided dome, not a smooth bun: six overlapping thatch skirts with rims jagged in the shape, a fringe of loose strands under every rim",
+   "the fringes are cards in the top 12 % of the atlas (alpha clip): turn on Mip Maps Preserve Coverage for the albedo in Unity",
+   "Detail_Stalks: stray stalks, off at the standard tier",
+   "one side of the lower half is pulled away: the hollow shows five tied bundles, loose straw lies in front (the three-views drew this as a tied-back curtain; made as the work pack words it)"
+  ]
+ },
+ "VG05": {
+  "id": "VG05",
+  "name": "Handcart",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG05_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG05_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG05_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   2.144,
+   1.096,
+   0.93
+  ],
+  "body_dimensions_xyz_m": [
+   2.144,
+   1.096,
+   0.93
+  ],
+  "size_limit_xyz_m": [
+   2.2,
+   1.1,
+   1
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [],
+  "detailMeshes": [],
+  "lods": {
+   "LOD0": {
+    "triangles": 7740,
+    "triangles_without_detail": 7740,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG05_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG05_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG05_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG05_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 3870,
+    "triangles_without_detail": 3870,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG05_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG05_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG05_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG05_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 1160,
+    "triangles_without_detail": 1160,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG05_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG05_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG05_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG05_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG05_Body_LOD0",
+    "VG05_Body_LOD1",
+    "VG05_Body_LOD2"
+   ]
+  },
+  "material": "M_VG05_Handcart",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 109,
+  "coplanar_lifted": 2,
+  "reference": "art/references/VG05/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": {
+   "mesh": "VG05_Collision",
+   "primitives": [
+    {
+     "type": "box",
+     "size_xyz_m": [
+      1.44,
+      1.1,
+      0.9
+     ],
+     "center_xyz_m": [
+      0.359,
+      0.0,
+      0.45
+     ]
+    }
+   ],
+   "note": ""
+  },
+  "notes": [
+   "two long beams run the whole length and thin into the handles; four cross beams pass through them (tenon ends show); the bed is six separate planks",
+   "wheels: a turned hub with two iron bands, twelve tapered spokes, six felloes, an iron tyre and rivet heads; the axle runs through two blocks under the beams, a linchpin outside each hub",
+   "low rails: posts let into the beams, a side board, a top rail through the posts; a prop leg with two braces keeps the bed level",
+   "intact and empty; the collision box covers the bed and wheels, not the handles"
+  ]
+ },
+ "VG06": {
+  "id": "VG06",
+  "name": "CarryingPoleBaskets",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG06_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG06_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG06_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   1.757,
+   0.48,
+   0.38
+  ],
+  "body_dimensions_xyz_m": [
+   1.757,
+   0.48,
+   0.38
+  ],
+  "size_limit_xyz_m": [
+   1.8,
+   0.5,
+   0.6
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [],
+  "detailMeshes": [],
+  "lods": {
+   "LOD0": {
+    "triangles": 7992,
+    "triangles_without_detail": 7992,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG06_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG06_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG06_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG06_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 3996,
+    "triangles_without_detail": 3996,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG06_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG06_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG06_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG06_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 1198,
+    "triangles_without_detail": 1198,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG06_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG06_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG06_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG06_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG06_Body_LOD0",
+    "VG06_Body_LOD1",
+    "VG06_Body_LOD2"
+   ]
+  },
+  "material": "M_VG06_CarryingPoleBaskets",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 41,
+  "coplanar_lifted": 2,
+  "reference": "art/references/VG06/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": "none in the model",
+  "notes": [
+   "set down: the baskets stand on the ground, the pole lies across both rims and the cords hang slack",
+   "the weave is in the texture (the wall is a plain bowl with thickness); modelled: rim hoop with eight bindings, two split-bamboo strips crossing under the bottom, four cords per basket, the wraps round the pole, two pegs",
+   "the middle of the pole is painted paler and smoother (polished by the shoulder); bamboo nodes are painted"
+  ]
+ },
+ "VG07": {
+  "id": "VG07",
+  "name": "StoneMill",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG07_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG07_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG07_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   0.983,
+   0.975,
+   0.846
+  ],
+  "body_dimensions_xyz_m": [
+   0.983,
+   0.975,
+   0.846
+  ],
+  "size_limit_xyz_m": [
+   1,
+   1,
+   0.9
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [],
+  "detailMeshes": [],
+  "lods": {
+   "LOD0": {
+    "triangles": 5586,
+    "triangles_without_detail": 5586,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG07_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG07_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG07_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG07_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 2792,
+    "triangles_without_detail": 2792,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG07_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG07_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG07_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG07_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 836,
+    "triangles_without_detail": 836,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG07_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG07_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG07_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG07_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG07_Body_LOD0",
+    "VG07_Body_LOD1",
+    "VG07_Body_LOD2"
+   ]
+  },
+  "material": "M_VG07_StoneMill",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 31,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG07/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": {
+   "mesh": "VG07_Collision",
+   "primitives": [
+    {
+     "type": "box",
+     "size_xyz_m": [
+      0.86,
+      0.86,
+      0.8
+     ],
+     "center_xyz_m": [
+      -0.064,
+      0.041,
+      0.401
+     ]
+    }
+   ],
+   "note": ""
+  },
+  "notes": [
+   "two cylinders stacked: the lower millstone fixed in the catch tray, the upper one on it with a feed hole and dressing notches cut down its side (in the shape); pick marks and the radial furrows on top are painted",
+   "the catch tray has a ring channel and an outlet cut through its wall; the spout is a grooved stone lip running out to the front, an upright slab under it",
+   "the push handle goes through a wooden socket block let into the upper stone, bound with cord; the base is thirteen fieldstones piled round a core, small stones at the foot",
+   "the collision box covers the tray and base, not the handle or the spout tip"
+  ]
+ },
+ "VG08": {
+  "id": "VG08",
+  "name": "StoneTrough",
+  "version": "v001",
+  "files": {
+   "fbx": "art/exports/yard-roadside-c/VG08_v001.fbx",
+   "glb": "art/exports/yard-roadside-c/VG08_v001.glb",
+   "blend": "art/source/yard-roadside-c/VG08_v001.blend"
+  },
+  "bake_device": "OPTIX",
+  "dimensions_xyz_m": [
+   1.511,
+   0.469,
+   0.414
+  ],
+  "body_dimensions_xyz_m": [
+   1.511,
+   0.469,
+   0.414
+  ],
+  "size_limit_xyz_m": [
+   1.6,
+   0.5,
+   0.45
+  ],
+  "within_limit": true,
+  "minTier": "standard",
+  "detailObjects": [],
+  "detailMeshes": [],
+  "lods": {
+   "LOD0": {
+    "triangles": 2032,
+    "triangles_without_detail": 2032,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG08_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG08_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG08_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG08_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD1": {
+    "triangles": 1016,
+    "triangles_without_detail": 1016,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG08_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG08_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG08_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG08_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   },
+   "LOD2": {
+    "triangles": 304,
+    "triangles_without_detail": 304,
+    "objects": 1,
+    "objects_without_detail": 1,
+    "materials": 1,
+    "textures_px": {
+     "VG08_Albedo.png": [
+      1024,
+      1024
+     ],
+     "VG08_Normal.png": [
+      1024,
+      1024
+     ],
+     "VG08_ORM.png": [
+      1024,
+      1024
+     ],
+     "VG08_MaskURP.png": [
+      1024,
+      1024
+     ]
+    }
+   }
+  },
+  "objects": {
+   "Body": [
+    "VG08_Body_LOD0",
+    "VG08_Body_LOD1",
+    "VG08_Body_LOD2"
+   ]
+  },
+  "material": "M_VG08_StoneTrough",
+  "textures": "one set: Albedo (sRGB) / Normal (OpenGL, +Y) / ORM (R AO, G roughness, B metal) / MaskURP (R metal, G AO, A smoothness)",
+  "source_parts": 3,
+  "coplanar_lifted": 0,
+  "reference": "art/references/VG08/prompt.txt",
+  "origin": "footprint centre, bottom z = 0, front = -Y (Blender) / -Z (FBX, Unity)",
+  "collision": {
+   "mesh": "VG08_Collision",
+   "primitives": [
+    {
+     "type": "box",
+     "size_xyz_m": [
+      1.48,
+      0.43,
+      0.4
+     ],
+     "center_xyz_m": [
+      -0.0,
+      0.0,
+      0.2
+     ]
+    }
+   ],
+   "note": ""
+  },
+  "notes": [
+   "one block hollowed out: the walls are 6–9 cm thick and uneven, the inside narrows to a flat floor; the rim is chipped in the shape, one corner broken off",
+   "it sits on two flat stones; no iron staples (the pack asks for stone only)",
+   "painted: the old water line with dark algae below it and streaks above, silt on the floor, moss low on the outside and along the rim, pale lichen, rusty runs",
+   "the collision box is the whole block with its two stones"
+  ]
+ }
+}
