@@ -1,0 +1,20 @@
+Use your built-in image generation tool (image_gen) to make reference sheets for ONE 3D game asset family, and save the PNG files into ./out/ with the exact file names below. Use V1.png and V5.png in this folder as the main input reference images for every generation: they show an ancient-tree forest with mossy giant roots, grey-brown bark and pine/fir trees in mist. V4.png shows the same forest from another angle. Match their bark, colours, moss and painting style exactly. Do not write any code other than what is needed to copy the generated files into ./out/.
+
+These sheets are for building a real-time 3D game model, so every feature must be a BIG, CLEAR, READABLE SHAPE that a modeller can copy, not fine painterly noise. Keep the silhouette simple and strong.
+
+The asset: "DR10 dead standing trees (snags)", TWO kinds of tall dead trees still standing in the forest, with NO leaves at all:
+- Kind A: about 8 m tall, trunk about 0.7 m diameter at the base. The top is snapped off at about 8 m with a jagged, splintered break (long pale splinters pointing up on one side). Two or three short broken-off branch stubs and one longer dead side branch bending up. Root flare at the base spreading into 4-5 short roots gripping the ground.
+- Kind B: about 14 m tall, trunk about 1.0 m diameter at the base, slightly leaning and gently curved. Still has a few long bare dead branches in the upper half (twisted, pointing up and out, ending in broken tips) giving a striking, graceful silhouette, like a skeleton tree. The very top is a thin broken spike. Root flare with 5-6 roots.
+Both:
+- Large patches where the bark has peeled away, showing smooth pale silver-grey weathered wood underneath with long vertical cracks; the remaining bark is deep grey-brown with vertical furrows; the edges of the peeled patches curl slightly.
+- Two or three round woodpecker holes (dark, about 8-12 cm) in a vertical row on the trunk, and some shelf fungus (bracket fungi) on the lower trunk.
+- Dark olive-green moss only near the base and on the upward-facing sides of the roots; pale grey-green lichen spots higher up.
+- Ground: a little leaf litter and moss around the root flare.
+
+Files to make (each a separate generation, landscape, at least 1536x1024):
+1. out/DR10-threeview.png : orthographic FRONT view and SIDE view of BOTH kinds side by side (A front, A side, B front, B side, left to right), same scale, flat ground line, a small 1.75 m grey human silhouette for scale. Plain light warm-grey background, even soft overcast lighting, no cast shadows on the background, no fog, no other trees, no text or labels.
+2. out/DR10-threequarter.png : both snags standing in the misty forest near the path, view from eye height 1.7 m about 15 m away looking slightly up so the full height and silhouettes are visible, overcast light, the same style as V5.
+3. out/DR10-detail.png : a sheet of three close-ups: (a) the jagged snapped top with pale splinters; (b) a peeled bark patch with silver-grey weathered wood, curled bark edges and woodpecker holes; (c) the root flare base with moss, shelf fungus and leaf litter.
+
+Style: Eastern xianxia fantasy, hand-painted look 3D game concept art, low saturation, overcast. Deep grey-brown old bark, silver-grey bare weathered wood, pale grey lichen, dark olive-green moss. Not a photo.
+When finished, list the files in ./out/ with their pixel sizes.
