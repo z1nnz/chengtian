@@ -1,0 +1,225 @@
+SKIP SH01: Git LFS pointer in this checkout (not pulled), not checked in this run
+Unity 6000.3.28f1, pipeline URP
+PASS SH02: Albedo / MaskURP / Normal textures found
+PASS SH02: textures 1024x1024 (1024 or less)
+PASS SH02: SH02_GroundOrigin is the model root; all LOD meshes hang under it
+PASS SH02: imported size 1.550 x 1.072 x 1.459 m matches model_info 1.55 x 1.072 x 1.459 within 2 cm
+PASS SH02: within the work pack's limit 2 x 2 x 1.9 m
+PASS SH02: the stems run on 0.18 m under the ground (origin at the stem base on the ground)
+PASS SH02: triangles LOD0/1/2 = 19664 / 3722 / 1887 (19% / 10%), model_info 19664 / 3722 / 1887
+PASS SH02: triangles 19664 / 3722 / 1887 within LOD0 30,000 / LOD1 4,000 / LOD2 2,000
+PASS SH02: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 32531 / 7459 / 3909 vertices
+PASS SH02: objects per LOD 2 / 2 / 2 (model_info 2 / 2 / 2)
+PASS SH02: 1 material for every LOD and Detail_ mesh (one material)
+PASS SH02: 1 LODGroup(s) with 3 levels covering all 2 LOD0 renderers
+PASS SH02: minTier = standard (understory plants, shown at the standard tier too)
+PASS SH02: detailObjects Detail_Litter → 3 meshes present
+PASS SH02: Detail_* off still shows the body (1 mesh per LOD)
+PASS SH02: no collider in the model
+PASS SH02: cloth material renders both faces (Cull Off)
+PASS SP01: Albedo / MaskURP / Normal textures found
+PASS SP01: textures 1024x1024 (1024 or less)
+PASS SP01: SP01_GroundOrigin is the model root; all LOD meshes hang under it
+PASS SP01: imported size 1.697 x 1.544 x 3.290 m matches model_info 1.697 x 1.544 x 3.29 within 2 cm
+PASS SP01: within the work pack's limit 2.4 x 2.4 x 3.7 m
+PASS SP01: the stems run on 0.30 m under the ground (origin at the stem base on the ground)
+PASS SP01: triangles LOD0/1/2 = 7840 / 1644 / 578 (21% / 7%), model_info 7840 / 1644 / 578
+PASS SP01: triangles 7840 / 1644 / 578 within LOD0 30,000 / LOD1 4,000 / LOD2 2,000
+PASS SP01: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 13066 / 3212 / 1321 vertices
+PASS SP01: objects per LOD 2 / 2 / 2 (model_info 2 / 2 / 2)
+PASS SP01: 1 material for every LOD and Detail_ mesh (one material)
+PASS SP01: 1 LODGroup(s) with 3 levels covering all 2 LOD0 renderers
+PASS SP01: minTier = standard (understory plants, shown at the standard tier too)
+PASS SP01: detailObjects Detail_Litter → 3 meshes present
+PASS SP01: Detail_* off still shows the body (1 mesh per LOD)
+PASS SP01: no collider in the model
+PASS SP01: cloth material renders both faces (Cull Off)
+PASS UG01: Albedo / MaskURP / Normal textures found
+PASS UG01: textures 1024x1024 (1024 or less)
+PASS UG01: UG01_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG01: imported size 1.783 x 1.561 x 1.129 m matches model_info 1.783 x 1.561 x 1.129 within 2 cm
+PASS UG01: within the work pack's limit 2 x 2 x 1.4 m
+PASS UG01: the stems run on 0.09 m under the ground (origin at the stem base on the ground)
+PASS UG01: triangles LOD0/1/2 = 3812 / 1906 / 571 (50% / 15%), model_info 3812 / 1906 / 571
+PASS UG01: triangles 3812 / 1906 / 571 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG01: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 5459 / 3710 / 1418 vertices
+PASS UG01: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG01: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG01: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG01: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG01: no detailObjects, and no Detail_ mesh in the model
+PASS UG01: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG01: no collider in the model
+PASS UG01: cloth material renders both faces (Cull Off)
+PASS UG02: Albedo / MaskURP / Normal textures found
+PASS UG02: textures 1024x1024 (1024 or less)
+PASS UG02: UG02_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG02: imported size 0.667 x 0.677 x 0.642 m matches model_info 0.667 x 0.677 x 0.642 within 2 cm
+PASS UG02: within the work pack's limit 1.2 x 1.2 x 0.9 m
+PASS UG02: the stems run on 0.07 m under the ground (origin at the stem base on the ground)
+PASS UG02: triangles LOD0/1/2 = 3342 / 1671 / 500 (50% / 15%), model_info 3342 / 1671 / 500
+PASS UG02: triangles 3342 / 1671 / 500 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG02: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 3070 / 2032 / 821 vertices
+PASS UG02: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG02: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG02: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG02: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG02: no detailObjects, and no Detail_ mesh in the model
+PASS UG02: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG02: no collider in the model
+PASS UG02: cloth material renders both faces (Cull Off)
+PASS UG03: Albedo / MaskURP / Normal textures found
+PASS UG03: textures 1024x1024 (1024 or less)
+PASS UG03: UG03_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG03: imported size 0.773 x 0.879 x 0.497 m matches model_info 0.773 x 0.879 x 0.497 within 2 cm
+PASS UG03: within the work pack's limit 1.2 x 1.2 x 0.75 m
+PASS UG03: the stems run on 0.07 m under the ground (origin at the stem base on the ground)
+PASS UG03: triangles LOD0/1/2 = 1926 / 963 / 288 (50% / 15%), model_info 1926 / 963 / 288
+PASS UG03: triangles 1926 / 963 / 288 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG03: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 2152 / 1336 / 531 vertices
+PASS UG03: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG03: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG03: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG03: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG03: no detailObjects, and no Detail_ mesh in the model
+PASS UG03: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG03: no collider in the model
+PASS UG03: cloth material renders both faces (Cull Off)
+PASS UG04: Albedo / MaskURP / Normal textures found
+PASS UG04: textures 1024x1024 (1024 or less)
+PASS UG04: UG04_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG04: imported size 0.274 x 0.251 x 0.326 m matches model_info 0.274 x 0.251 x 0.326 within 2 cm
+PASS UG04: within the work pack's limit 0.6 x 0.6 x 0.4 m
+PASS UG04: the stems run on 0.06 m under the ground (origin at the stem base on the ground)
+PASS UG04: triangles LOD0/1/2 = 3012 / 1506 / 451 (50% / 15%), model_info 3012 / 1506 / 451
+PASS UG04: triangles 3012 / 1506 / 451 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG04: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 3332 / 2090 / 807 vertices
+PASS UG04: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG04: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG04: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG04: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG04: no detailObjects, and no Detail_ mesh in the model
+PASS UG04: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG04: no collider in the model
+PASS UG04: cloth material renders both faces (Cull Off)
+PASS UG05_01: Albedo / MaskURP / Normal textures found
+PASS UG05_01: textures 1024x1024 (1024 or less)
+PASS UG05_01: UG05_01_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG05_01: imported size 0.582 x 0.519 x 0.140 m matches model_info 0.582 x 0.519 x 0.14 within 2 cm
+PASS UG05_01: within the work pack's limit 0.6 x 0.6 x 0.15 m
+PASS UG05_01: the heap sits on the ground (bottom at 0.000 m)
+PASS UG05_01: triangles LOD0/1/2 = 1712 / 856 / 256 (50% / 15%), model_info 1712 / 856 / 256
+PASS UG05_01: triangles 1712 / 856 / 256 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG05_01: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 1919 / 1228 / 554 vertices
+PASS UG05_01: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG05_01: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG05_01: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG05_01: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG05_01: no detailObjects, and no Detail_ mesh in the model
+PASS UG05_01: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG05_01: no collider in the model
+PASS UG05_01: cloth material renders both faces (Cull Off)
+PASS UG05_02: Albedo / MaskURP / Normal textures found
+PASS UG05_02: textures 1024x1024 (1024 or less)
+PASS UG05_02: UG05_02_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG05_02: imported size 1.200 x 0.962 x 0.208 m matches model_info 1.2 x 0.962 x 0.208 within 2 cm
+PASS UG05_02: within the work pack's limit 1.2 x 1.2 x 0.25 m
+PASS UG05_02: the heap sits on the ground (bottom at 0.000 m)
+PASS UG05_02: triangles LOD0/1/2 = 3663 / 1831 / 549 (50% / 15%), model_info 3663 / 1831 / 549
+PASS UG05_02: triangles 3663 / 1831 / 549 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG05_02: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 4148 / 2554 / 1162 vertices
+PASS UG05_02: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG05_02: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG05_02: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG05_02: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG05_02: no detailObjects, and no Detail_ mesh in the model
+PASS UG05_02: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG05_02: no collider in the model
+PASS UG05_02: cloth material renders both faces (Cull Off)
+PASS UG05_03: Albedo / MaskURP / Normal textures found
+PASS UG05_03: textures 1024x1024 (1024 or less)
+PASS UG05_03: UG05_03_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG05_03: imported size 1.789 x 1.395 x 0.267 m matches model_info 1.789 x 1.395 x 0.267 within 2 cm
+PASS UG05_03: within the work pack's limit 1.8 x 1.8 x 0.32 m
+PASS UG05_03: the heap sits on the ground (bottom at 0.000 m)
+PASS UG05_03: triangles LOD0/1/2 = 3955 / 1977 / 593 (50% / 15%), model_info 3955 / 1977 / 593
+PASS UG05_03: triangles 3955 / 1977 / 593 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG05_03: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 4354 / 2721 / 1258 vertices
+PASS UG05_03: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG05_03: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG05_03: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG05_03: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG05_03: no detailObjects, and no Detail_ mesh in the model
+PASS UG05_03: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG05_03: no collider in the model
+PASS UG05_03: cloth material renders both faces (Cull Off)
+PASS UG06_01: Albedo / MaskURP / Normal textures found
+PASS UG06_01: textures 1024x1024 (1024 or less)
+PASS UG06_01: UG06_01_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG06_01: imported size 0.974 x 0.313 x 0.214 m matches model_info 0.974 x 0.313 x 0.214 within 2 cm
+PASS UG06_01: within the work pack's limit 1.2 x 0.5 x 0.4 m
+PASS UG06_01: the vine runs from 0.15 m above to 0.07 m below the root's top line (origin on the root)
+PASS UG06_01: triangles LOD0/1/2 = 2631 / 1315 / 393 (50% / 15%), model_info 2631 / 1315 / 393
+PASS UG06_01: triangles 2631 / 1315 / 393 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG06_01: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 3332 / 2017 / 726 vertices
+PASS UG06_01: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG06_01: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG06_01: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG06_01: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG06_01: no detailObjects, and no Detail_ mesh in the model
+PASS UG06_01: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG06_01: no collider in the model
+PASS UG06_01: cloth material renders both faces (Cull Off)
+PASS UG06_02: Albedo / MaskURP / Normal textures found
+PASS UG06_02: textures 1024x1024 (1024 or less)
+PASS UG06_02: UG06_02_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG06_02: imported size 1.263 x 0.388 x 0.268 m matches model_info 1.263 x 0.388 x 0.268 within 2 cm
+PASS UG06_02: within the work pack's limit 1.6 x 0.6 x 0.6 m
+PASS UG06_02: the vine runs from 0.15 m above to 0.12 m below the root's top line (origin on the root)
+PASS UG06_02: triangles LOD0/1/2 = 3641 / 1819 / 546 (50% / 15%), model_info 3641 / 1819 / 546
+PASS UG06_02: triangles 3641 / 1819 / 546 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG06_02: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 4679 / 2800 / 1049 vertices
+PASS UG06_02: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG06_02: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG06_02: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG06_02: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG06_02: no detailObjects, and no Detail_ mesh in the model
+PASS UG06_02: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG06_02: no collider in the model
+PASS UG06_02: cloth material renders both faces (Cull Off)
+PASS UG06_03: Albedo / MaskURP / Normal textures found
+PASS UG06_03: textures 1024x1024 (1024 or less)
+PASS UG06_03: UG06_03_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG06_03: imported size 1.097 x 0.599 x 0.421 m matches model_info 1.097 x 0.599 x 0.421 within 2 cm
+PASS UG06_03: within the work pack's limit 1.4 x 0.8 x 0.7 m
+PASS UG06_03: the vine runs from 0.14 m above to 0.28 m below the root's top line (origin on the root)
+PASS UG06_03: triangles LOD0/1/2 = 3103 / 1551 / 465 (50% / 15%), model_info 3103 / 1551 / 465
+PASS UG06_03: triangles 3103 / 1551 / 465 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG06_03: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 3992 / 2415 / 883 vertices
+PASS UG06_03: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG06_03: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG06_03: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG06_03: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG06_03: no detailObjects, and no Detail_ mesh in the model
+PASS UG06_03: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG06_03: no collider in the model
+PASS UG06_03: cloth material renders both faces (Cull Off)
+PASS UG06_04: Albedo / MaskURP / Normal textures found
+PASS UG06_04: textures 1024x1024 (1024 or less)
+PASS UG06_04: UG06_04_GroundOrigin is the model root; all LOD meshes hang under it
+PASS UG06_04: imported size 1.271 x 0.379 x 0.454 m matches model_info 1.271 x 0.379 x 0.454 within 2 cm
+PASS UG06_04: within the work pack's limit 1.6 x 0.7 x 0.6 m
+PASS UG06_04: the vine runs from 0.07 m above to 0.38 m below the root's top line (origin on the root)
+PASS UG06_04: triangles LOD0/1/2 = 3101 / 1550 / 465 (50% / 15%), model_info 3101 / 1550 / 465
+PASS UG06_04: triangles 3101 / 1550 / 465 within the work pack's 4,000 (LOD1 2,000, LOD2 1,000)
+PASS UG06_04: every LOD body has the vertex colour (leaf colour, A occlusion) and UV2 wind weight 0–1 on all 4033 / 2428 / 880 vertices
+PASS UG06_04: objects per LOD 1 / 1 / 1 (model_info 1 / 1 / 1)
+PASS UG06_04: 1 material for every LOD and Detail_ mesh (one material)
+PASS UG06_04: 1 LODGroup(s) with 3 levels covering all 1 LOD0 renderers
+PASS UG06_04: minTier = standard (understory plants, shown at the standard tier too)
+PASS UG06_04: no detailObjects, and no Detail_ mesh in the model
+PASS UG06_04: Detail_* off still shows the body (1 mesh per LOD)
+PASS UG06_04: no collider in the model
+PASS UG06_04: cloth material renders both faces (Cull Off)
+INFO renders written to art/previews/undergrowth-c/unity
+INFO forest patch: 18 plants (SH01 only when its files are pulled), 18 LODGroups left on automatic; renders in art/previews/undergrowth-c/unity/patch (scene not saved)
