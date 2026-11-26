@@ -1,0 +1,328 @@
+{
+  "asset": "DR10_DeadSnag_A",
+  "version": "v001",
+  "blender": "5.2.2 LTS",
+  "bounds_main": {
+    "min": [
+      -2.5671,
+      -2.3251,
+      -0.5551
+    ],
+    "max": [
+      2.567,
+      2.3252,
+      8.0367
+    ],
+    "dims": [
+      5.1341,
+      4.6503,
+      8.5918
+    ]
+  },
+  "origin_at_bottom_centre": {
+    "footprint_centre_xy_m": [
+      -0.0,
+      0.0
+    ],
+    "ok": true
+  },
+  "build_origin_in_asset_m": [
+    -0.5271,
+    -0.1732,
+    0.0
+  ],
+  "bounds_detail": {
+    "min": [
+      -3.8494,
+      -4.0197,
+      -0.037
+    ],
+    "max": [
+      3.3633,
+      2.737,
+      1.1608
+    ]
+  },
+  "shape_lod0": {
+    "total_height_m": 8.037,
+    "crown_spread_xy_m": [
+      5.134,
+      4.65
+    ],
+    "trunk_diameter_at_1p3m_xy_m": {
+      "x": 1.656,
+      "y": 1.484
+    },
+    "trunk_diameter_at_1p3m_m": 1.57,
+    "break_top_z_every_10deg": [
+      5.728,
+      5.743,
+      5.697,
+      5.648,
+      5.552,
+      5.378,
+      5.026,
+      5.983,
+      5.864,
+      6.32,
+      6.329,
+      6.529,
+      6.521,
+      6.501,
+      6.725,
+      6.413,
+      7.326,
+      6.918,
+      6.5,
+      6.346,
+      5.886,
+      6.127,
+      6.566,
+      5.755,
+      5.669,
+      6.169,
+      6.136,
+      4.997,
+      null,
+      5.082,
+      null,
+      null,
+      5.509,
+      5.999,
+      5.598,
+      5.675
+    ],
+    "break_low_m": 4.997,
+    "break_high_m": 7.326,
+    "root_collar_spread_diameter_m": 3.679,
+    "blocked_at_0p3_1p0m_three_lines": [
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ]
+    ]
+  },
+  "shape_collision": {
+    "total_height_m": 5.035,
+    "crown_spread_xy_m": [
+      2.246,
+      2.136
+    ],
+    "trunk_diameter_at_1p3m_xy_m": {
+      "x": 1.497,
+      "y": 1.425
+    },
+    "trunk_diameter_at_1p3m_m": 1.461,
+    "break_top_z_every_10deg": [
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035,
+      5.035
+    ],
+    "break_low_m": 5.035,
+    "break_high_m": 5.035,
+    "root_collar_spread_diameter_m": 2.044,
+    "blocked_at_0p3_1p0m_three_lines": [
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ]
+    ]
+  },
+  "spec_check": {
+    "spec": {
+      "H": 8.0
+    },
+    "total_height_m": 8.037,
+    "trunk_diameter_at_1p3m_m": 1.57,
+    "break_low_m": 4.997,
+    "break_high_m": 7.326,
+    "root_collar_spread_ratio": 2.34,
+    "height_ok": true,
+    "woodpecker_holes": 3,
+    "bracket_fungi_clusters": 2,
+    "note": "工作包：高 8／14 m；樹皮剝落、頂端斷折、啄木洞；剪影要好看、不長葉。底徑工作包沒寫，照參考圖比例。總高量外框最高點；樹幹徑量 1.3 m 高處 X、Y 兩向平均；斷口高度量殼壁中間每 10° 從上往下打到的頂；根頸張開量 0.05 m 高處最外的根到軸心距離 × 2"
+  },
+  "peel_fraction_side_high": 0.411,
+  "plants_inside_body_lod0": {
+    "vertices_checked": 13209,
+    "inside_body_over_2cm": 18,
+    "inside_body_over_5cm": 0
+  },
+  "buried_depth_m": 0.555,
+  "tris": {
+    "LOD0": {
+      "DR10_DeadSnag_A_LOD0": 13706,
+      "Detail_DR10_Plants_LOD0": 17629
+    },
+    "LOD1": {
+      "DR10_DeadSnag_A_LOD1": 6834,
+      "Detail_DR10_Plants_LOD1": 8832
+    },
+    "LOD2": {
+      "DR10_DeadSnag_A_LOD2": 2075,
+      "Detail_DR10_Plants_LOD2": 2625
+    },
+    "collision": 144
+  },
+  "lod_ratio": {
+    "LOD1": 0.5,
+    "LOD2": 0.15
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "DR10_DeadSnag_A",
+      "DR10_DeadSnag_A_Collision",
+      "DR10_DeadSnag_A_LOD0",
+      "DR10_DeadSnag_A_LOD1",
+      "DR10_DeadSnag_A_LOD2",
+      "Detail_DR10_Plants_LOD0",
+      "Detail_DR10_Plants_LOD1",
+      "Detail_DR10_Plants_LOD2"
+    ],
+    "lod0_dimensions_m": [
+      5.1341,
+      4.6503,
+      8.5918
+    ],
+    "uv_layers": [
+      "UVMap",
+      "TileUV"
+    ],
+    "materials": [
+      "M_DR10_DeadSnag_A_A",
+      "M_DR10_DeadSnag_A_Leaf"
+    ]
+  },
+  "fbx_dims_match": true,
+  "textures_px": {
+    "DR10_DeadSnag_A_A_Albedo.png": [
+      2048,
+      2048
+    ],
+    "DR10_DeadSnag_A_A_MaskURP.png": [
+      2048,
+      2048
+    ],
+    "DR10_DeadSnag_A_A_Normal.png": [
+      2048,
+      2048
+    ],
+    "DR10_DeadSnag_A_A_ORM.png": [
+      2048,
+      2048
+    ]
+  },
+  "texel_px_per_m": 144.0,
+  "texel_by_part": {
+    "樹幹（樹皮＋裸木）": {
+      "area_m2": 38.55,
+      "atlas_share": 0.157,
+      "px_per_m_2048": 130.7,
+      "px_per_m_unity1024": 65.3
+    },
+    "心材內壁": {
+      "area_m2": 1.77,
+      "atlas_share": 0.003,
+      "px_per_m_2048": 89.0,
+      "px_per_m_unity1024": 44.5
+    },
+    "其他（木刺、碎片、洞、菌）": {
+      "area_m2": 0.45,
+      "atlas_share": 0.0,
+      "px_per_m_2048": 0.0,
+      "px_per_m_unity1024": 0.0
+    },
+    "斷頂木束": {
+      "area_m2": 19.27,
+      "atlas_share": 0.095,
+      "px_per_m_2048": 143.5,
+      "px_per_m_unity1024": 71.8
+    },
+    "枝": {
+      "area_m2": 10.22,
+      "atlas_share": 0.061,
+      "px_per_m_2048": 157.9,
+      "px_per_m_unity1024": 78.9
+    },
+    "主根": {
+      "area_m2": 25.93,
+      "atlas_share": 0.103,
+      "px_per_m_2048": 129.2,
+      "px_per_m_unity1024": 64.6
+    },
+    "細根": {
+      "area_m2": 2.52,
+      "atlas_share": 0.005,
+      "px_per_m_2048": 87.5,
+      "px_per_m_unity1024": 43.8
+    },
+    "地面": {
+      "area_m2": 13.34,
+      "atlas_share": 0.011,
+      "px_per_m_2048": 58.2,
+      "px_per_m_unity1024": 29.1
+    }
+  },
+  "hidden_tris_removed_lod0": 619,
+  "snag_build": {
+    "axis_x": 0,
+    "axis_y": 0,
+    "break_low": 4.997,
+    "radius": 0.8,
+    "limbs": 3
+  },
+  "checks_not_in_this_file": [
+    "Unity 匯入與引擎內外觀：另見 art/previews/d2-logs-b/DR10_DeadSnag_A/unity/report.txt",
+    "放進 D2 場景後的同鏡位截圖（場景由核心組擺）",
+    "實機效能、FPS"
+  ]
+}

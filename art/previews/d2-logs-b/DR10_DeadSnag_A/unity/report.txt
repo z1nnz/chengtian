@@ -1,0 +1,23 @@
+Unity 6000.3.28f1, pipeline URP
+PASS DR10_DeadSnag_A: Albedo / Normal / ORM / MaskURP textures found
+PASS DR10_DeadSnag_A: delivered textures 2048x2048 (larger than a person: 2048)
+INFO DR10_DeadSnag_A: imported at 1024x1024 on StandaloneWindows64 (importer max 1024)
+INFO DR10_DeadSnag_A: bark detail on UV0, tiling 5.47
+PASS DR10_DeadSnag_A: imported size 5.134 x 4.651 x 8.592 m matches model_info 5.1341 x 4.6503 x 8.5918 within 2 cm
+PASS DR10_DeadSnag_A: lowest point y = -0.555 (the trunk sinks into the soil, origin on the ground)
+PASS DR10_DeadSnag_A: origin at the bottom centre (LOD0 body footprint centre 0.000, 0.000 m from the origin; y = 0 is the ground)
+PASS DR10_DeadSnag_A: triangles LOD0/1/2 = 31335 / 15666 / 4700 (50% / 15%), model_info 31335 / 15666 / 4700
+PASS DR10_DeadSnag_A: objects per LOD 2 / 2 / 2 (model_info 2 / 2 / 2)
+PASS DR10_DeadSnag_A: 2 materials over every LOD and Detail_ mesh (model_info 2: body, two-sided plants)
+PASS DR10_DeadSnag_A: Detail_* plants render both faces
+PASS DR10_DeadSnag_A: minTier = standard (blocks the way: everyone sees it)
+PASS DR10_DeadSnag_A: detailObjects Detail_DR10_Plants present in the FBX
+PASS DR10_DeadSnag_A: Detail_* off still shows the body (1 mesh per LOD)
+PASS DR10_DeadSnag_A: Detail_DR10_Plants_LOD0 has UV0 (atlas) and UV1 (TileUV)
+PASS DR10_DeadSnag_A: DR10_DeadSnag_A_LOD0 has UV0 (atlas) and UV1 (TileUV)
+PASS DR10_DeadSnag_A: one collision shell (MeshCollider, renderer off)
+PASS DR10_DeadSnag_A: a walker crossing the trunk base is stopped at 3 of 3 lines (-0.5 R to 0.5 R)
+PASS DR10_DeadSnag_A: the trunk collision reaches 5.04 m (break at 5.00 m)
+PASS DR10_DeadSnag_A: the root collar at 2.2 R is a low step (y = 0.00 m)
+INFO renders written to art/previews/d2-logs-b/DR10_DeadSnag_A/unity
+INFO DR10_DeadSnag_A: *-rawimport.png show the delivered files without the project's import budget (2048 textures, no crunch, no mesh compression)

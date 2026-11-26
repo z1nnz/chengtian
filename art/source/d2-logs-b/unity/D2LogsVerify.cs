@@ -24,7 +24,7 @@ namespace YunJing.Editor
         static string Models = BudgetModels;
         static bool Raw => Models == RawModels;
         static string Version(string id) => "v001";
-        static readonly string[] AllIds = { "DR06_FallenTrunk_B", "DR06_FallenTrunk_A", "DR05_HollowLog", "DR07_GiantStump_A", "DR07_GiantStump_B", "DR08_RottenLog_A", "DR08_RottenLog_B", "DR08_RottenLog_C", "DR09_BranchPile_S", "DR09_BranchPile_M", "DR09_BranchPile_L" };
+        static readonly string[] AllIds = { "DR06_FallenTrunk_B", "DR06_FallenTrunk_A", "DR05_HollowLog", "DR07_GiantStump_A", "DR07_GiantStump_B", "DR08_RottenLog_A", "DR08_RottenLog_B", "DR08_RottenLog_C", "DR09_BranchPile_S", "DR09_BranchPile_M", "DR09_BranchPile_L", "DR10_DeadSnag_A", "DR10_DeadSnag_B" };
         static string[] Ids => string.IsNullOrEmpty(Environment.GetEnvironmentVariable("D2_IDS")) ? AllIds
             : Environment.GetEnvironmentVariable("D2_IDS").Split(',').Select(s => s.Trim()).Where(AllIds.Contains).ToArray();
         static string Repo => Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", ".."));
@@ -39,11 +39,12 @@ namespace YunJing.Editor
         [Serializable] class Cam { public string name; public float[] from; public float[] at; public float lens_mm; }
         [Serializable] class Tunnel { public float axis_y, floor_z, x0, x1; }
         [Serializable] class Stump { public float axis_x, axis_y, rim_low, pool_z, radius; }
+        [Serializable] class Snag { public float axis_x, axis_y, break_low, radius; public int limbs; }
         [Serializable] class Info
         {
             public float[] dimensions_m; public string minTier; public string[] detailObjects; public Lods budget_per_lod; public UnityInfo unity;
             public float[] build_origin_m; public float length_build_m, plate_x_build_m; public Cam[] review_cams_build_xyz; public Tunnel tunnel_build;
-            public Stump stump_build; public float[] ruler_build_xy; public WaterInfo water;
+            public Stump stump_build; public Snag snag_build; public float[] ruler_build_xy; public WaterInfo water;
         }
         // DR07: the standing water is its own FBX (<id>_water_v001.fbx, like CR06 / F01 in the creek repair pack): wet = body + water, dry = body only
         [Serializable] class WaterInfo { public string file; public string[] objects; public float z_m; public float[] centre_xy_m; }
@@ -371,6 +372,28 @@ namespace YunJing.Editor
             // part; the root plate stops it too; the top of the trunk is solid underfoot
             go = Place(id, info);
             Physics.SyncTransforms();
+            if (info.snag_build != null && info.snag_build.radius > 0)
+            {
+                // DR10 dead standing trees: a 1.75 m walker crossing the trunk base (along Unity z) is stopped on three lines; the collision
+                // goes up to just under the break (limbs are overhead and have no collision); the root collar 2.2 R out is a low step
+                var s = info.snag_build; int sn = 0, sh = 0;
+                foreach (float k in new[] { -.5f, 0f, .5f })
+                {
+                    sn++;
+                    float x = s.axis_x + k * s.radius;
+                    if (Physics.CapsuleCast(new Vector3(x, .45f, s.axis_y - 12), new Vector3(x, 1.40f, s.axis_y - 12), .35f, Vector3.forward, 24)) sh++;
+                }
+                Check(sh == sn, $"{id}: a walker crossing the trunk base is stopped at {sh} of {sn} lines (-0.5 R to 0.5 R)");
+                float snagTop = 0;
+                for (float x = s.axis_x - 3f; x <= s.axis_x + 3f; x += .1f)
+                    for (float z = s.axis_y - 3f; z <= s.axis_y + 3f; z += .1f)
+                        if (Physics.Raycast(new Vector3(x, 40, z), Vector3.down, out var snagHit, 50)) snagTop = Mathf.Max(snagTop, snagHit.point.y);
+                Check(snagTop > .85f * s.break_low && snagTop < s.break_low + .05f, $"{id}: the trunk collision reaches {snagTop:0.00} m (break at {s.break_low:0.00} m)");
+                bool step = Physics.Raycast(new Vector3(s.axis_x + 2.2f * s.radius, 10, s.axis_y), Vector3.down, out var hs, 12);
+                Check(!step || hs.point.y < .45f, $"{id}: the root collar at 2.2 R is a low step (y = {(step ? hs.point.y : 0):0.00} m)");
+                UnityEngine.Object.DestroyImmediate(go);
+                return;
+            }
             if (info.stump_build != null && info.stump_build.radius > 0)
             {
                 // DR07 stump: a 1.75 m walker crossing the stump (along Unity z) is stopped on five lines across the trunk; the hollow is closed
