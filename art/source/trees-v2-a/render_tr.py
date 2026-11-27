@@ -1,5 +1,5 @@
 """Preview renders for the tree redo v2 package A (trees-v2-a), per the package's section 2-3 delivery list:
-colour views (3/4, front, left / right 35 deg, side, top) with a 1.75 m figure, black silhouettes (front, +-35 deg), clay, wire,
+colour views (3/4, front, left / right 35 deg, side, top) with a 1.75 m figure, the 3/4 view on the grey-mist background (mist), the trunk bark close up (bark), black silhouettes (front, +-35 deg), clay, wire,
 under-canopy upward view, 20 m / 60 m eye-height views, LOD0-3 side by side.
 
     blender -b --factory-startup -P render_tr.py -- --out <dir> [--samples 64] TR06_A [TR06_B ...]
@@ -14,7 +14,7 @@ args = sys.argv[sys.argv.index('--') + 1:]
 def opt(k, d=None):
     if k in args: i = args.index(k); v = args[i + 1]; del args[i:i + 2]; return v
     return d
-OUT = Path(opt('--out')); SAMPLES = int(opt('--samples', '64')); ONLY = set((opt('--only', '') or '').split(',')) - {''}
+OUT = Path(opt('--out')).resolve(); SAMPLES = int(opt('--samples', '64')); ONLY = set((opt('--only', '') or '').split(',')) - {''}
 OUT.mkdir(parents=True, exist_ok=True)
 WANT = lambda k: not ONLY or k in ONLY
 
@@ -114,6 +114,19 @@ for vid in args:
     if WANT('color'):
         reset(); objs = append(vid); mn, mx = bounds(objs); objs += figure(mx.x + .6, mn.y - .4)
         orbit_views(objs, vid, ['three_quarter', 'front', 'left35', 'right35', 'side', 'top'])
+    if WANT('mist'):    # review #120: the tree on the grey-mist background (sRGB 185, 193, 198), ground kept only as a shadow catcher
+        reset(); objs = append(vid); mn, mx = bounds(objs); objs += figure(mx.x + .6, mn.y - .4)
+        sc = bpy.context.scene; sc.render.film_transparent = True; bpy.data.objects['ground'].is_shadow_catcher = True
+        ctr = (mn + mx) / 2; d = max(mx - mn) * 1.9; cam_at(ctr + Vector((-.55, -.85, .18)).normalized() * d, ctr, 40)
+        st = sc.render.image_settings; st.file_format = 'PNG'; st.color_mode = 'RGBA'
+        tmp = OUT / f'{vid}_mist_tmp.png'; sc.render.filepath = str(tmp); bpy.ops.render.render(write_still=True)
+        im = bpy.data.images.load(str(tmp)); import numpy as np
+        px = np.array(im.pixels[:], np.float32).reshape(-1, 4); bg = np.array([185, 193, 198], np.float32) / 255
+        px[:, :3] = px[:, :3] * px[:, 3:4] + bg * (1 - px[:, 3:4]); px[:, 3] = 1   # PNG is straight alpha: over-composite on the grey (the shadow catcher darkens it)
+        out = bpy.data.images.new(f'{vid}_mist', im.size[0], im.size[1]); out.pixels.foreach_set(np.clip(px, 0, 1).ravel())
+        out.filepath_raw = str(OUT / f'{vid}_mist.jpg'); out.file_format = 'JPEG'; out.save(); tmp.unlink(); print('wrote', OUT / f'{vid}_mist.jpg', flush=True)
+    if WANT('bark') and not vid.startswith('TR09'):   # review #120: the scanned bark close up (trunk at 1.1 m, 2.5 m away)
+        reset(res=(1200, 1200)); objs = append(vid); cam_at(Vector((1.6, -1.9, 1.3)), Vector((0, 0, 1.1)), 50); shot(OUT / f'{vid}_bark_close.png')
     if WANT('sil'):
         reset('WORKBENCH', (1200, 1200)); objs = append(vid)
         for o in objs: o.color = (0, 0, 0, 1)

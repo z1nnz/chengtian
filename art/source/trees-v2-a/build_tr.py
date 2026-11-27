@@ -21,6 +21,7 @@ import bpy, bmesh, json, math, sys, zlib
 from pathlib import Path
 from mathutils import Vector, Matrix, Quaternion
 import numpy as np
+sys.path.insert(0, str(Path(__file__).resolve().parent)); import bark_bake
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
@@ -40,10 +41,10 @@ def seed(*k):
 class Acc:
     """Collects verts / faces with per-vertex UV0, UV1 (wind weight, phase) and RGBA colour; one material per Acc."""
     def __init__(s):
-        s.v, s.f, s.uv, s.uv2, s.col = [], [], [], [], []
+        s.v, s.f, s.uv, s.uv2, s.col, s.rad = [], [], [], [], [], []
 
-    def add(s, verts, faces, uv, uv2, col):
-        b = len(s.v); s.v += verts; s.uv += uv; s.uv2 += uv2; s.col += col
+    def add(s, verts, faces, uv, uv2, col, rad=None):
+        b = len(s.v); s.v += verts; s.uv += uv; s.uv2 += uv2; s.col += col; s.rad += rad if rad is not None else [0.0] * len(verts)
         s.f += [tuple(b + i for i in f) for f in faces]
 
     def tris(s):
@@ -99,7 +100,7 @@ def frames(path):
 def tube(acc, path, radii, sides, wind, phase=0.0, shape=None, ao=None, tip=True, vscale=1.0, u0=0.0, colf=None, spin=0.0):
     """Ring tube along path. radii per point; shape(i, theta) -> radius multiplier; wind = (w_start, w_end).
     UV: u around (seam duplicated), v = arc length / circumference (square texels), times vscale."""
-    F = frames(path); n = len(path); verts, uv, uv2, col, faces = [], [], [], [], []
+    F = frames(path); n = len(path); verts, uv, uv2, col, faces, rad = [], [], [], [], [], []
     v = 0.0
     for i in range(n):
         if i: v += (path[i] - path[i - 1]).length / max(2 * math.pi * max(radii[i - 1], .01), 1e-3) * vscale
@@ -107,16 +108,16 @@ def tube(acc, path, radii, sides, wind, phase=0.0, shape=None, ao=None, tip=True
         for j in range(sides + 1):
             th = 2 * math.pi * j / sides + spin; r = radii[i] * (shape(i, th) if shape else 1.0)
             verts.append(path[i] + (nn * math.cos(th) + bb * math.sin(th)) * r)
-            uv.append((u0 + j / sides, v)); uv2.append((w, phase)); col.append(colf(i, th, a) if colf else (1, 1, 1, a))
+            uv.append((u0 + j / sides, v)); uv2.append((w, phase)); col.append(colf(i, th, a) if colf else (1, 1, 1, a)); rad.append(r)
     for i in range(n - 1):
         for j in range(sides):
             a = i * (sides + 1) + j; b = a + sides + 1
             faces.append((a, a + 1, b + 1, b))
     if tip:   # close the thin end with a short cone (the last ring already has a small radius)
-        c = len(verts); t = F[-1][0]; verts.append(path[-1] + t * radii[-1] * 1.5); uv.append((u0 + .5, v + .05)); uv2.append((wind[1], phase)); col.append((1, 1, 1, 1))
+        c = len(verts); t = F[-1][0]; verts.append(path[-1] + t * radii[-1] * 1.5); uv.append((u0 + .5, v + .05)); uv2.append((wind[1], phase)); col.append((1, 1, 1, 1)); rad.append(radii[-1])
         base = (n - 1) * (sides + 1)
         for j in range(sides): faces.append((base + j, base + j + 1, c))
-    acc.add(verts, faces, uv, uv2, col)
+    acc.add(verts, faces, uv, uv2, col, rad)
     return F
 
 
@@ -185,15 +186,18 @@ SPECIES = {
     # zig-zag shoots, 'twig' leafless dead-tree twigs); leaf: length range m, width / length, angle to the twig (deg),
     # where the outline points sit along the leaf, droop, flat (blade faces up); flowers: fraction of leaves drawn as blossoms
     'TR06': dict(name='垂柳', h=(8, 12), block='A1 溪邊、A3', palette=PALETTE, stream='hang', ns=(10, 14), leaf=((.24, .34), (.19, .25), (28, 55), .42, .25, False),
-                 leaves=12400, twig_r=(.008, .003), bark_tint=(1, 1, 1)),
-    'TR04': dict(name='楓', h=(8, 12), block='D3、A3', bark_mat='M_TreeV2_Bark_Maple', palette=[(.050, .008, .010), (.105, .014, .014), (.175, .026, .016), (.255, .050, .020), (.330, .095, .030)],
-                 stream='spray', ns=(10, 14), reach=.88, leaf=((.19, .28), (.8, .95), (35, 75), .55, .1, False), leaves=12500, twig_r=(.012, .004), bark_tint=(.92, .92, .95)),
+                 leaves=12400, twig_r=(.008, .003), bark_tint=(1, 1, 1), bark_scan='bark_brown_02'),
+    # TR04 v002 review (#120): the near-square 0.19-0.28 m leaves read as flat cards in clumps and the red was too orange ->
+    # narrower leaves (width 0.5-0.62 of the length) with a raised midrib (cup), spread over more of each branch (reach), and
+    # a dark sienna / rust palette (sRGB about #5A2414-#7C3E26 in the upper steps; linear values here)
+    'TR04': dict(name='楓', h=(8, 12), block='D3、A3', bark_mat='M_TreeV2_Bark_Maple', palette=[(.042, .010, .008), (.072, .015, .010), (.105, .021, .011), (.140, .028, .013), (.200, .050, .019)],   # top step #7C3E26: Unity's sun lifted #8A4A2A to orange
+                 stream='spray', ns=(12, 16), reach=.95, leaf=((.15, .22), (.5, .62), (35, 75), .42, .1, False), leaf_cup=.32, leaves=12500, twig_r=(.012, .004), bark_tint=(.92, .92, .95), bark_scan='bark_brown_02'),
     'TR07': dict(name='梅', h=(4, 6), block='A1 院子', bark_mat='M_TreeV2_Bark_Plum', palette=[(.050, .085, .030), (.085, .130, .045), (.130, .185, .060), (.185, .240, .080), (.240, .300, .110)],
                  stream='shoot', ns=(7, 11), leaf=((.05, .08), (.45, .6), (30, 60), .45, .0, False), leaves=4200, twig_r=(.010, .004),
-                 flowers=.55, zig=.75, flower_col=[(.80, .55, .58), (.90, .74, .76), (.95, .92, .90)], bark_tint=(.42, .36, .34)),
+                 flowers=.55, zig=.75, flower_col=[(.80, .55, .58), (.90, .74, .76), (.95, .92, .90)], bark_tint=(.58, .50, .46), bark_scan='bark_brown_02'),   # baked scan: .42 hid the furrows, lifted so the bark reads
     'TR09': dict(name='竹叢', h=(6, 8), block='A1 北側、A8 竹海', stream='bamboo', palette=[(.030, .068, .030), (.055, .115, .045), (.095, .175, .060), (.160, .245, .080), (.245, .315, .110)], ns=(0, 1), leaf=((.12, .2), (.12, .16), (60, 80), .35, .7, True),
                  leaves=6000, twig_r=(.006, .002), bark_tint=(.55, .46, .36), bark_mat='M_TreeV2_Bark_Bamboo'),
-    'TR08': dict(name='枯樹', h=(6, 9), block='A1、A9', bark_mat='M_TreeV2_Bark_Dead', palette=PALETTE, stream='twig', ns=(8, 12), leaf=None, leaves=0, twig_r=(.03, .006), bark_tint=(1.0, 1.22, 1.5)),
+    'TR08': dict(name='枯樹', h=(6, 9), block='A1、A9', bark_mat='M_TreeV2_Bark_Dead', palette=PALETTE, stream='twig', ns=(8, 12), leaf=None, leaves=0, twig_r=(.03, .006), bark_tint=(.92, .97, 1.06), bark_scan='bark_willow_02'),   # silver-grey on the willow scan (1.22 / 1.5 turned it blue-white)
 }
 
 
@@ -444,7 +448,7 @@ def build_tree(vid, cfg):
                 continue
             side_v = ld.cross(UP).normalized() if flat and abs(ld.z) < .95 else around.cross(ld)
             if mode != 'hang': side_v = Quaternion(ld, rg.uniform(-.35, .35)) @ side_v   # no two leaves share a plane (the petiole stays on the twig)
-            leaf(leaves, at, ld, side_v, Ll, Wl, leaf_colour(expo, occl, pal), .9 + .1 * t, ai / 20, sa=sa, lift=0.0 if mode == 'hang' else ((q % 3) - 1) * .0025)
+            leaf(leaves, at, ld, side_v, Ll, Wl, leaf_colour(expo, occl, pal), .9 + .1 * t, ai / 20, cup=sp.get('leaf_cup', .16), sa=sa, lift=0.0 if mode == 'hang' else ((q % 3) - 1) * .0025)
             nleaf += 1
     return wood, twigs, leaves, collide, anchors, streams, (nleaf, nflower)
 
@@ -542,7 +546,7 @@ def lod_leaves(vid, streams, anchors, frac, scale, budget):
             if sp.get('flowers') and rg.random() < sp['flowers']:
                 Fl = .06 * scale ** .75; leaf(acc, at, ld, around.cross(ld), Fl, Fl * .95, (*sp['flower_col'][q % 3], occl), .9 + .1 * t, ai / 20, cup=.25, sa=.5); continue
             side_v = ld.cross(UP).normalized() if flat and abs(ld.z) < .95 else around.cross(ld)
-            leaf(acc, at, ld, side_v, Ll, Wl, leaf_colour(expo, occl, pal), .9 + .1 * t, ai / 20, sa=sa)
+            leaf(acc, at, ld, side_v, Ll, Wl, leaf_colour(expo, occl, pal), .9 + .1 * t, ai / 20, cup=sp.get('leaf_cup', .16), sa=sa)
     return acc
 
 
@@ -659,8 +663,18 @@ def build(vid):
     src = wood
     if not sp['leaf'] or bam:   # leafless twigs / bamboo culms carry the silhouette: LOD1/2 decimate wood + twigs together
         src = Acc(); src.add(twigs.v, twigs.f, twigs.uv, twigs.uv2, twigs.col); src.add(wood.v, wood.f, wood.uv, wood.uv2, wood.col)
-    wood_o = wood.obj(f'{vid}_Wood', bark); srcm = tw_mat if bam else bark
-    w1 = src.obj('w1', srcm); w2 = src.obj('w2', srcm); wt = src.tris()
+    wood_o = wood.obj(f'{vid}_Wood', bark); srcm = tw_mat if bam else bark; wt = src.tris()
+    scan = sp.get('bark_scan')
+    if scan:   # review #120 / 11/15 standard section 5: scanned bark pushed into a high model, baked onto the wood's own UV
+        hi = bark_bake.high_model(wood_o, wood.rad, scan); bark_bake.bake_uv(wood_o)
+        bark_bake.bake(wood_o, hi, vid, TEX, 2048, tuple(sp.get('bark_tint', (1, 1, 1))))
+        print('BARK baked', vid, scan, 'hi tris', tris(hi), flush=True); bpy.data.objects.remove(hi, do_unlink=True)
+        def wcopy(nm):   # LOD1/2 wood: copies of the baked wood (same atlas UV); leafless trees add their twigs
+            o = wood_o.copy(); o.data = wood_o.data.copy(); o.name = nm; bpy.context.scene.collection.objects.link(o)
+            return join([o, twigs.obj(nm + '_tw', bark)], nm) if src is not wood else o
+        w1 = wcopy('w1'); w2 = wcopy('w2')
+    else:
+        w1 = src.obj('w1', srcm); w2 = src.obj('w2', srcm)
     print("PARTS wood", wood.tris(), "twigs", twigs.tris(), "leaves", leaves.tris(), "streams", len(streams), "anchors", len(anchors), flush=True)
     lod0 = join([wood_o, twigs.obj(f'{vid}_Twigs', tw_mat)] + ([leaves.obj(f'{vid}_Leaves', lfm)] if leaves.f else []), f'{vid}_LOD0')
     if l1.f:
@@ -696,7 +710,9 @@ def build(vid):
             'vertexData': {'colour': 'RGB = 葉色（依樹冠內高度與內外連續混色），A = 樹冠遮蔽；樹皮 RGB 白、A = 根部遮蔽',
                            'uv2': 'x = 風權重（主幹 0、主枝 0.05–0.3、次枝 0.3–0.55、垂枝 0.55–0.9、葉 0.9–1.0），y = 葉冠錨點相位'},
             'materials': sorted({m.name for o in (lod0, lod1, lod2, lod3) for m in o.data.materials}), 'barkTint': list(sp.get('bark_tint', (1, 1, 1))),
-            'textures': {'T_TreeV2_Bark_Albedo': '1024x1024', 'T_TreeV2_Bark_Normal': '1024x1024', f'T_{vid}_Far': '1024x512 (LOD3 only, alpha)'},
+            'textures': {'T_TreeV2_Bark_Albedo': '1024x1024' + ('（細枝）' if scan else ''), 'T_TreeV2_Bark_Normal': '1024x1024' + ('（細枝）' if scan else ''), f'T_{vid}_Far': '1024x512 (LOD3 only, alpha)',
+                         **({f'T_{vid}_Bark_Albedo': f'2048x2048（樹幹與枝：Poly Haven {scan} 掃描推進高模後烘焙）', f'T_{vid}_Bark_Normal': '2048x2048'} if scan else {})},
+            'barkScan': {'set': scan, 'source': f'https://polyhaven.com/a/{scan}', 'license': 'CC0', 'furrowDepth_m': f'branch radius x {bark_bake.DEPTH_K}, {bark_bake.DEPTH_MIN}-{bark_bake.DEPTH_MAX}'} if scan else None,
             'seedSalt': cfg.get('salt'), 'collision': f'{vid}_Collision（樹幹下段，8 邊管）', 'seed': f'zlib.crc32("{vid}")',
             'fbx': f'art/exports/{PKG}/{vid}.fbx', 'fps': '不寫（手機未實測）'}
     (OUT / f'{vid}.model_info.json').write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding='utf-8')

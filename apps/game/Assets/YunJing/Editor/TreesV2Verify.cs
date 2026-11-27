@@ -118,6 +118,19 @@ namespace YunJing.Editor
                     bark.SetFloat("_Smoothness", .08f); bark.SetFloat("_Metallic", 0); EditorUtility.SetDirty(bark);
                 }
             }
+            // trunk and limbs (review #120): each tree's own baked scanned-bark atlas, colour and species tint already in the texture
+            foreach (var id in Ids)
+            {
+                if (!Load(id).materials.Contains($"M_{id}_Bark")) continue;
+                var ba = T($"T_{id}_Bark_Albedo"); var bn = T($"T_{id}_Bark_Normal");
+                // delivered at 2048 (art/textures); the project's QingxiImportBudget caps model textures at 1024 in the game (browser download budget)
+                int Src(Texture2D t) { if (!t) return 0; var ti = (TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(t)); ti.GetSourceTextureWidthAndHeight(out int w, out _); return w; }
+                int Cap(Texture2D t) => t ? ((TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(t))).maxTextureSize : 0;
+                Check(Src(ba) == 2048 && Src(bn) == 2048 && Cap(ba) == 1024 && Cap(bn) == 1024, $"T_{id}_Bark_Albedo / _Normal imported: source {Src(ba)} / {Src(bn)}, in-game max {Cap(ba)} / {Cap(bn)} (QingxiImportBudget)");
+                var bark = Mat($"M_{id}_Bark", "Universal Render Pipeline/Lit");
+                bark.SetTexture("_BaseMap", ba); bark.SetColor("_BaseColor", Color.white); bark.SetTexture("_BumpMap", bn); bark.EnableKeyword("_NORMALMAP");
+                bark.SetFloat("_Smoothness", .08f); bark.SetFloat("_Metallic", 0); EditorUtility.SetDirty(bark);
+            }
             // bamboo culms: colour in the vertex colours, like the leaves
             var bamboo = Mat("M_TreeV2_Bamboo", "Universal Render Pipeline/Particles/Simple Lit");
             bamboo.SetColor("_BaseColor", Color.white); bamboo.SetFloat("_Smoothness", .35f); EditorUtility.SetDirty(bamboo);
