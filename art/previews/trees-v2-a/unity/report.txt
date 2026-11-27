@@ -1,4 +1,16 @@
 PASS T_TreeV2_Bark_Albedo / _Normal imported
+PASS T_TR04_A_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR04_B_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR04_C_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR06_A_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR06_B_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR06_C_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR07_A_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR07_B_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR07_C_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR08_A_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR08_B_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
+PASS T_TR08_C_Bark_Albedo / _Normal imported: source 2048 / 2048, in-game max 1024 / 1024 (QingxiImportBudget)
 PASS T_TR04_A_Far imported (1024 x 512)
 PASS T_TR04_B_Far imported (1024 x 512)
 PASS T_TR04_C_Far imported (1024 x 512)
@@ -16,58 +28,58 @@ PASS T_TR09_B_Far imported (1024 x 512)
 PASS T_TR09_C_Far imported (1024 x 512)
 Unity 6000.3.28f1, pipeline URP
 INFO axis: Blender +X -> Unity +X (the water side), Blender +Y -> Unity +Z, Blender +Z -> Unity +Y
-PASS TR04_A: imported size 10.968 x 9.814 x 9.716 m matches model_info 10.967 x 9.814 x 9.716
-PASS TR04_A: height 9.40 m (package 8-12 m)
+PASS TR04_A: imported size 10.429 x 10.135 x 9.676 m matches model_info 10.428 x 10.134 x 9.675
+PASS TR04_A: height 9.36 m (package 8-12 m)
 PASS TR04_A: roots end 0.320 m below ground (package 0.3 m)
-PASS TR04_A: triangles LOD0/1/2/3 = 57542 / 14598 / 3900 / 4, model_info 57542 / 14598 / 3900 / 4
+PASS TR04_A: triangles LOD0/1/2/3 = 59125 / 14600 / 3900 / 4, model_info 59125 / 14600 / 3900 / 4
 PASS TR04_A: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR04_A: every FBX material slot mapped
-PASS TR04_A: materials M_TR04_A_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf (model_info M_TR04_A_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf)
+PASS TR04_A: materials M_TR04_A_Bark, M_TR04_A_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf (model_info M_TR04_A_Bark, M_TR04_A_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf)
 PASS TR04_A: LODGroup 4 levels x 1 renderer
 PASS TR04_A: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR04_A: a ray at 1 m from 3 m on the land side hits the trunk at 2.78 m
-PASS TR04_A: LOD0 has UV2 (64722) and vertex colours (64722) on all 64722 vertices
-PASS TR04_A: wind weight <= 0.05 on 100% of the 856 trunk-base vertices (the rest are twigs hanging beside the trunk)
-PASS TR04_A: wind weight on all 55860 leaf vertices >= 0.85 (min 0.906)
-PASS TR04_A: leaf occlusion in vertex alpha 0.51-0.97
-PASS TR04_A: leaf colour varies (r+g 0.39-0.91)
-PASS TR04_B: imported size 8.876 x 8.966 x 10.104 m matches model_info 8.875 x 8.965 x 10.104
-PASS TR04_B: height 9.78 m (package 8-12 m)
+PASS TR04_A: LOD0 has UV2 (65731) and vertex colours (65731) on all 65731 vertices
+PASS TR04_A: wind weight <= 0.05 on 100% of the 859 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR04_A: wind weight on all 55375 leaf vertices >= 0.85 (min 0.906)
+PASS TR04_A: leaf occlusion in vertex alpha 0.49-0.98
+PASS TR04_A: leaf colour varies (r+g 0.36-0.73)
+PASS TR04_B: imported size 8.661 x 9.253 x 10.590 m matches model_info 8.661 x 9.253 x 10.589
+PASS TR04_B: height 10.27 m (package 8-12 m)
 PASS TR04_B: roots end 0.322 m below ground (package 0.3 m)
-PASS TR04_B: triangles LOD0/1/2/3 = 55522 / 14599 / 3900 / 4, model_info 55522 / 14599 / 3900 / 4
+PASS TR04_B: triangles LOD0/1/2/3 = 56461 / 14600 / 3899 / 4, model_info 56461 / 14600 / 3899 / 4
 PASS TR04_B: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR04_B: every FBX material slot mapped
-PASS TR04_B: materials M_TR04_B_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf (model_info M_TR04_B_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf)
+PASS TR04_B: materials M_TR04_B_Bark, M_TR04_B_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf (model_info M_TR04_B_Bark, M_TR04_B_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf)
 PASS TR04_B: LODGroup 4 levels x 1 renderer
 PASS TR04_B: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR04_B: a ray at 1 m from 3 m on the land side hits the trunk at 2.80 m
-PASS TR04_B: LOD0 has UV2 (63084) and vertex colours (63084) on all 63084 vertices
-PASS TR04_B: wind weight <= 0.05 on 100% of the 718 trunk-base vertices (the rest are twigs hanging beside the trunk)
-PASS TR04_B: wind weight on all 55385 leaf vertices >= 0.85 (min 0.906)
-PASS TR04_B: leaf occlusion in vertex alpha 0.51-0.98
-PASS TR04_B: leaf colour varies (r+g 0.40-0.93)
-PASS TR04_C: imported size 10.924 x 10.385 x 8.718 m matches model_info 10.924 x 10.385 x 8.718
-PASS TR04_C: height 8.40 m (package 8-12 m)
+PASS TR04_B: LOD0 has UV2 (63759) and vertex colours (63759) on all 63759 vertices
+PASS TR04_B: wind weight <= 0.05 on 100% of the 709 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR04_B: wind weight on all 55355 leaf vertices >= 0.85 (min 0.906)
+PASS TR04_B: leaf occlusion in vertex alpha 0.48-1.00
+PASS TR04_B: leaf colour varies (r+g 0.36-0.73)
+PASS TR04_C: imported size 11.249 x 10.235 x 9.205 m matches model_info 11.248 x 10.234 x 9.204
+PASS TR04_C: height 8.89 m (package 8-12 m)
 PASS TR04_C: roots end 0.317 m below ground (package 0.3 m)
-PASS TR04_C: triangles LOD0/1/2/3 = 58422 / 14598 / 3900 / 4, model_info 58422 / 14598 / 3900 / 4
+PASS TR04_C: triangles LOD0/1/2/3 = 59883 / 14598 / 3900 / 4, model_info 59883 / 14598 / 3900 / 4
 PASS TR04_C: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR04_C: every FBX material slot mapped
-PASS TR04_C: materials M_TR04_C_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf (model_info M_TR04_C_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf)
+PASS TR04_C: materials M_TR04_C_Bark, M_TR04_C_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf (model_info M_TR04_C_Bark, M_TR04_C_Far, M_TreeV2_Bark_Maple, M_TreeV2_Leaf)
 PASS TR04_C: LODGroup 4 levels x 1 renderer
 PASS TR04_C: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR04_C: a ray at 1 m from 3 m on the land side hits the trunk at 2.77 m
-PASS TR04_C: LOD0 has UV2 (65247) and vertex colours (65247) on all 65247 vertices
-PASS TR04_C: wind weight <= 0.05 on 100% of the 998 trunk-base vertices (the rest are twigs hanging beside the trunk)
-PASS TR04_C: wind weight on all 55605 leaf vertices >= 0.85 (min 0.906)
-PASS TR04_C: leaf occlusion in vertex alpha 0.50-0.97
-PASS TR04_C: leaf colour varies (r+g 0.38-0.93)
+PASS TR04_C: LOD0 has UV2 (66506) and vertex colours (66506) on all 66506 vertices
+PASS TR04_C: wind weight <= 0.05 on 100% of the 989 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR04_C: wind weight on all 56070 leaf vertices >= 0.85 (min 0.906)
+PASS TR04_C: leaf occlusion in vertex alpha 0.48-0.97
+PASS TR04_C: leaf colour varies (r+g 0.36-0.70)
 PASS TR06_A: imported size 9.631 x 9.077 x 9.484 m matches model_info 9.63 x 9.077 x 9.483
 PASS TR06_A: height 9.16 m (package 8-12 m)
 PASS TR06_A: roots end 0.324 m below ground (package 0.3 m)
 PASS TR06_A: triangles LOD0/1/2/3 = 59075 / 14599 / 3899 / 4, model_info 59075 / 14599 / 3899 / 4
 PASS TR06_A: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR06_A: every FBX material slot mapped
-PASS TR06_A: materials M_TR06_A_Far, M_TreeV2_Bark, M_TreeV2_Leaf (model_info M_TR06_A_Far, M_TreeV2_Bark, M_TreeV2_Leaf)
+PASS TR06_A: materials M_TR06_A_Bark, M_TR06_A_Far, M_TreeV2_Bark, M_TreeV2_Leaf (model_info M_TR06_A_Bark, M_TR06_A_Far, M_TreeV2_Bark, M_TreeV2_Leaf)
 PASS TR06_A: LODGroup 4 levels x 1 renderer
 PASS TR06_A: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR06_A: a ray at 1 m from 3 m on the land side hits the trunk at 2.63 m
@@ -82,11 +94,11 @@ PASS TR06_B: roots end 0.330 m below ground (package 0.3 m)
 PASS TR06_B: triangles LOD0/1/2/3 = 58391 / 14600 / 3899 / 4, model_info 58391 / 14600 / 3899 / 4
 PASS TR06_B: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR06_B: every FBX material slot mapped
-PASS TR06_B: materials M_TR06_B_Far, M_TreeV2_Bark, M_TreeV2_Leaf (model_info M_TR06_B_Far, M_TreeV2_Bark, M_TreeV2_Leaf)
+PASS TR06_B: materials M_TR06_B_Bark, M_TR06_B_Far, M_TreeV2_Bark, M_TreeV2_Leaf (model_info M_TR06_B_Bark, M_TR06_B_Far, M_TreeV2_Bark, M_TreeV2_Leaf)
 PASS TR06_B: LODGroup 4 levels x 1 renderer
 PASS TR06_B: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR06_B: a ray at 1 m from 3 m on the land side hits the trunk at 2.66 m
-PASS TR06_B: LOD0 has UV2 (66827) and vertex colours (66827) on all 66827 vertices
+PASS TR06_B: LOD0 has UV2 (66818) and vertex colours (66818) on all 66818 vertices
 PASS TR06_B: wind weight <= 0.05 on 100% of the 655 trunk-base vertices (the rest are twigs hanging beside the trunk)
 PASS TR06_B: wind weight on all 59265 leaf vertices >= 0.85 (min 0.906)
 PASS TR06_B: leaf occlusion in vertex alpha 0.55-0.95
@@ -97,12 +109,12 @@ PASS TR06_C: roots end 0.343 m below ground (package 0.3 m)
 PASS TR06_C: triangles LOD0/1/2/3 = 57366 / 14600 / 3898 / 4, model_info 57366 / 14600 / 3898 / 4
 PASS TR06_C: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR06_C: every FBX material slot mapped
-PASS TR06_C: materials M_TR06_C_Far, M_TreeV2_Bark, M_TreeV2_Leaf (model_info M_TR06_C_Far, M_TreeV2_Bark, M_TreeV2_Leaf)
+PASS TR06_C: materials M_TR06_C_Bark, M_TR06_C_Far, M_TreeV2_Bark, M_TreeV2_Leaf (model_info M_TR06_C_Bark, M_TR06_C_Far, M_TreeV2_Bark, M_TreeV2_Leaf)
 PASS TR06_C: LODGroup 4 levels x 1 renderer
 PASS TR06_C: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR06_C: a ray at 1 m from 3 m on the land side hits the trunk at 2.46 m
-PASS TR06_C: LOD0 has UV2 (65885) and vertex colours (65885) on all 65885 vertices
-PASS TR06_C: wind weight <= 0.05 on 99% of the 895 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR06_C: LOD0 has UV2 (65850) and vertex colours (65850) on all 65850 vertices
+PASS TR06_C: wind weight <= 0.05 on 99% of the 886 trunk-base vertices (the rest are twigs hanging beside the trunk)
 PASS TR06_C: wind weight on all 58860 leaf vertices >= 0.85 (min 0.906)
 PASS TR06_C: leaf occlusion in vertex alpha 0.54-0.91
 PASS TR06_C: leaf colour varies (r+g 0.58-1.11)
@@ -112,12 +124,12 @@ PASS TR07_A: roots end 0.322 m below ground (package 0.3 m)
 PASS TR07_A: triangles LOD0/1/2/3 = 22580 / 9370 / 3900 / 4, model_info 22580 / 9370 / 3900 / 4
 PASS TR07_A: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR07_A: every FBX material slot mapped
-PASS TR07_A: materials M_TR07_A_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf (model_info M_TR07_A_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf)
+PASS TR07_A: materials M_TR07_A_Bark, M_TR07_A_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf (model_info M_TR07_A_Bark, M_TR07_A_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf)
 PASS TR07_A: LODGroup 4 levels x 1 renderer
 PASS TR07_A: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR07_A: a ray at 1 m from 3 m on the land side hits the trunk at 2.86 m
-PASS TR07_A: LOD0 has UV2 (23225) and vertex colours (23225) on all 23225 vertices
-PASS TR07_A: wind weight <= 0.05 on 100% of the 967 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR07_A: LOD0 has UV2 (23226) and vertex colours (23226) on all 23226 vertices
+PASS TR07_A: wind weight <= 0.05 on 100% of the 968 trunk-base vertices (the rest are twigs hanging beside the trunk)
 PASS TR07_A: wind weight on all 17585 leaf vertices >= 0.85 (min 0.906)
 PASS TR07_A: leaf occlusion in vertex alpha 0.62-0.89
 PASS TR07_A: leaf colour varies (r+g 0.75-1.94)
@@ -127,12 +139,12 @@ PASS TR07_B: roots end 0.322 m below ground (package 0.3 m)
 PASS TR07_B: triangles LOD0/1/2/3 = 22150 / 9342 / 3899 / 4, model_info 22150 / 9342 / 3899 / 4
 PASS TR07_B: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR07_B: every FBX material slot mapped
-PASS TR07_B: materials M_TR07_B_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf (model_info M_TR07_B_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf)
+PASS TR07_B: materials M_TR07_B_Bark, M_TR07_B_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf (model_info M_TR07_B_Bark, M_TR07_B_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf)
 PASS TR07_B: LODGroup 4 levels x 1 renderer
 PASS TR07_B: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR07_B: a ray at 1 m from 3 m on the land side hits the trunk at 2.85 m
-PASS TR07_B: LOD0 has UV2 (22985) and vertex colours (22985) on all 22985 vertices
-PASS TR07_B: wind weight <= 0.05 on 100% of the 1009 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR07_B: LOD0 has UV2 (22944) and vertex colours (22944) on all 22944 vertices
+PASS TR07_B: wind weight <= 0.05 on 100% of the 1008 trunk-base vertices (the rest are twigs hanging beside the trunk)
 PASS TR07_B: wind weight on all 17755 leaf vertices >= 0.85 (min 0.906)
 PASS TR07_B: leaf occlusion in vertex alpha 0.60-0.90
 PASS TR07_B: leaf colour varies (r+g 0.75-1.94)
@@ -142,12 +154,12 @@ PASS TR07_C: roots end 0.326 m below ground (package 0.3 m)
 PASS TR07_C: triangles LOD0/1/2/3 = 22071 / 9024 / 3899 / 4, model_info 22071 / 9024 / 3899 / 4
 PASS TR07_C: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR07_C: every FBX material slot mapped
-PASS TR07_C: materials M_TR07_C_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf (model_info M_TR07_C_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf)
+PASS TR07_C: materials M_TR07_C_Bark, M_TR07_C_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf (model_info M_TR07_C_Bark, M_TR07_C_Far, M_TreeV2_Bark_Plum, M_TreeV2_Leaf)
 PASS TR07_C: LODGroup 4 levels x 1 renderer
 PASS TR07_C: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR07_C: a ray at 1 m from 3 m on the land side hits the trunk at 2.85 m
-PASS TR07_C: LOD0 has UV2 (22981) and vertex colours (22981) on all 22981 vertices
-PASS TR07_C: wind weight <= 0.05 on 100% of the 829 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR07_C: LOD0 has UV2 (22938) and vertex colours (22938) on all 22938 vertices
+PASS TR07_C: wind weight <= 0.05 on 100% of the 818 trunk-base vertices (the rest are twigs hanging beside the trunk)
 PASS TR07_C: wind weight on all 17925 leaf vertices >= 0.85 (min 0.906)
 PASS TR07_C: leaf occlusion in vertex alpha 0.60-0.98
 PASS TR07_C: leaf colour varies (r+g 0.75-1.94)
@@ -157,11 +169,11 @@ PASS TR08_A: roots end 0.321 m below ground (package 0.3 m)
 PASS TR08_A: triangles LOD0/1/2/3 = 48324 / 14600 / 3899 / 4, model_info 48324 / 14600 / 3899 / 4
 PASS TR08_A: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR08_A: every FBX material slot mapped
-PASS TR08_A: materials M_TR08_A_Far, M_TreeV2_Bark_Dead (model_info M_TR08_A_Far, M_TreeV2_Bark_Dead)
+PASS TR08_A: materials M_TR08_A_Bark, M_TR08_A_Far, M_TreeV2_Bark_Dead (model_info M_TR08_A_Bark, M_TR08_A_Far, M_TreeV2_Bark_Dead)
 PASS TR08_A: LODGroup 4 levels x 1 renderer
 PASS TR08_A: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR08_A: a ray at 1 m from 3 m on the land side hits the trunk at 2.71 m
-PASS TR08_A: LOD0 has UV2 (37779) and vertex colours (37779) on all 37779 vertices
+PASS TR08_A: LOD0 has UV2 (37777) and vertex colours (37777) on all 37777 vertices
 PASS TR08_A: wind weight <= 0.05 on 100% of the 944 trunk-base vertices (the rest are twigs hanging beside the trunk)
 INFO TR08_A: no leaves (leafless tree), leaf checks skipped
 PASS TR08_B: imported size 8.649 x 7.760 x 9.166 m matches model_info 8.648 x 7.76 x 9.165
@@ -170,11 +182,11 @@ PASS TR08_B: roots end 0.336 m below ground (package 0.3 m)
 PASS TR08_B: triangles LOD0/1/2/3 = 35828 / 14599 / 3899 / 4, model_info 35828 / 14599 / 3899 / 4
 PASS TR08_B: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR08_B: every FBX material slot mapped
-PASS TR08_B: materials M_TR08_B_Far, M_TreeV2_Bark_Dead (model_info M_TR08_B_Far, M_TreeV2_Bark_Dead)
+PASS TR08_B: materials M_TR08_B_Bark, M_TR08_B_Far, M_TreeV2_Bark_Dead (model_info M_TR08_B_Bark, M_TR08_B_Far, M_TreeV2_Bark_Dead)
 PASS TR08_B: LODGroup 4 levels x 1 renderer
 PASS TR08_B: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR08_B: a ray at 1 m from 3 m on the land side hits the trunk at 2.74 m
-PASS TR08_B: LOD0 has UV2 (27829) and vertex colours (27829) on all 27829 vertices
+PASS TR08_B: LOD0 has UV2 (27830) and vertex colours (27830) on all 27830 vertices
 PASS TR08_B: wind weight <= 0.05 on 100% of the 938 trunk-base vertices (the rest are twigs hanging beside the trunk)
 INFO TR08_B: no leaves (leafless tree), leaf checks skipped
 PASS TR08_C: imported size 9.521 x 8.784 x 8.679 m matches model_info 9.52 x 8.784 x 8.679
@@ -183,12 +195,12 @@ PASS TR08_C: roots end 0.329 m below ground (package 0.3 m)
 PASS TR08_C: triangles LOD0/1/2/3 = 43000 / 14600 / 3899 / 4, model_info 43000 / 14600 / 3899 / 4
 PASS TR08_C: within the package budget 60,000 / 15,000 / 4,000 / 200
 PASS TR08_C: every FBX material slot mapped
-PASS TR08_C: materials M_TR08_C_Far, M_TreeV2_Bark_Dead (model_info M_TR08_C_Far, M_TreeV2_Bark_Dead)
+PASS TR08_C: materials M_TR08_C_Bark, M_TR08_C_Far, M_TreeV2_Bark_Dead (model_info M_TR08_C_Bark, M_TR08_C_Far, M_TreeV2_Bark_Dead)
 PASS TR08_C: LODGroup 4 levels x 1 renderer
 PASS TR08_C: trunk collision as MeshCollider (368 tris), render hidden
 PASS TR08_C: a ray at 1 m from 3 m on the land side hits the trunk at 2.67 m
-PASS TR08_C: LOD0 has UV2 (33572) and vertex colours (33572) on all 33572 vertices
-PASS TR08_C: wind weight <= 0.05 on 100% of the 1217 trunk-base vertices (the rest are twigs hanging beside the trunk)
+PASS TR08_C: LOD0 has UV2 (33571) and vertex colours (33571) on all 33571 vertices
+PASS TR08_C: wind weight <= 0.05 on 100% of the 1218 trunk-base vertices (the rest are twigs hanging beside the trunk)
 INFO TR08_C: no leaves (leafless tree), leaf checks skipped
 PASS TR09_A: imported size 4.217 x 4.283 x 7.185 m matches model_info 4.217 x 4.283 x 7.184
 PASS TR09_A: height 6.88 m (package 6-8 m)
