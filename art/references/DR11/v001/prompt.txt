@@ -1,0 +1,18 @@
+Use your built-in image generation tool (image_gen) to make reference sheets for ONE 3D game asset family, and save the PNG files into ./out/ with the exact file names below. Use V4.png, V1.png and V5.png in this folder as the main input reference images for every generation: they show an ancient-tree forest with mossy giant roots, grey-brown bark, mossy boulders, ferns, a dug-up earth pit, and pine/fir trees in mist. Match their bark, colours, moss, soil and painting style exactly. Do not write any code other than what is needed to copy the generated files into ./out/.
+
+These sheets are for building a real-time 3D game model, so every feature must be a BIG, CLEAR, READABLE SHAPE that a modeller can copy, not fine painterly noise. Keep the silhouette simple and strong.
+
+The asset: "DR11 upturned root plate of a wind-thrown tree" (the root ball of a big fallen tree, torn out of the ground and standing up on edge like a wall), TWO kinds:
+- Kind A: root plate about 4 m wide and 3.5 m tall, roughly round/oval disc standing almost vertical (tilted back about 10 degrees). On the FRONT (the underside of the old root ball): a dense tangle of thick main roots (20-40 cm) radiating from the centre where the trunk was, curving outward and bending back, plus many thinner roots; packed mud and soil between the roots, with 4-6 embedded grey stones (20-60 cm) wedged in the soil. Snapped root ends with pale broken wood stick out around the rim, some long roots dangle down. The short stub of the fallen trunk (about 1 m diameter, 1.5 m long, broken end) comes out of the BACK, lying on the ground. On the TOP rim: a strip of the old forest floor still attached (moss, ferns, a few grass tufts) folded over.
+- Kind B: smaller and more broken, about 3 m wide and 2.6 m tall, tilted more (about 30 degrees, leaning back), half the root plate has crumbled, fewer stones, more hanging roots, moss growing over the upper half.
+Both:
+- In front of the plate on the ground: a shallow oval pit (the hole the roots came out of, about 3 m x 2 m, 40-60 cm deep) with dark damp soil, a few fallen stones and loose earth clods around the edge, a little leaf litter. The pit is part of the asset.
+- Colours: deep grey-brown bark on the thick roots, brown-black damp soil, grey stones, dark olive-green moss on the top and upward-facing parts, pale broken wood at snapped ends.
+
+Files to make (each a separate generation, landscape, at least 1536x1024):
+1. out/DR11-threeview.png : orthographic FRONT view (looking at the root face) and SIDE view of BOTH kinds side by side (A front, A side, B front, B side, left to right), same scale, flat ground line with the pit cut in section in the side views, a small 1.75 m grey human silhouette for scale. Plain light warm-grey background, even soft overcast lighting, no cast shadows on the background, no fog, no other trees, no text or labels.
+2. out/DR11-threequarter.png : both root plates in the misty forest beside the path, view from eye height 1.7 m about 10 m away, three-quarter view showing the root face, the pit and the trunk stub, overcast light, the same style as V4.
+3. out/DR11-detail.png : a sheet of three close-ups: (a) the root tangle with mud and wedged stones; (b) the rim with snapped root ends and the folded forest-floor strip with moss and ferns; (c) the shallow pit with damp soil and earth clods.
+
+Style: Eastern xianxia fantasy, hand-painted look 3D game concept art, low saturation, overcast. Not a photo.
+When finished, list the files in ./out/ with their pixel sizes.
