@@ -2,22 +2,22 @@
  "id": "TG01",
  "package": "docs/execution/2026-11-14/A-120h-roads-yard-and-mountain-street.md",
  "author": "A (Johnnnny0823)",
- "version": "v001",
+ "version": "v002",
  "status": "Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗",
  "block": "A1 演武場（設定圖 V1、V3）",
  "dimensions_m": [
-  0.694,
-  0.878,
+  0.745,
+  0.917,
   1.747
  ],
  "bounds_min_m": [
-  -0.35,
-  -0.521,
+  -0.376,
+  -0.549,
   -0.003
  ],
  "bounds_max_m": [
-  0.344,
-  0.356,
+  0.369,
+  0.367,
   1.744
  ],
  "limit_m": [
@@ -30,21 +30,21 @@
  "lods": [
   {
    "lod": 0,
-   "triangles": 6760,
+   "triangles": 21988,
    "objects": 2,
-   "materials": 1
+   "materials": 2
   },
   {
    "lod": 1,
-   "triangles": 3380,
+   "triangles": 10994,
    "objects": 2,
-   "materials": 1
+   "materials": 2
   },
   {
    "lod": 2,
-   "triangles": 1020,
+   "triangles": 3303,
    "objects": 2,
-   "materials": 1
+   "materials": 2
   }
  ],
  "objectsLOD0": [
@@ -55,13 +55,16 @@
   "TG01_Detail_Moss_LOD0"
  ],
  "materials": [
+  "M_TG01_Baked",
   "M_TrainingYard_Trim"
  ],
  "textures": {
   "T_TrainingYard_Albedo": "2048x2048",
   "T_TrainingYard_Normal": "2048x2048",
   "T_TrainingYard_MetallicSmoothness": "2048x2048",
-  "T_TrainingYard_Emission": "2048x2048"
+  "T_TrainingYard_Emission": "2048x2048",
+  "T_TG01_Baked_Albedo": "1024x1024",
+  "T_TG01_Baked_Normal": "1024x1024"
  },
  "textureNote": "one training-yard trim sheet shared by TG01-TG06 (art/textures/training-yard-a, MC01 strip layout), 256 px/m",
  "sockets": [
@@ -77,7 +80,8 @@
  "collision": "TG01_Collision (2 boxes)",
  "extra": {
   "postHeight_m": 1.74,
-  "postDiameter_m": 0.31
+  "postDiameter_m": 0.33,
+  "bakedSurface": "Poly Haven bark_willow_02 (wood), mossy_rock (stone), CC0"
  },
  "fbx": "art/exports/training-yard-a/TG01.fbx",
  "fps": "不寫（手機未實測）"
