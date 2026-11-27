@@ -29,3 +29,11 @@ for mid in sys.argv[1:]:
     row([img, PRE / f'{mid}_three_quarter.png', PRE / f'{mid}_clay_three_quarter.png', PRE / f'{mid}_wire_three_quarter.png'],
         [f'{ref} 選用的 AI 三視圖', '模型（材質）', '灰模（同光同角度）', '線框'], name=f'{mid}_ref_vs_model.jpg')
     row([PRE / f'{mid}_three_quarter.png', PRE / f'{mid}_LOD1_three_quarter.png'], ['LOD0', 'LOD1（同機位）'], name=f'{mid}_LOD0_vs_LOD1.jpg')
+    # review #119: the three-view beside the model's front / side / back at the same angles (orthographic, same order as the sheet)
+    views = [PRE / f'{mid}_{v}.png' for v in ('front', 'side', 'back')]
+    if all(p.exists() for p in views):
+        tri = [Image.open(p).convert('RGB') for p in views]; hh = min(i.height for i in tri); tri = [i.resize((int(i.width * hh / i.height), hh)) for i in tri]
+        strip = Image.new('RGB', (sum(i.width for i in tri), hh), (236, 234, 230)); x = 0
+        for i in tri: strip.paste(i, (x, 0)); x += i.width
+        tmp = PRE / f'_{mid}_fsb.png'; strip.save(tmp)
+        row([img, tmp], [f'{ref} 選用的 AI 三視圖（正面／側面／背面）', '模型（正面／側面 +X／背面，同角度正交）'], name=f'{mid}_threeview_same_angle.jpg'); tmp.unlink()

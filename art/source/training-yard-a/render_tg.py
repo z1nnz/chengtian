@@ -98,4 +98,4 @@ else:
         reset(); off = (0, 0, 2.6) if mid.startswith('ST02') else (0, 0, .4) if mid.startswith('ST05') else (0, 0, 0)   # hanging pieces: hooks / loop up at eave height
         objs = append(mid, off); mn, mx = bounds(objs); objs = objs + figure(mx.x + .45, mx.y + .45)   # 1.75 m figure beside and behind the piece: visible in front and side views, inside the frame
         tag = f'{mid}' + ('_clay' if CLAY else '') + ('_wire' if WIRE else '') + ('_nodetail' if NODETAIL else '') + (f'_LOD{LOD}' if LOD else '')
-        shoot(objs, tag, ['three_quarter', 'side', 'front', 'top'] if not (CLAY or WIRE or NODETAIL or LOD) else ['three_quarter'])
+        shoot(objs, tag, ['three_quarter', 'side', 'front', 'back', 'top'] if not (CLAY or WIRE or NODETAIL or LOD) else ['three_quarter'])

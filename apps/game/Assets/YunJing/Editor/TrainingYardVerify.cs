@@ -62,7 +62,7 @@ namespace YunJing.Editor
         static void Import()
         {
             Copy(Exports, Path.Combine(Repo, "apps/game", Models), "*.fbx");
-            Copy(Path.Combine(Repo, "art/textures", Pkg), Path.Combine(Repo, "apps/game", Models, "Textures"), "T_TrainingYard_*.png");
+            Copy(Path.Combine(Repo, "art/textures", Pkg), Path.Combine(Repo, "apps/game", Models, "Textures"), "T_*.png");   // trim sheet + per-module baked atlases (review #119)
             AssetDatabase.Refresh();
             foreach (var guid in AssetDatabase.FindAssets("t:Model", new[] { Models }))
             {
@@ -127,6 +127,19 @@ namespace YunJing.Editor
                     }
                     EditorUtility.SetDirty(mat);
                 }
+            }
+            // review #119: modules with a baked scanned surface (old wood, mossy stone) carry M_<ID>_Baked with T_<ID>_Baked_Albedo / _Normal (1024)
+            foreach (var file in Directory.GetFiles(Path.Combine(Repo, "art/textures", Pkg), "T_*_Baked_Albedo.png"))
+            {
+                var id = Path.GetFileName(file).Replace("T_", "").Replace("_Baked_Albedo.png", "");
+                var ba = T($"T_{id}_Baked_Albedo"); var bn = T($"T_{id}_Baked_Normal");
+                Check(ba && bn && PngSize(file) == 1024, $"T_{id}_Baked_Albedo / _Normal imported (source {PngSize(file)})");
+                if (!(ba && bn)) continue;
+                var name = $"M_{id}_Baked"; var path = $"{Models}/{name}.mat"; var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+                if (mat == null) { mat = new Material(Shader.Find("Universal Render Pipeline/Lit")); AssetDatabase.CreateAsset(mat, path); }
+                mat.enableInstancing = true; Mats[name] = mat;
+                mat.SetTexture("_BaseMap", ba); mat.SetColor("_BaseColor", Color.white); mat.SetTexture("_BumpMap", bn); mat.SetFloat("_BumpScale", 1); mat.EnableKeyword("_NORMALMAP");
+                mat.SetFloat("_Smoothness", .1f); mat.SetFloat("_Metallic", 0); EditorUtility.SetDirty(mat);
             }
             AssetDatabase.SaveAssets();
         }

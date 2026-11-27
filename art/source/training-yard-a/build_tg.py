@@ -18,6 +18,7 @@ from mathutils import Vector, Matrix
 import numpy as np
 
 HERE = Path(__file__).resolve().parent; ROOT = HERE.parents[2]
+sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / 'art/source/mountain-street-houses-a'))
 import build_mc01 as mc
 from build_mc01 import box, beam, lathe, tube, chisel, bevel, apply, moss_tuft
@@ -105,83 +106,150 @@ def rubble_block(name, size, c, strip, seed, amt=.03, rot=0.0):
     chisel(o, amt, 2.4, seed, keep_bed=True); bevel(o, min(.035, min(size) * .22), 2, 30)
     o.data.transform(Matrix.Translation(c) @ Matrix.Rotation(rot, 4, 'Z')); return o
 
+# ------------------------------------------------------------------ stones (core team's SS01 rock(), core-d2-v1/d2_ground.py, PR #118)
+def rock_geo(c, L, W, H, seed, dish=.02, sink=.003, res=(28, 12), rot=None):   # sink 3 mm: TG01 sits on the yard floor (bottom >= 0)
+    """The core team's SS01 half-buried stone, copied unchanged except for the resolution and an
+    optional fixed rotation: a squircle body with noise, 5-8 soft cleavage planes for the broken faces, a slight dish on top."""
+    from mathutils import noise
+    R = random.Random(seed); so = Vector((R.uniform(-50, 50), R.uniform(-50, 50), seed * .61))
+    rot = R.uniform(0, math.tau) if rot is None else rot; cs, sn = math.cos(rot), math.sin(rot)
+    nu, nv = res; verts = []; planes = []
+    for _ in range(R.randint(5, 8)):
+        a = R.uniform(0, math.tau); el = R.uniform(-.1, .55)
+        n = Vector((math.cos(a) * math.cos(el), math.sin(a) * math.cos(el), math.sin(el))); planes.append((n, R.uniform(.72, .9)))
+    for j in range(nv + 1):
+        v = j / nv
+        for i in range(nu):
+            t = math.tau * i / nu; ct, st = math.cos(t), math.sin(t)
+            sx = math.copysign(abs(ct) ** .72, ct); sy = math.copysign(abs(st) ** .72, st); d = Vector((ct, st, v * 2 - 1))
+            k = 1 + .13 * noise.noise(so + d * 1.1) + .06 * noise.noise(so + d * 2.7) + .025 * noise.noise(so + d * 6.5)
+            if v < .62:
+                f = v / .62; rr = (.82 + .18 * f) * (1 + .07 * math.sin(f * math.pi)) * k; z = -sink + (H + sink) * .78 * f ** .9
+            else:
+                f = (v - .62) / .38; rr = max((1. - .9 * f ** 2.4) * k, 0.); z = -sink + (H + sink) * (.78 + .22 * math.sin(f * math.pi / 2)) - dish * f ** 3
+                z += .012 * noise.noise(so * 2 + Vector((ct * rr * L, st * rr * W, 0)) * 3.)
+            x, y = sx * L / 2 * rr, sy * W / 2 * rr
+            if z > 0:
+                q = Vector((x / (L / 2), y / (W / 2), (z - H / 2) / max(H, .05) * 1.2))
+                for n, dd in planes:
+                    e = q.dot(n) - dd
+                    if e > -.08: q -= n * (math.log1p(math.exp(e / .04)) * .04)
+                x, y = q.x * L / 2, q.y * W / 2; z = min(z, q.z / 1.2 * max(H, .05) + H / 2)
+            verts.append((c[0] + x * cs - y * sn, c[1] + x * sn + y * cs, c[2] + z))
+    verts.append((c[0], c[1], c[2] + H - dish * 1.05)); faces = []
+    for j in range(nv):
+        for i in range(nu):
+            a = j * nu + i; b = j * nu + (i + 1) % nu; faces.append((a, b, b + nu, a + nu))
+    top = len(verts) - 1; base = nv * nu; faces += [(base + i, base + (i + 1) % nu, top) for i in range(nu)]
+    # no bottom face: it would lie on the ground plane, coplanar with the neighbouring stones' bottoms in the tight collar
+    return verts, faces
+
+
+def rock(name, c, L, W, H, seed, rot=None):
+    verts, faces = rock_geo(c, L, W, H, seed, rot=rot)
+    bm = bmesh.new(); vs = [bm.verts.new(v) for v in verts]
+    for f in faces: bm.faces.new([vs[i] for i in f])
+    return mc.finish(name, bm, 'granite_moss', 'Main', smooth=True)
+
+
+def tag(o, kind):   # baked surface: 0 wood, 1 polished grip, 2 stone (bake_tg.py)
+    o['kind'] = kind; return o
+
+
 # ------------------------------------------------------------------ TG01 wooden training dummy (three-view option 3)
 def TG01():
-    """木人樁 (picked three-view option 3): a thick round hardwood post set in a ring of eight rough river stones; two upper
-    arms angled forward and out, one straight middle arm, one bent leg near the foot, all through square mortises with dark
-    iron plates; a band of hemp rope round the arm zone with a knot and a hanging tail; dents and splinters on the struck
-    front, a split from the top, a lashed splint repair on the side; the arm ends polished dark by hands; moss at the foot.
-    Front (the side you stand to train) is -Y."""
-    rg = random.Random(1401); R0, H = .155, 1.74
-    # post: lathe with many rings (cracks, dents), slightly irregular radius, rounded top
-    zs = list(np.linspace(.02, H - .03, 40))   # foot 2 cm up inside the core, not flush with the stones' beds
-    prof = [(R0 * (1.03 - .03 * z / H) * (1 + .015 * math.sin(z * 7.3)), z) for z in zs] + [(R0 * .96, H - .012), (R0 * .9, H), (R0 * .45, H + .004)]   # flat sawn top, worn edge
-    post = lathe('TG01_post', prof, 'beam', 'Main', seg=40)
+    """木人樁 (picked three-view option 3), v002 after the PR #119 review: a thick round post of split old wood (deep lengthwise
+    cracks and a split top as geometry; scanned old-wood surface baked on), set in a squat collar of fitted mossy stones; two
+    upper arms angled forward, one middle arm, one long bent leg reaching down toward the collar, square mortises with dark
+    iron plates; a wide band of hemp rope round the arm zone (many turns, knot and two tails at the back); a lashed patch of
+    five slats on the -X side; the arm and leg ends polished dark by hands; moss at the foot. Front (the trainee) is -Y."""
+    rg = random.Random(1401); R0, H = .165, 1.74
+    zs = list(np.linspace(.02, H - .03, 58))
+    prof = [(R0 * (1.03 - .03 * z / H) * (1 + .015 * math.sin(z * 7.3)), z) for z in zs] + [(R0 * .96, H - .012), (R0 * .9, H), (R0 * .45, H + .004)]
+    post = tag(lathe('TG01_post', prof, 'beam', 'Main', seg=56), 0)
     me = post.data; co = np.array([v.co[:] for v in me.vertices]); ang = np.arctan2(co[:, 1], co[:, 0]); rr = np.hypot(co[:, 0], co[:, 1])
     d = np.zeros(len(co))
-    for a0, z0, z1, depth in ((1.9, .2, 1.1, .03), (-.6, .45, 1.15, .024), (2.9, 1.25, H + .01, .05), (-2.3, .85, H + .01, .032)):   # vertical splits, two from the top
-        w = np.exp(-((np.angle(np.exp(1j * (ang - a0)))) / .085) ** 2); d += depth * w * ((co[:, 2] > z0) & (co[:, 2] < z1)) * np.clip((co[:, 2] - z0) / .1, 0, 1)
-    for q in range(9):   # dents on the struck front (-Y), between knee and chest height
+    # deep lengthwise cracks (the three-view's split old wood): some run most of the height, three open from the top
+    cracks = [(1.9, .15, 1.15, .035), (-.6, .4, 1.2, .03), (2.9, 1.0, H + .01, .055), (-2.3, .8, H + .01, .04), (.5, .1, .9, .028),
+              (-1.4, .25, 1.55, .032), (2.3, .3, .75, .025), (-2.9, .55, 1.4, .03), (1.2, 1.25, H + .01, .03)]
+    for a0, z0, z1, depth in cracks:
+        wdt = .06 + .03 * rg.random()
+        w = np.exp(-((np.angle(np.exp(1j * (ang - a0 - .04 * np.sin(co[:, 2] * 3.1)))) / wdt) ** 2))   # cracks wander a little
+        span = np.clip((co[:, 2] - z0) / .12, 0, 1) * np.clip((z1 - co[:, 2]) / .12, 0, 1)
+        d += depth * w * span
+    for q in range(11):   # dents on the struck front (-Y)
         a0 = -math.pi / 2 + rg.uniform(-.9, .9); z0 = rg.uniform(.75, 1.5); s = rg.uniform(.035, .06)
-        da = np.angle(np.exp(1j * (ang - a0))) * R0; dz = co[:, 2] - z0
-        d += rg.uniform(.012, .022) * np.exp(-(da ** 2 + dz ** 2) / s ** 2)
-    chip = np.exp(-((np.angle(np.exp(1j * (ang + 1.2)))) / .35) ** 4) * np.clip((co[:, 2] - (H - .09)) / .03, 0, 1)   # a chunk split off the top edge
-    d += .045 * chip
+        da = np.angle(np.exp(1j * (ang - a0))) * R0; dz = co[:, 2] - z0; d += rg.uniform(.012, .022) * np.exp(-(da ** 2 + dz ** 2) / s ** 2)
+    # split top: a V-shaped notch across the sawn face, plus a chunk off the edge
+    top = co[:, 2] > H - .02; xr = co[:, 0] / R0
+    co[top, 2] -= .06 * np.exp(-(xr[top] / .18) ** 2) * np.clip(1 - rr[top] / (R0 * 1.1), 0, 1) ** .3
+    d += .045 * np.exp(-((np.angle(np.exp(1j * (ang + 1.2)))) / .35) ** 4) * np.clip((co[:, 2] - (H - .09)) / .03, 0, 1)
     k = np.where(rr > 1e-4, (rr - d) / np.maximum(rr, 1e-4), 1)
     co[:, 0] *= k; co[:, 1] *= k; me.vertices.foreach_set('co', co.ravel()); me.update(); mc.reuv(post, 'beam', (0, 0, 1))
     def surf(a, z): return Vector((math.cos(a) * R0, math.sin(a) * R0, z))
-    # arms: two upper ones angled forward / out and slightly up, a straight middle one; polished ends
-    arms = [(-math.pi / 2 - .38, 1.36, .40, .06), (-math.pi / 2 + .38, 1.36, .40, .06), (-math.pi / 2, 1.13, .36, 0.0)]
+    def frame(a):
+        n_ = Vector((math.cos(a), math.sin(a), 0)); t_ = Vector((-math.sin(a), math.cos(a), 0))
+        return n_, t_, Matrix(((n_.x, t_.x, 0, 0), (n_.y, t_.y, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1)))
+    # arms
+    arms = [(-math.pi / 2 - .38, 1.36, .42, .06), (-math.pi / 2 + .38, 1.36, .42, .06), (-math.pi / 2, 1.06, .38, 0.0)]
     for i, (a, z, L, up) in enumerate(arms):
         dvec = Vector((math.cos(a), math.sin(a), up)).normalized(); P0 = Vector((math.cos(a) * .05, math.sin(a) * .05, z))
         mid = P0 + dvec * (R0 - .05 + L * .55); P1 = P0 + dvec * (R0 - .05 + L)
-        tube(f'TG01_arm{i}', [P0, P0 + dvec * (R0 - .04), mid], .036, 'beam', 'Main', sides=10, radii=[.036, .036, .034])
-        tube(f'TG01_armend{i}', [mid - dvec * .01, P1 - dvec * .02, P1], .033, 'tile', 'Main', sides=10, radii=[.034, .03, .018])
-        n_ = Vector((math.cos(a), math.sin(a), 0)); t_ = Vector((-math.sin(a), math.cos(a), 0))
-        plate = box(f'TG01_plate{i}', (.012, .085, .085), (0, 0, 0), 'bronze', 'Main', bev=.002, segs=1)
-        plate.data.transform(Matrix.Translation(surf(a, z) + n_ * .002) @ Matrix(((n_.x, t_.x, 0, 0), (n_.y, t_.y, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))))
-        for sg in (-1, 1):   # iron wedge either side of the arm
+        tag(tube(f'TG01_arm{i}', [P0, P0 + dvec * (R0 - .04), mid], .038, 'beam', 'Main', sides=12, radii=[.038, .038, .036]), 0)
+        tag(tube(f'TG01_armend{i}', [mid - dvec * .01, P1 - dvec * .02, P1], .035, 'tile', 'Main', sides=12, radii=[.036, .032, .019]), 1)
+        n_, t_, M = frame(a)
+        plate = box(f'TG01_plate{i}', (.012, .09, .09), (0, 0, 0), 'bronze', 'Main', bev=.002, segs=1); plate.data.transform(Matrix.Translation(surf(a, z) + n_ * .002) @ M)
+        for sg in (-1, 1):
             wd = box(f'TG01_wedge{i}{sg:+d}', (.03, .018, .022), (0, 0, 0), 'bronze', 'Main', bev=.002, segs=1)
-            wd.data.transform(Matrix.Translation(surf(a, z) + n_ * .012 + Vector((0, 0, sg * .05))) @ Matrix(((n_.x, t_.x, 0, 0), (n_.y, t_.y, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))))
-    # leg: out from the post, then bending down toward the ground
-    a = -math.pi / 2 + .12; n_ = Vector((math.cos(a), math.sin(a), 0)); z = .62
-    pts = [Vector((n_.x * .05, n_.y * .05, z)), surf(a, z) + n_ * .02, surf(a, z) + n_ * .17 + Vector((0, 0, -.03)), surf(a, z) + n_ * .25 + Vector((0, 0, -.14)), surf(a, z) + n_ * .27 + Vector((0, 0, -.34))]
-    tube('TG01_leg', pts[:4], .045, 'beam', 'Main', sides=10, radii=[.046, .046, .044, .042])
-    tube('TG01_legend', [pts[3] - (pts[3] - pts[2]).normalized() * .02, pts[4]], .04, 'tile', 'Main', sides=10, radii=[.041, .03])
-    t_ = Vector((-math.sin(a), math.cos(a), 0))
-    plate = box('TG01_plateL', (.012, .1, .1), (0, 0, 0), 'bronze', 'Main', bev=.002, segs=1)
-    plate.data.transform(Matrix.Translation(surf(a, z) + n_ * .002) @ Matrix(((n_.x, t_.x, 0, 0), (n_.y, t_.y, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))))
-    # rope band round the arm zone: a rope-textured sleeve, single turns at its edges, a knot with a hanging tail
-    zr0, zr1, Rr = 1.17, 1.33, R0 + .012
-    lathe('TG01_rope', [(R0 - .01, zr0), (Rr, zr0 + .006), (Rr + .004, (zr0 + zr1) / 2), (Rr, zr1 - .006), (R0 - .01, zr1)], 'cloth', 'Main', seg=28)
-    for j, zz in enumerate((zr0 + .008, zr1 - .008)):
-        ring = [Vector((math.cos(t) * (Rr + .006), math.sin(t) * (Rr + .006), zz + .004 * math.sin(3 * t))) for t in np.linspace(0, math.tau, 29)]
-        tube(f'TG01_turn{j}', ring, .013, 'cloth', 'Main', sides=6, caps=False)
-    ka = math.radians(-20); kn = Vector((math.cos(ka), math.sin(ka), 0)); kc = Vector((math.cos(ka) * (Rr + .02), math.sin(ka) * (Rr + .02), zr0 + .03))
-    lathe('TG01_knot', [(.008, -.03), (.024, -.02), (.03, 0), (.024, .02), (.008, .03)], 'cloth', 'Main', seg=10, center=(0, 0, 0)); kno = mc.parts[-1]
-    kno.data.transform(Matrix.Translation(kc) @ Matrix.Rotation(math.pi / 2, 4, 'Y'))
-    tail = [kc + kn * .01, kc + kn * .035 + Vector((0, 0, -.06)), kc + kn * .04 + Vector((.01, 0, -.16)), kc + kn * .03 + Vector((.02, .01, -.24))]
-    tube('TG01_tail', tail, .011, 'cloth', 'Main', sides=6, radii=[.012, .011, .01, .007])
-    # splint repair on the +X side: two slats lashed with rope
-    for j, da in enumerate((-.2, .2)):
-        aa = 0.0 + da; n_ = Vector((math.cos(aa), math.sin(aa), 0)); t_ = Vector((-math.sin(aa), math.cos(aa), 0))
-        sl = box(f'TG01_slat{j}', (.018, .055, .5), (0, 0, 0), 'oldwood', 'Main', bev=.004, segs=1)
-        sl.data.transform(Matrix.Translation(surf(aa, .72 + .02 * j) + n_ * .006) @ Matrix(((n_.x, t_.x, 0, 0), (n_.y, t_.y, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))))
-    for j, zz in enumerate((.55, .89)):
-        arc = [Vector((math.cos(t) * (R0 + .022), math.sin(t) * (R0 + .022), zz)) for t in np.linspace(-.55, .55, 11)]
-        arc = [Vector((math.cos(-.6) * (R0 - .01), math.sin(-.6) * (R0 - .01), zz))] + arc + [Vector((math.cos(.6) * (R0 - .01), math.sin(.6) * (R0 - .01), zz))]
-        tube(f'TG01_lash{j}', arc, .009, 'cloth', 'Main', sides=6)
-    # stone collar: eight rough stones in a ring round the foot, a dark core and packed earth between them
-    for j in range(8):
-        t = j / 8 * math.tau + rg.uniform(-.08, .08); rc = .27 + rg.uniform(-.01, .01); hh = .17 + rg.uniform(-.02, .03)
-        rubble_block(f'TG01_stone{j}', (.17 + rg.uniform(-.02, .02), .23 + rg.uniform(-.02, .03), hh), (math.cos(t) * rc, math.sin(t) * rc, hh / 2 - .012),   # sunk 12 mm: the chisel lifts the bed corners
-                     'granite_moss' if rg.random() < .5 else 'granite', 14000 + j, amt=.045, rot=t)
-    lathe('TG01_core', [(.30, .04), (.30, .105)], 'dark', 'Main', seg=16)   # bottom 1 cm up
-    for q in range(5):
-        t = rg.uniform(0, math.tau); tuft(f'Detail_Moss_TG01_{q}', rg, (math.cos(t) * .3, math.sin(t) * .3, .04), .9)   # against the stones
+            wd.data.transform(Matrix.Translation(surf(a, z) + n_ * .012 + Vector((0, 0, sg * .052))) @ M)
+    # leg (three-view: long and thick, out from the post at knee height, then bending down to just above the stone collar)
+    a = -math.pi / 2 + .12; n_, t_, M = frame(a); z = .66
+    pts = [Vector((n_.x * .05, n_.y * .05, z)), surf(a, z) + n_ * .02, surf(a, z) + n_ * .16 + Vector((0, 0, -.02)), surf(a, z) + n_ * .27 + Vector((0, 0, -.12)),
+           surf(a, z) + n_ * .31 + Vector((0, 0, -.30)), surf(a, z) + n_ * .32 + Vector((0, 0, -.40))]
+    tag(tube('TG01_leg', pts[:5], .052, 'beam', 'Main', sides=12, radii=[.054, .054, .052, .05, .048]), 0)
+    tag(tube('TG01_legend', [pts[4] - (pts[4] - pts[3]).normalized() * .02, pts[5]], .046, 'tile', 'Main', sides=12, radii=[.048, .034]), 1)
+    plate = box('TG01_plateL', (.012, .11, .11), (0, 0, 0), 'bronze', 'Main', bev=.002, segs=1); plate.data.transform(Matrix.Translation(surf(a, z) + n_ * .002) @ M)
+    # rope band: a wide wrap of hemp rope (eleven turns over a rope-textured sleeve), knot and two tails at the back (+Y)
+    zr0, zr1, Rr = 1.12, 1.42, R0 + .012
+    lathe('TG01_rope', [(R0 - .01, zr0), (Rr, zr0 + .006), (Rr + .004, (zr0 + zr1) / 2), (Rr, zr1 - .006), (R0 - .01, zr1)], 'cloth', 'Main', seg=32)
+    for j, zz in enumerate(np.linspace(zr0 + .012, zr1 - .012, 11)):
+        ring = [Vector((math.cos(t) * (Rr + .006), math.sin(t) * (Rr + .006), zz + .0035 * math.sin(3 * t + j))) for t in np.linspace(0, math.tau, 33)]
+        tube(f'TG01_turn{j}', ring, .0125, 'cloth', 'Main', sides=6, caps=False)
+    ka = math.radians(95); kn = Vector((math.cos(ka), math.sin(ka), 0)); kc = Vector((math.cos(ka) * (Rr + .022), math.sin(ka) * (Rr + .022), (zr0 + zr1) / 2 + .03))
+    lathe('TG01_knot', [(.008, -.035), (.026, -.024), (.034, 0), (.026, .024), (.008, .035)], 'cloth', 'Main', seg=10, center=(0, 0, 0)); kno = mc.parts[-1]
+    kno.data.transform(Matrix.Translation(kc) @ Matrix.Rotation(math.pi / 2, 4, 'X'))
+    for j, side in enumerate((-.4, .4)):
+        sv = Vector((-kn.y, kn.x, 0)) * side
+        tail = [kc + kn * .012, kc + kn * .03 + sv * .03 + Vector((0, 0, -.07)), kc + kn * .035 + sv * .05 + Vector((0, 0, -.18)), kc + kn * .028 + sv * .055 + Vector((0, 0, -.27 - .05 * j))]
+        tube(f'TG01_tail{j}', tail, .012, 'cloth', 'Main', sides=6, radii=[.013, .012, .011, .008])
+    # patch: five slats on the -X side (left edge in the three-view's front view, right edge in its back view), tops staggered, two double lashings
+    for j in range(5):
+        aa = math.pi + (j - 2) * .22; n_, t_, M = frame(aa); hgt = .6 - abs(j - 2) * .05 + rg.uniform(-.03, .03)
+        sl = tag(box(f'TG01_slat{j}', (.02, .062, hgt), (0, 0, 0), 'oldwood', 'Main', bev=.004, segs=1), 0)
+        sl.data.transform(Matrix.Translation(surf(aa, .38 + hgt / 2 + rg.uniform(-.02, .02)) + n_ * .008) @ M)
+    for j, zz in enumerate((.48, .86)):
+        arc = [Vector((math.cos(t) * (R0 + .03), math.sin(t) * (R0 + .03), zz)) for t in np.linspace(math.pi - .6, math.pi + .6, 13)]
+        arc = [Vector((math.cos(math.pi - .66) * (R0 - .01), math.sin(math.pi - .66) * (R0 - .01), zz))] + arc + [Vector((math.cos(math.pi + .66) * (R0 - .01), math.sin(math.pi + .66) * (R0 - .01), zz))]
+        for q in range(2): tube(f'TG01_lash{j}{q}', [p + Vector((0, 0, q * .022)) for p in arc], .009, 'cloth', 'Main', sides=6)
+    # stone collar: twelve fitted rough stones (the core team's SS01 stone) round the foot, packed earth core, moss
+    for j in range(12):
+        t = j / 12 * math.tau + rg.uniform(-.05, .05); rc = .285 + rg.uniform(-.012, .012); hh = .2 + rg.uniform(-.03, .04)
+        tag(rock(f'TG01_stone{j}', (math.cos(t) * rc, math.sin(t) * rc, 0), .2 + rg.uniform(-.02, .03), .17 + rg.uniform(-.015, .02), hh, 14000 + j, rot=t + math.pi / 2), 2)
+    lathe('TG01_core', [(.30, .04), (.30, .14)], 'dark', 'Main', seg=16)
+    for q in range(7):
+        t = rg.uniform(0, math.tau); tuft(f'Detail_Moss_TG01_{q}', rg, (math.cos(t) * (R0 + .03), math.sin(t) * (R0 + .03), .14), .9)   # at the post foot, on the collar
+    # bake the scanned wood / stone onto the tagged parts (bake_tg.py)
+    baked = [o for o in mc.parts if 'kind' in o.keys()]
+    for o in baked:
+        at = o.data.attributes.new('kind', 'FLOAT', 'POINT'); at.data.foreach_set('value', [float(o['kind'])] * len(o.data.vertices))
+    for o in baked: mc.parts.remove(o)
+    low = mc.join(baked, 'TG01_baked'); low['grp'] = 'Main'; mc.parts.append(low)
+    import bake_tg
+    hi = bake_tg.high_model(low); bake_tg.bake(low, hi, 'TG01', TEX, 1024); bpy.data.objects.remove(hi, do_unlink=True)
+    low.data.attributes.remove(low.data.attributes['kind'])
     socket('Socket_Front', (0, -.6, 0), (0, 0, 0))
-    cols = [('box', (0, 0, H / 2), (2 * R0 + .02, 2 * R0 + .02, H)), ('box', (0, 0, .1), (.72, .72, .2))]
-    return {'collision': cols, 'postHeight_m': H, 'postDiameter_m': round(2 * R0, 3),
+    cols = [('box', (0, 0, H / 2), (2 * R0 + .02, 2 * R0 + .02, H)), ('box', (0, 0, .11), (.74, .74, .22))]
+    return {'collision': cols, 'postHeight_m': H, 'postDiameter_m': round(2 * R0, 3), 'bakedSurface': 'Poly Haven bark_willow_02 (wood), mossy_rock (stone), CC0',
             'mount': 'origin at the post centre, z = 0 on the ground; the arms point to -Y (the trainee stands there, Socket_Front)'}
 
 # ------------------------------------------------------------------ build / LOD / export / info
@@ -193,6 +261,8 @@ def build(mid):
     lod0 = {}
     for g, objs in groups.items():
         lod0[g] = mc.join(objs, f'{tag}_LOD0' if g == 'Main' else f'{tag}_{g}_LOD0'); bpy.ops.object.select_all(action='DESELECT')
+    import bake_tg
+    for o in lod0.values(): bake_tg.open_zero_uv(o)   # QA: no zero-area UV faces (2 mm bevel strips on the trim sheet)
     T = {g: mc.tris(o) for g, o in lod0.items()}; tot = sum(T.values()); out = {}
     for lv, frac in ((1, .5), (2, .15)):
         for g, o in lod0.items():
@@ -215,14 +285,14 @@ def build(mid):
                              mesh_smooth_type='FACE', use_tspace=False, add_leaf_bones=False, bake_anim=False, path_mode='STRIP', embed_textures=False)
     lods = [{'lod': lv, 'triangles': sum(mc.tris(o) for o in d.values()), 'objects': len(d), 'materials': len({m.name for o in d.values() for m in o.data.materials})}
             for lv, d in ((0, lod0), (1, out[1]), (2, out[2]))]
-    info = {'id': mid, 'package': PACKAGE, 'author': 'A (Johnnnny0823)', 'version': 'v001',
+    info = {'id': mid, 'package': PACKAGE, 'author': 'A (Johnnnny0823)', 'version': 'v002',
             'status': 'Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗',
             'block': 'A1 演武場（設定圖 V1、V3）',
             'dimensions_m': [round(float(d), 3) for d in dims], 'bounds_min_m': [round(float(v), 3) for v in mn], 'bounds_max_m': [round(float(v), 3) for v in mx],
             'limit_m': list(lim), 'origin': meta.get('mount', ''), 'minTier': 'low', 'lods': lods,
             'objectsLOD0': [o.name for o in lod0.values()], 'detailObjects': [o.name for g, o in lod0.items() if g.startswith('Detail_')],
             'materials': sorted({m.name for o in lod0.values() for m in o.data.materials}),
-            'textures': {f'{SHEET_NAME}_{n}': '2048x2048' for n in ('Albedo', 'Normal', 'MetallicSmoothness', 'Emission')},
+            'textures': {**{f'{SHEET_NAME}_{n}': '2048x2048' for n in ('Albedo', 'Normal', 'MetallicSmoothness', 'Emission')}, **({f'T_{tag}_Baked_Albedo': '1024x1024', f'T_{tag}_Baked_Normal': '1024x1024'} if (TEX / f'T_{tag}_Baked_Albedo.png').exists() else {})},
             'textureNote': 'one training-yard trim sheet shared by TG01-TG06 (art/textures/training-yard-a, MC01 strip layout), 256 px/m',
             'sockets': [{'name': e.name, 'location_m': [round(x, 3) for x in e.location]} for e in SOCKETS],
             'collision': f'{tag}_Collision ({len(cols)} boxes)', 'extra': {k: v for k, v in meta.items() if k not in ('collision', 'mount')},
