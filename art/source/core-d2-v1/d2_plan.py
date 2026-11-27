@@ -862,6 +862,33 @@ if REAL:   # 神木、兩座拱門：樹皮加苔、提亮（設定圖的棕灰�
             if sl.material and not any(k_ in sl.material.name for k_ in ('Leaf', 'Fern', 'Vine', 'Moss', 'UG')):
                 mossify(sl.material, 1.4 if o in _ARS else 1.6, 3.0, reach=.15, lichen=(0 if 'nolichen' in argv else 1.0))   # 11/22 設定圖 V2、V6 拱門側面也有一條條苔
     mossify(M_BARKR, .75, 1.6)
+    if 'gtarchbark' in argv:   # 11/27 試了四版，z1nnz 選維持原本 → 預設關。11/26 z1nnz「我甚至覺得神樹也可以用拱門的材質」→ 神木樹幹改用 V2 拱門（DR01）的材質（含苔、地衣）
+        _am = next((s_.material for a_ in _ARS if a_.type == 'MESH' and 'Plants' not in a_.name for s_ in a_.material_slots if s_.material), None)
+        if _am:
+            _gta = _am.copy(); _gta.name = 'GT01_ArchBark'
+            _gn = _gta.node_tree
+            _gtc = _gn.nodes.new('ShaderNodeTexCoord'); _gmp = _gn.nodes.new('ShaderNodeMapping')
+            _gmp.inputs['Scale'].default_value = (1 / 5.5, 1 / 5.5, 1 / 8.5)   # 神木熔接後沒有 UV → 拱門的貼圖改用盒投影（沿樹幹拉長一點）。v2：2.2 m 一格紋路太碎、像花崗岩 → 放大 2.5 倍
+            for _hn in _gn.nodes:   # v2：拱門材質的提亮（mossify lift 3.0，配 Josh 偏暗的貼圖）放到神木上整棵發白 → 降到 2.0
+                if _hn.type == 'HUE_SAT' and abs(_hn.inputs['Value'].default_value - 3.0) < 1e-3:
+                    _hn.inputs['Value'].default_value = 2.0   # v4：v3 的 1.6 加上深溝後又太暗、拱門的灰褐感不見 → 回 2.0（v2 2.0 沒溝時偏白）
+            for _mn in _gn.nodes:   # v3：地衣小斑在神木這麼大的表面上變成整片灰點 → 減到約 1/3
+                if _mn.type == 'MIX_RGB' and tuple(round(c_, 2) for c_ in _mn.inputs[2].default_value[:3]) == (.66, .68, .61):
+                    _lk = _mn.inputs[0].links
+                    if _lk and _lk[0].from_node.type == 'MATH':
+                        _lk[0].from_node.inputs[1].default_value = .55   # v4：.35 幾乎看不到地衣
+            _MOSSED.discard(_gta.name)
+            mossify(_gta, 0.0, 1.0, furrow=True)   # v3：加回原本神木的縱向深溝（只要溝，不再加苔：amount 0），順便偏暖
+            _gn.links.new(_gtc.outputs['Object'], _gmp.inputs['Vector'])
+            for _tn in [n_ for n_ in _gn.nodes if n_.type == 'TEX_IMAGE']:
+                _tn.projection, _tn.projection_blend = 'BOX', .3
+                for _lk in list(_tn.inputs['Vector'].links):
+                    _gn.links.remove(_lk)
+                _gn.links.new(_gmp.outputs['Vector'], _tn.inputs['Vector'])
+            for _o in _GTO:
+                if _o.type == 'MESH' and 'Wood' in _o.name:
+                    _o.data.materials.clear(); _o.data.materials.append(_gta)
+            print('GODTREE arch bark', _am.name)
 
 # ---------------- 神木的地上根：往祭壇、往外放射 ----------------
 def root_ridge(a, b, r0, r1, m=M_ROOT, force=False, tube=False):
@@ -1872,13 +1899,18 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             if o_ is None:
                 continue
             sc.collection.objects.link(o_)
-            if o_.name.startswith('LG01_A'):   # v005 試放：往右移 0.8 m，不壓路邊
-                p0, p1 = _c5 - _f5 * 1.0 + _r5 * 4.2, _c5 + _f5 * 7.5 + _r5 * 3.2
+            _v5pos = 'lg01v5' in argv   # 11/26 z1nnz「這個移開好了，不要跟例圖一樣」→ 預設搬進 V5 鏡頭後方的林子（六張圖都看不到）；lg01v5 = 舊的 V5 右下位置
+            if o_.name.startswith('LG01_A'):
+                p0, p1 = (_c5 - _f5 * 1.0 + _r5 * 4.2, _c5 + _f5 * 7.5 + _r5 * 3.2) if _v5pos else (Vector((-52, -42)), Vector((-44.5, -38.5)))   # 西南林子：V2–V6 鏡頭都看不到（算過視角）
             else:
-                p0, p1 = _c5 + _f5 * 1.0 + _r5 * 6.4, _c5 + _f5 * 7.6 + _r5 * 4.8
-            for sl_ in o_.material_slots:   # 場景光比 Codex 的檢查圖亮 → 整根發白像水泥：壓暗、苔色拉飽和
+                p0, p1 = (_c5 + _f5 * 1.0 + _r5 * 6.4, _c5 + _f5 * 7.6 + _r5 * 4.8) if _v5pos else (Vector((-50, -46.5)), Vector((-44, -44.5)))
+            _archm = next((s_.material for a_ in _ARS if a_.type == 'MESH' and 'Plants' not in a_.name for s_ in a_.material_slots if s_.material), None)
+            if _archm and 'lg01own' not in argv:   # 11/26 z1nnz「顏色不對，材質直接照抄拱門」（他覺得 V2 拱門做得超好）→ 用 DR01 拱門的材質（含苔、地衣）
+                for sl_ in o_.material_slots:
+                    sl_.material = _archm
+            for sl_ in o_.material_slots:   # 舊：Codex 自己的材質在場景裡發白 → 壓暗、苔色拉飽和（lg01own 時才用）
                 m_ = sl_.material
-                if m_ and m_.use_nodes and 'lg01raw' not in argv:
+                if m_ and m_.use_nodes and 'lg01raw' not in argv and m_ is not _archm:
                     b_ = next((x_ for x_ in m_.node_tree.nodes if x_.type == 'BSDF_PRINCIPLED'), None)
                     if b_ and b_.inputs['Base Color'].links:
                         src_ = b_.inputs['Base Color'].links[0].from_socket
@@ -1889,6 +1921,7 @@ if REAL:   # V5 設定圖：支路兩旁各有幾條沿著路走的長根
             o_.rotation_euler = (0, 0, math.atan2(dd_.y, dd_.x))
             o_.location = (mid_.x, mid_.y, gh(mid_.x, mid_.y) - o_.dimensions.z * .15)
             globals().setdefault('_LOGS', []).append((Vector((p0.x, p0.y)), math.atan2(dd_.y, dd_.x), dd_.length, o_.dimensions.y / 2))
+            globals().setdefault('_LG01LOGS', []).append(globals()['_LOGS'][-1])   # 只拿 LG01 來清樹（其他倒木旁的樹不動，免得六張圖的樹變樣）
             print('LG01', o_.name, tuple(round(c, 1) for c in o_.location))
 
 # ---------------- 樹（三種新樹種＋古林巨木），依分區散佈 ----------------
@@ -2058,11 +2091,26 @@ if 'real' in argv and 'nov6fill' not in argv:   # 11/26 設定圖 V6：拱門後
         if _nv >= 34:
             break
     print('V6 FILL', _nv)
+def _on_log(x, y, pad=2.5):   # 11/26 樹幹穿過 LG01 倒木 → 倒木上和旁邊 2.5 m 不種樹
+    for p0_, a_, L_, r_ in globals().get('_LG01LOGS', []):
+        d_ = Vector((math.cos(a_), math.sin(a_))); v_ = Vector((x, y)) - p0_
+        t_ = max(0.0, min(L_, v_.dot(d_)))
+        if (v_ - d_ * t_).length < r_ + pad:
+            return True
+    return False
+
+
 for x, y, k, s in TREES:
     if 'real' in argv and (any(math.hypot(x - cx, y - cy) < (16 if k == 'G' else 8) for cx, cy in _CAMS) or math.hypot(x - ARCH_N[0], y - ARCH_N[1]) < (24 if k == 'G' else 12)):
         continue   # 真樹的樹冠比方塊寬，相機旁邊的樹拿掉，免得鏡頭被擋
     if 'real' in argv and y < 10 and path_d(x, y) < 13:   # 11/22 z1nnz 選了試做版
         continue   # 11/22 試做：V1 俯瞰前景那段路兩旁清出一條林間空帶，從上面看得到小路
+    if 'real' in argv and _on_log(x, y):   # 照樣種（亂數照用，其他樹才不會變樣），種完立刻刪掉
+        _n0 = set(sc.objects)
+        KIND[k](x, y, s)
+        for _o in set(sc.objects) - _n0:
+            bpy.data.objects.remove(_o, do_unlink=True)
+        continue
     KIND[k](x, y, s)
 if 'real' in argv:   # V6 北入口兩側的近景大樹
     # 11/22 V6 框景：右邊近處一棵粗幹老樹、左邊近處一棵黃綠闊葉樹，把拱門框在中間（設定圖 V6）
@@ -2686,6 +2734,11 @@ if 'real' in argv:
 # 1.75 m 人形尺（祭壇前）
 cyl((4, -6, gh(4, -6)), .22, .18, 1.75, mat('human', (.8, .1, .1))).hide_render = True
 
+if 'stats' in argv or 'export' in argv:   # 11/26 搬進 Unity：盤點／匯出（不算圖）
+    import os
+    exec(open('D:/chengtian/4-素材與快取/bark-sample/d2_unity_export.py', encoding='utf-8').read())
+    raise SystemExit(0)
+
 # ---------------- 燈光、霧、相機 ----------------
 w = bpy.data.worlds.new('W')
 sc.world = w
@@ -2887,6 +2940,8 @@ SHOTS = {
 }
 if ONLY and 'VM' in ONLY:   # 檢查用：神木根部近拍（看苔墊）
     SHOTS['VM'] = ((-10, 14, 2.2), (-22, 28, 1.0), 28, '神木根部近拍')
+if ONLY and 'VG' in ONLY:   # 檢查用：西南林子裡的 LG01 長倒木（11/26 搬出 V5）
+    SHOTS['VG'] = ((-40, -50, 1.8), (-48, -41.5, .4), 24, 'LG01 長倒木近拍')
 if ONLY and 'VL' in ONLY:   # 檢查用：林子裡那兩根 DR08 倒木（11/25 移出六張圖之後看不到）
     SHOTS['VL'] = ((7, 15, 1.9), (-.5, 22, .3), 24, 'DR08 倒木近拍')
 for k, (loc, tgt, lens, _) in SHOTS.items():
