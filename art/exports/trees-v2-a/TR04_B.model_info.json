@@ -13,43 +13,44 @@
  "windBaseMax": 0.05,
  "leanSide": "+X（樹幹和長枝斜向 +X）",
  "dimensions_m": [
-  8.875,
-  8.965,
-  10.104
+  8.661,
+  9.253,
+  10.589
  ],
  "bounds_min_m": [
-  -3.807,
-  -5.113,
+  -3.968,
+  -5.262,
   -0.322
  ],
  "bounds_max_m": [
-  5.068,
-  3.852,
-  9.782
+  4.693,
+  3.991,
+  10.267
  ],
  "origin": "樹幹底部中心，z = 0 是地面；根往下埋 0.3 m",
  "lods": [
   {
    "lod": 0,
-   "triangles": 55522,
+   "triangles": 56461,
    "materials": [
+    "M_TR04_B_Bark",
     "M_TreeV2_Bark_Maple",
     "M_TreeV2_Leaf"
    ]
   },
   {
    "lod": 1,
-   "triangles": 14599,
+   "triangles": 14600,
    "materials": [
-    "M_TreeV2_Bark_Maple",
+    "M_TR04_B_Bark",
     "M_TreeV2_Leaf"
    ]
   },
   {
    "lod": 2,
-   "triangles": 3900,
+   "triangles": 3899,
    "materials": [
-    "M_TreeV2_Bark_Maple",
+    "M_TR04_B_Bark",
     "M_TreeV2_Leaf"
    ]
   },
@@ -67,8 +68,8 @@
   "canopyAnchors": 16,
   "anchorsFrontWaterSide": 7,
   "anchorsBack": 9,
-  "twigStreams": 184,
-  "leavesLOD0": 11077,
+  "twigStreams": 219,
+  "leavesLOD0": 11071,
   "blossomsLOD0": 0,
   "leafVertices": 5
  },
@@ -77,6 +78,7 @@
   "uv2": "x = 風權重（主幹 0、主枝 0.05–0.3、次枝 0.3–0.55、垂枝 0.55–0.9、葉 0.9–1.0），y = 葉冠錨點相位"
  },
  "materials": [
+  "M_TR04_B_Bark",
   "M_TR04_B_Far",
   "M_TreeV2_Bark_Maple",
   "M_TreeV2_Leaf"
@@ -87,10 +89,19 @@
   0.95
  ],
  "textures": {
-  "T_TreeV2_Bark_Albedo": "1024x1024",
-  "T_TreeV2_Bark_Normal": "1024x1024",
-  "T_TR04_B_Far": "1024x512 (LOD3 only, alpha)"
+  "T_TreeV2_Bark_Albedo": "1024x1024（細枝）",
+  "T_TreeV2_Bark_Normal": "1024x1024（細枝）",
+  "T_TR04_B_Far": "1024x512 (LOD3 only, alpha)",
+  "T_TR04_B_Bark_Albedo": "2048x2048（樹幹與枝：Poly Haven bark_brown_02 掃描推進高模後烘焙）",
+  "T_TR04_B_Bark_Normal": "2048x2048"
  },
+ "barkScan": {
+  "set": "bark_brown_02",
+  "source": "https://polyhaven.com/a/bark_brown_02",
+  "license": "CC0",
+  "furrowDepth_m": "branch radius x 0.38, 0.004-0.11"
+ },
+ "seedSalt": null,
  "collision": "TR04_B_Collision（樹幹下段，8 邊管）",
  "seed": "zlib.crc32(\"TR04_B\")",
  "fbx": "art/exports/trees-v2-a/TR04_B.fbx",

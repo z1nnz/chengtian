@@ -93,6 +93,8 @@
   "T_TreeV2_Bark_Normal": "1024x1024",
   "T_TR09_C_Far": "1024x512 (LOD3 only, alpha)"
  },
+ "barkScan": null,
+ "seedSalt": null,
  "collision": "TR09_C_Collision（樹幹下段，8 邊管）",
  "seed": "zlib.crc32(\"TR09_C\")",
  "fbx": "art/exports/trees-v2-a/TR09_C.fbx",

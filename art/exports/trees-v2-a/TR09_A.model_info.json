@@ -93,6 +93,7 @@
   "T_TreeV2_Bark_Normal": "1024x1024",
   "T_TR09_A_Far": "1024x512 (LOD3 only, alpha)"
  },
+ "barkScan": null,
  "seedSalt": 1,
  "collision": "TR09_A_Collision（樹幹下段，8 邊管）",
  "seed": "zlib.crc32(\"TR09_A\")",

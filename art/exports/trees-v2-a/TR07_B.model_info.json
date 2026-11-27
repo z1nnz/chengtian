@@ -33,6 +33,7 @@
    "lod": 0,
    "triangles": 22150,
    "materials": [
+    "M_TR07_B_Bark",
     "M_TreeV2_Bark_Plum",
     "M_TreeV2_Leaf"
    ]
@@ -41,7 +42,7 @@
    "lod": 1,
    "triangles": 9342,
    "materials": [
-    "M_TreeV2_Bark_Plum",
+    "M_TR07_B_Bark",
     "M_TreeV2_Leaf"
    ]
   },
@@ -49,7 +50,7 @@
    "lod": 2,
    "triangles": 3899,
    "materials": [
-    "M_TreeV2_Bark_Plum",
+    "M_TR07_B_Bark",
     "M_TreeV2_Leaf"
    ]
   },
@@ -77,20 +78,30 @@
   "uv2": "x = 風權重（主幹 0、主枝 0.05–0.3、次枝 0.3–0.55、垂枝 0.55–0.9、葉 0.9–1.0），y = 葉冠錨點相位"
  },
  "materials": [
+  "M_TR07_B_Bark",
   "M_TR07_B_Far",
   "M_TreeV2_Bark_Plum",
   "M_TreeV2_Leaf"
  ],
  "barkTint": [
-  0.42,
-  0.36,
-  0.34
+  0.58,
+  0.5,
+  0.46
  ],
  "textures": {
-  "T_TreeV2_Bark_Albedo": "1024x1024",
-  "T_TreeV2_Bark_Normal": "1024x1024",
-  "T_TR07_B_Far": "1024x512 (LOD3 only, alpha)"
+  "T_TreeV2_Bark_Albedo": "1024x1024（細枝）",
+  "T_TreeV2_Bark_Normal": "1024x1024（細枝）",
+  "T_TR07_B_Far": "1024x512 (LOD3 only, alpha)",
+  "T_TR07_B_Bark_Albedo": "2048x2048（樹幹與枝：Poly Haven bark_brown_02 掃描推進高模後烘焙）",
+  "T_TR07_B_Bark_Normal": "2048x2048"
  },
+ "barkScan": {
+  "set": "bark_brown_02",
+  "source": "https://polyhaven.com/a/bark_brown_02",
+  "license": "CC0",
+  "furrowDepth_m": "branch radius x 0.38, 0.004-0.11"
+ },
+ "seedSalt": null,
  "collision": "TR07_B_Collision（樹幹下段，8 邊管）",
  "seed": "zlib.crc32(\"TR07_B\")",
  "fbx": "art/exports/trees-v2-a/TR07_B.fbx",

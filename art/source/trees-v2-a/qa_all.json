@@ -2,76 +2,75 @@
  "TR04_A": {
   "objects": {
    "TR04_A_LOD0": {
-    "tris": 57542,
+    "tris": 59125,
     "errors": [],
     "warnings": [
      "TR04_A_LOD0: ~100.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
-     "TR04_A_LOD0: duplicate verts=1582 loose verts=0",
+     "TR04_A_LOD0: duplicate verts=1942 loose verts=0",
      "asset lowest point z=-0.32 (not resting on ground plane z=0)"
     ],
-    "sec": 36.1
+    "sec": 28.7
    }
   },
   "reimport_dims": [
-   10.967,
-   9.814,
-   9.716
+   10.428,
+   10.134,
+   9.675
   ],
   "built_dims": [
-   10.967,
-   9.814,
-   9.716
+   10.428,
+   10.134,
+   9.675
   ],
   "reimport_error_m": 0.0
  },
  "TR04_B": {
   "objects": {
    "TR04_B_LOD0": {
-    "tris": 55522,
+    "tris": 56461,
     "errors": [],
     "warnings": [
      "TR04_B_LOD0: ~100.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
-     "TR04_B_LOD0: duplicate verts=1369 loose verts=0",
-     "hidden back-to-back faces: TR04_B_LOD0 (1 pairs) - delete to save tris",
+     "TR04_B_LOD0: duplicate verts=1547 loose verts=0",
      "asset lowest point z=-0.3221 (not resting on ground plane z=0)"
     ],
-    "sec": 31.2
+    "sec": 24.7
    }
   },
   "reimport_dims": [
-   8.875,
-   8.965,
-   10.104
+   8.661,
+   9.253,
+   10.589
   ],
   "built_dims": [
-   8.875,
-   8.965,
-   10.104
+   8.661,
+   9.253,
+   10.589
   ],
   "reimport_error_m": 0.0
  },
  "TR04_C": {
   "objects": {
    "TR04_C_LOD0": {
-    "tris": 58422,
+    "tris": 59883,
     "errors": [],
     "warnings": [
      "TR04_C_LOD0: ~100.0% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
-     "TR04_C_LOD0: duplicate verts=1761 loose verts=0",
+     "TR04_C_LOD0: duplicate verts=1959 loose verts=0",
      "asset lowest point z=-0.3171 (not resting on ground plane z=0)"
     ],
-    "sec": 36.4
+    "sec": 22.5
    }
   },
   "reimport_dims": [
-   10.924,
-   10.385,
-   8.718
+   11.248,
+   10.234,
+   9.204
   ],
   "built_dims": [
-   10.924,
-   10.385,
-   8.718
+   11.248,
+   10.234,
+   9.204
   ],
   "reimport_error_m": 0.0
  },
@@ -85,7 +84,7 @@
      "TR06_A_LOD0: duplicate verts=1414 loose verts=0",
      "asset lowest point z=-0.3234 (not resting on ground plane z=0)"
     ],
-    "sec": 35.8
+    "sec": 37.6
    }
   },
   "reimport_dims": [
@@ -111,7 +110,7 @@
      "hidden back-to-back faces: TR06_B_LOD0 (1 pairs) - delete to save tris",
      "asset lowest point z=-0.3295 (not resting on ground plane z=0)"
     ],
-    "sec": 36.5
+    "sec": 36.3
    }
   },
   "reimport_dims": [
@@ -136,7 +135,7 @@
      "TR06_C_LOD0: duplicate verts=1134 loose verts=0",
      "asset lowest point z=-0.3431 (not resting on ground plane z=0)"
     ],
-    "sec": 33.9
+    "sec": 38.7
    }
   },
   "reimport_dims": [
@@ -161,7 +160,7 @@
      "TR07_A_LOD0: duplicate verts=810 loose verts=0",
      "asset lowest point z=-0.3221 (not resting on ground plane z=0)"
     ],
-    "sec": 17.9
+    "sec": 8.9
    }
   },
   "reimport_dims": [
@@ -186,7 +185,7 @@
      "TR07_B_LOD0: duplicate verts=715 loose verts=0",
      "asset lowest point z=-0.3221 (not resting on ground plane z=0)"
     ],
-    "sec": 15.6
+    "sec": 8.1
    }
   },
   "reimport_dims": [
@@ -211,7 +210,7 @@
      "TR07_C_LOD0: duplicate verts=709 loose verts=0",
      "asset lowest point z=-0.3257 (not resting on ground plane z=0)"
     ],
-    "sec": 15.0
+    "sec": 7.3
    }
   },
   "reimport_dims": [
@@ -236,7 +235,7 @@
      "TR08_A_LOD0: duplicate verts=7903 loose verts=0",
      "asset lowest point z=-0.3204 (not resting on ground plane z=0)"
     ],
-    "sec": 233.7
+    "sec": 271.8
    }
   },
   "reimport_dims": [
@@ -261,7 +260,7 @@
      "TR08_B_LOD0: duplicate verts=5731 loose verts=0",
      "asset lowest point z=-0.3355 (not resting on ground plane z=0)"
     ],
-    "sec": 167.8
+    "sec": 211.9
    }
   },
   "reimport_dims": [
@@ -286,7 +285,7 @@
      "TR08_C_LOD0: duplicate verts=6983 loose verts=0",
      "asset lowest point z=-0.3292 (not resting on ground plane z=0)"
     ],
-    "sec": 201.5
+    "sec": 190.6
    }
   },
   "reimport_dims": [
@@ -311,7 +310,7 @@
      "TR09_A_LOD0: duplicate verts=1268 loose verts=0",
      "asset lowest point z=-0.3 (not resting on ground plane z=0)"
     ],
-    "sec": 20.8
+    "sec": 11.1
    }
   },
   "reimport_dims": [
@@ -336,7 +335,7 @@
      "TR09_B_LOD0: duplicate verts=1084 loose verts=0",
      "asset lowest point z=-0.3 (not resting on ground plane z=0)"
     ],
-    "sec": 18.6
+    "sec": 9.3
    }
   },
   "reimport_dims": [
@@ -361,7 +360,7 @@
      "TR09_C_LOD0: duplicate verts=1760 loose verts=0",
      "asset lowest point z=-0.3 (not resting on ground plane z=0)"
     ],
-    "sec": 27.1
+    "sec": 13.9
    }
   },
   "reimport_dims": [
