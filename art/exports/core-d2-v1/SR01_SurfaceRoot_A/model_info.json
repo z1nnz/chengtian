@@ -1,0 +1,196 @@
+{
+  "asset": "SR01_SurfaceRoot_A",
+  "version": "v002",
+  "minTier": "standard",
+  "detailObjects": [
+    "SR01_SurfaceRoot_A_Detail_Small"
+  ],
+  "name_zh": "地表盤根 A",
+  "slot": "D2_AncientTree_SurfaceRoot",
+  "note": "Surface root A, girth 0.44 m, half buried.",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 11478,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD1": {
+      "triangles": 5737,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD2": {
+      "triangles": 1720,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 1
+    }
+  },
+  "texture_resolution_px": {
+    "SR01_SurfaceRoot_A_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "SR01_SurfaceRoot_A_Metallic.png": [
+      1024,
+      1024
+    ],
+    "SR01_SurfaceRoot_A_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "SR01_SurfaceRoot_A_Normal.png": [
+      1024,
+      1024
+    ],
+    "SR01_SurfaceRoot_A_Roughness.png": [
+      1024,
+      1024
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "centre at ground level z = 0; trunk end -X; both ends dive under the ground",
+  "dimensions_m": [
+    5.4704,
+    2.4776,
+    0.6105
+  ],
+  "bounds_min_m": [
+    -2.7352,
+    -0.7841,
+    -0.0726
+  ],
+  "bounds_max_m": [
+    2.7352,
+    1.6935,
+    0.5379
+  ],
+  "size_limit_m": [
+    6.588,
+    6.720000000000001,
+    1.0
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        5.4704,
+        1.1372,
+        0.5349
+      ],
+      "min": [
+        -2.7352,
+        -0.468,
+        0.003
+      ],
+      "max": [
+        2.7352,
+        0.6692,
+        0.5379
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        4.0426,
+        2.4776,
+        0.5682
+      ],
+      "min": [
+        -2.0811,
+        -0.7841,
+        -0.0726
+      ],
+      "max": [
+        1.9615,
+        1.6935,
+        0.4955
+      ]
+    }
+  },
+  "lods": {
+    "Main": {
+      "LOD0": 5090,
+      "LOD1": 2544,
+      "LOD2": 762
+    },
+    "Detail_Small": {
+      "LOD0": 6388,
+      "LOD1": 3193,
+      "LOD2": 958
+    }
+  },
+  "lod_totals": {
+    "LOD0": 11478,
+    "LOD1": 5737,
+    "LOD2": 1720
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_SR01_SurfaceRoot_A_Main"
+  ],
+  "textures": [
+    "SR01_SurfaceRoot_A_BaseColor.png",
+    "SR01_SurfaceRoot_A_Metallic.png",
+    "SR01_SurfaceRoot_A_MetallicSmoothness.png",
+    "SR01_SurfaceRoot_A_Normal.png",
+    "SR01_SurfaceRoot_A_Roughness.png"
+  ],
+  "texture_size_px": 1024,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_SR01_SurfaceRoot_A_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "SR01_SurfaceRoot_A_BaseColor.png",
+        "Normal": "SR01_SurfaceRoot_A_Normal.png",
+        "MetallicSmoothness": "SR01_SurfaceRoot_A_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "SR01_SurfaceRoot_A_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "parts": {
+    "girth_m": 0.44,
+    "length_m": 4.3,
+    "buried": "both ends dive under z = 0"
+  },
+  "sockets_blender_xyz": {},
+  "sockets_fbx_reimport_xyz": {},
+  "fbx_objects": [
+    "SR01_SurfaceRoot_A.001",
+    "SR01_SurfaceRoot_A_Collision.001",
+    "SR01_SurfaceRoot_A_Detail_Small_LOD0.001",
+    "SR01_SurfaceRoot_A_Detail_Small_LOD1.001",
+    "SR01_SurfaceRoot_A_Detail_Small_LOD2.001",
+    "SR01_SurfaceRoot_A_LOD0.001",
+    "SR01_SurfaceRoot_A_LOD1.001",
+    "SR01_SurfaceRoot_A_LOD2.001"
+  ],
+  "glb": "SR01_SurfaceRoot_A_v002.glb",
+  "interface": {},
+  "modeling_method": "procedural mesh construction (art/source/core-d2-v1/d2_ground.py with village-houses-b fr_parts / cr_mats, the AL01 method); procedural stone, earth, bark, moss and leaf shaders baked to one atlas",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 175.9,
+        "median": 188.4,
+        "p90": 196.8,
+        "area_m2": 12.3
+      },
+      "inside_or_covered": null,
+      "atlas_px": 1024,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": null,
+  "reference": "art/references/core-d2-models-v1/ (AI three-view core-d2-models-v1/SR01/turnaround; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-houses-unity/ (local Unity batch check, not committed)",
+  "based_on": "Claude Code redo of Codex v001 (art/core-1113-co-ruins-v2), review docs/execution/2026-11-14/codex-v11-review-1.md"
+}
