@@ -1,0 +1,109 @@
+{
+ "id": "TR06_B",
+ "package": "docs/execution/2026-11-14/樹木重做-v2-分工.md（A：TR04／06／07／08／09 v002，TR06 先交樣品）",
+ "author": "A (Johnnnny0823)",
+ "version": "v002",
+ "status": "Exported; Imported: see README (Unity 6000.3.28f1 check); In-game Verified: 未驗",
+ "block": "A1 溪邊、A3",
+ "species": "垂柳",
+ "heightRange_m": [
+  8,
+  12
+ ],
+ "windBaseMax": 0.05,
+ "leanSide": "+X（樹幹和長枝斜向 +X），擺放時 +X 朝水面",
+ "dimensions_m": [
+  8.78,
+  8.253,
+  11.041
+ ],
+ "bounds_min_m": [
+  -3.386,
+  -4.18,
+  -0.33
+ ],
+ "bounds_max_m": [
+  5.395,
+  4.073,
+  10.711
+ ],
+ "origin": "樹幹底部中心，z = 0 是地面；根往下埋 0.3 m",
+ "lods": [
+  {
+   "lod": 0,
+   "triangles": 58391,
+   "materials": [
+    "M_TR06_B_Bark",
+    "M_TreeV2_Bark",
+    "M_TreeV2_Leaf"
+   ]
+  },
+  {
+   "lod": 1,
+   "triangles": 14600,
+   "materials": [
+    "M_TR06_B_Bark",
+    "M_TreeV2_Leaf"
+   ]
+  },
+  {
+   "lod": 2,
+   "triangles": 3899,
+   "materials": [
+    "M_TR06_B_Bark",
+    "M_TreeV2_Leaf"
+   ]
+  },
+  {
+   "lod": 3,
+   "triangles": 4,
+   "materials": [
+    "M_TR06_B_Far"
+   ]
+  }
+ ],
+ "structure": {
+  "culms": 0,
+  "mainLimbs": 6,
+  "canopyAnchors": 17,
+  "anchorsFrontWaterSide": 9,
+  "anchorsBack": 8,
+  "twigStreams": 199,
+  "leavesLOD0": 11853,
+  "blossomsLOD0": 0,
+  "leafVertices": 5
+ },
+ "vertexData": {
+  "colour": "RGB = 葉色（依樹冠內高度與內外連續混色），A = 樹冠遮蔽；樹皮 RGB 白、A = 根部遮蔽",
+  "uv2": "x = 風權重（主幹 0、主枝 0.05–0.3、次枝 0.3–0.55、垂枝 0.55–0.9、葉 0.9–1.0），y = 葉冠錨點相位"
+ },
+ "materials": [
+  "M_TR06_B_Bark",
+  "M_TR06_B_Far",
+  "M_TreeV2_Bark",
+  "M_TreeV2_Leaf"
+ ],
+ "barkTint": [
+  1,
+  1,
+  1
+ ],
+ "textures": {
+  "T_TreeV2_Bark_Albedo": "1024x1024（細枝）",
+  "T_TreeV2_Bark_Normal": "1024x1024（細枝）",
+  "T_TR06_B_Far": "1024x512 (LOD3 only, alpha)",
+  "T_TR06_B_Bark_Albedo": "2048x2048（樹幹與枝：Poly Haven bark_brown_02 掃描推進高模後烘焙）",
+  "T_TR06_B_Bark_Normal": "2048x2048"
+ },
+ "barkScan": {
+  "set": "bark_brown_02",
+  "source": "https://polyhaven.com/a/bark_brown_02",
+  "license": "CC0",
+  "furrowDepth_m": "branch radius x 0.38, 0.004-0.11"
+ },
+ "seedSalt": null,
+ "collision": "TR06_B_Collision（樹幹下段，8 邊管）",
+ "seed": "zlib.crc32(\"TR06_B\")",
+ "fbx": "art/exports/trees-v2-a/TR06_B.fbx",
+ "fps": "不寫（手機未實測）"
+}
