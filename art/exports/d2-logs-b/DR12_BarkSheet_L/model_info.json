@@ -1,0 +1,251 @@
+{
+  "asset": "DR12_BarkSheet_L",
+  "version": "v001",
+  "minTier": "standard",
+  "detailObjects": [],
+  "name_zh": "地上的大片剝落樹皮 L（長約 1.5 m，捲起成浪頭）",
+  "slot": "D2 古樹空地、林地路邊（工作包：樹皮與樹瘤共擺 20 處；V2、V6）",
+  "note": "從倒木剝下來、躺在地上的一大片樹皮：前段平貼地、兩側微翹成淺槽，後段往上捲、翻過來像浪頭；朝上的內面是淺奶油色的長條纖維、帶受潮深色斑，捲起的外側是深灰褐樹皮（板塊做在幾何上）、朝上處長苔；前端撕斷成一排長短不齊的纖維尖齒，捲起端內層纖維一縷縷垂下；厚度斷面三層：深色外皮、紅褐中層、淺色內皮。表面是 D2 倒木的分層手繪平鋪貼圖（DR08_Shared＋DR09 淺色新斷木），和 DR08／DR09 共用，不另出貼圖。",
+  "references": "art/references/DR12/v001/（Codex 依 D2 設定圖 V2、V6、V4 畫的三視圖、四分之三視圖、細節圖）",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 14588,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD1": {
+      "triangles": 6856,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 1
+    },
+    "LOD2": {
+      "triangles": 2200,
+      "objects": 1,
+      "objects_without_detail": 1,
+      "materials": 1
+    }
+  },
+  "texture_resolution_px": {
+    "DR08_Shared/Textures/DR08_Moss_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Moss_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_Bark_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Normal.png": [
+      1024,
+      1024
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)：看樹皮片的長邊；撕斷端在 -X、捲起端在 +X",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "底部中心：LOD0 外框 XY 的中心正下方的地面；z = 0 是地面，貼地的樹皮略陷進地面 1 cm",
+  "dimensions_m": [
+    1.4678,
+    0.8084,
+    0.653
+  ],
+  "bounds_min_m": [
+    -0.7339,
+    -0.4042,
+    -0.01
+  ],
+  "bounds_max_m": [
+    0.7339,
+    0.4042,
+    0.643
+  ],
+  "spec_check": {
+    "spec": "工作包 DR12：0.3–1.5 m（大片樹皮與樹瘤，共擺 20 處；BarkL 是其中最大的一種）",
+    "longest_m": 1.4678,
+    "in_range": true,
+    "curl_top_m": 0.643,
+    "curl_ratio": 0.438,
+    "curl_ok": true,
+    "note": "參考圖：前段平貼地、後段往上捲成浪頭；捲起高約為長的 0.35–0.55"
+  },
+  "lods": {
+    "LOD0": 14588,
+    "LOD1": 6856,
+    "LOD2": 2200,
+    "collision": 536
+  },
+  "lod_rule": "LOD 每級用同一組參數重建（不是 decimate），只換取樣密度：LOD0 [0.32, 0.8]、LOD1 [0.235, 0.52]、LOD2 [0.13, 0.31]（相對高模 150 × 96 格）",
+  "materials": [
+    "M_DR09_Layered"
+  ],
+  "objects_per_lod": 1,
+  "material_note": "M_DR09_Layered：YunJing/D2LayeredWood，DR08_Shared 的苔、褐腐、內壁、土、樹皮法線＋DR09_Shared 的樹皮顏色（偏橄欖深灰褐）與淺色新斷木（纖維那格），全部 1024，和 DR09 斷枝堆同一個材質",
+  "uv": {
+    "UV0": "UVMap：公尺 × 1.25（u 沿樹皮長向 = 原本的樹幹方向，v 橫向）",
+    "UV1": "Extra：x = 土的權重，y = 頂點 AO（1 = 不遮）",
+    "vertex_color": "RGBA = 苔、褐腐（受潮斑、紅褐中層）、撕裂纖維（淺色內皮）、內壁的權重；樹皮 = 1 − 其他權重總和"
+  },
+  "unity": {
+    "shader": "YunJing/D2LayeredWood（apps/game/Assets/YunJing/Runtime/D2Logs/D2LayeredWood.shader）",
+    "fibre_slot": "DR09_Shared/Textures/DR09_FreshWood_{Albedo,Normal}.png",
+    "bark_slot": "DR09_Shared/Textures/DR09_Bark_Albedo.png＋DR08_Shared/Textures/DR08_Bark_Normal.png",
+    "other_slots": "DR08_Shared/Textures/DR08_{Moss,Rot,Inner,Soil}_{Albedo,Normal}.png"
+  },
+  "collision": "DR12_BarkSheet_L_Collision：MeshCollider（convex off），renderer 關；同一組參數取樣 [0.1, 0.1] 重建的低模（536 面），捲起處擋得住、平段可以踩上去",
+  "sockets_blender_xyz": {},
+  "build_origin_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "review_cams_build_xyz": [
+    {
+      "name": "tq",
+      "from": [
+        -2.221,
+        -2.615,
+        1.593
+      ],
+      "at": [
+        0,
+        0,
+        0.225
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "side",
+      "from": [
+        0,
+        -3.255,
+        0.45
+      ],
+      "at": [
+        0,
+        0,
+        0.27
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "curl",
+      "from": [
+        1.394,
+        -1.321,
+        0.75
+      ],
+      "at": [
+        0.323,
+        0,
+        0.322
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "teeth",
+      "from": [
+        -1.394,
+        -0.807,
+        0.42
+      ],
+      "at": [
+        -0.47,
+        0,
+        0.05
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "end",
+      "from": [
+        -2.948,
+        -0.25,
+        0.55
+      ],
+      "at": [
+        0,
+        0,
+        0.225
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "top",
+      "from": [
+        0,
+        -0.3,
+        3.495
+      ],
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "lens_mm": 40
+    },
+    {
+      "name": "back",
+      "from": [
+        1.027,
+        2.661,
+        1.222
+      ],
+      "at": [
+        0,
+        0,
+        0.225
+      ],
+      "lens_mm": 40
+    }
+  ],
+  "ruler_build_xy": [
+    -1.184,
+    0.904
+  ],
+  "length_build_m": 1.468,
+  "external_assets": [
+    "樹皮法線、苔、褐腐、內壁、土：DR08_Shared（B 自製手繪平鋪貼圖，見 DR08 README）",
+    "樹皮顏色、淺色新斷木：DR09_Shared（Codex 畫，見 DR09 README）"
+  ],
+  "files_sha256": {
+    "DR12_BarkSheet_L_v001.fbx": "d55434c46df7f65387727f77d12fe8c704b0726418ad1c04129685f37271fc9e",
+    "DR12_BarkSheet_L_v001.glb": "30f02c224efb216647fb1852f46b3333a89859a07e45a0fa16b1c5c63f836e00"
+  }
+}

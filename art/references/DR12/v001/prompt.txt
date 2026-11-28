@@ -1,0 +1,23 @@
+Use your built-in image generation tool (image_gen) to make reference sheets for ONE 3D game asset family, and save the PNG files into ./out/ with the exact file names below. Use V2.png, V6.png and V4.png in this folder as the main input reference images for every generation: they show an ancient-tree forest with mossy giant roots, deep grey-brown furrowed bark with pale grey-green lichen, mossy boulders, ferns, a muddy path, fallen leaves, in mist. Match their bark, colours, moss and painting style exactly. Do not write any code other than what is needed to copy the generated files into ./out/.
+
+These sheets are for building a real-time 3D game model, so every feature must be a BIG, CLEAR, READABLE SHAPE that a modeller can copy, not fine painterly noise. Keep silhouettes simple and strong.
+
+The asset family: "DR12 large pieces of fallen bark and tree burls on the forest floor" (pieces that fell off the giant ancient trees), FIVE kinds, all lying on the ground:
+- Bark L: one big curled sheet of bark about 1.5 m long, 0.7 m wide, 4-6 cm thick, curved like a shallow half-pipe lying on its back (concave side up), one end curling up and over more strongly; ragged torn edges, one end snapped across.
+- Bark M: about 0.9 m long, curled into an almost closed tube (rolled up) at one end and flatter at the other, lying on its side.
+- Bark S: two or three small flat-ish broken pieces 0.3-0.5 m, slightly warped, one leaning on another.
+- Burl A (ground burl): a broken-off tree burl about 0.6-0.8 m across and 0.4 m tall, a lumpy rounded knob covered in bark with swirling, knotted bark grain and many small bumps, the broken bottom side showing pale wood, half sunk in the leaf litter.
+- Burl B (root burl): a burl about 0.5 m across grown ON a thick mossy root (show a short piece of the root, about 0.4 m thick and 1.2 m long, for context); the burl swells out of the root's side like a bulging knot with swirled bark.
+For all bark pieces:
+- OUTER face: deep grey-brown bark, 1-3 cm thick vertical ridges and furrows (same bark as the roots in V2), patches of pale grey-green lichen and a little dark olive moss on the upward parts.
+- INNER face: pale tan / cream fibrous inner bark with long stringy fibres running lengthwise and a few dark damp stains; this pale inner face must be clearly visible where the sheet curls.
+- The thick cross-section at the torn edges shows the layers: dark outer bark, a reddish-brown middle layer, the pale inner fibre.
+- Small leaf litter, a few fern fronds and moss around the pieces on damp dark soil.
+
+Files to make (each a separate generation, landscape, at least 1536x1024):
+1. out/DR12-threeview.png : the five kinds side by side, each shown in orthographic TOP view (above) and SIDE view (below), same scale, flat ground line, a small 1.75 m grey human silhouette for scale at the right. Plain light warm-grey background, even soft overcast lighting, no cast shadows on the background, no fog, no other trees, no text or labels.
+2. out/DR12-threequarter.png : the pieces lying on the forest floor beside a muddy path near the big roots, view from eye height 1.7 m about 4 m away, three-quarter view, overcast light, the same style as V6.
+3. out/DR12-detail.png : a sheet of three close-ups: (a) the curled edge of Bark L showing outer bark ridges, the layered torn cross-section and the pale fibrous inner face; (b) Burl A swirled knotted bark and its broken pale underside; (c) Burl B bulging out of the mossy root.
+
+Style: Eastern xianxia fantasy, hand-painted look 3D game concept art, low saturation, overcast. Not a photo.
+When finished, list the files in ./out/ with their pixel sizes.
