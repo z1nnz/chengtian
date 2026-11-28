@@ -44,6 +44,10 @@ namespace YunJing.Editor
     // (stops before it); PS02 broken bridge, up the stairs from both road ends, each stopped at its broken edge, and pushed sideways at
     // the balustrade on the deck; BT01 beacon tower, round the outside stair onto the paved top (feet 5.4 m), and pushed at the
     // standing wall from outside. Material slots for these come from model_info's materials (one to four atlases each).
+    // Work pack 2026-11-28 (B-150h batch A): VH04 street shop, its own walks: from the street up the step stone into the open right bay
+    // and across the shop floor to the back shelves; inside along the floor to the counter's end; along the front under the awning,
+    // stopped by the goods set out on the ground; pushed at both gables and the back wall from outside.
+    // Optional: -vhOnly <ID>[,<ID>] on the command line checks only those pieces (the rest of the kit is unchanged).
     // Writes artifacts/village-houses-unity/. Run with -executeMethod YunJing.Editor.VillageHousesModelCheck.Run
     // This is an editor batch check, not play in the game: nothing is placed in the main scene.
     public static class VillageHousesModelCheck
@@ -54,7 +58,7 @@ namespace YunJing.Editor
         static bool Road(string id) => RoadKit.Any(k => id.StartsWith(k));
         static string Exports(string id) => Path.Combine(Repo, "art", "exports", Road(id) ? "roadside-landmarks-b" : id.StartsWith("RS") ? "village-reskin-b" : "village-houses-b");
         static string Out => Path.Combine(Repo, "artifacts", "village-houses-unity");
-        static readonly string[] Wanted = { "VL01_LongEmptyHouse", "VL02_MovedInHouse", "VL03_HalfCollapsedHouse", "VL04_DiligentFamilyHouse", "VL05_ElderlyCoupleHouse", "VH01_TwoStoreyHouse", "VH02_LCourtyardHouse", "VH03_NarrowCottage", "RS01_TownInn", "RS02_Blacksmith", "RS02_MaterialShop", "RS03_SectGate", "LT01_VillageStoneLantern",
+        static readonly string[] Wanted = { "VL01_LongEmptyHouse", "VL02_MovedInHouse", "VL03_HalfCollapsedHouse", "VL04_DiligentFamilyHouse", "VL05_ElderlyCoupleHouse", "VH01_TwoStoreyHouse", "VH02_LCourtyardHouse", "VH03_NarrowCottage", "VH04_StreetShop", "RS01_TownInn", "RS02_Blacksmith", "RS02_MaterialShop", "RS03_SectGate", "LT01_VillageStoneLantern",
                                             "PS01_OldPostStation", "BS01_BoundaryStone", "FS01_FieldShrine", "RI04_Scarecrow_A", "RI04_Scarecrow_B", "FE04_NetRackMooring", "PS02_BrokenBridge", "BT01_OldBeaconTower" };
         static string[] Slots(string id) => id.StartsWith("LT") ? new[] { "Main" } : id.StartsWith("RS") ? new[] { "Main", "Stone", "Wood", "Tile" } : new[] { "Main", "Stone", "Wood", "RoofTiles" };
         static readonly List<string> Report = new List<string>();
@@ -97,6 +101,8 @@ namespace YunJing.Editor
             if (Directory.Exists(Out)) Directory.Delete(Out, true);
             Directory.CreateDirectory(Out);
             var ids = Wanted.Where(i => File.Exists(Path.Combine(Exports(i), i, "model_info.json"))).ToArray();
+            var args = Environment.GetCommandLineArgs(); int oi = Array.IndexOf(args, "-vhOnly");
+            if (oi >= 0 && oi + 1 < args.Length) { var only = args[oi + 1].Split(','); ids = ids.Where(only.Contains).ToArray(); }
             Report.Add("INFO checked: " + string.Join(", ", ids.Select(i => $"{i} {Info(i).version}")) + "; not exported yet: " + string.Join(", ", Wanted.Except(ids)));
             foreach (var id in ids) Copy(id);
             AssetDatabase.Refresh();
@@ -117,7 +123,7 @@ namespace YunJing.Editor
                 var foot = new Vector3(at.x, 0, at.z); feet[id] = foot;
                 bool ps = id.StartsWith("PS01"), prop = Road(id) && !ps;
                 bool vh = id.StartsWith("VH"), rs = id.StartsWith("RS");
-                bool court = id.StartsWith("VH02_"), lane = id.StartsWith("VH03_"), lt = id.StartsWith("LT");
+                bool court = id.StartsWith("VH02_"), lane = id.StartsWith("VH03_"), shop = id.StartsWith("VH04_"), lt = id.StartsWith("LT");
                 if (lt) LanternChecks(id, go, foot);
                 else if (ps) PsWalks(id, foot);
                 else if (id.StartsWith("PS02")) BridgeWalks(id, foot);
@@ -125,6 +131,7 @@ namespace YunJing.Editor
                 else if (prop) FrontPush(id, foot);
                 else if (court) CourtWalks(id, foot);
                 else if (lane) LaneWalks(id, foot);
+                else if (shop) ShopWalks(id, foot);
                 else if (vh) { VhDoor(id, foot); VhAlong(id, foot); VhWalls(id, foot); }
                 else if (!rs) { UpTheSteps(id, foot); Walls(id, foot); }
                 else if (Info(id).collision) RsWalks(id, foot);
@@ -163,8 +170,8 @@ namespace YunJing.Editor
                     }
                 }
                 // where the player stands at the door (VL / VH / RS); PS01: before the open stall; the road props have no door
-                var on = prop ? null : Person(foot + (ps ? new Vector3(3.6f, .02f, -.7f) : rs ? new Vector3(8.3f, 0, 0) : court ? new Vector3(.1f, .4f, .8f) : lane ? new Vector3(2.15f, .125f, -.9f) : vh ? new Vector3(-.6f, .14f, -2.62f) : new Vector3(-.6f, .54f, -3.1f)));
-                var dc = prop ? c : foot + (ps ? new Vector3(3.6f, 1.2f, 1.2f) : rs ? new Vector3(7.6f, 1.6f, 0) : court ? new Vector3(.6f, 1.6f, .5f) : lane ? new Vector3(1.9f, 1.3f, -1.2f) : vh ? new Vector3(0, 1.6f, -2.8f) : new Vector3(0, 1.4f, -3.2f));
+                var on = prop ? null : Person(foot + (ps ? new Vector3(3.6f, .02f, -.7f) : rs ? new Vector3(8.3f, 0, 0) : court ? new Vector3(.1f, .4f, .8f) : lane ? new Vector3(2.15f, .125f, -.9f) : shop ? new Vector3(1.9f, .3f, -.55f) : vh ? new Vector3(-.6f, .14f, -2.62f) : new Vector3(-.6f, .54f, -3.1f)));
+                var dc = prop ? c : foot + (ps ? new Vector3(3.6f, 1.2f, 1.2f) : rs ? new Vector3(7.6f, 1.6f, 0) : court ? new Vector3(.6f, 1.6f, .5f) : lane ? new Vector3(1.9f, 1.3f, -1.2f) : shop ? new Vector3(.2f, 1.5f, -.6f) : vh ? new Vector3(0, 1.6f, -2.8f) : new Vector3(0, 1.4f, -3.2f));
                 if (id.StartsWith("RS01_")) Shot(id + "_street_side", dc, dc + new Vector3(1, .25f, -.55f).normalized * 9f, 40);
                 if (id.StartsWith("RS02_Blacksmith")) { var fa = foot + new Vector3(-.6f, .8f, .1f); Shot(id + "_forge_anvil", fa, fa + new Vector3(.6f, .35f, -1).normalized * 4.6f, 40); ForgeGlow(id); ForgeLight(id, go); }
                 if (id.StartsWith("RS03_")) { var pq = foot + new Vector3(0, 3.6f, -.5f); Shot(id + "_plaque", pq, pq + new Vector3(.3f, -.45f, -1).normalized * 6f, 40); }
@@ -193,6 +200,13 @@ namespace YunJing.Editor
                     Shot(id + "_lane_gable", gab, gab + new Vector3(.3f, .1f, -1).normalized * 7f, 40);
                     var sh = foot + new Vector3(.6f, 1.0f, 3.0f);
                     Shot(id + "_shed", sh, sh + new Vector3(1, .3f, .25f).normalized * 4.5f, 45);
+                }
+                else if (shop)
+                {
+                    var st = foot + new Vector3(.3f, 2.0f, -.8f);
+                    Shot(id + "_street_eye_1p7", st, foot + new Vector3(9.5f, 1.7f, -6.5f), 40);
+                    var inside = foot + new Vector3(0, 1.2f, 1.0f);
+                    Shot(id + "_shop_inside", inside, foot + new Vector3(.9f, 1.6f, -4.2f), 55);
                 }
                 else if (vh)
                 {
@@ -765,6 +779,33 @@ namespace YunJing.Editor
                 ("inside the shed towards the back, stopped by the firewood stack",
                     new Vector3(.5f, .02f, 2.55f), Vector3.forward, 200, (p, f) => p.z < 3.33f - .2f && p.z > 3.33f - .35f && f.y < .05f),
                 ("pushed at the shed's back from outside", new Vector3(0f, .02f, 6.5f), Vector3.back, 200, (p, f) => p.z > 4.05f + .2f && p.z < 4.05f + .35f && f.y < .05f),
+            };
+            foreach (var t in tests)
+            {
+                cc.transform.position = o + t.start; Physics.SyncTransforms();
+                var feet = Stroll(cc, o, t.dir, t.n); var end = cc.transform.position - o;
+                Check(t.ok(end, feet), $"{id}: a walker {t.what} (end x {end.x:F2}, z {end.z:F2} m, feet {feet.x:F3}-{feet.y:F3} m)");
+            }
+            UnityEngine.Object.DestroyImmediate(cc.gameObject);
+        }
+
+        // VH04 (Unity x, up, z = Blender x, z, y): plinth and shop floor x -3.12..3.12, z -1.65..2.37, top 0.3 m; step stone x 1.35..2.45,
+        // z -2.01..-1.65, top 0.15 m; back shelves' front z 1.48 (x -2.03..-0.63 and 0.63..2.68); counter x -0.89..0.89, z -1.06..-0.46;
+        // goods on the ground x -0.9..1.15, z -2.25..-1.65; gables' outer faces x -/+3.12 (with the footing), back z 2.37.
+        static void ShopWalks(string id, Vector3 o)
+        {
+            Physics.SyncTransforms(); var cc = Walker();
+            var tests = new List<(string what, Vector3 start, Vector3 dir, int n, Func<Vector3, Vector2, bool> ok)>
+            {
+                ("from the street up the step stone into the open right bay and across the floor to the back shelves (feet on the 0.3 m floor)",
+                    new Vector3(1.9f, .02f, -4.5f), Vector3.forward, 420, (p, f) => p.z < 1.48f - .2f && p.z > 1.48f - .4f && Mathf.Abs(p.y - .3f) < .03f),
+                ("inside on the shop floor towards the counter, stopped at its end",
+                    new Vector3(1.9f, .32f, -.75f), Vector3.left, 200, (p, f) => p.x > .89f + .2f && p.x < .89f + .38f && Mathf.Abs(p.y - .3f) < .03f),
+                ("along the shop front under the awning, stopped by the goods on the ground",
+                    new Vector3(-4.6f, .02f, -2.1f), Vector3.right, 300, (p, f) => p.x < -.9f - .2f && p.x > -.9f - .38f && f.y < .05f),
+                ("pushed at the west gable from outside", new Vector3(-5.5f, .02f, .5f), Vector3.right, 220, (p, f) => p.x < -3.12f - .2f && p.x > -3.12f - .38f && f.y < .05f),
+                ("pushed at the east gable from outside", new Vector3(5.5f, .02f, 1.2f), Vector3.left, 220, (p, f) => p.x > 3.12f + .2f && p.x < 3.12f + .38f && f.y < .05f),
+                ("pushed at the back wall from outside", new Vector3(1.5f, .02f, 5.5f), Vector3.back, 220, (p, f) => p.z > 2.37f + .2f && p.z < 2.37f + .38f && f.y < .05f),
             };
             foreach (var t in tests)
             {

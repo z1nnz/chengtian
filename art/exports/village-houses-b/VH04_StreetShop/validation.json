@@ -1,0 +1,264 @@
+{
+  "asset": "VH04_StreetShop",
+  "checks": [
+    {
+      "check": "footprint_within_limit",
+      "pass": true,
+      "detail": {
+        "min": [
+          -3.3821,
+          -2.9797,
+          0.0
+        ],
+        "max": [
+          3.3821,
+          2.862,
+          5.8842
+        ],
+        "box_m": [
+          [
+            -3.5,
+            -3.0,
+            0.0
+          ],
+          [
+            3.5,
+            3.0,
+            6.5
+          ]
+        ]
+      }
+    },
+    {
+      "check": "base_at_z0",
+      "pass": true,
+      "detail": {
+        "min_z": 0.0,
+        "design_min_z": 0.0,
+        "largest_clamp_m": 0.01006
+      }
+    },
+    {
+      "check": "ridge_along_street",
+      "pass": true,
+      "detail": {
+        "ridge_top_m": [
+          5.78,
+          5.771,
+          5.78
+        ],
+        "roof_over_front_and_back_m": [
+          4.057,
+          3.819
+        ]
+      }
+    },
+    {
+      "check": "shop_front_open",
+      "pass": true,
+      "detail": {
+        "right_bay_first_hit_y_m": 1.95,
+        "over_counter_first_hit_y_m": 2.125,
+        "corner_post_y_m": -1.541,
+        "post_line_y_m": -1.35
+      }
+    },
+    {
+      "check": "counter_and_raised_floor",
+      "pass": true,
+      "detail": {
+        "counter_top_m": 1.2,
+        "floor_m": 0.3,
+        "counter_over_floor_m": 0.9
+      }
+    },
+    {
+      "check": "awning_under_eave",
+      "pass": true,
+      "detail": {
+        "awning_top_at_y-2.3_m": [
+          2.756,
+          2.732,
+          2.76
+        ],
+        "first_hit_at_y-2.6_m": 2.65
+      }
+    },
+    {
+      "check": "shop_boards_stacked",
+      "pass": true,
+      "detail": {
+        "board_face_y_m_at_1m": -1.654,
+        "post_line_y_m": -1.35
+      }
+    },
+    {
+      "check": "collision_walls_closed_front_open",
+      "pass": true,
+      "detail": {
+        "collision_faces_m": {
+          "west": -3.12,
+          "east": 3.12,
+          "back": 2.37
+        },
+        "floor_inside_right_bay_m": 0.3,
+        "right_bay_first_collision_y_m": 1.49
+      }
+    },
+    {
+      "check": "lod_ratios_50_15",
+      "pass": true,
+      "detail": {
+        "triangles": {
+          "LOD0": 123968,
+          "LOD1": 61983,
+          "LOD2": 18081
+        },
+        "LOD1": 0.5,
+        "LOD2": 0.146,
+        "per_group": {
+          "Stone": {
+            "LOD0": 9340,
+            "LOD1": 4670,
+            "LOD2": 1400
+          },
+          "Wood": {
+            "LOD0": 17976,
+            "LOD1": 8988,
+            "LOD2": 2696
+          },
+          "Main": {
+            "LOD0": 36428,
+            "LOD1": 18214,
+            "LOD2": 5464
+          },
+          "Detail_Small": {
+            "LOD0": 39104,
+            "LOD1": 19551,
+            "LOD2": 5865
+          },
+          "Roof": {
+            "LOD0": 21120,
+            "LOD1": 10560,
+            "LOD2": 2656
+          }
+        }
+      }
+    },
+    {
+      "check": "fbx_reimport_dimensions",
+      "pass": true,
+      "detail": {
+        "fbx_lod0_dims_m": [
+          6.7642,
+          5.8417,
+          5.8842
+        ],
+        "blend_dims_m": [
+          6.7642,
+          5.8417,
+          5.8842
+        ],
+        "tolerance_m": 0.02,
+        "max_error_m": 4e-05
+      }
+    },
+    {
+      "check": "fbx_has_lod0_1_2",
+      "pass": true,
+      "detail": [
+        "Socket_Awning_Under.001",
+        "Socket_BackDoor.001",
+        "Socket_Counter.001",
+        "Socket_Shelf_0.001",
+        "Socket_Shelf_1.001",
+        "Socket_Shelf_2.001",
+        "Socket_Shelf_3.001",
+        "Socket_ShopFront.001",
+        "Socket_Table.001",
+        "VH04_StreetShop.001",
+        "VH04_StreetShop_Collision.001",
+        "VH04_StreetShop_Detail_Small_LOD0.001",
+        "VH04_StreetShop_Detail_Small_LOD1.001",
+        "VH04_StreetShop_Detail_Small_LOD2.001",
+        "VH04_StreetShop_LOD0.001",
+        "VH04_StreetShop_LOD1.001",
+        "VH04_StreetShop_LOD2.001"
+      ]
+    },
+    {
+      "check": "fbx_sockets",
+      "pass": true,
+      "detail": {
+        "Socket_Awning_Under.001": [
+          -0.2,
+          -2.13,
+          0.0
+        ],
+        "Socket_BackDoor.001": [
+          0.0,
+          2.25,
+          0.3
+        ],
+        "Socket_Counter.001": [
+          0.0,
+          -0.76,
+          1.2
+        ],
+        "Socket_Shelf_0.001": [
+          1.6,
+          1.73,
+          0.495
+        ],
+        "Socket_Shelf_1.001": [
+          1.6,
+          1.73,
+          1.145
+        ],
+        "Socket_Shelf_2.001": [
+          1.6,
+          1.73,
+          1.795
+        ],
+        "Socket_Shelf_3.001": [
+          1.6,
+          1.73,
+          2.445
+        ],
+        "Socket_ShopFront.001": [
+          1.98,
+          -2.05,
+          0.0
+        ],
+        "Socket_Table.001": [
+          -1.875,
+          -0.75,
+          0.92
+        ]
+      }
+    },
+    {
+      "check": "fbx_collision",
+      "pass": true,
+      "detail": "collision mesh present"
+    },
+    {
+      "check": "glb_written",
+      "pass": true,
+      "detail": {
+        "bytes": 12406640
+      }
+    },
+    {
+      "check": "ten_views_rendered",
+      "pass": true,
+      "detail": "orthographic, framing asserted per view"
+    }
+  ],
+  "all_pass": true,
+  "seconds": 345,
+  "not_checked": [
+    "in-engine lighting and walking (see the Unity report)",
+    "mobile frame rate (not measured)"
+  ]
+}

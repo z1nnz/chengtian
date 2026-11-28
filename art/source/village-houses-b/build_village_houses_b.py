@@ -25,7 +25,7 @@ sys.path.insert(0, str(HERE))
 import numpy as np
 from mathutils import Vector, Matrix
 import ti_core, ti_mats, ti_pipeline as pl
-import vl_house, vl_roof, vh_house, vh_court, vh_lane, lt_lantern
+import vl_house, vl_roof, vh_house, vh_court, vh_lane, vh_shop, lt_lantern
 from ti_core import S
 
 KIT = 'village-houses-b'
@@ -39,6 +39,7 @@ vl_house.register(ASSETS)
 vh_house.register(ASSETS)   # work pack 2026-11-09 B-112h batch A: VH01..
 vh_court.register(ASSETS)   # VH02
 vh_lane.register(ASSETS)    # VH03
+vh_shop.register(ASSETS)    # VH04 (work pack 2026-11-28 B-150h)
 lt_lantern.register(ASSETS) # LT01 (village-gate stone lantern, one 1024 atlas)
 
 
@@ -246,8 +247,18 @@ def export_glb(path):
     bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True, export_yup=True, export_apply=True, export_image_format='JPEG', export_jpeg_quality=88)
 
 
+def empty_scene():
+    """Start from an empty scene without read_factory_settings (it resets the preferences and drops the installed extensions)."""
+    for o in list(bpy.data.objects): bpy.data.objects.remove(o, do_unlink=True)
+    for coll in (bpy.data.meshes, bpy.data.materials, bpy.data.images, bpy.data.node_groups, bpy.data.cameras, bpy.data.lights, bpy.data.worlds):
+        for d in list(coll): coll.remove(d)
+    for c in list(bpy.data.collections): bpy.data.collections.remove(c)
+    for sc in list(bpy.data.scenes)[1:]: bpy.data.scenes.remove(sc)
+    bpy.context.scene.world = bpy.data.worlds.new('World')
+
+
 def build(aid):
-    bpy.ops.wm.read_factory_settings(use_empty=True)
+    empty_scene()
     scene = bpy.context.scene; scene.unit_settings.system = 'METRIC'; scene.unit_settings.scale_length = 1
     bpy.context.preferences.filepaths.save_version = 0
     ti_mats.MAT_INFO.clear(); ti_core.reset_state(aid)
@@ -458,6 +469,7 @@ from vl_checks import *   # noqa: F401,F403  house_checks, texel_density
 from vh_house import vhouse_checks   # noqa: F401
 from vh_court import vcourt_checks   # noqa: F401
 from vh_lane import vlane_checks   # noqa: F401
+from vh_shop import vshop_checks   # noqa: F401
 from lt_lantern import lantern_checks   # noqa: F401
 
 

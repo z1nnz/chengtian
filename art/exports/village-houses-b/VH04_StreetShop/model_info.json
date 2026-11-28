@@ -1,0 +1,456 @@
+{
+  "asset": "VH04_StreetShop",
+  "version": "v001",
+  "minTier": "standard",
+  "detailObjects": [
+    "VH04_StreetShop_Detail_Small"
+  ],
+  "name_zh": "臨街店屋",
+  "slot": "A1_QingxiVillage_StreetShop",
+  "note": "臨街店屋（概念圖 2 右邊的主角、概念圖 1）：7 × 6 m 地塊上的單層高屋加閣樓，屋脊順著街，長邊屋簷朝街，兩側是山牆。臨街一面整面敞開：四根方柱（三開間）托一根粗額枋，枋下有插門板的槽、地上一道有槽的木門檻，枋上到屋面用木板封起。拆下的門板（5 片）一排立在左前角柱和額枋前，下端往街外撇。店內地面比街高一級（0.3 m，石砌邊），中間一間是櫃台，左間一張矮貨桌，後牆四層貨架、兩側山牆各一座兩層貨架，放陶罐、竹籃、布匹和木盒；頭頂看得到閣樓樓板的楞木，左後角一把竹梯上閣樓。前簷下伸出一片褪色帆布篷，前端綁在竹竿橫桿上、由兩根竹竿撐著，中間下垂，外緣一道花邊垂簾，縫了一塊深色補丁。山牆是石灰泥加亂石牆腳、轉角木柱與腰枋橫平豎直（沒有斜撐），下面一扇直欞窗、上面一扇閣樓小窗；後牆一扇木板門（關著）和一扇窗。屋頂用 VL 的筒瓦與板瓦，屋脊兩端低調起翹，後坡和山牆邊長苔。碰撞：石基與店內地面（比街高一級）、兩側山牆、後牆、額枋以上整塊、兩根中柱、櫃台、貨桌、貨架、地上的大缸、竹梯、門板、布篷竹竿、牆角陶缸；店面敞開可以走進去。",
+  "budget_per_lod": {
+    "LOD0": {
+      "triangles": 123968,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 4
+    },
+    "LOD1": {
+      "triangles": 61983,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 4
+    },
+    "LOD2": {
+      "triangles": 18081,
+      "objects": 2,
+      "objects_without_detail": 1,
+      "materials": 4
+    }
+  },
+  "texture_resolution_px": {
+    "VH04_StreetShop_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Metallic.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Normal.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Roughness.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Stone_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Stone_Metallic.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Stone_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Stone_Normal.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Stone_Roughness.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Wood_BaseColor.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Wood_Metallic.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Wood_MetallicSmoothness.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Wood_Normal.png": [
+      2048,
+      2048
+    ],
+    "VH04_StreetShop_Wood_Roughness.png": [
+      2048,
+      2048
+    ],
+    "VL_RoofTiles_BaseColor.png": [
+      1024,
+      1024
+    ],
+    "VL_RoofTiles_MetallicSmoothness.png": [
+      1024,
+      1024
+    ],
+    "VL_RoofTiles_Normal.png": [
+      1024,
+      1024
+    ],
+    "VL_RoofTiles_Roughness.png": [
+      1024,
+      1024
+    ]
+  },
+  "units": "meters",
+  "front": "-Y (Blender)",
+  "up": "+Z (Blender); FBX exported Y-up, -Z forward, transforms baked",
+  "origin": "centre of the lot at ground level, front (the street, the open shop front) -Y",
+  "dimensions_m": [
+    6.7642,
+    5.8417,
+    5.8842
+  ],
+  "bounds_min_m": [
+    -3.3821,
+    -2.9797,
+    0.0
+  ],
+  "bounds_max_m": [
+    3.3821,
+    2.862,
+    5.8842
+  ],
+  "size_limit_m": [
+    7.0,
+    6.0,
+    6.5
+  ],
+  "pieces": {
+    "Main": {
+      "dims_m": [
+        6.7642,
+        5.8417,
+        5.8842
+      ],
+      "min": [
+        -3.3821,
+        -2.9797,
+        0.0
+      ],
+      "max": [
+        3.3821,
+        2.862,
+        5.8842
+      ]
+    },
+    "Detail_Small": {
+      "dims_m": [
+        6.5842,
+        5.5429,
+        3.2203
+      ],
+      "min": [
+        -3.285,
+        -2.916,
+        0.0
+      ],
+      "max": [
+        3.2992,
+        2.6269,
+        3.2203
+      ]
+    }
+  },
+  "lods": {
+    "Stone": {
+      "LOD0": 9340,
+      "LOD1": 4670,
+      "LOD2": 1400
+    },
+    "Wood": {
+      "LOD0": 17976,
+      "LOD1": 8988,
+      "LOD2": 2696
+    },
+    "Main": {
+      "LOD0": 36428,
+      "LOD1": 18214,
+      "LOD2": 5464
+    },
+    "Detail_Small": {
+      "LOD0": 39104,
+      "LOD1": 19551,
+      "LOD2": 5865
+    },
+    "Roof": {
+      "LOD0": 21120,
+      "LOD1": 10560,
+      "LOD2": 2656
+    }
+  },
+  "lod_totals": {
+    "LOD0": 123968,
+    "LOD1": 61983,
+    "LOD2": 18081
+  },
+  "lod_rule": "LOD1 about 50%, LOD2 about 15% of LOD0 (detail parts dropped first, then collapse decimate)",
+  "materials": [
+    "M_VH04_StreetShop_Main",
+    "M_VH04_StreetShop_RoofTiles",
+    "M_VH04_StreetShop_Stone",
+    "M_VH04_StreetShop_Wood"
+  ],
+  "textures": [
+    "VH04_StreetShop_BaseColor.png",
+    "VH04_StreetShop_Metallic.png",
+    "VH04_StreetShop_MetallicSmoothness.png",
+    "VH04_StreetShop_Normal.png",
+    "VH04_StreetShop_Roughness.png",
+    "VH04_StreetShop_Stone_BaseColor.png",
+    "VH04_StreetShop_Stone_Metallic.png",
+    "VH04_StreetShop_Stone_MetallicSmoothness.png",
+    "VH04_StreetShop_Stone_Normal.png",
+    "VH04_StreetShop_Stone_Roughness.png",
+    "VH04_StreetShop_Wood_BaseColor.png",
+    "VH04_StreetShop_Wood_Metallic.png",
+    "VH04_StreetShop_Wood_MetallicSmoothness.png",
+    "VH04_StreetShop_Wood_Normal.png",
+    "VH04_StreetShop_Wood_Roughness.png",
+    "VL_RoofTiles_BaseColor.png",
+    "VL_RoofTiles_MetallicSmoothness.png",
+    "VL_RoofTiles_Normal.png",
+    "VL_RoofTiles_Roughness.png"
+  ],
+  "texture_size_px": 2048,
+  "unity": {
+    "pipeline": "URP Lit",
+    "axes": "imported with bakeAxisConversion: Unity local = (Blender x, z, y); the model front faces Unity -Z",
+    "materials": {
+      "M_VH04_StreetShop_Main": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "VH04_StreetShop_BaseColor.png",
+        "Normal": "VH04_StreetShop_Normal.png",
+        "MetallicSmoothness": "VH04_StreetShop_MetallicSmoothness.png"
+      },
+      "M_VH04_StreetShop_RoofTiles": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "VL_RoofTiles_BaseColor.png",
+        "Normal": "VL_RoofTiles_Normal.png",
+        "MetallicSmoothness": "VL_RoofTiles_MetallicSmoothness.png",
+        "uv": "own (tile cells)"
+      },
+      "M_VH04_StreetShop_Stone": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "VH04_StreetShop_Stone_BaseColor.png",
+        "Normal": "VH04_StreetShop_Stone_Normal.png",
+        "MetallicSmoothness": "VH04_StreetShop_Stone_MetallicSmoothness.png"
+      },
+      "M_VH04_StreetShop_Wood": {
+        "shader": "Universal Render Pipeline/Lit",
+        "BaseColor": "VH04_StreetShop_Wood_BaseColor.png",
+        "Normal": "VH04_StreetShop_Wood_Normal.png",
+        "MetallicSmoothness": "VH04_StreetShop_Wood_MetallicSmoothness.png"
+      }
+    },
+    "normal_maps": "OpenGL +Y",
+    "MetallicSmoothness": "R metallic, A smoothness",
+    "lod_group": "objects end in _LOD0/_LOD1/_LOD2 under one root",
+    "collision": "VH04_StreetShop_Collision: MeshCollider (convex off), renderer hidden"
+  },
+  "collision": true,
+  "sockets_blender_xyz": {
+    "Socket_ShopFront": [
+      1.98,
+      -2.05,
+      0.0
+    ],
+    "Socket_Counter": [
+      0.0,
+      -0.76,
+      1.2
+    ],
+    "Socket_Table": [
+      -1.875,
+      -0.75,
+      0.92
+    ],
+    "Socket_Shelf_0": [
+      1.6,
+      1.73,
+      0.495
+    ],
+    "Socket_Shelf_1": [
+      1.6,
+      1.73,
+      1.145
+    ],
+    "Socket_Shelf_2": [
+      1.6,
+      1.73,
+      1.795
+    ],
+    "Socket_Shelf_3": [
+      1.6,
+      1.73,
+      2.445
+    ],
+    "Socket_BackDoor": [
+      0.0,
+      2.25,
+      0.3
+    ],
+    "Socket_Awning_Under": [
+      -0.2,
+      -2.13,
+      0.0
+    ]
+  },
+  "sockets_fbx_reimport_xyz": {
+    "Socket_Awning_Under.001": [
+      -0.2,
+      -2.13,
+      0.0
+    ],
+    "Socket_BackDoor.001": [
+      0.0,
+      2.25,
+      0.3
+    ],
+    "Socket_Counter.001": [
+      0.0,
+      -0.76,
+      1.2
+    ],
+    "Socket_Shelf_0.001": [
+      1.6,
+      1.73,
+      0.495
+    ],
+    "Socket_Shelf_1.001": [
+      1.6,
+      1.73,
+      1.145
+    ],
+    "Socket_Shelf_2.001": [
+      1.6,
+      1.73,
+      1.795
+    ],
+    "Socket_Shelf_3.001": [
+      1.6,
+      1.73,
+      2.445
+    ],
+    "Socket_ShopFront.001": [
+      1.98,
+      -2.05,
+      0.0
+    ],
+    "Socket_Table.001": [
+      -1.875,
+      -0.75,
+      0.92
+    ]
+  },
+  "fbx_objects": [
+    "Socket_Awning_Under.001",
+    "Socket_BackDoor.001",
+    "Socket_Counter.001",
+    "Socket_Shelf_0.001",
+    "Socket_Shelf_1.001",
+    "Socket_Shelf_2.001",
+    "Socket_Shelf_3.001",
+    "Socket_ShopFront.001",
+    "Socket_Table.001",
+    "VH04_StreetShop.001",
+    "VH04_StreetShop_Collision.001",
+    "VH04_StreetShop_Detail_Small_LOD0.001",
+    "VH04_StreetShop_Detail_Small_LOD1.001",
+    "VH04_StreetShop_Detail_Small_LOD2.001",
+    "VH04_StreetShop_LOD0.001",
+    "VH04_StreetShop_LOD1.001",
+    "VH04_StreetShop_LOD2.001"
+  ],
+  "glb": "VH04_StreetShop_v001.glb",
+  "interface": {
+    "ridge_m": [
+      5.78,
+      5.771,
+      5.78
+    ],
+    "counter_top_m": 1.2,
+    "awning_m": [
+      2.756,
+      2.732,
+      2.76
+    ],
+    "collision": {
+      "west": -3.12,
+      "east": 3.12,
+      "back": 2.37
+    }
+  },
+  "modeling_method": "procedural mesh construction (art/source/village-houses-b/vh_shop.py, vh_roof.py, props from vh_court.py); procedural shaders baked to three 2048 atlases (Main, Stone, Wood); roof tiles on the shared 1024 VL tile texture (VL_Shared)",
+  "texel_density_px_per_m": {
+    "Main": {
+      "visible": {
+        "p10": 92.8,
+        "median": 113.3,
+        "p90": 201.5,
+        "area_m2": 75.7
+      },
+      "inside_or_covered": {
+        "p10": 9.8,
+        "median": 39.9,
+        "p90": 81.5,
+        "area_m2": 193.7
+      },
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Stone": {
+      "visible": {
+        "p10": 210.4,
+        "median": 289.0,
+        "p90": 289.2,
+        "area_m2": 33.5
+      },
+      "inside_or_covered": {
+        "p10": 70.7,
+        "median": 70.9,
+        "p90": 210.6,
+        "area_m2": 24.5
+      },
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    },
+    "Wood": {
+      "visible": {
+        "p10": 96.2,
+        "median": 129.2,
+        "p90": 129.8,
+        "area_m2": 91.5
+      },
+      "inside_or_covered": {
+        "p10": 5.4,
+        "median": 76.2,
+        "p90": 100.4,
+        "area_m2": 199.3
+      },
+      "atlas_px": 2048,
+      "style_spec_target": "256 px/m for buildings"
+    }
+  },
+  "hidden_faces_downweighted": [
+    19366,
+    43249
+  ],
+  "reference": "art/references/VH04/ (AI three-view VH04/VH04-threeview; proportions from the work pack's written sizes, not measured from the image)",
+  "unity_import_verified": "see artifacts/village-houses-unity/ (local Unity batch check, not committed)",
+  "based_on": "new outline (work pack 2026-11-28 VH04, concept A1_concept_2_entry); materials and roof tiles shared with VL01-05 and VH01-03"
+}

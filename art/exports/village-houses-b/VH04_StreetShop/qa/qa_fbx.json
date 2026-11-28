@@ -1,0 +1,196 @@
+{
+ "asset": "VH04_StreetShop_v001",
+ "tris": 123968,
+ "objects": [
+  "VH04_StreetShop_Detail_Small_LOD0",
+  "VH04_StreetShop_LOD0"
+ ],
+ "near_coplanar": {
+  "1mm": {
+   "state_alternatives": 0,
+   "same_underside_on_ground": 0,
+   "same_between": 24,
+   "same_inside": 0,
+   "same": 24,
+   "two_sides": 1792,
+   "groups": {
+    "StreetShop|two_sides_between": {
+     "pairs": 1638,
+     "overlap_cm2": 83199.46
+    },
+    "Detail_Small/StreetShop|two_sides_between": {
+     "pairs": 154,
+     "overlap_cm2": 2556.95
+    },
+    "Detail_Small/StreetShop|same_between": {
+     "pairs": 24,
+     "overlap_cm2": 30.94
+    }
+   },
+   "same_at": [
+    [
+     2.37,
+     1.74,
+     1.36,
+     3
+    ],
+    [
+     2.37,
+     1.72,
+     1.14,
+     2
+    ],
+    [
+     2.47,
+     1.72,
+     1.14,
+     2
+    ],
+    [
+     2.38,
+     1.73,
+     1.24,
+     2
+    ],
+    [
+     2.47,
+     1.74,
+     1.24,
+     2
+    ],
+    [
+     -2.51,
+     0.68,
+     0.59,
+     2
+    ],
+    [
+     2.53,
+     1.21,
+     0.62,
+     2
+    ],
+    [
+     2.52,
+     1.3,
+     0.62,
+     2
+    ],
+    [
+     2.47,
+     1.74,
+     1.36,
+     1
+    ],
+    [
+     -2.51,
+     0.6,
+     0.59,
+     1
+    ],
+    [
+     2.49,
+     1.3,
+     0.62,
+     1
+    ],
+    [
+     2.51,
+     1.0,
+     0.59,
+     1
+    ]
+   ]
+  },
+  "0.5mm": {
+   "state_alternatives": 0,
+   "same_underside_on_ground": 0,
+   "same_between": 7,
+   "same_inside": 0,
+   "same": 7,
+   "two_sides": 1568,
+   "groups": {
+    "StreetShop|two_sides_between": {
+     "pairs": 1414,
+     "overlap_cm2": 78827.37
+    },
+    "Detail_Small/StreetShop|two_sides_between": {
+     "pairs": 154,
+     "overlap_cm2": 2556.95
+    },
+    "Detail_Small/StreetShop|same_between": {
+     "pairs": 7,
+     "overlap_cm2": 3.75
+    }
+   },
+   "same_at": [
+    [
+     2.53,
+     1.21,
+     0.62,
+     2
+    ],
+    [
+     2.52,
+     1.3,
+     0.62,
+     2
+    ],
+    [
+     2.47,
+     1.72,
+     1.14,
+     1
+    ],
+    [
+     2.47,
+     1.74,
+     1.24,
+     1
+    ],
+    [
+     2.37,
+     1.74,
+     1.36,
+     1
+    ]
+   ]
+  },
+  "0.1mm": {
+   "state_alternatives": 0,
+   "same_underside_on_ground": 0,
+   "same_between": 0,
+   "same_inside": 0,
+   "same": 0,
+   "two_sides": 1372,
+   "groups": {
+    "StreetShop|two_sides_between": {
+     "pairs": 1218,
+     "overlap_cm2": 78627.41
+    },
+    "Detail_Small/StreetShop|two_sides_between": {
+     "pairs": 154,
+     "overlap_cm2": 2556.95
+    }
+   },
+   "same_at": []
+  }
+ },
+ "zero_uv": {
+  "1e-12": 0,
+  "1e-10": 0,
+  "1e-09": 0,
+  "1e-08": 68
+ },
+ "zero_uv_by_object": {
+  "1e-12": {},
+  "1e-10": {},
+  "1e-09": {},
+  "1e-08": {
+   "VH04_StreetShop_LOD0": 68
+  }
+ },
+ "pieces": 1178,
+ "loose_over_5mm": 0,
+ "loose_list": []
+}

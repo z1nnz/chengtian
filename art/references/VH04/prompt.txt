@@ -1,0 +1,24 @@
+Use your built-in image generation tool (image_gen) to make reference sheets for ONE 3D game building, and save the PNG files into ./out/ with the exact file names below. Use the images in this folder as input references for every generation:
+- C2_shop.png (MAIN reference): a village shop house seen from the road. Copy its look: white lime-plaster walls with mottled grey patches, dark weathered timber frame, dark grey pan-and-roll roof tiles with moss, a ground floor that is completely open to the street with goods on shelves and a counter, faded cloth awnings stretched out from under the eave on wooden poles, baskets and dried strings hanging under the eave.
+- C1_shops.png: the same village from above; the shop houses with cloth awnings along the road.
+- VH03_style.png: an existing 3D model from the same village (materials and roof tiles must match it: same tile shape and colour, same plaster, same dark timber, same rubble-stone base).
+Do not write any code other than what is needed to copy the generated files into ./out/.
+
+These sheets are for building a real-time 3D game model, so every feature must be a BIG, CLEAR, READABLE SHAPE that a modeller can copy, not fine painterly noise.
+
+The building: "VH04 street shop house" (臨街店屋) in a southern Chinese mountain village. NOT Japanese.
+- Overall 7 m wide (along the street), 6 m deep including the eaves and awning, 6.5 m to the top of the ridge.
+- One tall storey (wall plates at about 3.2 m) with a low storage loft under the roof; a gable roof whose ridge runs ALONG the street, so the long eave faces the street and the two triangular gables are at the left and right sides. Roof: dark grey pan-and-roll tiles, a gently concave curve, a stacked tile ridge with small, low upturned ends, moss on the tiles. Eave overhangs about 0.9 m at the front.
+- Street front: the ground floor is completely OPEN between four square dark timber posts (three bays). A heavy timber beam over the posts carries a narrow strip of timber boards up to the eave. The removable vertical shop-front boards (narrow planks, about 2.4 m tall) are taken down and stacked leaning against the wall at one end of the front.
+- Inside the open front: a low timber counter (about 0.9 m high) across the middle bay; wooden shelves with three or four tiers along the back and side walls holding jars, baskets and cloth bundles; an earth or plank floor raised one step (0.3 m) above the street on a stone edge.
+- A faded cloth awning (beige / pale ochre canvas with a darker patch sewn on) stretched out from under the front eave and held up by two thin wooden poles at its outer corners, sagging a little between them.
+- Sides (gables): white lime plaster with grey stains and repairs over a low rubble-stone base, dark timber corner posts and a middle rail, one small lattice window high in each gable for the loft, a small lattice window lower down.
+- Back: plaster wall, a plank back door, one small lattice window.
+
+Files to make (each a separate generation, landscape, at least 1536x1024):
+1. out/VH04-threeview.png : orthographic FRONT view (the open shop front), RIGHT SIDE view (gable end) and BACK view side by side, same scale, flat ground line, a small 1.75 m grey human silhouette for scale. Plain light warm-grey background, even soft overcast lighting, no cast shadows on the background, no text or labels.
+2. out/VH04-threequarter.png : three-quarter view from street level, eye height 1.7 m, about 9 m away, showing the open shop front with the awning, counter, shelves and the stacked shop boards, plus one gable side. Same painterly style and warm late-afternoon light as C2_shop.png.
+3. out/VH04-detail.png : a sheet of three close-ups: (a) the counter and shelves inside the open front with goods; (b) the stacked removable shop-front boards leaning on the wall and the beam above the posts; (c) the cloth awning attachment under the eave and its pole.
+
+Style: Eastern fantasy, hand-painted look 3D game concept art, low saturation. Not a photo.
+When finished, list the files in ./out/ with their pixel sizes.
