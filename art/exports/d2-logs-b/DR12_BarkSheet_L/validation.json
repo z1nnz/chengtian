@@ -1,0 +1,172 @@
+{
+  "asset": "DR12_BarkSheet_L",
+  "version": "v001",
+  "blender": "5.2.2 LTS",
+  "bounds_main": {
+    "min": [
+      -0.7339,
+      -0.4042,
+      -0.01
+    ],
+    "max": [
+      0.7339,
+      0.4042,
+      0.643
+    ],
+    "dims": [
+      1.4678,
+      0.8084,
+      0.653
+    ]
+  },
+  "origin_at_bottom_centre": {
+    "footprint_centre_xy_m": [
+      0.0,
+      0.0
+    ],
+    "ok": true
+  },
+  "spec_check": {
+    "spec": "工作包 DR12：0.3–1.5 m（大片樹皮與樹瘤，共擺 20 處；BarkL 是其中最大的一種）",
+    "longest_m": 1.4678,
+    "in_range": true,
+    "curl_top_m": 0.643,
+    "curl_ratio": 0.438,
+    "curl_ok": true,
+    "note": "參考圖：前段平貼地、後段往上捲成浪頭；捲起高約為長的 0.35–0.55"
+  },
+  "thickness_lod0": {
+    "samples": 405,
+    "median_m": 0.0897,
+    "p10_m": 0.0705,
+    "p90_m": 0.1016
+  },
+  "normals_lod0": {
+    "faces_checked": 2084,
+    "inward": 5
+  },
+  "tris": {
+    "LOD0": 14588,
+    "LOD1": 6856,
+    "LOD2": 2200,
+    "collision": 536
+  },
+  "lod_ratio": {
+    "LOD1": 0.47,
+    "LOD2": 0.151
+  },
+  "lod_ratio_ok": true,
+  "collision_bounds": {
+    "min": [
+      -0.6864,
+      -0.4015,
+      -0.0082
+    ],
+    "max": [
+      0.7348,
+      0.4031,
+      0.6396
+    ],
+    "covers_lod0": true
+  },
+  "fbx_roundtrip": {
+    "objects": [
+      "DR12_BarkSheet_L",
+      "DR12_BarkSheet_L_Collision",
+      "DR12_BarkSheet_L_LOD0",
+      "DR12_BarkSheet_L_LOD1",
+      "DR12_BarkSheet_L_LOD2"
+    ],
+    "lod0_dimensions_m": [
+      1.4678,
+      0.8084,
+      0.653
+    ],
+    "uv_layers": [
+      "UVMap",
+      "Extra"
+    ],
+    "colour_attributes": [
+      "Layers"
+    ],
+    "materials": [
+      "M_DR09_Layered"
+    ]
+  },
+  "fbx_dims_match": true,
+  "layers": {
+    "0": {
+      "moss_mean_outer": 0.081,
+      "fibre_share": 0.483
+    },
+    "1": {
+      "moss_mean_outer": 0.081,
+      "fibre_share": 0.476
+    },
+    "2": {
+      "moss_mean_outer": 0.079,
+      "fibre_share": 0.458
+    }
+  },
+  "textures_px": {
+    "DR08_Shared/Textures/DR08_Moss_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Moss_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Rot_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Inner_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Soil_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR08_Shared/Textures/DR08_Bark_Normal.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_Bark_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Albedo.png": [
+      1024,
+      1024
+    ],
+    "DR09_Shared/Textures/DR09_FreshWood_Normal.png": [
+      1024,
+      1024
+    ]
+  },
+  "checks": {
+    "size": true,
+    "curl": true,
+    "origin": true,
+    "lod": true,
+    "normals": true,
+    "fbx": true,
+    "collision": true,
+    "textures_1024": true
+  },
+  "all_pass": true
+}
