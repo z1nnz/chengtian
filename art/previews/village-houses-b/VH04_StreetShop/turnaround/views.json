@@ -1,0 +1,158 @@
+{
+  "asset": "VH04_StreetShop",
+  "source": "art/source/village-houses-b/blend/VH04_StreetShop_v001.blend",
+  "same_geometry": true,
+  "render_of": "exported LOD0 with baked textures",
+  "views": [
+    {
+      "file": "01_front.png",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "camera_location": [
+        0.0,
+        -26.6393,
+        2.9421
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "02_right.png",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "camera_location": [
+        26.5804,
+        -0.0589,
+        2.9421
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "03_rear.png",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "camera_location": [
+        0.0,
+        26.5216,
+        2.9421
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "04_left.png",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "camera_location": [
+        -26.5804,
+        -0.0589,
+        2.9421
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "05_front_right.png",
+      "direction": [
+        1,
+        -1,
+        0.45
+      ],
+      "camera_location": [
+        17.9103,
+        -17.9692,
+        11.0017
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "06_rear_right.png",
+      "direction": [
+        1,
+        1,
+        0.45
+      ],
+      "camera_location": [
+        17.9103,
+        17.8515,
+        11.0017
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "07_rear_left.png",
+      "direction": [
+        -1,
+        1,
+        0.45
+      ],
+      "camera_location": [
+        -17.9103,
+        17.8515,
+        11.0017
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "08_front_left.png",
+      "direction": [
+        -1,
+        -1,
+        0.45
+      ],
+      "camera_location": [
+        -17.9103,
+        -17.9692,
+        11.0017
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "09_top.png",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "camera_location": [
+        0.0,
+        -0.0589,
+        29.5225
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    },
+    {
+      "file": "10_high_front.png",
+      "direction": [
+        0,
+        -1,
+        1
+      ],
+      "camera_location": [
+        0.0,
+        -18.8541,
+        21.7373
+      ],
+      "projection": "orthographic",
+      "framing_checked": true
+    }
+  ]
+}
